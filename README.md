@@ -1,2 +1,3 @@
-# Warculator
+# StatHammer
+
 PPE
