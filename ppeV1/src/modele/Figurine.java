@@ -31,14 +31,34 @@ public class Figurine {
 	//renvoi un dico avec en clé les noms des stats des armes et en valeurs une liste de valeur de toute les armes 
 	public HashMap<String,ArrayList<Integer>> statAtk(){
 		HashMap<String,ArrayList<Integer>> liste = new HashMap<String, ArrayList<Integer>>();
-		//Ajouter du code a prendre depuis arme
+		ArrayList<Integer> stats = new ArrayList<Integer>();
+		
+		ArrayList<Integer> A = new ArrayList<Integer>();
+		ArrayList<Integer> F = new ArrayList<Integer>();
+		ArrayList<Integer> PA = new ArrayList<Integer>();
+		ArrayList<Integer> D = new ArrayList<Integer>();
+		
+		for (Arme arme : armes) {
+			stats = arme.statsAtk();
+			A.add(stats.get(0));
+			F.add(stats.get(1));
+			PA.add(stats.get(2));
+			D.add(stats.get(3));
+		}
+		liste.put("A", A);
+		liste.put("F", F);
+		liste.put("PA", PA);
+		liste.put("D", D);
+		
 		return liste;
 	}
 	public void updateHP(int dommage) {
 		this.HP +=dommage;
 	}
-	public ArrayList<Arme> defense(){
-		ArrayList<Arme> liste = new ArrayList<Arme>();
+	public HashMap<String,Integer> defense(){
+		HashMap<String,Integer> liste = new HashMap<String,Integer>();
+		liste.put("E", E);
+		liste.put("SV", SV);
 		return liste;
 	}
 	

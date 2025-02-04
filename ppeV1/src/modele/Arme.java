@@ -20,7 +20,10 @@ public abstract class  Arme {
 	}
 	public ArrayList<Integer> statsAtk(){
 		ArrayList<Integer> liste = new ArrayList<Integer>();
-		
+		liste.add(A);
+		liste.add(F);
+		liste.add(PA);
+		liste.add(D);
 		return liste;
 	}
 }
