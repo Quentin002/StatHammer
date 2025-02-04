@@ -29,8 +29,8 @@ public class Figurine {
 	}
 	
 	//renvoi un dico avec en clé les noms des stats des armes et en valeurs une liste de valeur de toute les armes 
-	public HashMap<String,Arme> statAtk(){
-		HashMap<String,Arme> liste = new HashMap<String, Arme>();
+	public HashMap<String,ArrayList<Integer>> statAtk(){
+		HashMap<String,ArrayList<Integer>> liste = new HashMap<String, ArrayList<Integer>>();
 		//Ajouter du code a prendre depuis arme
 		return liste;
 	}
