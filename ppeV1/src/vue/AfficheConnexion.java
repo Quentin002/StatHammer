@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class Connexion {
+public class AfficheConnexion {
 	public static void affiche(Stage primaryStage) {
 		VBox root = new VBox();
 		Scene scene = new Scene(root,1200,800);		

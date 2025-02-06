@@ -2,7 +2,7 @@ package application;
 	
 import javafx.application.Application;
 import javafx.stage.Stage;
-import vue.Connexion;
+import vue.AfficheConnexion;
 
 
 public class Main extends Application {
@@ -10,7 +10,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			
-			Connexion.affiche(primaryStage);
+			AfficheConnexion.affiche(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
