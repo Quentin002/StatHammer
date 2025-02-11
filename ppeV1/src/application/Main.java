@@ -10,8 +10,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BDD conec = new BDD();
-			AfficheConnexion.affiche(primaryStage,conec);
+			
+			AfficheConnexion.affiche(primaryStage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

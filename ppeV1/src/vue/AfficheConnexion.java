@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AfficheConnexion {
-	public static void affiche(Stage primaryStage,BDD conec) {
+	public static void affiche(Stage primaryStage) {
 		VBox root = new VBox();
 		Scene scene = new Scene(root,1200,800);		
 		TextField pseudo = new TextField();
@@ -35,7 +35,7 @@ public class AfficheConnexion {
 		
 		envoi.setOnAction(e ->{
 			
-			if(Connexion.verif(pseudo.getText(),mdp.getText(),conec)) {
+			if(Connexion.verif(pseudo.getText(),mdp.getText())) {
 				
 				primaryStage.close();
 				AfficheLogged.affiche(primaryStage);

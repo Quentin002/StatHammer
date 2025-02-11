@@ -1,11 +1,11 @@
 package controlleur;
 
 public class Connexion {
-	public static Boolean verif(String login, String mdp,BDD conec) {
+	public static Boolean verif(String login, String mdp) {
 		
 		
 		Bool test = new Bool(false);
-		conec = new BDD(login,mdp,"ppe1_v1",test);
+		BDD conec = new BDD(login,mdp,"ppe1_v1",test);
 		if (test.getBin()) {
 			conec.close();
 		}

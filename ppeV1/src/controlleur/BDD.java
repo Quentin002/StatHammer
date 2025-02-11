@@ -17,7 +17,7 @@ public class BDD {
 
 	private Connection connec;
 	private Statement stat;
-	private String base;
+	
 	
 	
 	
@@ -29,7 +29,7 @@ public class BDD {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
 			this.stat = connec.createStatement();
-			this.base = base;
+			
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
 			
@@ -43,7 +43,7 @@ public class BDD {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
 			this.stat = connec.createStatement();
-			this.base = base;
+			
 			verif.setBin(true);
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
@@ -62,7 +62,7 @@ public class BDD {
 			e.printStackTrace();
 		}
 	}
-	public void lister() {
+	public void lister(String base) {
 		try {
 			ResultSet rs = stat.executeQuery("SELECT * FROM "+base);
 			ResultSetMetaData md = rs.getMetaData();
