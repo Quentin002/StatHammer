@@ -1,5 +1,6 @@
 package vue;
 
+import controlleur.BDD;
 import controlleur.Connexion;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class AfficheConnexion {
-	public static void affiche(Stage primaryStage) {
+	public static void affiche(Stage primaryStage,BDD conec) {
 		VBox root = new VBox();
 		Scene scene = new Scene(root,1200,800);		
 		TextField pseudo = new TextField();
@@ -34,7 +35,7 @@ public class AfficheConnexion {
 		
 		envoi.setOnAction(e ->{
 			
-			if(Connexion.verif(pseudo.getText(),mdp.getText())) {
+			if(Connexion.verif(pseudo.getText(),mdp.getText(),conec)) {
 				
 				primaryStage.close();
 				AfficheLogged.affiche(primaryStage);

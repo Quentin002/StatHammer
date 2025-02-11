@@ -1,5 +1,6 @@
 package application;
 	
+import controlleur.BDD;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import vue.AfficheConnexion;
@@ -9,8 +10,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			
-			AfficheConnexion.affiche(primaryStage);
+			BDD conec = new BDD();
+			AfficheConnexion.affiche(primaryStage,conec);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -18,6 +19,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+		
 		
 	}
 }

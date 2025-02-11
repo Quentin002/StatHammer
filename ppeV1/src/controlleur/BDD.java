@@ -19,6 +19,11 @@ public class BDD {
 	private Statement stat;
 	private String base;
 	
+	
+	
+	public BDD() {
+		
+	}
 	public BDD(String login,String pwd,String base) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
