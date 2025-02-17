@@ -3,14 +3,15 @@ package modele;
 import java.util.ArrayList;
 
 public abstract class  Arme {
-	String nom;
-	ArrayList<AptitudeArme> aptitudes;
-	int A;
-	int F;
-	int PA;
-	int D;
+	
+	private String nom;
+	private ArrayList<AptitudeArme> aptitudes;
+	private int A;
+	private int F;
+	private int PA;
+	private int D;
 	public Arme(String nom, ArrayList<AptitudeArme> aptitudes, int a, int f, int pA, int d) {
-		super();
+		
 		this.nom = nom;
 		this.aptitudes = aptitudes;
 		A = a;
@@ -26,4 +27,6 @@ public abstract class  Arme {
 		liste.add(D);
 		return liste;
 	}
+		
+	
 }
