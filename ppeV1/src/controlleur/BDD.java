@@ -2,6 +2,7 @@ package controlleur;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class BDD {
 
 
 	private Connection connec;
-	private Statement stat;
+	private PreparedStatement stat;
 	
 	
 	
@@ -28,23 +29,7 @@ public class BDD {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
-			this.stat = connec.createStatement();
-			
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			
-			e.printStackTrace();
-		}catch(SQLException e) {
-			System.err.println(e.getMessage());
-		}
-	}
-	public BDD(String login,String pwd,String base,Bool verif) {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
-			this.stat = connec.createStatement();
-			
-			verif.setBin(true);
+			this.stat = null;
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
 			
@@ -54,6 +39,7 @@ public class BDD {
 		}
 	}
 	
+	
 	public void close() {
 		try {
 			connec.close();
@@ -62,11 +48,19 @@ public class BDD {
 			e.printStackTrace();
 		}
 	}
-	public void lister(String base) {
+	public ArrayList<String> selectUtilisateur(String nom, String mdp) {
+		ArrayList<String> rendu = new ArrayList<String>();
 		try {
-			ResultSet rs = stat.executeQuery("SELECT * FROM "+base);
+			
+			String requete = "SELECT nom_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
+			stat = connec.prepareStatement(requete);
+			stat.setString(1, nom);
+			stat.setString(2, mdp);
+			
+			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
 			ArrayList<String> column = new ArrayList<String>();
+			
 			String res ="";
 			for(int i =1;i<=md.getColumnCount();i++) {
 				column.add(md.getColumnName(i));
@@ -75,14 +69,20 @@ public class BDD {
 				for (String col : column) {
 					res += rs.getString(col)+" ";
 				}
-				System.out.println(res);
+				
+				rendu.add(res);
 				res="";
 				
 			}
+			return rendu;
+			
 		} catch (SQLException e) {
 			// TODO: handle exception
 			System.err.println(e.getMessage());
+			
+			
 		}
+		return rendu;
 	}
 	
 		

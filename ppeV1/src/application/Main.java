@@ -6,6 +6,8 @@ import vue.AfficheConnexion;
 
 
 public class Main extends Application {
+	
+	// le main appelle la vue de connexion
 	@Override
 	public void start(Stage primaryStage) {
 		try {
