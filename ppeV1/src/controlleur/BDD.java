@@ -60,17 +60,16 @@ public class BDD {
 			ResultSetMetaData md = rs.getMetaData();
 			ArrayList<String> column = new ArrayList<String>();
 			
-			String res ="";
+			
 			for(int i =1;i<=md.getColumnCount();i++) {
 				column.add(md.getColumnName(i));
 			}
 			while(rs.next()) {
 				for (String col : column) {
-					res += rs.getString(col)+" ";
+					rendu.add(rs.getString(col));
 				}
 				
-				rendu.add(res);
-				res="";
+				
 				
 			}
 			return rendu;

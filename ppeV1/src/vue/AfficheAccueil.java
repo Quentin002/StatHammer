@@ -2,6 +2,8 @@ package vue;
 
 
 
+import java.awt.Dimension;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,8 +17,14 @@ import javafx.stage.Stage;
 
 public class AfficheAccueil {
 	public static void affiche(Stage primaryStage) {
+		
+		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		double hauteur = tailleEcran.getHeight()/2;
+		double largeur = tailleEcran.getWidth()/2;
+		
+		
 		VBox root = new VBox();
-		Scene scene = new Scene(root,1200,800);
+		Scene scene = new Scene(root,largeur,hauteur);
 		
 		Label titre = new Label("StatHammer");
 		VBox cadre = new VBox();
@@ -30,7 +38,7 @@ public class AfficheAccueil {
 		Image accueil = new Image("/images/accueil.jpg");
 		ImageView iv1 = new ImageView();
 		iv1.setImage(accueil);
-		iv1.setFitWidth(700);
+		iv1.setFitWidth(largeur*0.66);
 		iv1.setPreserveRatio(true);
 		iv1.setSmooth(true);
 		iv1.setCache(true);
