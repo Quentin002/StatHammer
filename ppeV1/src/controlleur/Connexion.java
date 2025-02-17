@@ -3,8 +3,8 @@ package controlleur;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
+import vue.AfficheAccueil;
 import vue.AfficheConnexionFailed;
-import vue.AfficheLogged;
 
 public class Connexion {
 	public static void verif(String login, String mdp,Stage primaryStage) {
@@ -21,7 +21,7 @@ public class Connexion {
 		if (login.equals(rendu.getFirst().trim())) {
 			
 			primaryStage.close();
-			AfficheLogged.affiche(primaryStage);
+			AfficheAccueil.affiche(primaryStage);
 		}else {
 			System.out.println(rendu);
 		}
