@@ -1,6 +1,5 @@
 package application;
 	
-import controlleur.BDD;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import vue.AfficheConnexion;

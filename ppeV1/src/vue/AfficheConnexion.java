@@ -1,6 +1,5 @@
 package vue;
 
-import controlleur.BDD;
 import controlleur.Connexion;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
