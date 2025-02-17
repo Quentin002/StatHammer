@@ -10,7 +10,8 @@ public class Connexion {
 	public static void verif(String login, String mdp,Stage primaryStage) {
 		
 		
-		
+		login = login.trim();
+		mdp = mdp.trim();
 		BDD conec = new BDD("root","","StatHammer_v1");
 		
 		ArrayList<String> rendu = conec.selectUtilisateur(login, mdp);

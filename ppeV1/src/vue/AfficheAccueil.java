@@ -73,6 +73,10 @@ public class AfficheAccueil {
 		
 		root.setAlignment(Pos.TOP_CENTER);
 		
+		simulation.setOnAction(e -> {
+			primaryStage.close();
+			AfficheSimulation.affiche(primaryStage);
+		});
 		
 		
 		primaryStage.setScene(scene);
