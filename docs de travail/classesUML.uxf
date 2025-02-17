@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>192</x>
+      <y>40</y>
+      <w>88</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;40.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>32</x>
+      <y>24</y>
+      <w>168</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>User
+--
+- listes: ArrayList&lt;ArmyList&gt;
+- name: String
+- password: String
+- e_mail: String
+--
++ User()
++ newList(list_name: String)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>264</x>
+      <y>24</y>
+      <w>176</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>ArmyList
+--
+- units: ArrayList&lt;Unit&gt;
+- name: String
+- description: String
+- data: String
+--
++ ArmyList(list_name: String)
++ newUnit(unit_name: String)
++ addUnit(unit: Unit)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>24</y>
+      <w>224</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>Unit
+--
+- figs: ArrayList&lt;Figurine&gt;
+- name: String
+- points: int
+--
++ Unit(unit_name: String)
++ getArmy()
++ killFigurine(Figurine)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>432</x>
+      <y>24</y>
+      <w>104</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;30.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>824</x>
+      <y>136</y>
+      <w>168</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Faction
+--
+- name: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>824</x>
+      <y>24</y>
+      <w>168</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Army
+--
+- name: String
+- logo_file: String
+--
++ Army()
++ getFaction()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>896</x>
+      <y>96</y>
+      <w>24</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>736</x>
+      <y>24</y>
+      <w>104</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>224</x>
+      <y>280</y>
+      <w>192</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>Figurine
+--
+- weapons: ArrayList&lt;Weapon&gt;
+- aptitudes: ArrayList&lt;Aptitude&gt;
+- name: String
+- logo_file: String
+- M: int
+- E: int
+- SV: int
+- HP: int
+- CD: int
+- CO: int
+--
++ Figurine()
++ getAptitude()
++ updateHP(hp: int)
++ statAtk():HashMap
++ getStatsDef(): hashmap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>128</y>
+      <w>336</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>400.0;10.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>48</x>
+      <y>328</y>
+      <w>88</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>Aptitude
+--
+- name: String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>584</x>
+      <y>544</y>
+      <w>88</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>MeleeWeapon
+--
+-cc</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1288</x>
+      <y>0</y>
+      <w>80</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>SimpleClass</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>520</x>
+      <y>280</y>
+      <w>240</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Abstract&gt;&gt;
+Weapon
+--
+- name: String
+- aptitudes: ArrayList&lt;WeaponAptitude&gt;
+- A: int
+- F: int
+- PA: int
+- D: int
+--
++ Weapon()
++ getAptitudes()
++ getStats(): hashmap</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>128</x>
+      <y>328</y>
+      <w>112</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>408</x>
+      <y>296</y>
+      <w>128</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;140.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>544</y>
+      <w>88</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>RangeWeapon
+--
+-ct</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>432</y>
+      <w>24</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>648</x>
+      <y>432</y>
+      <w>168</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;190.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>824</x>
+      <y>328</y>
+      <w>136</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>WeaponAptitude
+--
+- name: String
+- valeur: int
+--
++ WeaponAptitude()
++ getValeur()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>752</x>
+      <y>328</y>
+      <w>88</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0</additional_attributes>
+  </element>
+</diagram>
