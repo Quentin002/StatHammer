@@ -1,10 +1,10 @@
 package modele;
 
-public class Aptitude {
+public class Faction {
 	
 	private String nom;
 
-	public Aptitude(String nom) {
+	public Faction(String nom) {
 		this.nom = nom;
 	}
 	
