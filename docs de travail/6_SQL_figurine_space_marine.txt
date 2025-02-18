@@ -1,0 +1,334 @@
+INSERT INTO `figurine` (`id_figurine`, `nom_figurine`, `M`, `E`, `SV`, `PV`, `CD`, `CO`) VALUES
+(DEFAULT, 'Adrax Agatone', '6\"', '4', '2+', '5', '6+', '1'),
+(DEFAULT, 'Apothicaire Biologis', '5\"', '6', '3+', '5', '6+', '3'),
+(DEFAULT, "Apothicaire Primaris", '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, "Archiviste", '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, "Archiviste à Réacteur Dorsal", '12\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, 'Archiviste Primaris', '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, 'Archiviste en Armure Phobos', '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, 'Archiviste en Armure Terminator', '5\"', '5', '2+', '5', '6+', '1'),
+(DEFAULT, 'Bunker Hammerfall', '-', '12', '2+', '14', '6+', '0'),
+(DEFAULT, 'Canon Thunderfire', '3”', '6', '2+', '6', '6+', '2'),
+(DEFAULT, 'Artilleur Techmarine', '3”', '6', '2+', '6', '6+', '2'),
+(DEFAULT, 'Capitaine', '6\"', '4', '3+', '5', '6+', '1'),
+(DEFAULT, 'Capitaine Primaris', '6\"', '4', '3+', '5', '6+', '1'),
+(DEFAULT, 'Capitaine Sicarius', '6\"', '4', '2+', '5', '6+', '1'),
+(DEFAULT, 'Capitaine en Armure Gravis', '6\"', '6', '3+', '6', '6+', '1'),
+(DEFAULT, 'Capitaine en Armure Phobos', '6\"', '4', '3+', '5', '6+', '1'),
+(DEFAULT, 'Capitaine en Armure Terminator', '5\"', '5', '2+', '6', '6+', '1'),
+(DEFAULT, 'Capitaine à Moto', '12\"', '5', '3+', '6', '6+', '2'),
+(DEFAULT, 'Capitaine à Réacteur Dorsal', '12\"', '4', '3+', '5', '6+', '1'),
+(DEFAULT, 'Champion de Compagnie Primaris', '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, 'Chapelain', '6\"', '4', '3+', '4', '5+', '1'),
+(DEFAULT, 'Chapelain Cassius', '6\"', '4', '3+', '4', '5+', '1'),
+(DEFAULT, 'Chapelain Primaris', '6\"', '4', '3+', '4', '5+', '1'),
+(DEFAULT, 'Chapelain en Armure Terminator', '5\"', '5', '2+', '5', '5+', '1'),
+(DEFAULT, 'Chapelain à Moto', '12"', '5', '3+', '5', '5+', '1'),
+(DEFAULT, 'Chapelain à Réacteur Dorsal', '12\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, "Darnath Lysander", '5\"', '5', '2+', '6', '6+', '1'),
+(DEFAULT, "Doyen Bladeguard", '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, "Doyen en Armure Terminator", '5\"', '5', '2+', '5', '6+', '1'),
+(DEFAULT, "Doyen Primaris", '6\"', '4', '3+', '4', '6+', '1'),
+(DEFAULT, "Dreadnought", '6\"', '9', '2+', '8', '6+', '3'),
+(DEFAULT, "Dreadnought Ballistus", '8\"', '10', '2+', '12', '6+', '4'),
+(DEFAULT, "Dreadnought Brutalis", '8\"', '10', '2+', '12', '6+', '4'),
+(DEFAULT, "Dreadnought Contemptor", '6\"', '9', '2+', '10', '6+', '3'),
+(DEFAULT, "Dreadnought Ironclad", '6\"', '10', '2+', '8', '6+', '3'),
+(DEFAULT, "Dreadnought Redemptor", '8\"', '10', '2+', '12', '6+', '4'),
+(DEFAULT, "Escorteur Stormraven", '20\"', '10', '3+', '14', '6+', '0'),
+(DEFAULT, "Escorteur Stormtalon", '20\"', '8', '3+', '10', '6+', '0'),
+
+-- ESCOUADE AGGRESSOR
+(DEFAULT, "Aggressor Sergent", '5\"', '6', '3+', '3', '6+', '1'),
+(DEFAULT, "Aggressor", '5\"', '6', '3+', '3', '6+', '1'),
+
+-- ESCOUADE CENTURION DEVASTATOR
+(DEFAULT, "Sergent Centurion Devastator", '4\"', '7', '2+', '4', '6+', '2'),
+(DEFAULT, "Centurion Devastator", '4\"', '7', '2+', '4', '6+', '2'),
+
+-- ESCOUADE D'ASSAUT
+(DEFAULT, "Sergent d'Assaut", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Marine d'Assaut", '6\"', '4', '3+', '2', '6+', '1'),
+
+
+-- ESCOUADE D'ASSAUT CENTURION
+(DEFAULT, "Sergent Centurion d'Assaut", '4\"', '7', '2+', '4', '6+', '2'),
+(DEFAULT, "Centurion d'Assaut", '4\"', '7', '2+', '4', '6+', '2'),
+
+-- ESCOUADE D'ASSAUT INTERCESSOR
+(DEFAULT, "Sergent Intercessor d'Assaut", '6\"', '4', '3+', '2', '6+', '2'),
+(DEFAULT, "Intercessor d'Assaut", '6\"', '4', '3+', '2', '6+', '2'),
+
+-- ESCOUADE D'ASSAUT TERMINATOR
+(DEFAULT, "Assaut Terminator Sergent", '5\"', '5', '2+', '3', '6+', '1'),
+(DEFAULT, "Assaut Terminator", '5\"', '5', '2+', '3', '6+', '1'),
+
+-- ESCOUADE D'ASSAUT À RÉACTEURS DORSAUX
+(DEFAULT, "Sergent d'Assaut à Réacteur Dorsal", '12\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Marine d'Assaut à Réacteur Dorsal", '12\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade d'État-major
+(DEFAULT, "Apothicaire", '6\"', '4', '3+', '3', '6+', '1'),
+(DEFAULT, "Doyen de Compagnie", '6\"', '4', '3+', '3', '6+', '1'),
+(DEFAULT, "Champion de Compagnie", '6\"', '4', '3+', '3', '6+', '1'),
+(DEFAULT, "Vétéran de Compagnie", '6\"', '4', '3+', '3', '6+', '1'),
+
+-- Escouade Desolator
+(DEFAULT, "Sergent Desolator", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Marine Desolator", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Devastator
+(DEFAULT, "Sergent Devastator", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Marine Devastator", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Eliminator
+(DEFAULT, "Sergent Eliminator", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Eliminator", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Eradicator
+(DEFAULT, "Sergent Eradicator", '5\"', '6', '3+', '6', '6+', '1'),
+(DEFAULT, "Eradicator", '5\"', '6', '3+', '6', '6+', '1'),
+
+-- Escouade Hellblaster
+(DEFAULT, "Sergent Hellblaster", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Hellblaster", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Inceptor
+(DEFAULT, "Sergent Inceptor", '10\"', '6', '3+', '3', '6+', '1'),
+(DEFAULT, "Inceptor", '10\"', '6', '3+', '3', '6+', '1'),
+
+-- Escouade Incursor
+(DEFAULT, "Sergent Incursor", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Incursor", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Infernus
+(DEFAULT, "Sergent Infernus", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Marine Infernus", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Infiltrator
+(DEFAULT, "Sergent Infiltrator", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Infiltrateur", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Intercessor
+(DEFAULT, "Sergent Intercessor", '6\"', '4', '3+', '2', '6+', '2'),
+(DEFAULT, "Intercessor", '6\"', '4', '3+', '2', '6+', '2'),
+
+-- Escouade Lourde Intercessor
+(DEFAULT, "Sergent Intercessor Lourd", '5\"', '6', '3+', '3', '6+', '2'),
+(DEFAULT, "Intercessor Lourd", '5\"', '6', '3+', '3', '6+', '2'),
+
+-- Escouade Outrider
+(DEFAULT, "Sergent Outrider", '12\"', '5', '3+', '4', '6+', '2'),
+(DEFAULT, "Outrider", '12\"', '5', '3+', '4', '6+', '2'),
+(DEFAULT, "Quad Invader", '12\"', '5', '3+', '8', '6+', '2'),
+
+-- Escouade Reiver
+(DEFAULT, "Sergent Reiver", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Reiver", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Suppressor
+(DEFAULT, "Sergent Suppressor", '12\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Suppressor", '12\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade Tactique
+(DEFAULT, "Sergent Tactique", '6\"', '4', '3+', '2', '6+', '2'),
+(DEFAULT, "Marine Tactique", '6\"', '4', '3+', '2', '6+', '2'),
+
+-- Escouade Terminator
+(DEFAULT, "Sergent Terminator", '5\"', '5', '2+', '3', '6+', '1'),
+(DEFAULT, "Terminator", '5\"', '5', '2+', '3', '6+', '1'),
+
+-- Escouade Terminator Relic
+(DEFAULT, "Sergent Terminator Relic", '5\"', '5', '2+', '3', '6+', '1'),
+(DEFAULT, "Terminator Relic", '5\"', '5', '2+', '3', '6+', '1'),
+
+-- Escouade de Motos
+(DEFAULT, "Sergent Motard", '12\"', '5', '3+', '3', '6+', '2'),
+(DEFAULT, "Motard Space Marine", '12\"', '5', '3+', '3', '6+', '2'),
+(DEFAULT, "Moto d'Assaut", '12\"', '5', '3+', '5', '6+', '2'),
+
+-- Escouade de Motos Scouts
+(DEFAULT, "Sergent Motard Scout", '12\"', '5', '4+', '3', '6+', '2'),
+(DEFAULT, "Motard Scout", '12\"', '5', '4+', '3', '6+', '2'),
+
+-- Escouade de Motos d'Assaut
+(DEFAULT, "Moto d'Assaut", '12\"', '5', '3+', '5', '6+', '2'),
+
+-- Escouade de Scouts
+(DEFAULT, "Sergent Scout", '6\"', '4', '4+', '2', '6+', '1'),
+(DEFAULT, "Scout", '6\"', '4', '4+', '2', '6+', '1'),
+
+-- Escouade de Scouts Snipers
+(DEFAULT, "Sergent Scout Sniper", '6\"', '4', '4+', '2', '6+', '1'),
+(DEFAULT, "Scout Sniper", '6\"', '4', '4+', '2', '6+', '1'),
+
+-- Escouade de Vétérans Bladeguards
+(DEFAULT, "Sergent Vétéran Bladeguard", '6\"', '4', '3+', '3', '6+', '1'),
+(DEFAULT, "Vétéran Bladeguard", '6\"', '4', '3+', '3', '6+', '1'),
+
+-- Escouade de Vétérans Sternguards
+(DEFAULT, "Sergent Vétéran Sternguard", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Vétéran Sternguard", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade de Vétérans Vanguards
+(DEFAULT, "Sergent Vétéran Vanguard", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Vétéran Vanguard", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Escouade de Vétérans Vanguards à Réacteurs Dorsaux
+(DEFAULT, "Sergent Vétéran Vanguard à Réacteur Dorsal", '12\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Vétéran Vanguard à Réacteur Dorsal", '12\"', '4', '3+', '2', '6+', '1'),
+
+-- Exo-harnais Tactique Invictor
+(DEFAULT, "Exo-harnais Tactique Invictor", '8\"', '8', '3+', '12', '6+', '4'),
+
+-- Gladiator Lancer
+(DEFAULT, "Gladiator Lancer", '10\"', '10', '3+', '12', '6+', '3'),
+
+-- Gladiator Reaper
+(DEFAULT, "Gladiator Reaper", '10\"', '10', '3+', '12', '6+', '3'),
+
+-- Gladiator Valiant
+(DEFAULT, "Gladiator Valiant", '10\"', '10', '3+', '12', '6+', '3'),
+
+-- Hunter
+(DEFAULT, "Hunter", '9\"', '11', '3+', '11', '6+', '3'),
+
+-- Impulsor
+(DEFAULT, "Impulsor", '12\"', '9', '3+', '11', '6+', '2'),
+
+-- Intercepteur Stormhawk
+(DEFAULT, "Intercepteur Stormhawk", '20\"', '9', '3+', '10', '6+', '0'),
+
+-- Judicateur
+(DEFAULT, "Judicateur", '6\"', '4', '3+', '4', '5+', '1'),
+
+-- Kayvaan Shrike
+(DEFAULT, "Kayvaan Shrike", '12\"', '4', '3+', '5', '6+', '1'),
+
+-- Kor'sarro Khan
+(DEFAULT, "Kor'sarro Khan", '6\"', '4', '3+', '5', '6+', '1'),
+
+-- Land Raider
+(DEFAULT, "Land Raider", '10\"', '12', '2+', '16', '6+', '5'),
+
+-- Land Raider Crusader
+(DEFAULT, "Land Raider Crusader", '12\"', '12', '2+', '16', '6+', '5'),
+
+-- Land Raider Redeemer
+(DEFAULT, "Land Raider Redeemer", '12\"', '12', '2+', '16', '6+', '5'),
+
+-- Land Speeder
+(DEFAULT, "Land Speeder", '14\"', '7', '3+', '6', '6+', '2'),
+-- Land Speeder Storm
+(DEFAULT, "Land Speeder Storm", '14\"', '7', '4+', '7', '6+', '1'),
+
+-- Land Speeder Tornado
+(DEFAULT, "Land Speeder Tornado", '14\"', '7', '3+', '6', '6+', '2'),
+
+-- Land Speeder Typhoon
+(DEFAULT, "Land Speeder Typhoon", '14\"', '7', '3+', '6', '6+', '2'),
+
+-- Lieutenant
+(DEFAULT, "Lieutenant", '6\"', '4', '3+', '4', '6+', '1'),
+
+-- Lieutenant avec Arme Combinée
+(DEFAULT, "Lieutenant avec Arme Combinée", '6\"', '4', '3+', '4', '6+', '1'),
+
+-- Lieutenant Primaris
+(DEFAULT, "Lieutenant Primaris", '6\"', '4', '3+', '4', '6+', '1'),
+
+-- Lieutenant en Armure Phobos
+(DEFAULT, "Lieutenant en Armure Phobos", '6\"', '4', '3+', '4', '6+', '1'),
+
+-- Lieutenant en Armure Reiver
+(DEFAULT, "Lieutenant en Armure Reiver", '6\"', '4', '3+', '4', '6+', '1'),
+
+-- Marneus Calgar
+(DEFAULT, "Marneus Calgar", '6\"', '6', '2+', '6', '6+', '1'),
+(DEFAULT, "Garde d'Honneur Victrix", '6\"', '4', '2+', '3', '6+', '1'),
+
+-- Maître Archiviste Tigurius
+(DEFAULT, "Maître Archiviste Tigurius", '6\"', '4', '3+', '4', '6+', '1'),
+
+-- Module de Largage
+(DEFAULT, "Module de Largage", '-', '7', '3+', '8', '6+', '2'),
+
+-- Pedro Kantor
+(DEFAULT, "Pedro Kantor", '6\"', '4', '2+', '5', '6+', '1'),
+
+-- Predator Annihilator
+(DEFAULT, "Predator Annihilator", '10\"', '10', '3+', '11', '6+', '3'),
+
+-- Predator Destructor
+(DEFAULT, "Predator Destructor", '10\"', '10', '3+', '11', '6+', '3'),
+
+-- Quad Invader
+(DEFAULT, "Quad Invader", '12\"', '5', '3+', '8', '6+', '2'),
+
+-- Razorback
+(DEFAULT, "Razorback", '12\"', '9', '3+', '10', '6+', '2'),
+
+-- Repulsor
+(DEFAULT, "Repulsor", '10\"', '12', '3+', '16', '6+', '5'),
+
+-- Repulsor Executioner
+(DEFAULT, "Repulsor Executioner", '10\"', '12', '3+', '16', '6+', '5'),
+
+-- Rhino
+(DEFAULT, "Rhino", '12\"', '9', '3+', '10', '6+', '2'),
+
+-- Roboute Guilliman
+(DEFAULT, "Roboute Guilliman", '8\"', '9', '2+', '10', '5+', '4'),
+
+-- Révérend de Fer Feirros
+(DEFAULT, "Révérend de Fer Feirros", '5\"', '6', '2+', '6', '6+', '1'),
+
+-- Sergent Chronus
+(DEFAULT, "Sergent Chronus", '6\"', '4', '2+', '3', '6+', '1'),
+
+-- Sergent Telion
+(DEFAULT, "Sergent Telion", '6\"', '4', '4+', '3', '6+', '1'),
+
+-- Servitors de l'Astartes
+(DEFAULT, "Servitor de l'Astartes", '6\"', '4', '4+', '1', '8+', '0'),
+
+-- Servo-tourelles Firestrike
+(DEFAULT, "Servo-tourelle Firestrike", '3\"', '6', '2+', '6', '6+', '2'),
+
+-- Stalker
+(DEFAULT, "Stalker", '9\"', '11', '3+', '11', '6+', '3'),
+
+-- Storm Speeder Hailstrike
+(DEFAULT, "Storm Speeder Hailstrike", '14\"', '9', '3+', '11', '6+', '3'),
+
+-- Storm Speeder Hammerstrike
+(DEFAULT, "Storm Speeder Hammerstrike", '14\"', '9', '3+', '11', '6+', '3'),
+
+-- Storm Speeder Thunderstrike
+(DEFAULT, "Storm Speeder Thunderstrike", '14\"', '9', '3+', '11', '6+', '3'),
+
+-- Techmarine
+(DEFAULT, "Techmarine", '6\"', '4', '2+', '4', '6+', '1'),
+
+-- Techmarine Primaris
+(DEFAULT, "Techmarine Primaris", '6\"', '4', '2+', '4', '6+', '1'),
+
+-- Tor Garadon
+(DEFAULT, "Tor Garadon", '5\"', '6', '3+', '6', '6+', '1'),
+
+-- Uriel Ventris
+(DEFAULT, "Uriel Ventris", '6\"', '4', '3+', '5', '6+', '1'),
+
+-- Vindicator
+(DEFAULT, "Vindicator", '9\"', '11', '2+', '11', '6+', '3'),
+
+-- Vulkan He'stan
+(DEFAULT, "Vulkan He'stan", '6\"', '4', '2+', '5', '6+', '1'),
+
+-- Vétérans des Guerres Tyraniques
+(DEFAULT, "Sergent Vétéran", '6\"', '4', '3+', '2', '6+', '1'),
+(DEFAULT, "Vétéran des Guerres Tyraniques", '6\"', '4', '3+', '2', '6+', '1'),
+
+-- Whirlwind
+(DEFAULT, "Whirlwind", '10\"', '10', '3+', '11', '6+', '3')
+;
