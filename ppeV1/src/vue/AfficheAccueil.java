@@ -85,6 +85,10 @@ public class AfficheAccueil {
 			primaryStage.close();
 			AfficheSimulation.affiche(primaryStage);
 		});
+		creeListe.setOnAction(e ->{
+			primaryStage.close();
+			AfficheCreerListe.afficheCreerListe(primaryStage);
+		});
 		
 		
 		primaryStage.setScene(scene);
