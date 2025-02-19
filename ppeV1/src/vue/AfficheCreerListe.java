@@ -37,6 +37,8 @@ public class AfficheCreerListe {
 		Button creation = new Button("Créer une unité");
 		ChoiceBox<String> faction = new ChoiceBox<>();
 		faction.getItems().addAll("SpaceMarine","Chaos","T moche");
+		ChoiceBox<String> groupe = new ChoiceBox<>();
+		groupe.getItems().addAll("chien","chat","serpent");		
 		
 		iv1.setFitHeight(hauteur/15);
 		iv1.setPreserveRatio(true);
@@ -74,6 +76,10 @@ public class AfficheCreerListe {
 		entete.setMaxHeight(hauteur/15);
 		
 		gaucheCorps.getChildren().add(corpTete);
+		
+		corpTete.getChildren().addAll(groupe,iv2);
+		corpTete.setAlignment(Pos.CENTER);
+		corpTete.setMaxHeight(hauteur/15);
 		
 		root.setAlignment(Pos.CENTER);
 		root.getChildren().add(titre);
