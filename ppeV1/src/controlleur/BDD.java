@@ -12,22 +12,15 @@ import modele.Arme;
 
 public class BDD {
 
-
-
-
 	private Connection connec;
 	private PreparedStatement stat;
-	
-	
-	
-	
-	public BDD() {
 		
-	}
+	public BDD() {}
+	
 	public BDD(String login,String pwd,String base) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
+			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+ base, login, pwd);
 			this.stat = null;
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
@@ -36,6 +29,19 @@ public class BDD {
 		}catch(SQLException e) {
 			System.err.println(e.getMessage());
 		}
+	}
+	
+	
+	public PreparedStatement getPreparedStatement(String sql, Object... params) throws SQLException
+	{
+		stat = connec.prepareStatement(sql);
+		if(params.length > 0)
+		{
+			for (int i = 0; i < params.length; i++) {
+				stat.setObject(i + 1, params[i]);
+			}
+		}
+		return stat;
 	}
 	
 	
@@ -50,11 +56,8 @@ public class BDD {
 	public ArrayList<String> selectUtilisateur(String nom, String mdp) {
 		ArrayList<String> rendu = new ArrayList<String>();
 		try {
-			
-			String requete = "SELECT nom_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
-			stat = connec.prepareStatement(requete);
-			stat.setString(1, nom);
-			stat.setString(2, mdp);
+			stat = this.getPreparedStatement("SELECT nom_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
+				nom, mdp);
 			
 			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
