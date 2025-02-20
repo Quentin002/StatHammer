@@ -19,6 +19,10 @@ public class Unit {
 		return armee;
 	}
 	
+	
+	public String getNom() {
+		return nom;
+	}
 	public void killFigurine(Figurine mort) {
 		figurines.remove(mort);
 	}

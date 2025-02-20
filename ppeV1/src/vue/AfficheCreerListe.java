@@ -1,6 +1,7 @@
 package vue;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import controlleur.Instanciation;
 import javafx.geometry.Pos;
@@ -16,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import modele.Armee;
 import modele.Faction;
 
@@ -40,17 +42,30 @@ public class AfficheCreerListe {
 		ImageView iv1 = new ImageView(logoFaction);
 		ImageView iv2 = new ImageView(logoFaction);
 		Button creation = new Button("Créer une unité");
-		ChoiceBox<String> faction = new ChoiceBox<>();
-		for(Faction fac:Instanciation.getFaction()) {
-			faction.getItems().add(fac.getNom());
-			defaut = fac.getNom();
-		}
-		faction.setValue(defaut);
+		ChoiceBox<Faction> faction = new ChoiceBox<>();
 		
-		ChoiceBox<String> groupe = new ChoiceBox<>();
-		for(Armee armee:Instanciation.getArmee(new Faction(faction.getValue()))) {
-			groupe.getItems().add(armee.getNom());
+		
+		for(Faction fac:Instanciation.getFaction()) {
+			faction.getItems().add(fac);
 		}
+		faction.setValue(faction.getItems().getFirst());
+		
+		
+		
+		
+		ChoiceBox<Armee> groupe = new ChoiceBox<>();
+		for(Armee armee:Instanciation.getArmee(faction.getValue())) {
+			groupe.getItems().add(armee);
+		}
+		groupe.setValue(groupe.getItems().getFirst());
+		
+		faction.setOnAction(e->{
+			groupe.getItems().clear();
+			for(Armee armee:Instanciation.getArmee(faction.getValue())) {
+				groupe.getItems().add(armee);
+			}
+			groupe.setValue(groupe.getItems().getFirst());
+		});
 			
 		
 		iv1.setFitHeight(hauteur/15);

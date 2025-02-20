@@ -23,6 +23,11 @@ public class Armee {
 	public String getLogo() {
 		return logo;
 	}
+
+	@Override
+	public String toString() {
+		return "" + nom + "";
+	}
 	
 
 	
