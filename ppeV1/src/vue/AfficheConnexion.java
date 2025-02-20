@@ -18,12 +18,14 @@ public class AfficheConnexion {
 		Label nomPseudo = new Label("Pseudo");
 		Label nomMdp = new Label("Mot de passe");
 		Button envoi = new Button("Appuyer sur moi");
+		Button creaCompte = new Button("Créer un compte");
 		
 		root.getChildren().add(nomPseudo);
 		root.getChildren().add(pseudo);
 		root.getChildren().add(nomMdp);
 		root.getChildren().add(mdp);
 		root.getChildren().add(envoi);
+		root.getChildren().add(creaCompte);
 		
 		mdp.setMaxWidth(200);
 		pseudo.setMaxWidth(200);
@@ -31,6 +33,10 @@ public class AfficheConnexion {
 		pseudo.setAlignment(Pos.CENTER);
 		mdp.setAlignment(Pos.CENTER);
 		root.setAlignment(Pos.CENTER);
+		
+		creaCompte.setOnAction(e ->{
+			AfficheCreationCompte.affiche(primaryStage);
+		});
 		
 		envoi.setOnAction(e ->{
 			

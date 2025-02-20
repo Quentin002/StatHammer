@@ -27,7 +27,7 @@ public class BDD {
 	public BDD(String login,String pwd,String base) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
+			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+base,login,pwd);
 			this.stat = null;
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
@@ -39,14 +39,7 @@ public class BDD {
 	}
 	
 	
-	public void close() {
-		try {
-			connec.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	public ArrayList<String> selectUtilisateur(String nom, String mdp) {
 		ArrayList<String> rendu = new ArrayList<String>();
 		try {
@@ -84,7 +77,41 @@ public class BDD {
 		return rendu;
 	}
 	
+	public ArrayList<String> creerUtilisateur(String adresse, String nom, String mdp){
+		ArrayList<String> crea = new ArrayList<String>();
 		
+		String creationRequete = "INSERT INTO utilisateur"
+			+" (nom_utilisateur, email_utilisateur, mdp_utilisateur)"
+			+"VALUES (?, ?, ?);";
+		try {
+			if(connec == null || connec.isClosed()) {
+				System.err.println("La connexion à la bdd n'est pas possible.");
+				return crea;
+			}
+			PreparedStatement stat = connec.prepareStatement(creationRequete);
+	        stat.setString(1, nom);
+	        stat.setString(2, adresse);
+	        stat.setString(3, mdp);
+	        
+	        int rowsInserted = stat.executeUpdate();
+	        
+	        if (rowsInserted > 0) {
+	            crea.add(adresse);
+	        }
+	        stat.close();
+			}catch (SQLException e) {
+				System.err.println("Erreur SQL : " + e.getMessage());
+			}
+		return crea;
+	}
+	public void close() {
+		try {
+			connec.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
 		
 	public void ajouter(Arme a) {
 		try {
