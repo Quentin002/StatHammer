@@ -2,7 +2,6 @@ package vue.simulation;
 
 import vue.afficheTopMenu;
 import java.util.ArrayList;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

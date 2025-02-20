@@ -14,7 +14,7 @@ public class afficheTopMenu extends HBox
 	    Button btn_account = new Button("Mon compte");
 	    Button btn_logout = new Button("Déconnexion");
 	    this.getChildren().addAll(btn_end, btn_account, btn_logout);
-	    setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+	    this.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
 	    
 	    // vers le menu principal
 	    btn_end.setOnAction(e -> {
