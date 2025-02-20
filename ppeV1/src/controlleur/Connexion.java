@@ -1,7 +1,6 @@
 package controlleur;
 
 import java.util.ArrayList;
-
 import javafx.stage.Stage;
 import vue.AfficheAccueil;
 import vue.AfficheConnexionFailed;
