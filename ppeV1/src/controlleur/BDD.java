@@ -82,7 +82,45 @@ public class BDD {
 		}
 		return rendu;
 	}
-	
+	public ArrayList<String> select(String requete,String... param ) throws SQLException{
+		ArrayList<String> rendu = new ArrayList<String>();
+		try {
+			
+			
+			stat = connec.prepareStatement(requete);
+			if(param.length>0) {
+				for(int i = 1;i<=param.length;i++) {
+					stat.setString(i, param[i-1]);
+				}
+			}
+			
+			
+			ResultSet rs = stat.executeQuery();
+			ResultSetMetaData md = rs.getMetaData();
+			ArrayList<String> column = new ArrayList<String>();
+			
+			
+			for(int i =1;i<=md.getColumnCount();i++) {
+				column.add(md.getColumnName(i));
+			}
+			while(rs.next()) {
+				for (String col : column) {
+					rendu.add(rs.getString(col));
+				}
+				
+				
+				
+			}
+			return rendu;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return rendu;
+	}
 		
 		
 	public void ajouter(Arme a) {

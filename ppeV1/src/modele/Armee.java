@@ -16,6 +16,15 @@ public class Armee {
 		return faction;
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+	
+
 	
 	
 	

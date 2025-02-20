@@ -1,6 +1,8 @@
 package vue;
 
 import java.awt.Dimension;
+
+import controlleur.Instanciation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +16,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modele.Armee;
+import modele.Faction;
 
 public class AfficheCreerListe {
 	public static void afficheCreerListe(Stage primaryStage) {
@@ -21,6 +25,7 @@ public class AfficheCreerListe {
 		double hauteur = tailleEcran.getHeight()/2;
 		double largeur = tailleEcran.getWidth()/2;
 		
+		String defaut = new String();
 		
 		VBox root = new VBox();
 		HBox boite = new HBox();
@@ -36,9 +41,17 @@ public class AfficheCreerListe {
 		ImageView iv2 = new ImageView(logoFaction);
 		Button creation = new Button("Créer une unité");
 		ChoiceBox<String> faction = new ChoiceBox<>();
-		faction.getItems().addAll("SpaceMarine","Chaos","T moche");
+		for(Faction fac:Instanciation.getFaction()) {
+			faction.getItems().add(fac.getNom());
+			defaut = fac.getNom();
+		}
+		faction.setValue(defaut);
+		
 		ChoiceBox<String> groupe = new ChoiceBox<>();
-		groupe.getItems().addAll("chien","chat","serpent");		
+		for(Armee armee:Instanciation.getArmee(new Faction(faction.getValue()))) {
+			groupe.getItems().add(armee.getNom());
+		}
+			
 		
 		iv1.setFitHeight(hauteur/15);
 		iv1.setPreserveRatio(true);

@@ -7,6 +7,11 @@ public class Faction {
 	public Faction(String nom) {
 		this.nom = nom;
 	}
+
+	public String getNom() {
+		return nom;
+	}
+	
 	
 	
 
