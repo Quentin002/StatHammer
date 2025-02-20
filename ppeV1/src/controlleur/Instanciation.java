@@ -5,6 +5,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import modele.Aptitude;
+import modele.Arme;
 import modele.Armee;
 import modele.Faction;
 import modele.Figurine;
@@ -79,6 +81,58 @@ public class Instanciation {
 		try {
 			BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
 			ResultSet tab = conec.selectRS("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",unitName );
+			ResultSetMetaData md = tab.getMetaData();
+			ArrayList<String> column = new ArrayList<String>();
+			
+			for(int i =1;i<=md.getColumnCount();i++) {
+				column.add(md.getColumnName(i));
+			}
+			
+			
+			
+			while(tab.next()) {
+				rendu.add(null);
+			}
+			
+		}catch(SQLException e) {
+			
+		}
+		
+		return rendu;
+	}
+	
+	public static ArrayList<Arme> getArme(String figNom){
+		ArrayList<Arme> rendu = new ArrayList<>();
+		
+		try {
+			BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
+			ResultSet tab = conec.selectRS("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",figNom );
+			ResultSetMetaData md = tab.getMetaData();
+			ArrayList<String> column = new ArrayList<String>();
+			
+			for(int i =1;i<=md.getColumnCount();i++) {
+				column.add(md.getColumnName(i));
+			}
+			
+			
+			
+			while(tab.next()) {
+				rendu.add(null);
+			}
+			
+		}catch(SQLException e) {
+			
+		}
+		
+		return rendu;
+	}
+	
+	public static ArrayList<Aptitude> getAptitude(String figNom){
+		ArrayList<Aptitude> rendu = new ArrayList<>();
+		
+		try {
+			BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
+			ResultSet tab = conec.selectRS("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",figNom );
 			ResultSetMetaData md = tab.getMetaData();
 			ArrayList<String> column = new ArrayList<String>();
 			
