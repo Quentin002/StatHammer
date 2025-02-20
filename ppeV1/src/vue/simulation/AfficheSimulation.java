@@ -2,7 +2,7 @@ package vue.simulation;
 
 import vue.AfficheAccueil;
 import vue.AfficheConnexion;
-
+import vue.afficheTopMenu;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -32,31 +32,7 @@ public class AfficheSimulation
 		
 		
 		/* -- menu du haut de l'écran -- */
-		HBox menu = new HBox();
-		menu.setStyle("-fx-background-color: gray; -fx-padding: 5px; -fx-spacing: 10px;");
-		//Label title = new Label("Simulation"); // moche, à modifire
-        Button btn_end = new Button("Fin simulation");
-        Button btn_account = new Button("Mon compte");
-        Button btn_logout = new Button("Déconnexion");
-        menu.getChildren().addAll(btn_end, btn_account, btn_logout);
-        
-        /* actions des boutons du menu */
-        btn_end.setOnAction(e -> { // vers le menu principal
-			primaryStage.close();
-			AfficheAccueil.affiche(primaryStage);
-		});
-//        btn_logout.setOnAction(e -> { // vers gestion compte utilisateur
-//			primaryStage.close();
-//			Affiche____.affiche(primaryStage);
-//		});
-        btn_logout.setOnAction(e -> { // vers page de connexion
-			primaryStage.close();
-			/*
-			 * ce serait bien de déconnecter l'utilisateur proprement
-			 */
-			AfficheConnexion.affiche(primaryStage);
-		});
-        
+		afficheTopMenu menu = new afficheTopMenu(primaryStage);
 
         // partie principale de la fenêtre
 		HBox main = new HBox();
