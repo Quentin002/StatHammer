@@ -12,7 +12,7 @@ public class Connexion {
 		
 		login = login.trim();
 		mdp = mdp.trim();
-		BDD conec = new BDD("root","","StatHammer_v1");
+		BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
 		
 		ArrayList<String> rendu = conec.selectUtilisateur(login, mdp);
 		conec.close();
