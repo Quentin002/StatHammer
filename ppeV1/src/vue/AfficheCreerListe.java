@@ -3,12 +3,14 @@ package vue;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import controlleur.BDD;
 import controlleur.Instanciation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -17,9 +19,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 import modele.Armee;
 import modele.Faction;
+import modele.Unit;
 
 public class AfficheCreerListe {
 	public static void afficheCreerListe(Stage primaryStage) {
@@ -36,14 +38,17 @@ public class AfficheCreerListe {
 		HBox entete = new HBox();
 		VBox gaucheCorps = new VBox();
 		HBox corpTete = new HBox();
+		VBox droiteCorps= new VBox();
 		Scene scene = new Scene(root,largeur,hauteur);
 		Label titre = new Label("StatHammer");
 		Image logoFaction = new Image("images/wip.jpg");
 		ImageView iv1 = new ImageView(logoFaction);
 		ImageView iv2 = new ImageView(logoFaction);
 		Button creation = new Button("Créer une unité");
+		Button retour = new Button("RETOUR");
+		ScrollPane toutUnit = new ScrollPane();
 		ChoiceBox<Faction> faction = new ChoiceBox<>();
-		
+		Instanciation.conec =new BDD("400129","stathammer_greta_admin","stathammer_v1");;
 		
 		for(Faction fac:Instanciation.getFaction()) {
 			faction.getItems().add(fac);
@@ -65,6 +70,15 @@ public class AfficheCreerListe {
 				groupe.getItems().add(armee);
 			}
 			groupe.setValue(groupe.getItems().getFirst());
+		});
+		
+		
+		groupe.setOnAction(e->{
+			toutUnit.setContent(droiteCorps);
+			for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
+				System.out.println(unit);
+				droiteCorps.getChildren().add(new Label(unit.toString()));
+			}
 		});
 			
 		
@@ -93,11 +107,14 @@ public class AfficheCreerListe {
 		gauche.setMaxHeight(hauteur);
 		gauche.setBackground(Background.fill(Color.BLUE));
 		
+		droite.getChildren().add(toutUnit);
 		droite.setPrefWidth(largeur/2);
 		droite.setPrefHeight(hauteur);
 		droite.setMaxWidth(largeur/2);
 		droite.setMaxHeight(hauteur);
 		droite.setBackground(Background.fill(Color.RED));
+		
+		toutUnit.setFitToHeight(true);
 		
 		entete.getChildren().addAll(creation,faction,iv1);
 		entete.setAlignment(Pos.CENTER);
@@ -111,7 +128,15 @@ public class AfficheCreerListe {
 		
 		root.setAlignment(Pos.CENTER);
 		root.getChildren().add(titre);
+		root.getChildren().add(retour);
 		root.getChildren().add(boite);
+		
+		retour.setOnAction(e->{
+			Instanciation.conec.close();
+			primaryStage.close();
+			AfficheAccueil.affiche(primaryStage);
+			
+		});
 		
 		
 		

@@ -6,11 +6,11 @@ public abstract class  Arme {
 	
 	private String nom;
 	private ArrayList<AptitudeArme> aptitudes;
-	private int A;
+	private String A;
 	private int F;
 	private int PA;
-	private int D;
-	public Arme(String nom, ArrayList<AptitudeArme> aptitudes, int a, int f, int pA, int d) {
+	private String D;
+	public Arme(String nom, ArrayList<AptitudeArme> aptitudes, String a, int f, int pA, String d) {
 		
 		this.nom = nom;
 		this.aptitudes = aptitudes;
@@ -21,10 +21,10 @@ public abstract class  Arme {
 	}
 	public ArrayList<Integer> statsAtk(){
 		ArrayList<Integer> liste = new ArrayList<Integer>();
-		liste.add(A);
+		
 		liste.add(F);
 		liste.add(PA);
-		liste.add(D);
+		
 		return liste;
 	}
 		

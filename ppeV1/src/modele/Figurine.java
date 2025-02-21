@@ -8,13 +8,13 @@ public class Figurine {
 	ArrayList<Aptitude> aptidudes;
 	String nom;
 	String logoChemin;
-	int M;
+	String M;
 	int E;
 	int SV;
 	int HP;
 	int CD;
 	int CO;
-	public Figurine(ArrayList<Arme> armes, ArrayList<Aptitude> aptidudes, String nom, String logoChemin, int m, int e, int sV, int hP, int cD, int cO) {
+	public Figurine(ArrayList<Arme> armes, ArrayList<Aptitude> aptidudes, String nom, String logoChemin, String m, int e, int sV, int hP, int cD, int cO) {
 		super();
 		this.armes = armes;
 		this.aptidudes = aptidudes;

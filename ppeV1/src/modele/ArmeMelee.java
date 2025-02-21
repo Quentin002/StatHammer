@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class ArmeMelee extends Arme {
 	private int CC;
 
-	public ArmeMelee(String nom, ArrayList<AptitudeArme> aptitudes, int a, int f, int pA, int d,int cc) {
+	public ArmeMelee(String nom, ArrayList<AptitudeArme> aptitudes, String a, int f, int pA, String d,int cc) {
 		super(nom, aptitudes, a, f, pA, d);
 		this.CC=cc;
 		// TODO Auto-generated constructor stub
