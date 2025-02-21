@@ -15,6 +15,10 @@ public class Unit {
 		this.points = points;
 		this.armee = armee;
 	}
+	//v2
+	public ArrayList<Figurine> getList_unit() {
+		return figurines;
+	}
 	public Armee getArmee() {
 		return armee;
 	}

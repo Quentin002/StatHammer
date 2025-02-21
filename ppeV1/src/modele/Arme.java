@@ -27,6 +27,48 @@ public abstract class  Arme {
 		liste.add(D);
 		return liste;
 	}
-		
+	
+	//v2
+	public int getD() {
+		return D;
+	}
+
+	public void setD(int d) {
+		this.D = d;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public int getA() {
+		return A;
+	}
+
+	public void setA(int a) {
+		this.A = a;
+	}
+
+	public void setPa(int pa) {
+		this.PA = pa;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getPa() {
+		return PA;
+	}
+
+
+	public int getF() {
+		return F;
+	}
+
+	public void setF(int f) {
+		this.F = f;
+	}
+	protected abstract int getC();
 	
 }

@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class AfficheAccueil {
 	public static void affiche(Stage primaryStage) {
 		VBox root = new VBox();
-		Scene scene = new Scene(root,1200,800);
+		Scene scene = new Scene(root,800,600);
 		
 		Label titre = new Label("StatHammer");
 		VBox cadre = new VBox();
@@ -50,6 +50,24 @@ public class AfficheAccueil {
 		gererListe.setPrefWidth(200);
 		gererListe.setPrefHeight(50);
 		
+		//v2
+				HBox vb = new HBox();
+				Button btn_deco = new Button("Déconnexion");
+				Button btn_compte = new Button("Gestion de compte");
+				vb.getChildren().add(btn_compte);
+			    vb.getChildren().add(btn_deco);
+			    
+			    btn_deco.setOnAction(e -> {
+					primaryStage.close();
+					AfficheConnexion.affiche(primaryStage);
+				});
+			    btn_compte.setOnAction(e -> {
+					primaryStage.close();
+					AfficheGestionCompte.affiche(primaryStage);
+				});
+				vb.setAlignment(Pos.TOP_RIGHT);
+				
+				root.getChildren().add(vb);
 		root.getChildren().add(titre);
 		root.getChildren().add(capsule);
 		

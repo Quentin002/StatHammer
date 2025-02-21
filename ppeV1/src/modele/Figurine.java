@@ -61,6 +61,40 @@ public class Figurine {
 		liste.put("SV", SV);
 		return liste;
 	}
-	
+	//v2
+	public int getHP() {
+		return HP;
+	}
+
+	public void setHP(int HP) {
+		this.HP = HP;
+	}
+	public ArrayList<Arme> getList() {
+		return armes;
+	}
+	public String getNom_figurine() {
+		return nom;
+	}
+
+	public void setNom_figurine(String nom_figurine) {
+		this.nom = nom_figurine;
+	}
+
+	public int getE() {
+		return E;
+	}
+
+	public void setE(int e) {
+		this.E = e;
+	}
+
+	public int getSv() {
+		return SV;
+	}
+
+
+	public void setSv(int sv) {
+		this.SV = sv;
+	}
 }
 

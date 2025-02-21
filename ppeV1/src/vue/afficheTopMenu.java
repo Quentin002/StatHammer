@@ -23,8 +23,8 @@ public class afficheTopMenu extends HBox
 		});
 	    // vers gestion compte utilisateur
 	    btn_account.setOnAction(e -> {
-			//primaryStage.close();
-			//AfficheGestionCompte.affiche(primaryStage);
+			primaryStage.close();
+			AfficheGestionCompte.affiche(primaryStage);
 		});
 	    // vers page de connexion
 	    btn_logout.setOnAction(e -> {

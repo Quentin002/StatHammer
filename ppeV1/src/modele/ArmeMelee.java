@@ -18,4 +18,9 @@ public class ArmeMelee extends Arme {
 		return null;
 	}
 
+	@Override
+	protected int getC() {
+		return CC;
+	}
+
 }
