@@ -1,6 +1,8 @@
 package vue;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+
 import controlleur.BDD;
 import controlleur.Instanciation;
 import javafx.geometry.Pos;
@@ -9,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -18,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import modele.Armee;
+import modele.ArmeeListe;
 import modele.Faction;
 import modele.Unit;
 
@@ -42,13 +46,15 @@ public class AfficheCreerListe {
 		Image logoFaction = new Image("images/wip.jpg");
 		ImageView iv1 = new ImageView(logoFaction);
 		ImageView iv2 = new ImageView(logoFaction);
-		Button creation = new Button("Créer une unité");
+		Button creation = new Button("Créer une Armée");
+		TextField nomArmee = new TextField();
 		Button retour = new Button("RETOUR");
 		ScrollPane toutUnit = new ScrollPane();
 		ScrollPane unitSauv = new ScrollPane();
 		VBox gaucheUnit = new VBox();
 		ChoiceBox<Faction> faction = new ChoiceBox<>();
 		Instanciation.conec =new BDD("400129","stathammer_greta_admin","stathammer_v1");;
+		ArmeeListe armeeListe;
 		
 		for(Faction fac:Instanciation.getFaction()) {
 			faction.getItems().add(fac);
@@ -125,7 +131,7 @@ public class AfficheCreerListe {
 		toutUnit.setFitToHeight(true);
 		toutUnit.setContent(droiteCorps);
 		
-		entete.getChildren().addAll(creation,faction,iv1);
+		entete.getChildren().addAll(creation,nomArmee,faction,iv1);
 		entete.setAlignment(Pos.CENTER);
 		entete.setMaxHeight(hauteur/15);
 		
@@ -133,6 +139,11 @@ public class AfficheCreerListe {
 		gaucheCorps.getChildren().add(unitSauv);
 		
 		unitSauv.setContent(gaucheUnit);
+		unitSauv.setFitToHeight(true);
+		
+		creation.setOnAction(e->{
+			armeeListe = new ArmeeListe(new ArrayList<Unit>(),nomArmee.getText(),"","");
+		});
 		
 		corpTete.getChildren().addAll(groupe,iv2);
 		corpTete.setAlignment(Pos.CENTER);
