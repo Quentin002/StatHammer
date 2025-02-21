@@ -1,8 +1,6 @@
 package vue;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-
 import controlleur.BDD;
 import controlleur.Instanciation;
 import javafx.geometry.Pos;
@@ -29,7 +27,7 @@ public class AfficheCreerListe {
 		double hauteur = tailleEcran.getHeight()/2;
 		double largeur = tailleEcran.getWidth()/2;
 		
-		String defaut = new String();
+		
 		
 		VBox root = new VBox();
 		HBox boite = new HBox();
@@ -47,6 +45,8 @@ public class AfficheCreerListe {
 		Button creation = new Button("Créer une unité");
 		Button retour = new Button("RETOUR");
 		ScrollPane toutUnit = new ScrollPane();
+		ScrollPane unitSauv = new ScrollPane();
+		VBox gaucheUnit = new VBox();
 		ChoiceBox<Faction> faction = new ChoiceBox<>();
 		Instanciation.conec =new BDD("400129","stathammer_greta_admin","stathammer_v1");;
 		
@@ -73,12 +73,20 @@ public class AfficheCreerListe {
 		});
 		
 		
+		for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
+			
+			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Button("+")));
+		}
 		groupe.setOnAction(e->{
-			toutUnit.setContent(droiteCorps);
+			droiteCorps.getChildren().clear();
+			
 			for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
-				System.out.println(unit);
-				droiteCorps.getChildren().add(new Label(unit.toString()));
+				
+				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Button("+")));
+				
 			}
+			
+			
 		});
 			
 		
@@ -115,12 +123,16 @@ public class AfficheCreerListe {
 		droite.setBackground(Background.fill(Color.RED));
 		
 		toutUnit.setFitToHeight(true);
+		toutUnit.setContent(droiteCorps);
 		
 		entete.getChildren().addAll(creation,faction,iv1);
 		entete.setAlignment(Pos.CENTER);
 		entete.setMaxHeight(hauteur/15);
 		
 		gaucheCorps.getChildren().add(corpTete);
+		gaucheCorps.getChildren().add(unitSauv);
+		
+		unitSauv.setContent(gaucheUnit);
 		
 		corpTete.getChildren().addAll(groupe,iv2);
 		corpTete.setAlignment(Pos.CENTER);

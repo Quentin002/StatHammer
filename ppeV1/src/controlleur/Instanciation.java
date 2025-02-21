@@ -56,22 +56,21 @@ public class Instanciation {
 	
 	public static ArrayList<Unit> getUnite(Armee armee){
 		ArrayList<Unit> rendu = new ArrayList<>();
-		
+		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
-			ResultSet tab = conec.selectRS("SELECT u.nom_unite, u.logo_unite, u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getNom() );
-			ResultSetMetaData md = tab.getMetaData();
-			ArrayList<String> column = new ArrayList<String>();
+			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getNom() );
 			
-			for(int i =1;i<=md.getColumnCount();i++) {
-				column.add(md.getColumnName(i));
+			
+			for (int i = 0;i<nom.size();i = i+2) {
+				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
 			}
 			
 			
 			
-			while(tab.next()) {
-				rendu.add(new Unit(Instanciation.getFigurine(tab.getString("nom_unit")),tab.getString("nom_unit"),tab.getInt("points_unit"),armee));
-			}
+			//while(tab.next()) {
+			//	rendu.add(new Unit(Instanciation.getFigurine(tab.getString("nom_unit")),tab.getString("nom_unit"),tab.getInt("points_unit"),armee));
+			//}
 			
 		}catch(SQLException e) {
 			
@@ -81,7 +80,7 @@ public class Instanciation {
 	}
 	public static ArrayList<Figurine> getFigurine(String unitName){
 		ArrayList<Figurine> rendu = new ArrayList<>();
-		
+		ArrayList<String> temp = new ArrayList<>();
 		try {
 			
 			ResultSet tab = conec.selectRS("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
@@ -96,9 +95,12 @@ public class Instanciation {
 			
 			
 			while(tab.next()) {
-				for(int i=0;i<tab.getInt("nb_figurine");i++) {
-					rendu.add(new Figurine(Instanciation.getArme(tab.getString("nom_figurine")),Instanciation.getAptitude(tab.getString("nom_figurine")),
-						tab.getString("nom_figurine"),"",tab.getString("M"),tab.getInt("E"),tab.getInt("SV"),tab.getInt("PV"),tab.getInt("CD"),tab.getInt("CO")));
+				temp.clear();
+				for(String col:column) {
+					temp.add(tab.getString(col));
+				}
+				for(int i=0;i<Integer.parseInt(temp.get(7));i++) {
+					rendu.add(new Figurine(Instanciation.getArme(temp.get(0)),Instanciation.getAptitude(temp.get(0)),temp.get(0),"",temp.get(1),Integer.parseInt(temp.get(2)),Integer.parseInt(temp.get(3)),Integer.parseInt(temp.get(4)),Integer.parseInt(temp.get(5)),Integer.parseInt(temp.get(6))));
 				}
 			}
 			

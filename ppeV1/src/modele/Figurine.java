@@ -61,6 +61,12 @@ public class Figurine {
 		liste.put("SV", SV);
 		return liste;
 	}
+
+	@Override
+	public String toString() {
+		return "" + nom + "";
+	}
+	
 	
 }
 
