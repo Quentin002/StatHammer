@@ -2,6 +2,7 @@ package vue.simulation;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -11,35 +12,58 @@ import javafx.scene.layout.VBox;
 
 public class SimAptAndWeaponsVBox extends VBox
 {
+	private int group_number;
+	private String group_name;
+	int group_size;
+	String[][] weapon_list;
+	String[][] aptitude_list;
+	
 	public SimAptAndWeaponsVBox(){
-		this.setStyle("-fx-background-color: yellow;");
+		
+		this.setStyle("-fx-padding: 2px;");
 	}
 	
-	public void set_apt_and_weapons(int unit_number)
+	// setters
+	public void setFigGroup(int fig_group_number, String fig_group_name, int fig_group_size){
+		group_number = fig_group_number;
+		group_name = fig_group_name;
+		group_size = fig_group_size;
+	}
+	public void setArmes(String[][] weapons){
+		weapon_list = weapons;
+	}
+	public void setAptitudes(String[][] aptitudes){
+		aptitude_list = aptitudes;
+	}
+	
+	public void set_apt_and_weapons()
 	{
-		String fig_name = "Figurine 1";
-		int max_weapons = 10;
-		String[] weapon_list = {"arme 1", "arme 2","arme 3", "arme 4"};
+		/* -- ligne 1: numéro du group et nom figurine -- */
+		HBox first_row = new HBox();
 		
-		Label figurine = new Label(fig_name);
-		HBox second_row = new HBox();
-		
-		// numéro index de l'unité et choix de l'arme
-		Label number = new Label(Integer.toString(unit_number));
-		//unit_number.setStyle("-fx-background-color: orange;");
+		// numéro du group de figurines identiques
+		Label number = new Label(Integer.toString(group_number));
 		number.setAlignment(Pos.CENTER);
 		number.setMinHeight(25);
 		number.setMinWidth(25);
-		number.setStyle("-fx-text-fill: white; -fx-background-color: black; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 5;");
+		number.setStyle("-fx-text-fill: white; -fx-background-color: black;");
+		HBox.setMargin(number, new Insets(0, 2, 2, 0));
+				
+		Label figurine = new Label(group_name);
+		first_row.getChildren().addAll(number, figurine);
+		
+		//first_row.setAlignment(javafx.geometry.Pos.BASELINE_LEFT);
+		
+		/* -- ligne 2: menu déroulant choix de l'arme -- */
 		ChoiceBox<String> select_weapon = new ChoiceBox<String>();
-		for(int i = 0; i < weapon_list.length; i++)
+		for(int i = 0; i < weapon_list[group_number - 1].length; i++)
         {
-			select_weapon.getItems().add(weapon_list[i]);
+			select_weapon.getItems().add(weapon_list[group_number - 1][i]);
         }
-		select_weapon.setValue(weapon_list[0]);
+		select_weapon.setValue(weapon_list[group_number - 1][0]);
 		
 		// choix du nombre d'attaquants (= nombre d'armes)
-		Slider nb_of_attackers = new Slider(1, max_weapons, 1);
+		Slider nb_of_attackers = new Slider(1, group_size, 1);
 		nb_of_attackers.setMajorTickUnit(1);
 		nb_of_attackers.setMinorTickCount(0);
 		nb_of_attackers.setSnapToTicks(true);
@@ -52,14 +76,25 @@ public class SimAptAndWeaponsVBox extends VBox
 		
 		// checkbox
 		TilePane aptitudes = new TilePane();
+		for(int i = 0; i < aptitude_list[group_number - 1].length; i++)
+        {
+			CheckBox one_aptitude = new CheckBox(aptitude_list[group_number - 1][i]);
+			one_aptitude.setStyle("-fx-padding: 2px;");
+			aptitudes.getChildren().add(one_aptitude);
+        }
 		
 		
-		HBox.setMargin(number, new Insets(0, 5, 2, 5));
-		HBox.setMargin(select_weapon, new Insets(0, 5, 2, 0));
-		second_row.getChildren().addAll(number, select_weapon);
+		
+		//second_row.getChildren().addAll(number, select_weapon);
 		//second_row.setAlignment(javafx.geometry.Pos.BASELINE_CENTER);
 		
-		this.getChildren().addAll(figurine, second_row, nb_of_attackers, aptitudes);
+//		for(int i = 0; i < this.getChildren().size(); i++)
+//		{
+//			SimAptAndWeaponsVBox.setMargin(this.getChildren().get(i), new Insets(2));
+//		}
+		
+		this.getChildren().addAll(first_row, select_weapon, nb_of_attackers, aptitudes);
 		//this.setAlignment(Pos.CENTER); // fonctionne pour le label
+		
 	}
 }
