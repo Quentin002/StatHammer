@@ -2,8 +2,10 @@ package vue.simulation;
 
 import vue.afficheTopMenu;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import controlleur.ControlleurSimu;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Arme;
@@ -26,11 +27,12 @@ public class AfficheSimulation
 {
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
 	
-	public static void setColumn2Bottom(SimAptAndWeaponsVBox wap)
+	public static void setColumn1Bottom(SimAptAndWeaponsVBox wap)
 	{
 		weapons_aptitudes_menu.getChildren().clear();
 		//weapons_aptitudes_menu = wap; // marche pas
 		weapons_aptitudes_menu.getChildren().addAll(wap.getChildren());
+		weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
 	}
 	
 	// run config: --module-path "C:\Users\greta\CODE\eclipse-java\javafx-sdk-21.0.6\lib" --add-modules javafx.controls
@@ -51,7 +53,10 @@ public class AfficheSimulation
 //		{}
 		String[] attacker_lists = {"Liste 1", "Liste 2", "Liste 3"};
 		String[] defender_lists = {"Liste 1", "Liste 2", "Liste 3"};
-		
+		HashMap<String, String[]> units_names =  new HashMap<String, String[]>();
+		units_names.put("Liste 1", new String[]{"Unité 1", "Unité 2", "Unité 3", "Unité 4", "Unité 5"});
+		units_names.put("Liste 2", new String[]{"Unité 6", "Unité 7", "Unité 8", "Unité 9"});
+		units_names.put("Liste 3", new String[]{"Unité 10", "Unité 11"});
 
 		VBox root_box = new VBox();
 		afficheTopMenu menu = new afficheTopMenu(primaryStage); // menu du haut de l'écran
@@ -59,13 +64,14 @@ public class AfficheSimulation
 		
 		
         /* -- colonne de gauche -- */
-        ScrollPane column1_box = new ScrollPane(); // conteneur avec barres de défilement
-        column1_box.prefWidthProperty().bind(main.widthProperty().multiply(0.3));
-        //column1_box.setFitToHeight(true);
-        column1_box.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // pas de barre horizontale
+		VBox column1_box = new VBox();
+		column1_box.prefWidthProperty().bind(main.widthProperty().multiply(0.3));
+		
+		ScrollPane column1_scrollpane = new ScrollPane(); // conteneur avec barres de défilement
+        column1_scrollpane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // pas de barre horizontale
         
         VBox column1 = new VBox();
-        column1.prefWidthProperty().bind(column1_box.widthProperty());
+        column1.prefWidthProperty().bind(column1_scrollpane.widthProperty());
         //column1.setMaxHeight(Double.MAX_VALUE);
         //column1.setStyle("-fx-background-color: lightgreen;");
         
@@ -74,7 +80,7 @@ public class AfficheSimulation
         
         // menu choix armée
         ChoiceBox<String> list1_drop_down = new ChoiceBox<>();
-        list1_drop_down.prefWidthProperty().bind(column1_box.widthProperty());
+        list1_drop_down.prefWidthProperty().bind(column1_scrollpane.widthProperty());
         for(int i = 0; i < attacker_lists.length; i++)
         {
         	list1_drop_down.getItems().add(attacker_lists[i]);
@@ -85,18 +91,17 @@ public class AfficheSimulation
         
         // unités colonne 1 (par défaut)
         SimUnitsVBox units_list1 = new SimUnitsVBox(1);
-        units_list1.setList(); // valeur par défaut
+        units_list1.setList(units_names.get("Liste 1")); // 1ère par défaut
         column1.getChildren().add(units_list1);
-        column1_box.setContent(column1);
+        column1_scrollpane.setContent(column1);
         
-        // changement de liste
+        VBox.setMargin(weapons_aptitudes_menu, new Insets(5,2,2,2));
+        column1_box.getChildren().addAll(column1_scrollpane, weapons_aptitudes_menu);
+        
 //        list1_drop_down.setOnAction(e -> {
-//        	// nettoyage
-//        	units_list1.getChildren().clear();
-//        	units_list1.setList(list1_drop_down.getValue());
-//        	
-//        	// on affiche les listes
-//        	System.out.println("sélection ChoiceBox 1 : " + list1_drop_down.getValue());            
+//        	units_list1 = null;
+//        	units_list1 = new SimUnitsVBox(1);
+//        	units_list1.setList(units_names.get(list1_drop_down.getValue()));
 //        });
         
         
@@ -104,6 +109,18 @@ public class AfficheSimulation
         VBox column2 = new VBox();
         column2.prefWidthProperty().bind(main.widthProperty().multiply(0.4));
         //column2.setMaxHeight(500);//.bind(main.heightProperty().multiply(1));
+        
+        	// boutons inverser et simuler   
+		Image icons_inversion = new Image("/images/inversion_icons.png");
+		ImageView icons_inversion_box = new ImageView(icons_inversion);
+		Button reverse_armies = new Button();
+		reverse_armies.setGraphic(icons_inversion_box);
+		Button btn_simulate = new Button("Action !!");
+		btn_simulate.setStyle("-fx-font-size: 17;");
+		
+		HBox column2_top = new HBox();
+        column2_top.setAlignment(Pos.CENTER);
+		column2_top.getChildren().addAll(reverse_armies, btn_simulate);
         
         	// grande image
         Image image_col2 = new Image("/images/wip.jpg");
@@ -116,79 +133,8 @@ public class AfficheSimulation
 		Pane big_image_pane = new Pane();
 		big_image_pane.getChildren().add(image_box);
 		
-			// bouton inverser armées
-		Image icons_inversion = new Image("/images/inversion_icons.png");
-		ImageView icons_inversion_box = new ImageView(icons_inversion);
-		Button inverser_armees = new Button();
-		inverser_armees.setGraphic(icons_inversion_box);
-		
-			// bouton simuler!
-		Button btn_simulate = new Button("Simuler");
-		//SimHistogramme histogramme1 = null ;
-		//SimHistogramme histogramme2 = null ;
-		
-		//=> calcul => retour des données
-		//Calcul calculs = new Calcul();
-		//histogramme1 = null;
-		//histogramme1 = new SimHistogramme();
-		//histogramme2 = null;
-		//histogramme2 = new SimHistogramme<String, Number>();
-		//big_image_pane.getChildren().clear();
-		//big_image_pane.getChildren().add(histogramme1);
-		//big_image_pane.getChildren().add(histogramme2);
-		
-		// hauteur histogramme
-		//big_image_pane.prefHeightProperty().bind(column2.heightProperty().multiply(0.6));
-			
-			// empilement des images
-		StackPane column2_top = new StackPane();
-		StackPane.setAlignment(inverser_armees, Pos.BOTTOM_CENTER);
-		StackPane.setAlignment(btn_simulate, Pos.BOTTOM_CENTER);
-		column2_top.getChildren().addAll(big_image_pane, inverser_armees, btn_simulate);
-		
-		
-		
-		
-			// -- boites dessous la grande image -- */
-		HBox column2_bottom = new HBox();
-		
-			// boite de gauche: sélection d'armes et d'aptitudes d'arme
-		//SimAptAndWeaponsVBox apt_and_weapons_menu = new SimAptAndWeaponsVBox();
-		//apt_and_weapons_menu.prefWidthProperty().bind(column2_bottom.widthProperty().multiply(0.5));
-		//apt_and_weapons_menu.set_apt_and_weapons(1); // 1 par défaut
-		
-		
-		
-		// obtenir weapon_menu en appelant une autre classe et avec les données souhaitées
-		
-//		weapon_menu.setStyle("-fx-background-color: lightblue;");
-//		weapon_menu.prefWidthProperty().bind(column2_bottom.widthProperty().multiply(0.5));
-//		
-//		String unit_name = "nom de l'unité";
-//		Label unit_name_label = new Label(unit_name);
-//		String[] weapons = {"arme1", "arme2", "arme3"};
-//		ChoiceBox<String> weapon_drop_down = new ChoiceBox<>();
-//		weapon_drop_down.prefWidthProperty().bind(weapon_menu.widthProperty());
-//
-//        for(int i = 0; i < weapons.length; i++)
-//        {
-//        	weapon_drop_down.getItems().add(weapons[i]);
-//        }
-//        weapon_drop_down.setValue(weapons[0]);        
-//        weapon_menu.getChildren().addAll(unit_name_label, weapon_drop_down);
-		
-		
-			// boite de droite: figurines ciblées, zone du milieu en bas à droite
-//		VBox targetedFigurine = new VBox();
-//		targetedFigurine.setStyle("-fx-background-color: cyan;");
-//		targetedFigurine.prefWidthProperty().bind(column2_bottom.widthProperty().multiply(0.5));
-		
-		
-		
 			// assemblage
-//		column2_bottom.getChildren().addAll(weapons_aptitudes_menu, targetedFigurine);
-//		column2.getChildren().addAll(column2_top, column2_bottom);
-		column2.getChildren().addAll(column2_top, weapons_aptitudes_menu);
+		column2.getChildren().addAll(column2_top, big_image_pane);
 		
 		
         /* -- colonne de droite -- */
@@ -205,13 +151,13 @@ public class AfficheSimulation
         {
         	list2_drop_down.getItems().add(defender_lists[i]);
         }
-        list2_drop_down.setValue(defender_lists[0]);
+        list2_drop_down.setValue(defender_lists[1]);
         
         column3.getChildren().add(list2_drop_down);
         
         // unités colonne 3
         SimUnitsVBox units_list2 = new SimUnitsVBox(3);
-        units_list2.setList(); // afficher la première par défaut
+        units_list2.setList(units_names.get("Liste 2")); // 2ème par défaut
         column3.getChildren().add(units_list2);
         column3_box.setContent(column3);
         
@@ -220,11 +166,11 @@ public class AfficheSimulation
 		main.getChildren().addAll(column1_box, column2, column3_box);
 		root_box.getChildren().addAll(menu, main);
 		
-		//test
-		Button envoi = new Button("Appuyer sur moi");
-		root_box.getChildren().add(envoi);
+//		//test
+//		Button envoi = new Button("Appuyer sur moi");
+//		root_box.getChildren().add(envoi);
 		
-		envoi.setOnAction(e -> {
+		btn_simulate.setOnAction(e -> {
 			ArmeMelee w1 = new ArmeMelee("t1",3,4,1,2,1);
 			ArmeMelee w2 = new ArmeMelee("t2",8,2,3,2,3);
 			ArrayList<Arme> l1= new ArrayList<>();
@@ -254,7 +200,6 @@ public class AfficheSimulation
 			ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
 		});
 		
-			
 		
 		Scene scene = new Scene(root_box,800,600);
 		primaryStage.setTitle("Simulation");
@@ -262,14 +207,33 @@ public class AfficheSimulation
 		primaryStage.show();
 		
 		
-		
-		// boutons qui déplient les unités
-		// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
-        // cette évènement devait être géré dans SimUnitsVBox, mais on a besoin de le faire ici
+		// choix des listes d'armées
 		ArrayList<SimUnitsVBox> lists = new ArrayList<SimUnitsVBox>();
 		lists.add(units_list1);
 		lists.add(units_list2);
 		
+        ArrayList<ChoiceBox<String>> lists_drop_down = new ArrayList<ChoiceBox<String>>();
+        lists_drop_down.add(list1_drop_down);
+        lists_drop_down.add(list2_drop_down);
+        for(int i = 0; i < 2; i++)
+        {
+        	final int j = i;
+        	lists_drop_down.get(i).setOnAction(e -> {
+        		
+        		// Passer par un contrôleur pour obtenir les unités!!
+        		
+//        		SimUnitsVBox units_list = units_2lists.get(j);
+//        		units_list = null;
+//        		units_list = new SimUnitsVBox(j == 0 ? 1 : 3);
+        		lists.get(j).getChildren().clear();
+        		lists.get(j).setList(units_names.get(lists_drop_down.get(j).getValue()));
+            });
+        }
+		
+		
+		// boutons qui déplient les unités
+		// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
+        // cette évènement devait être géré dans SimUnitsVBox, mais on a besoin de le faire ici
         for(int c = 0; c < 2; c++) // les c 1 et 2 correspondent aux colonnes 1 et 3
         {
         	ArrayList<Button> dropdown_unit_buttons = lists.get(c).getButtons();
@@ -285,11 +249,9 @@ public class AfficheSimulation
 	 			/* -- BOUTONS des unités --*/
 	 			dropdown_unit_buttons.get(i).setOnAction(e ->
 	 			{
+	 				System.out.println("hello");
 //	 				// dérouler ou replier les figurines
-//	 				if(!fig_boxes.get(j).isOpen() || lists.get(col).getSelectedUnit() == j + 1)
-//	 				{
-	 					fig_boxes.get(j).changeState();
-//	 				}
+	 				fig_boxes.get(j).changeState();
 	 				
 	 				// retirer bordure unité désélectionnée
 	 				if(lists.get(col).getSelectedUnit() > 0)
@@ -307,18 +269,10 @@ public class AfficheSimulation
 	 						if(col == 0)
 	 						{
 	 							weapons_aptitudes_menu.getChildren().clear();
-//		 						weapons_aptitudes_menu.set_apt_and_weapons(lists.get(col).getSelectedUnit());
-	 						}
-	 						else // col == 1
-	 						{
-	 							// afficher menu figurines cibles
 	 						}
 	 					}
 	 					// bordure unité sélectionnée
 	 					dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;");
-	 					
-	 					// action dans la zone des armes et aptitudes
-	 	 				
 	 				}
 	 				else
 	 				{
@@ -334,50 +288,7 @@ public class AfficheSimulation
 	 					dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 0;");
 	 				}
 	 			});
-	 			
-	 			
-//	 			/* -- BOUTONS groupes de figurines -- */
-//	 			// on reste dans les boucles for pour garder les itérateurs
-//	 			// listes . une liste . liste d'objets zones figurines . un objet zones figurines . figurines
-//				//String[][] figs =  lists.get(0).getFigBoxes().get(j).getFigurines();
-//	            SimFigurinesVBox figs = lists.get(0).getFigBoxes().get(j); // String[][]
-//	            ArrayList<Button> fig_group_buttons = figs.getFigGroupButtons();
-//	            
-//				System.out.println(fig_group_buttons.size());
-//				for(int k = 0; k < fig_group_buttons.size(); k++)
-//				{
-//					//ArrayList<Button> fig_buttons;
-//					System.out.println("hello");
-//					fig_group_buttons.get(k).setOnAction(e ->
-//					{
-//						System.out.println("hello");
-//					});
-//				}
-//	 			//apt_and_weapons_menu.set_apt_and_weapons(lists.get(col).getSelectedUnit());
-				
-				
-				/* -- BOUTONS figurines individuelles-- */
-				//
 	 		}
         }
- 		
- 		// boutons groupe d'unité
 	}
-
-	
-	
-	/* méthode pour gérer le choix d'une liste d'armées */
-	// => obtenir des unités dans la BD
-	// => obtenir les VBox des deux colonnes avec une classe SimulationUnits
-	
-	/* méthode pour gérer le choix d'une unité et en obtenir les armes */
-	// => obtenir des armes, aptitudes et aptitudes d'armes
-	// => obtenir les noeuds de ce menu
-	
-	/* méthode pour sélectionner arme, nombre d'attaquants, aptitudes */
-	
-	/* méthode pour afficher les cibles en sélectionnant une unité défenseuse */
-	
-	/* méthode pour cibler les figurines qui font prendre dans la gueule */
-	
 }

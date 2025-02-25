@@ -32,9 +32,8 @@ public class SimUnitsVBox extends VBox
 	}
 
 	// générer les listes d'unités à afficher 
-	public void setList()
+	public void setList(String[] units_names)
 	{
-		String[] units_names = {"Unité 1", "Unité 2", "Unité 3", "Unité 4", "Unité 5"};
 		String[][] figs_names = {{"Héros"},
 				{"Figurine 1", "Figurine 2", "Figurine 3", "Figurine 4", "Figurine 5", "Figurine 6"},
 				{"Figurine 6", "Figurine 7", "Figurine 8"}};
@@ -43,6 +42,7 @@ public class SimUnitsVBox extends VBox
 		// chaque unité est une VBox qui contient un bouton et une SimFigurineVBox
 		for(int i = 0; i < units_names.length; i++)
 		{
+			//System.out.println(units_names[i]);
 			VBox one_unit = new VBox();
 			
 			// boutons pour déplier
@@ -58,7 +58,7 @@ public class SimUnitsVBox extends VBox
 			
 			this.getChildren().add(one_unit);
 		}
-
+		//System.out.println(this.getChildren());
 		
 		
 //		// appuis sur les boutons
