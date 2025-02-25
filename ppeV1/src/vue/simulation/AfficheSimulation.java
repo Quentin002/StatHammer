@@ -2,6 +2,8 @@ package vue.simulation;
 
 import vue.afficheTopMenu;
 import java.util.ArrayList;
+
+import controlleur.ControlleurSimu;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +16,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.Calcul;
 
 public class AfficheSimulation
 //public class Main extends Application
@@ -217,6 +220,9 @@ public class AfficheSimulation
         /* -- assemblage -- */
 		main.getChildren().addAll(column1_box, column2, column3_box);
 		root_box.getChildren().addAll(menu, main);
+		
+		
+			
 		
 		Scene scene = new Scene(root_box,800,600);
 		primaryStage.setTitle("Simulation");
