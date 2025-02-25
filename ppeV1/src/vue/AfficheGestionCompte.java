@@ -12,9 +12,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modele.User;
 public class AfficheGestionCompte {
 
-public static void affiche(Stage primaryStage) {
+public static void affiche(Stage primaryStage,User session) {
 
 
 	
@@ -30,7 +31,7 @@ public static void affiche(Stage primaryStage) {
 	VBox vbox = new VBox();
 	VBox vbox2 = new VBox();
 	VBox vboxL = new VBox();
-	afficheTopMenu menu = new afficheTopMenu(primaryStage);
+	afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
 	
 	
 	

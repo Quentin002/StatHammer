@@ -20,6 +20,30 @@ public class User {
 		this.nom = nom;
 	}
 	
+	public ArrayList<ArmeeListe> getListes() {
+		return listes;
+	}
+	public void setListes(ArrayList<ArmeeListe> listes) {
+		this.listes = listes;
+	}
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public String getMdp() {
+		return mdp;
+	}
+	public void setMdp(String mdp) {
+		this.mdp = mdp;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public void addArmee(ArmeeListe armee) {
 		listes.add(armee);
 	}

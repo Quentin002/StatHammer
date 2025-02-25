@@ -10,21 +10,21 @@ import vue.simulation.AfficheSimulation;
 public class ControllerTopMenu {
 
 	
-	public static void go_acceuil(Stage primaryStage) { 
+	public static void go_acceuil(Stage primaryStage,User session) { 
 		primaryStage.close();
-		AfficheAccueil.affiche(primaryStage);
+		AfficheAccueil.affiche(primaryStage,session);
 	}
-	public static void go_gestion_compte(Stage primaryStage) { 
+	public static void go_gestion_compte(Stage primaryStage,User session) { 
 		primaryStage.close();
-		AfficheGestionCompte.affiche(primaryStage);
+		AfficheGestionCompte.affiche(primaryStage,session);
 	}
 	public static void go_deco(Stage primaryStage) { 
 		primaryStage.close();
 		AfficheConnexion.affiche(primaryStage);
 	}
-	public static void go_simulaton(Stage primaryStage) { 
+	public static void go_simulaton(Stage primaryStage,User session) { 
 		primaryStage.close();
-		AfficheSimulation.affiche(primaryStage);
+		AfficheSimulation.affiche(primaryStage,session);
 	}
 }
 
