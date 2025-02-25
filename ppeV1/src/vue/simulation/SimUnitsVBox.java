@@ -25,6 +25,7 @@ public class SimUnitsVBox extends VBox
 	
 	// getters
 	public ArrayList<Button> getButtons(){
+		System.out.println(buttons);
 		return buttons;
 	}
 	public ArrayList<SimFigurinesVBox> getFigBoxes(){
@@ -58,31 +59,5 @@ public class SimUnitsVBox extends VBox
 			
 			this.getChildren().add(one_unit);
 		}
-		//System.out.println(this.getChildren());
-		
-		
-//		// appuis sur les boutons
-//		for(int i = 0; i < buttons.size(); i++)
-//		{
-//			final int j = i; // merci chatgpt pour le trick!
-//			// impossible d'écrire unit_box.get(i), i ne peut entrer dans la fonction lambda parce qu'il est susceptible de changer à l'extérieur de celle-ci
-//			
-//			buttons.get(i).setOnAction(e ->
-//			{
-//				unit_box.get(j).changeState();
-//				if(unit_box.get(j).isOpen())
-//				{
-//					// afficher figurines
-//					unit_box.get(j).setFigurines();
-//					//selected_unit = j + 1;
-//				}
-//				else
-//				{
-//					// cacher figurine
-//					unit_box.get(j).getChildren().clear(); // index est constant dans sa portée, alors que i change
-//				}
-//			});
-//		}
-		
 	}
 }

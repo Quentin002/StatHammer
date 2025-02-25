@@ -74,7 +74,6 @@ public class AfficheSimulation
         column1.prefWidthProperty().bind(column1_scrollpane.widthProperty());
         //column1.setMaxHeight(Double.MAX_VALUE);
         //column1.setStyle("-fx-background-color: lightgreen;");
-        
         //column1_box.prefWidthProperty().bind(main.widthProperty().multiply(0.3));
         
         
@@ -86,7 +85,6 @@ public class AfficheSimulation
         	list1_drop_down.getItems().add(attacker_lists[i]);
         }
         list1_drop_down.setValue(attacker_lists[0]);
-        
         column1.getChildren().add(list1_drop_down);
         
         // unités colonne 1 (par défaut)
@@ -97,12 +95,6 @@ public class AfficheSimulation
         
         VBox.setMargin(weapons_aptitudes_menu, new Insets(5,2,2,2));
         column1_box.getChildren().addAll(column1_scrollpane, weapons_aptitudes_menu);
-        
-//        list1_drop_down.setOnAction(e -> {
-//        	units_list1 = null;
-//        	units_list1 = new SimUnitsVBox(1);
-//        	units_list1.setList(units_names.get(list1_drop_down.getValue()));
-//        });
         
         
         /* -- colonne centrale -- */
@@ -221,16 +213,19 @@ public class AfficheSimulation
         	lists_drop_down.get(i).setOnAction(e -> {
         		
         		// Passer par un contrôleur pour obtenir les unités!!
+        		//ControlleurSimu.changeList(lists_drop_down.get(j).getValue());
         		
-//        		SimUnitsVBox units_list = units_2lists.get(j);
-//        		units_list = null;
-//        		units_list = new SimUnitsVBox(j == 0 ? 1 : 3);
         		lists.get(j).getChildren().clear();
         		lists.get(j).setList(units_names.get(lists_drop_down.get(j).getValue()));
+        		dropdownUnitButtonsAction(lists);
             });
         }
-		
-		
+        
+        dropdownUnitButtonsAction(lists); // 1ère fois
+	}
+	
+	private static void dropdownUnitButtonsAction(ArrayList<SimUnitsVBox> lists)
+	{
 		// boutons qui déplient les unités
 		// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
         // cette évènement devait être géré dans SimUnitsVBox, mais on a besoin de le faire ici
@@ -247,10 +242,11 @@ public class AfficheSimulation
 	 			// impossible d'écrire unit_box.get(i), i ne peut entrer dans la fonction lambda parce qu'il est susceptible de changer à l'extérieur de celle-ci
 	 			
 	 			/* -- BOUTONS des unités --*/
+	 			//System.out.println(dropdown_unit_buttons);
+	 			//System.out.println("hello");
 	 			dropdown_unit_buttons.get(i).setOnAction(e ->
 	 			{
-	 				System.out.println("hello");
-//	 				// dérouler ou replier les figurines
+	 				// dérouler ou replier les figurines
 	 				fig_boxes.get(j).changeState();
 	 				
 	 				// retirer bordure unité désélectionnée
