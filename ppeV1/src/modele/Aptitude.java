@@ -8,6 +8,10 @@ public class Aptitude {
 		this.nom = nom;
 	}
 	
+	public int voix(int degat) {
+		
+		return degat;
+	}
 	
 
 }

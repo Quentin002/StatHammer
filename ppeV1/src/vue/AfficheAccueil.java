@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class AfficheAccueil {
-	public static void affiche(Stage primaryStage) {
+	public static void affiche(Stage primaryStage, int idUtilisateur) {
 		VBox root = new VBox();
 		Scene scene = new Scene(root,1200,800);
 		
@@ -78,6 +78,10 @@ public class AfficheAccueil {
 			AfficheSimulation.affiche(primaryStage);
 		});
 		
+		gererListe.setOnAction(e -> {
+			primaryStage.close();
+			AfficheGestionListe.affiche(primaryStage, idUtilisateur);
+		});
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();

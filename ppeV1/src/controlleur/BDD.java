@@ -40,11 +40,11 @@ public class BDD {
 	
 	
 	
-	public ArrayList<String> selectUtilisateur(String nom, String mdp) {
-		ArrayList<String> rendu = new ArrayList<String>();
+	public ArrayList<Object> selectUtilisateur(String nom, String mdp) {
+		ArrayList<Object> rendu = new ArrayList<Object>();
 		try {
 			
-			String requete = "SELECT nom_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
+			String requete = "SELECT id_utilisateur, nom_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
 			stat = connec.prepareStatement(requete);
 			stat.setString(1, nom);
 			stat.setString(2, mdp);
@@ -58,12 +58,13 @@ public class BDD {
 				column.add(md.getColumnName(i));
 			}
 			while(rs.next()) {
-				for (String col : column) {
+				/*for (String col : column) {
 					res += rs.getString(col)+" ";
-				}
-				
-				rendu.add(res);
-				res="";
+				}*/
+				rendu.add(rs.getInt("id_utilisateur"));
+				rendu.add(rs.getString("nom_utilisateur"));
+				/*rendu.add(res);
+				res="";*/
 				
 			}
 			return rendu;
@@ -104,6 +105,13 @@ public class BDD {
 			}
 		return crea;
 	}
+	
+	public Connection getConnection() {
+	    return this.connec;
+	}
+
+
+	
 	public void close() {
 		try {
 			connec.close();
