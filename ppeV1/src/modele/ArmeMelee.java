@@ -10,6 +10,10 @@ public class ArmeMelee extends Arme {
 		this.CC=cc;
 		// TODO Auto-generated constructor stub
 	}
+	public ArmeMelee(String nom,int F,int PA,int A,int D,int cc) {
+		super(nom,F,PA,A,D);
+		this.CC = cc;
+ }
 
 	@Override
 	public ArrayList<Integer> statsAtk() {
@@ -19,7 +23,7 @@ public class ArmeMelee extends Arme {
 	}
 
 	@Override
-	protected int getC() {
+	public int getC() {
 		return CC;
 	}
 

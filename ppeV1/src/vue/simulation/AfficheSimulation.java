@@ -3,6 +3,7 @@ package vue.simulation;
 import vue.afficheTopMenu;
 import java.util.ArrayList;
 
+import controlleur.ControlleurSimu;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,6 +16,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import modele.Arme;
+import modele.ArmeMelee;
+import modele.Figurine;
+import modele.Unit;
 
 public class AfficheSimulation
 //public class Main extends Application
@@ -215,6 +220,39 @@ public class AfficheSimulation
 		main.getChildren().addAll(column1_box, column2, column3_box);
 		root_box.getChildren().addAll(menu, main);
 		
+		//test
+		Button envoi = new Button("Appuyer sur moi");
+		root_box.getChildren().add(envoi);
+		
+		envoi.setOnAction(e -> {
+			ArmeMelee w1 = new ArmeMelee("t1",3,4,1,2,1);
+			ArmeMelee w2 = new ArmeMelee("t2",8,2,3,2,3);
+			ArrayList<Arme> l1= new ArrayList<>();
+			l1.add(w1);
+			l1.add(w2);
+			Figurine fi1 = new Figurine("test1",6,2,3,l1);
+			
+			Figurine fi3 = new Figurine("test15",4,4,2,l1);
+			Figurine fi4 = new Figurine("test14",6,2,3,l1);
+			Figurine fi5 = new Figurine("test13",6,2,3,l1);
+			Figurine fi6 = new Figurine("test12",6,2,3,l1);
+			Figurine fi2 = new Figurine("test9",6,2,2,l1);
+			Figurine fi7 = new Figurine("test76",4,4,2,l1);
+			ArrayList<Figurine> fu1 = new ArrayList<Figurine>();
+			fu1.add(fi1);
+			fu1.add(fi2);
+			fu1.add(fi3);
+			fu1.add(fi4);
+			fu1.add(fi5);
+			fu1.add(fi6);
+			ArrayList<Figurine> fu2 = new ArrayList<Figurine>();
+			fu2.add(fi3);
+			fu2.add(fi7);
+			Unit u1 = new Unit("unite1",fu1);
+			Unit u2 = new Unit("unite2",fu2);
+			//Calcul.bataille(u1, u2,big_image_pane);
+			ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
+		});
 		
 			
 		

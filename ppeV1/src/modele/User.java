@@ -16,6 +16,9 @@ public class User {
 		this.mdp = mdp;
 		this.email = email;
 	}
+	public User( String nom) {
+		this.nom = nom;
+	}
 	
 	public void addArmee(ArmeeListe armee) {
 		listes.add(armee);

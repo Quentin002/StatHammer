@@ -19,6 +19,17 @@ public abstract class  Arme {
 		PA = pA;
 		D = d;
 	}
+	
+
+	public Arme(String nom, int F, int PA, int A, int D) {
+			this.nom = nom;
+			this.F = F;
+			this.PA = PA;
+			this.A=A;
+			this.D=D;
+	 }
+
+
 	public ArrayList<Integer> statsAtk(){
 		ArrayList<Integer> liste = new ArrayList<Integer>();
 		liste.add(A);
@@ -69,6 +80,6 @@ public abstract class  Arme {
 	public void setF(int f) {
 		this.F = f;
 	}
-	protected abstract int getC();
+	public abstract int getC();
 	
 }
