@@ -1,8 +1,60 @@
 package modele;
 
+import javafx.application.Application;
+import javafx.geometry.Bounds;
+import javafx.scene.Scene;
+import javafx.scene.chart.Axis;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
 public class Calcul {
+	private int[] tabdegat1; 
+	private float degat_moyen1; 
+	private float mort_moyen1;
+	private int[] tabmort1;
+	
+	
 
 	
+	public Calcul(int[] tabdegat1, float degat_moyen1, float mort_moyen1,int[] tabmort1) {
+		super();
+		this.tabdegat1 = tabdegat1;
+		this.degat_moyen1 = degat_moyen1;
+		this.mort_moyen1 = mort_moyen1;
+		this.tabmort1 = tabmort1;
+	}
+	public int[] getTabdegat1() {
+		return tabdegat1;
+	}
+	public void setTabdegat1(int[] tabdegat1) {
+		this.tabdegat1 = tabdegat1;
+	}
+	public float getDegat_moyen1() {
+		return degat_moyen1;
+	}
+	public void setDegat_moyen1(float degat_moyen1) {
+		this.degat_moyen1 = degat_moyen1;
+	}
+	public float getMort_moyen1() {
+		return mort_moyen1;
+	}
+	public void setMort_moyen1(float mort_moyen1) {
+		this.mort_moyen1 = mort_moyen1;
+	}
+	public int[] getTabmort1() {
+		return tabmort1;
+	}
+	public void setTabmort1(int[] tabmort1) {
+		this.tabmort1 = tabmort1;
+	}
 	public static boolean jet_de_touche(boolean jet,int CT){
 		int d1 = (int) ((Math.random() * (6 - 1)) + 1);
 				switch(d1){
@@ -111,7 +163,7 @@ public class Calcul {
 	}		
 
 
-	public static void bataille(Unit u1, Unit u2){
+	public static Calcul bataille(modele.Unit u1, modele.Unit u2){
 		int touche = 0;
 		int blessure = 0;
 		int degat_block = 0;
@@ -120,6 +172,7 @@ public class Calcul {
 		float mort_moyen = 0;
 		boolean dflag = false;
 		int[] tabdegat = new int[50];
+		
 		int[] tabmort = new int[50];
 		for (int k=0;k<10000;k++){ //simulation 100000
 			int sum_degat = 0;
@@ -172,22 +225,12 @@ public class Calcul {
 		}
 		degat_moyen =(float)complet_degat/10000;
 		mort_moyen = (float)mort_moyen/10000;
-		System.out.println("nbr touche :"+touche);
-		System.out.println("nbr blessure :"+blessure);
-		System.out.println("degat bloquer :"+degat_block);
-		System.out.println("degat moyen : "+ degat_moyen);
-		System.out.println("mort moyen : "+mort_moyen);
-		//Affichage
-		for(int i =0;i<tabmort.length;i++){
-			if(tabmort[i] !=0) {
-				System.out.println("nbr mort " +i +" : "+ tabmort[i]+" fois ");
-			}
-		}
-		for(int i =0;i<tabdegat.length;i++){
-			if(tabdegat[i] !=0) {
-				System.out.println("nbr degat " +i +" : "+ tabdegat[i]+" fois ");
-			}
-		}
-		//System.out.println("Histogram of rolls:" );
+		Calcul c1 = new Calcul(tabdegat,degat_moyen,mort_moyen,tabmort);
+		return c1;
+		
+		
+
+	       
 	}
+
 }
