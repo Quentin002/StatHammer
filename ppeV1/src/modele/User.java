@@ -8,9 +8,10 @@ public class User {
 	private String nom;
 	private String mdp;
 	private String email;
+	private String role;
 	
 	
-	public User(ArrayList<ArmeeListe> listes, String nom, String mdp, String email) {
+	public User(ArrayList<ArmeeListe> listes, String nom, String mdp, String role,String email) {
 		this.listes = listes;
 		this.nom = nom;
 		this.mdp = mdp;

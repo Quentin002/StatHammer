@@ -24,10 +24,12 @@ public class BDD {
 	public BDD() {
 		
 	}
+
 	public BDD(String login,String pwd,String base) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+base,login,pwd);
+			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+base,login,pwd);
+			
 			this.stat = null;
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
@@ -38,6 +40,7 @@ public class BDD {
 		}
 	}
 	
+
 	
 	public void close() {
 		try {
@@ -85,7 +88,10 @@ public class BDD {
 	}
 	
 		
-		
+	public Connection getConnec() {
+		return connec;
+	}
+
 	public void ajouter(Arme a) {
 		try {
 			stat.executeUpdate("INSERT INTO arme (id,prenom,login,password,statut,age) VALUES (NULL,");

@@ -12,11 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modele.ModeleEvenement;
 
 public class AfficheAccueil {
-	public static void affiche(Stage primaryStage) {
+	public static void affiche(Stage primaryStage, ModeleEvenement ev) {
 		VBox root = new VBox();
-		Scene scene = new Scene(root,1200,800);
+		Scene scene = new Scene(root,1200,600);
 		
 		Label titre = new Label("StatHammer");
 		VBox cadre = new VBox();
@@ -26,16 +27,16 @@ public class AfficheAccueil {
 		Button simulation = new Button("SIMULATION");
 		Button creeListe = new Button("CREER LISTE");
 		Button gererListe = new Button("GERER LISTE");
+		Button admin = new Button("ADMIN");
 		
-		Image accueil = new Image("/images/accueil.jpg");
+
+		Image accueil = new Image("/images/"+ev.getNom_evenement()+".jpg");
 		ImageView iv1 = new ImageView();
 		iv1.setImage(accueil);
 		iv1.setFitWidth(700);
 		iv1.setPreserveRatio(true);
 		iv1.setSmooth(true);
 		iv1.setCache(true);
-		
-		
 		
 		
 		titre.setFont(Font.font(32));
@@ -49,6 +50,9 @@ public class AfficheAccueil {
 		
 		gererListe.setPrefWidth(200);
 		gererListe.setPrefHeight(50);
+		
+		admin.setPrefWidth(200);
+		admin.setPrefHeight(50);
 		
 		root.getChildren().add(titre);
 		root.getChildren().add(capsule);
@@ -68,6 +72,7 @@ public class AfficheAccueil {
 		cadre.getChildren().add(simulation);
 		cadre.getChildren().add(creeListe);
 		cadre.getChildren().add(gererListe);
+		cadre.getChildren().add(admin);
 		
 		
 		
@@ -76,6 +81,11 @@ public class AfficheAccueil {
 		simulation.setOnAction(e -> {
 			primaryStage.close();
 			AfficheSimulation.affiche(primaryStage);
+		});
+		
+		admin.setOnAction(e -> {
+			primaryStage.close();
+			AfficheAdmin.affiche(primaryStage);
 		});
 		
 		

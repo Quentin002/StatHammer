@@ -1,10 +1,13 @@
 package controlleur;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
 import vue.AfficheAccueil;
 import vue.AfficheConnexionFailed;
+import modele.ModeleEvenement;
 
 public class Connexion {
 	public static void verif(String login, String mdp,Stage primaryStage) {
@@ -12,20 +15,43 @@ public class Connexion {
 		
 		login = login.trim();
 		mdp = mdp.trim();
-		BDD conec = new BDD("root","","StatHammer_v1");
 		
-		ArrayList<String> rendu = conec.selectUtilisateur(login, mdp);
-		conec.close();
+		
 		try {
 			
-		
-		if (login.equals(rendu.getFirst().trim())) {
+			BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
 			
-			primaryStage.close();
-			AfficheAccueil.affiche(primaryStage);
-		}else {
-			System.out.println(rendu);
-		}
+			ArrayList<String> rendu = conec.selectUtilisateur(login, mdp);
+		
+			
+			String requete = "SELECT * FROM evenement WHERE id_evenement=?;";
+			PreparedStatement stat = conec.getConnec().prepareStatement(requete);
+			stat.setInt(1, 1);
+			ResultSet rev = stat.executeQuery();
+			while(rev.next()) {
+				
+				ModeleEvenement evenement = new ModeleEvenement(rev.getString("nom_evenement"),
+																rev.getString("URL_evenement"),
+																rev.getString("date_evenement"),
+																rev.getString("description_evenement"));
+			
+				if (login.equals(rendu.getFirst().trim())) {
+					
+					primaryStage.close();
+					AfficheAccueil.affiche(primaryStage, evenement);
+				}
+				else {
+					System.out.println(rendu);
+				}
+			
+			
+			}
+			
+			
+		
+			
+		
+			conec.close();
 		}catch(Exception e) {
 			AfficheConnexionFailed.affiche(primaryStage);
 		}
