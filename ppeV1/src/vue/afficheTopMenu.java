@@ -25,8 +25,7 @@ public class afficheTopMenu extends HBox
 	    Button btn_simu = new Button("Simulation");
 	    this.getChildren().addAll(btn_home, btn_account,btn_gerer_liste,btn_creer_liste,btn_simu, btn_logout);
 	    this.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
-	    //if(session.getRole().trim()=="Admin") {
-	    System.out.println(session.getRole().trim());
+	    //System.out.println(session.getRole().trim());
 	    if(session.getRole().equals("Admin") ) {
 	    	this.getChildren().add(btn_admin);
 	    }

@@ -11,19 +11,16 @@ public class ControllerTopMenu {
 
 	
 	public static void go_acceuil(Stage primaryStage,User session) { 
-		primaryStage.close();
+		//primaryStage.close(); pour fermer stage
 		AfficheAccueil.affiche(primaryStage,session);
 	}
 	public static void go_gestion_compte(Stage primaryStage,User session) { 
-		primaryStage.close();
 		AfficheGestionCompte.affiche(primaryStage,session);
 	}
 	public static void go_deco(Stage primaryStage) { 
-		primaryStage.close();
 		AfficheConnexion.affiche(primaryStage);
 	}
 	public static void go_simulaton(Stage primaryStage,User session) { 
-		primaryStage.close();
 		AfficheSimulation.affiche(primaryStage,session);
 	}
 }
