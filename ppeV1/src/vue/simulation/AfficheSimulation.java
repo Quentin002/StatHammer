@@ -21,6 +21,7 @@ import modele.Arme;
 import modele.ArmeMelee;
 import modele.Figurine;
 import modele.Unit;
+import modele.User;
 
 public class AfficheSimulation
 //public class Main extends Application
@@ -42,7 +43,7 @@ public class AfficheSimulation
 	
 //	@Override
 //	public void start(Stage primaryStage)
-	public static void affiche(Stage primaryStage)
+	public static void affiche(Stage primaryStage,User session)
 	//public static void affiche(Stage primaryStage, ArrayList<ArmeeListe> liste)
 	{
 		// listes d'armées
@@ -59,7 +60,7 @@ public class AfficheSimulation
 		units_names.put("Liste 3", new String[]{"Unité 10", "Unité 11"});
 
 		VBox root_box = new VBox();
-		afficheTopMenu menu = new afficheTopMenu(primaryStage); // menu du haut de l'écran
+		afficheTopMenu menu = new afficheTopMenu(primaryStage,session); // menu du haut de l'écran
 		HBox main = new HBox(); // partie principale de la fenêtre
 		
 		

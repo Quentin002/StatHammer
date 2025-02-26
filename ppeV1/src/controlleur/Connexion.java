@@ -3,6 +3,7 @@ package controlleur;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
+import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheConnexionFailed;
 
@@ -20,9 +21,9 @@ public class Connexion {
 			
 		
 		if (login.equals(rendu.getFirst().trim())) {
-			
+			User session = new User(login);
 			primaryStage.close();
-			AfficheAccueil.affiche(primaryStage);
+			AfficheAccueil.affiche(primaryStage,session);
 		}else {
 			System.out.println(rendu);
 		}
