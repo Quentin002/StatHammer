@@ -19,7 +19,7 @@ public class CreationCompte {
 				
 				System.out.println("Compté créé" + crea);
 				primaryStage.close();
-				AfficheAccueil.affiche(primaryStage);
+				AfficheAccueil.affiche(primaryStage, 0);
 			}else {
 				System.out.println("échec de la création de compte" + crea);
 				AfficheConnexionFailed.affiche(primaryStage);

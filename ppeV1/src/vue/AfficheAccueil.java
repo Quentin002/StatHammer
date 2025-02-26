@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import vue.GestionListe.AfficheGestionListe;
 
 public class AfficheAccueil {
 	public static void affiche(Stage primaryStage, int idUtilisateur) {

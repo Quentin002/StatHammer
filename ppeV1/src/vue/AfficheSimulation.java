@@ -43,7 +43,7 @@ public class AfficheSimulation
         /* actions des boutons du menu */
         btn_end.setOnAction(e -> { // vers le menu principal
 			primaryStage.close();
-			AfficheAccueil.affiche(primaryStage);
+			AfficheAccueil.affiche(primaryStage, 0);
 		});
 //        btn_logout.setOnAction(e -> { // vers gestion compte utilisateur
 //			primaryStage.close();

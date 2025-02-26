@@ -1,15 +1,19 @@
-package vue;
+package vue.GestionListe;
 
 import controlleur.GestionListe;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.ArmeeListe;
+import vue.AfficheAccueil;
+import controlleur.SupprListe;
 
 import java.util.ArrayList;
 
@@ -73,17 +77,30 @@ public class AfficheGestionListe {
             Button modifBtn = new Button("Para");
             Button supprBtn = new Button("X");
             
-            
             actions.getChildren().addAll(partageBtn, modifBtn, supprBtn);
             actions.setAlignment(Pos.CENTER_RIGHT);
 
             listeBox.getChildren().addAll(nomListe, descriptionListe, actions);
             liste.getChildren().add(listeBox);
+            
+            supprBtn.setOnAction(e -> {
+            	 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Voulez-vous vraiment supprimer la liste :"+armee.getNom()+"?", ButtonType.YES, ButtonType.NO);
+            	    alert.showAndWait().ifPresent(response -> {
+            	        if (response == ButtonType.YES) {
+            	            int idListe = armee.getId();
+            	            SupprListe suppr = new SupprListe();
+            	            suppr.Suppression(idListe);
+
+            	            liste.getChildren().remove(listeBox);
+            	        }
+            	    });
+            });
         }
         // ajout des conteneurs principaux à la scène
         boite.getChildren().addAll(selectBouton, liste);
         root.getChildren().addAll(titre, header, boite);
-
+        
+        
         // Bouton Retour
         Retour.setOnAction(e -> {
             primaryStage.close();
@@ -93,4 +110,5 @@ public class AfficheGestionListe {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 }
