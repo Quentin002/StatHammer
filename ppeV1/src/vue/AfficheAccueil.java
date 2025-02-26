@@ -18,6 +18,7 @@ public class AfficheAccueil {
 	public static void affiche(Stage primaryStage,User session) {
 		VBox root = new VBox();
 		Scene scene = new Scene(root,800,600);
+	
 		afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
 		root.getChildren().add(menu);
 		
