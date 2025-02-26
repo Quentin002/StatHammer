@@ -21,9 +21,15 @@ public class afficheTopMenu extends HBox
 	    Button btn_home = new Button("Accueil");
 	    Button btn_gerer_liste = new Button("Gerer liste");
 	    Button btn_creer_liste = new Button("Création liste");
+	    Button btn_admin = new Button("Admin");
 	    Button btn_simu = new Button("Simulation");
 	    this.getChildren().addAll(btn_home, btn_account,btn_gerer_liste,btn_creer_liste,btn_simu, btn_logout);
 	    this.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+	    //if(session.getRole().trim()=="Admin") {
+	    System.out.println(session.getRole().trim());
+	    if(session.getRole().equals("Admin") ) {
+	    	this.getChildren().add(btn_admin);
+	    }
 	    Label pseudo = new Label(session.getNom());
 	    //pseudo.setStyle("-fx-text-fill: white");
 	    pseudo.setTextFill(Color.WHITE);
