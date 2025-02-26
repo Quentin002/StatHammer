@@ -38,7 +38,7 @@ public class AfficheSimulation
 	
 	// run config: --module-path "C:\Users\greta\CODE\eclipse-java\javafx-sdk-21.0.6\lib" --add-modules javafx.controls
 //	public static void main(String[] args){
-//		launch(args);	
+//		launch(args);
 //	}
 	
 //	@Override
@@ -73,24 +73,22 @@ public class AfficheSimulation
         
         VBox column1 = new VBox();
         column1.prefWidthProperty().bind(column1_scrollpane.widthProperty());
-        //column1.setMaxHeight(Double.MAX_VALUE);
-        //column1.setStyle("-fx-background-color: lightgreen;");
-        //column1_box.prefWidthProperty().bind(main.widthProperty().multiply(0.3));
         
         
         // menu choix armée
+        HBox col1_first_row = new HBox();
         ChoiceBox<String> list1_drop_down = new ChoiceBox<>();
+        list1_drop_down.setStyle("-fx-font-size: 15;");
         list1_drop_down.prefWidthProperty().bind(column1_scrollpane.widthProperty());
         for(int i = 0; i < attacker_lists.length; i++)
         {
         	list1_drop_down.getItems().add(attacker_lists[i]);
         }
-        list1_drop_down.setValue(attacker_lists[0]);
-        column1.getChildren().add(list1_drop_down);
+        col1_first_row.getChildren().add(list1_drop_down);
+        column1.getChildren().add(col1_first_row);
         
         // unités colonne 1 (par défaut)
         SimUnitsVBox units_list1 = new SimUnitsVBox(1);
-        units_list1.setList(units_names.get("Liste 1")); // 1ère par défaut
         column1.getChildren().add(units_list1);
         column1_scrollpane.setContent(column1);
         
@@ -101,7 +99,6 @@ public class AfficheSimulation
         /* -- colonne centrale -- */
         VBox column2 = new VBox();
         column2.prefWidthProperty().bind(main.widthProperty().multiply(0.4));
-        //column2.setMaxHeight(500);//.bind(main.heightProperty().multiply(1));
         
         	// boutons inverser et simuler   
 		Image icons_inversion = new Image("/images/inversion_icons.png");
@@ -109,7 +106,7 @@ public class AfficheSimulation
 		Button reverse_armies = new Button();
 		reverse_armies.setGraphic(icons_inversion_box);
 		Button btn_simulate = new Button("Action !!");
-		btn_simulate.setStyle("-fx-font-size: 17;");
+		btn_simulate.setStyle("-fx-font-size: 15;");
 		
 		HBox column2_top = new HBox();
         column2_top.setAlignment(Pos.CENTER);
@@ -138,19 +135,19 @@ public class AfficheSimulation
         VBox column3 = new VBox();
         column3.prefWidthProperty().bind(column3_box.widthProperty());
         
-        ChoiceBox<String> list2_drop_down = new ChoiceBox<>();        
-        list2_drop_down.prefWidthProperty().bind(column3_box.widthProperty());
+        HBox col3_first_row = new HBox();
+        ChoiceBox<String> list2_drop_down = new ChoiceBox<>();
+        list2_drop_down.setStyle("-fx-font-size: 15;");
+        list2_drop_down.prefWidthProperty().bind(column1_scrollpane.widthProperty());
         for(int i = 0; i < defender_lists.length; i++)
         {
         	list2_drop_down.getItems().add(defender_lists[i]);
         }
-        list2_drop_down.setValue(defender_lists[1]);
-        
-        column3.getChildren().add(list2_drop_down);
+        col3_first_row.getChildren().add(list2_drop_down);
+        column3.getChildren().add(col3_first_row);
         
         // unités colonne 3
         SimUnitsVBox units_list2 = new SimUnitsVBox(3);
-        units_list2.setList(units_names.get("Liste 2")); // 2ème par défaut
         column3.getChildren().add(units_list2);
         column3_box.setContent(column3);
         
@@ -159,9 +156,6 @@ public class AfficheSimulation
 		main.getChildren().addAll(column1_box, column2, column3_box);
 		root_box.getChildren().addAll(menu, main);
 		
-//		//test
-//		Button envoi = new Button("Appuyer sur moi");
-//		root_box.getChildren().add(envoi);
 		
 		btn_simulate.setOnAction(e -> {
 			ArmeMelee w1 = new ArmeMelee("t1",3,4,1,2,1);
@@ -204,18 +198,32 @@ public class AfficheSimulation
 		ArrayList<SimUnitsVBox> lists = new ArrayList<SimUnitsVBox>();
 		lists.add(units_list1);
 		lists.add(units_list2);
-		
         ArrayList<ChoiceBox<String>> lists_drop_down = new ArrayList<ChoiceBox<String>>();
         lists_drop_down.add(list1_drop_down);
-        lists_drop_down.add(list2_drop_down);
+        lists_drop_down.add(list2_drop_down);;
+        ArrayList<HBox> first_rows = new ArrayList<HBox>();
+        first_rows.add(col1_first_row);
+        first_rows.add(col3_first_row);
         for(int i = 0; i < 2; i++)
         {
         	final int j = i;
         	lists_drop_down.get(i).setOnAction(e -> {
         		
-        		// Passer par un contrôleur pour obtenir les unités!!
+        		// Passer par un contrôleur pour obtenir les logos de factions et les unités!!
         		//ControlleurSimu.changeList(lists_drop_down.get(j).getValue());
         		
+        		// logo de faction
+        		Image logo_faction = new Image("/images/android-fill.png");
+        		ImageView logo_box = new ImageView();
+        		logo_box.setPreserveRatio(true);
+        		logo_box.fitHeightProperty().bind(lists_drop_down.get(j).heightProperty());
+        		logo_box.setImage(logo_faction);
+        		if(first_rows.get(j).getChildren().size() == 2){
+        			first_rows.get(j).getChildren().remove(1);
+        		}
+        		first_rows.get(j).getChildren().add(logo_box);
+        		
+        		// unités
         		lists.get(j).getChildren().clear();
         		lists.get(j).setList(units_names.get(lists_drop_down.get(j).getValue()));
         		dropdownUnitButtonsAction(lists);
@@ -243,8 +251,6 @@ public class AfficheSimulation
 	 			// impossible d'écrire unit_box.get(i), i ne peut entrer dans la fonction lambda parce qu'il est susceptible de changer à l'extérieur de celle-ci
 	 			
 	 			/* -- BOUTONS des unités --*/
-	 			//System.out.println(dropdown_unit_buttons);
-	 			//System.out.println("hello");
 	 			dropdown_unit_buttons.get(i).setOnAction(e ->
 	 			{
 	 				// dérouler ou replier les figurines

@@ -25,7 +25,6 @@ public class SimUnitsVBox extends VBox
 	
 	// getters
 	public ArrayList<Button> getButtons(){
-		System.out.println(buttons);
 		return buttons;
 	}
 	public ArrayList<SimFigurinesVBox> getFigBoxes(){
@@ -39,8 +38,6 @@ public class SimUnitsVBox extends VBox
 				{"Figurine 1", "Figurine 2", "Figurine 3", "Figurine 4", "Figurine 5", "Figurine 6"},
 				{"Figurine 6", "Figurine 7", "Figurine 8"}};
 		
-		// cette classe est une VBox qui contient une liste d'unités
-		// chaque unité est une VBox qui contient un bouton et une SimFigurineVBox
 		for(int i = 0; i < units_names.length; i++)
 		{
 			//System.out.println(units_names[i]);
