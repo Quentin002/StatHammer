@@ -213,7 +213,8 @@ public class AfficheSimulation
         		//ControlleurSimu.changeList(lists_drop_down.get(j).getValue());
         		
         		// logo de faction
-        		Image logo_faction = new Image("/images/android-fill.png");
+        		String file_name = "android-fill.png"; // à récupérer par le contrôleur
+        		Image logo_faction = new Image("/images/" + file_name);
         		ImageView logo_box = new ImageView();
         		logo_box.setPreserveRatio(true);
         		logo_box.fitHeightProperty().bind(lists_drop_down.get(j).heightProperty());
