@@ -18,10 +18,7 @@ public class SimAptAndWeaponsVBox extends VBox
 	String[][] weapon_list;
 	String[][] aptitude_list;
 	
-	public SimAptAndWeaponsVBox(){
-		
-		this.setStyle("-fx-padding: 2px;");
-	}
+	//public SimAptAndWeaponsVBox(){}
 	
 	// setters
 	public void setFigGroup(int fig_group_number, String fig_group_name, int fig_group_size){
@@ -52,7 +49,6 @@ public class SimAptAndWeaponsVBox extends VBox
 		Label figurine = new Label(group_name);
 		first_row.getChildren().addAll(number, figurine);
 		
-		//first_row.setAlignment(javafx.geometry.Pos.BASELINE_LEFT);
 		
 		/* -- ligne 2: menu déroulant choix de l'arme -- */
 		ChoiceBox<String> select_weapon = new ChoiceBox<String>();
@@ -83,16 +79,7 @@ public class SimAptAndWeaponsVBox extends VBox
 			aptitudes.getChildren().add(one_aptitude);
         }
 		
-		
-		
-		//second_row.getChildren().addAll(number, select_weapon);
-		//second_row.setAlignment(javafx.geometry.Pos.BASELINE_CENTER);
-		
-//		for(int i = 0; i < this.getChildren().size(); i++)
-//		{
-//			SimAptAndWeaponsVBox.setMargin(this.getChildren().get(i), new Insets(2));
-//		}
-		
+		//SimAptAndWeaponsVBox.setMargin(this.getChildren(), new Insets(5));
 		this.getChildren().addAll(first_row, select_weapon, nb_of_attackers, aptitudes);
 		//this.setAlignment(Pos.CENTER); // fonctionne pour le label
 		

@@ -20,7 +20,6 @@ public class SimFigurinesVBox extends VBox
 	private int column;
 	private ArrayList<SimAptAndWeaponsVBox> weapons_aptitudes_menu_view = new ArrayList<SimAptAndWeaponsVBox>();
 	private String[][] figs;
-	//private ArrayList<Button> group_buttons = new ArrayList<Button>();
 	private boolean open = false; // les figurines sont cachées par défaut
 	
 	public SimFigurinesVBox(int col, String[][] figs_names){
@@ -39,9 +38,6 @@ public class SimFigurinesVBox extends VBox
 	public String[][] getFigurines(){
 		return figs;
 	}
-//	public ArrayList<Button> getFigGroupButtons(){
-//		return group_buttons;
-//	}
 	
 	public void setFigurines()
 	{
@@ -77,10 +73,9 @@ public class SimFigurinesVBox extends VBox
 				{
 					weapons_aptitudes_menu.set_apt_and_weapons();
 					//weapons_aptitudes_menu.prefWidthProperty().bind(this.widthProperty().multiply(0.2));
-					AfficheSimulation.setColumn2Bottom(weapons_aptitudes_menu);
+					AfficheSimulation.setColumn1Bottom(weapons_aptitudes_menu);
 				});
 			}
- 			
 			
 			// boutons des figurines
 			for(int j = 0; j < figs[i].length; j++)
@@ -117,42 +112,6 @@ public class SimFigurinesVBox extends VBox
 			SimFigurinesVBox.setMargin(fig_group, new Insets(3));
 			
 			this.getChildren().add(fig_group);
-			
-			// actions des boutons
 		}
-		
-
-//        ArrayList<Button> buttons_units_list1 = units_list1.getButtons();
-//        ArrayList<SimFigurinesHBox> unit_box_list1 = units_list1.getUnitBox();
-// 		for(int i = 0; i < unit_box.size(); i++)
-// 		{
-// 			final int j = i; // merci chatgpt pour le trick!
-// 			// impossible d'écrire unit_box.get(i), i ne peut entrer dans la fonction lambda parce qu'il est susceptible de changer à l'extérieur de celle-ci
-// 			
-// 			buttons_units_list1.get(i).setOnAction(e ->
-// 			{
-// 				unit_box_list1.get(j).changeState();
-// 				if(unit_box_list1.get(j).isOpen())
-// 				{
-// 					// afficher figurines
-// 					unit_box_list1.get(j).setFigurines();
-// 					if(selected_unit != j + 1)
-// 					{
-// 						selected_unit = j + 1;
-// 						apt_and_weapons_menu.getChildren().clear();
-// 						apt_and_weapons_menu.set_apt_and_weapons(selected_unit);
-// 					}
-// 					
-// 					// apt_and_weapons_menu
-// 				}
-// 				else
-// 				{
-// 					// cacher figurine
-// 					unit_box_list1.get(j).getChildren().clear(); // index est constant dans sa portée, alors que i change
-// 					apt_and_weapons_menu.getChildren().clear();
-// 					selected_unit = 0; // valeur "impossible"
-// 				}
-// 			});
-// 		}
 	}
 }
