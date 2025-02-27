@@ -87,14 +87,33 @@ public class BDD {
 		return rendu;
 	}
 	
+	public void updateUtilisateur(String pseudo,int id) {
+		try {
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET nom_utilisateur=? WHERE id_utilisateur=?;",pseudo,id);
+			stat.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+		}
+	}
+	public void updateMp(String mdp,int id) {
+		try {
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp,id);
+			stat.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+		}
+	}
+	
 	public int UtilisateurID(String nom, String mdp) {
-		ArrayList<String> rendu = new ArrayList<String>();
 		try {
 			stat = this.getPreparedStatement("SELECT id_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
 				nom, mdp);
 			
 			ResultSet rs = stat.executeQuery();
-			ResultSetMetaData md = rs.getMetaData();
 			rs.next();
 			int id = rs.getInt("id_utilisateur");
 
@@ -115,7 +134,6 @@ public class BDD {
 				nom, mdp);
 			
 			ResultSet rs = stat.executeQuery();
-			ResultSetMetaData md = rs.getMetaData();
 			rs.next();
 			role = rs.getString("role_utilisateur");
 
@@ -128,7 +146,28 @@ public class BDD {
 			
 		}
 		return role;
-	}		
+	}
+	
+	public String UtilisateurMdp(int id) {
+		String mdp = "test null";
+		try {
+			stat = this.getPreparedStatement("SELECT mdp_utilisateur FROM utilisateur WHERE id_utilisateur=?;",
+				id);
+			
+			ResultSet rs = stat.executeQuery();
+			rs.next();
+			mdp = rs.getString("mdp_utilisateur");
+
+			return mdp;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return mdp;
+	}
 	
 		
 		

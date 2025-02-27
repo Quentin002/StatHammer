@@ -1,5 +1,6 @@
 package controlleur;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
@@ -33,5 +34,22 @@ public class Connexion {
 			AfficheConnexionFailed.affiche(primaryStage);
 		}
 		
+	}
+	
+	public static void updatePseudo(String pseudo,int id) throws SQLException {
+		BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
+		conec.updateUtilisateur(pseudo,id);
+		conec.close();
+	}
+	public static void updateMdp(String mdp,int id) throws SQLException {
+		BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
+		conec.updateMp(mdp,id);
+		conec.close();
+	}
+	public static String selectMdp(int id) throws SQLException {
+		BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
+		String mdp =conec.UtilisateurMdp(id);
+		conec.close();
+		return mdp;
 	}
 }
