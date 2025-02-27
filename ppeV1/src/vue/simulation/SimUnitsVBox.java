@@ -40,7 +40,6 @@ public class SimUnitsVBox extends VBox
 		
 		for(int i = 0; i < units_names.length; i++)
 		{
-			//System.out.println(units_names[i]);
 			VBox one_unit = new VBox();
 			
 			// boutons pour déplier

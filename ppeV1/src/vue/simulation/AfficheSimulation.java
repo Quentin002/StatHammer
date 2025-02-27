@@ -224,9 +224,13 @@ public class AfficheSimulation
         		}
         		first_rows.get(j).getChildren().add(logo_box);
         		
-        		// unités
+        		// effacer la zone armes et aptitudes
+        		weapons_aptitudes_menu.setStyle("-fx-border-width: 0;");
+        		weapons_aptitudes_menu.getChildren().clear();
+        		// effacer et recréer les unités
         		lists.get(j).getChildren().clear();
         		lists.get(j).setList(units_names.get(lists_drop_down.get(j).getValue()));
+        		// remettre la capture des boutons pour dérouler les unités
         		dropdownUnitButtonsAction(lists);
             });
         }
