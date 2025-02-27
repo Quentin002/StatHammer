@@ -1,9 +1,15 @@
 package controlleur;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import vue.AfficheAccueil;
 import vue.AfficheConnexionFailed;
@@ -11,56 +17,43 @@ import modele.ModeleEvenement;
 import modele.User;
 
 public class AdminController {
-	public static void verif(String login, String mdp,Stage primaryStage) {
-		
-		
-		login = login.trim();
-		mdp = mdp.trim();
-		
-		
-		try {
-			
-			BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
-			
-			ArrayList<String> rendu = conec.selectUtilisateur(login, mdp);
-		
-			
-			String requete = "SELECT * FROM evenement WHERE id_evenement=?;";
-			PreparedStatement stat = conec.getConnec().prepareStatement(requete);
-			stat.setInt(1, 1);
-			ResultSet rev = stat.executeQuery();
-			while(rev.next()) {
-				
-				ModeleEvenement evenement = new ModeleEvenement(rev.getString("nom_evenement"),
-																rev.getString("URL_evenement"),
-																rev.getString("date_evenement"),
-																rev.getString("description_evenement"));
-				
-				User utilisateur = new User (rev.getString("nom"),
-											rev.getString("email"),
-											rev.getString("mdp"),
-											rev.getString("role"));
-			
-				if (login.equals(rendu.getFirst().trim())) {
-					
-					primaryStage.close();
-					AfficheAccueil.affiche(primaryStage, evenement);
-				}
-				else {
-					System.out.println(rendu);
-				}
-			
-			
-			}
-			
-			
-		
-			
-		
-			conec.close();
-		}catch(Exception e) {
-			AfficheConnexionFailed.affiche(primaryStage);
-		}
-		
+	public static void verif(Stage primaryStage, ImageView imageView) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Images", "*.png"));
+        
+        // Ouvrir le file chooser et obtenir le fichier sélectionné
+        File file = fileChooser.showOpenDialog(primaryStage);
+        
+        if (file != null) {
+            System.out.println("Fichier sélectionné : " + file.getAbsolutePath());
+            System.out.println(file.getName());
+            
+            // Créer une nouvelle image à partir du chemin absolu du fichier
+            Image image = new Image("file:" + file.getAbsolutePath());
+            
+            // Définir l'image dans l'ImageView
+            imageView.setImage(image);
+
+            // Chemin de destination où vous voulez sauvegarder l'image
+            String destinationDir = "src\\images"; // Remplacez ceci par le chemin réel de destination
+            File destinationFolder = new File(destinationDir);
+            
+            // Créez le répertoire s'il n'existe pas
+            if (!destinationFolder.exists()) {
+                destinationFolder.mkdirs();
+            }
+            
+            File nouveauNom = new File("image1.png");
+            // Créez le fichier de destination avec le même nom
+            File destinationFile = new File(destinationFolder, nouveauNom.getName());
+
+            try {
+                // Copier le fichier dans le dossier de destination
+                Files.copy(file.toPath(), destinationFile.toPath());
+                System.out.println("Fichier enregistré à : " + destinationFile.getAbsolutePath());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
 	}
 }

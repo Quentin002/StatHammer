@@ -5,76 +5,49 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
+import javafx.scene.control.TextField;
+import java.awt.TextArea;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import controlleur.AdminController;
 
 public class AfficheAdmin {
     public static void affiche(Stage primaryStage) {
 
         // Création du bouton "parcourir"
         Button parcourir = new Button("Parcourir");
+        Button valider = new Button("Valider");
+        Text img1 = new Text("votre_event.png");
+        TextField descEvent = new TextField("Description");
 
         // Création d'un ImageView pour afficher l'image
         ImageView imageView = new ImageView();
         imageView.setPreserveRatio(true); // Maintenir le ratio de l'image
-        imageView.setFitWidth(400); // Largeur maximale de l'image dans la vue
+        imageView.setFitWidth(80); // Largeur maximale de l'image dans la vue
 
         // Action du bouton
         parcourir.setOnAction(e -> {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Tous les fichiers", "*.*"));
-            
-            // Ouvrir le file chooser et obtenir le fichier sélectionné
-            File file = fileChooser.showOpenDialog(primaryStage);
-            
-            if (file != null) {
-                System.out.println("Fichier sélectionné : " + file.getAbsolutePath());
-                
-                // Créer une nouvelle image à partir du chemin absolu du fichier
-                Image image = new Image("file:" + file.getAbsolutePath());
-                
-                // Définir l'image dans l'ImageView
-                imageView.setImage(image);
-
-                // Chemin de destination où vous voulez sauvegarder l'image
-                String destinationDir = "img\\evnmt"; // Remplacez ceci par le chemin réel de destination
-                File destinationFolder = new File(destinationDir);
-                
-                // Créez le répertoire s'il n'existe pas
-                if (!destinationFolder.exists()) {
-                    destinationFolder.mkdirs();
-                }
-
-                // Créez le fichier de destination avec le même nom
-                File destinationFile = new File(destinationFolder, file.getName());
-
-                try {
-                    // Copier le fichier dans le dossier de destination
-                    Files.copy(file.toPath(), destinationFile.toPath());
-                    System.out.println("Fichier enregistré à : " + destinationFile.getAbsolutePath());
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
+        	AdminController.verif(primaryStage, imageView);
         });
 
         // VBox principal
-        VBox vbox = new VBox(20);
-        vbox.getChildren().addAll(parcourir, imageView);
-        vbox.setAlignment(Pos.CENTER);
+        HBox hbox = new HBox(20);
+        hbox.getChildren().addAll(img1, imageView, descEvent, parcourir, valider);
+        hbox.setAlignment(Pos.CENTER);
 
         // Ajout du VBox à la scène
-        Scene scene = new Scene(vbox, 800, 600);
+        Scene scene = new Scene(hbox, 800, 600);
 
         // Ajout d'un titre à la fenêtre
         primaryStage.setTitle("StatHammer : Admin");
-        // Association de la scène à la fenêtre principale
         primaryStage.setScene(scene);
         primaryStage.show();
     }
