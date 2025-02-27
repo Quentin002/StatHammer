@@ -19,6 +19,17 @@ public abstract class  Arme {
 		PA = pA;
 		D = d;
 	}
+	
+
+	public Arme(String nom, int F, int PA, int A, int D) {
+			this.nom = nom;
+			this.F = F;
+			this.PA = PA;
+			this.A=A;
+			this.D=D;
+	 }
+
+
 	public ArrayList<Integer> statsAtk(){
 		ArrayList<Integer> liste = new ArrayList<Integer>();
 		liste.add(A);
@@ -27,6 +38,48 @@ public abstract class  Arme {
 		liste.add(D);
 		return liste;
 	}
-		
+	
+	//v2
+	public int getD() {
+		return D;
+	}
+
+	public void setD(int d) {
+		this.D = d;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public int getA() {
+		return A;
+	}
+
+	public void setA(int a) {
+		this.A = a;
+	}
+
+	public void setPa(int pa) {
+		this.PA = pa;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getPa() {
+		return PA;
+	}
+
+
+	public int getF() {
+		return F;
+	}
+
+	public void setF(int f) {
+		this.F = f;
+	}
+	public abstract int getC();
 	
 }

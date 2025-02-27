@@ -87,6 +87,49 @@ public class BDD {
 		return rendu;
 	}
 	
+	public int UtilisateurID(String nom, String mdp) {
+		ArrayList<String> rendu = new ArrayList<String>();
+		try {
+			stat = this.getPreparedStatement("SELECT id_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
+				nom, mdp);
+			
+			ResultSet rs = stat.executeQuery();
+			ResultSetMetaData md = rs.getMetaData();
+			rs.next();
+			int id = rs.getInt("id_utilisateur");
+
+			return id;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return 0;
+	}
+	public String UtilisateurRole(String nom, String mdp) {
+		String role = "null";
+		try {
+			stat = this.getPreparedStatement("SELECT role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
+				nom, mdp);
+			
+			ResultSet rs = stat.executeQuery();
+			ResultSetMetaData md = rs.getMetaData();
+			rs.next();
+			role = rs.getString("role_utilisateur");
+
+			return role;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return role;
+	}		
+	
 		
 		
 	public void ajouter(Arme a) {
