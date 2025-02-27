@@ -17,5 +17,8 @@ public class ArmeDist extends Arme {
 		return liste;
 	}
 	
-
+	public int getC() {
+		return CT;
+	}
+	
 }
