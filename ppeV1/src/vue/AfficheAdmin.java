@@ -46,11 +46,13 @@ public class AfficheAdmin {
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(80);
 
-        // Action du bouton
+        // Action des boutons
         parcourir.setOnAction(e -> {
         	ControllerAdmin.parcourir(primaryStage, imageView);
         });
-        
+        valider.setOnAction(e -> {
+        	ControllerAdmin.valider();
+        });
         
         // VBox principal
         HBox hbox = new HBox(20);

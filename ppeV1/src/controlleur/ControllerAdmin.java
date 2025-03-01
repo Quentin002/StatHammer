@@ -17,16 +17,21 @@ import modele.Evenement;
 import modele.User;
 
 public class ControllerAdmin {
+	
+	static File destinationFile ;
+	static File file;
+	
 	public static void parcourir(Stage primaryStage, ImageView imageView) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Images", "*.png"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers Images", "*.png", "*.jpg"));
         
         // Ouvrir le file chooser et obtenir le fichier sélectionné
-        File file = fileChooser.showOpenDialog(primaryStage);
+        file = fileChooser.showOpenDialog(primaryStage);
         
         if (file != null) {
-            System.out.println("Fichier sélectionné : " + file.getAbsolutePath());
-            System.out.println(file.getName());
+        	
+        	System.out.println("Fichier sélectionné : " + file.getName());
+        	System.out.println("Chemin du fichier : " + file.getAbsolutePath());
             
             // Créer une nouvelle image à partir du chemin absolu du fichier
             Image image = new Image("file:" + file.getAbsolutePath());
@@ -44,16 +49,19 @@ public class ControllerAdmin {
             }
             
             File nouveauNom = new File(file.getName());
-            // Créez le fichier de destination avec le même nom
-            File destinationFile = new File(destinationFolder, nouveauNom.getName());
-
-            try {
-                // Copier le fichier dans le dossier de destination
-                Files.copy(file.toPath(), destinationFile.toPath());
-                System.out.println("Fichier enregistré à : " + destinationFile.getAbsolutePath());
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
+            destinationFile = new File(destinationFolder, nouveauNom.getName());
+            	
         }
 	}
+	
+	//méthode "valider"
+	public static void valider() {
+		try {
+            // Copier le fichier dans le dossier de destination
+            Files.copy(file.toPath(), destinationFile.toPath());
+            System.out.println("Fichier enregistré à : " + destinationFile.getAbsolutePath());
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 }
