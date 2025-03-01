@@ -1,11 +1,11 @@
 package modele;
 
 public class Armee {
-	
+
 	private String nom;
 	private String logo;
 	private Faction faction;
-	
+
 	public Armee(String nom, String logo, Faction faction) {
 		this.nom = nom;
 		this.logo = logo;
@@ -16,8 +16,4 @@ public class Armee {
 		return faction;
 	}
 
-	
-	
-	
-	
 }

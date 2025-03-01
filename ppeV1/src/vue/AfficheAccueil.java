@@ -1,6 +1,6 @@
 package vue;
 
-
+import vue.simulation.AfficheSimulation;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,12 +12,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import vue.GestionListe.AfficheGestionListe;
+import modele.User;
 
 public class AfficheAccueil {
-	public static void affiche(Stage primaryStage, int idUtilisateur) {
+	public static void affiche(Stage primaryStage,User session) {
 		VBox root = new VBox();
-		Scene scene = new Scene(root,1200,800);
+		Scene scene = new Scene(root,800,600);
+	
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		root.getChildren().add(menu);
 		
 		Label titre = new Label("StatHammer");
 		VBox cadre = new VBox();
@@ -66,24 +69,21 @@ public class AfficheAccueil {
 		cadreImage.setAlignment(Pos.CENTER);
 		
 		cadreImage.getChildren().add(iv1);
-		cadre.getChildren().add(simulation);
+		/*cadre.getChildren().add(simulation);
 		cadre.getChildren().add(creeListe);
 		cadre.getChildren().add(gererListe);
 		
 		
 		
-		root.setAlignment(Pos.TOP_CENTER);
+		
 		
 		simulation.setOnAction(e -> {
 			primaryStage.close();
 			AfficheSimulation.affiche(primaryStage);
+			
 		});
-		
-		gererListe.setOnAction(e -> {
-			primaryStage.close();
-			AfficheGestionListe.affiche(primaryStage, idUtilisateur);
-		});
-		
+		*/
+		root.setAlignment(Pos.TOP_CENTER);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

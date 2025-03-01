@@ -13,41 +13,36 @@ import javafx.stage.Stage;
 public class AfficheConnexionFailed {
 	public static void affiche(Stage primaryStage) {
 		VBox root = new VBox();
-		Scene scene = new Scene(root,800,600);		
+		Scene scene = new Scene(root, 800, 600);
 		TextField pseudo = new TextField();
 		TextField mdp = new TextField();
 		Label nomPseudo = new Label("Pseudo");
 		Label nomMdp = new Label("Mot de passe");
 		Button envoi = new Button("Appuyer sur moi");
 		Label erreur = new Label("Mauvais Login et/ou MDP");
-		
+
 		erreur.setTextFill(Color.RED);
 		erreur.setAlignment(Pos.CENTER);
-		
-		
-		
+
 		root.getChildren().add(nomPseudo);
 		root.getChildren().add(pseudo);
 		root.getChildren().add(nomMdp);
 		root.getChildren().add(mdp);
 		root.getChildren().add(envoi);
 		root.getChildren().add(erreur);
-		
+
 		mdp.setMaxWidth(200);
 		pseudo.setMaxWidth(200);
-		
+
 		pseudo.setAlignment(Pos.CENTER);
 		mdp.setAlignment(Pos.CENTER);
 		root.setAlignment(Pos.CENTER);
-		
-		envoi.setOnAction(e ->{
-			
-			Connexion.verif(pseudo.getText(),mdp.getText(),primaryStage);
+
+		envoi.setOnAction(e -> {
+
+			Connexion.verif(pseudo.getText(), mdp.getText(), primaryStage);
 		});
-		
-		
-		
-		
+
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

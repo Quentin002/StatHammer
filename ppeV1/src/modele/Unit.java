@@ -2,6 +2,7 @@ package modele;
 
 import java.util.ArrayList;
 
+
 public class Unit {
 	
 	private ArrayList<Figurine> figurines;
@@ -14,6 +15,14 @@ public class Unit {
 		this.nom = nom;
 		this.points = points;
 		this.armee = armee;
+	}
+	public Unit(String nom_unit,ArrayList<Figurine> list_unit) {
+		this.nom = nom_unit;
+		this.figurines = list_unit;
+	}
+	//v2
+	public ArrayList<Figurine> getList_unit() {
+		return figurines;
 	}
 	public Armee getArmee() {
 		return armee;
