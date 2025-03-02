@@ -13,7 +13,7 @@ public abstract class  Arme {
 	public Arme(String nom, ArrayList<AptitudeArme> aptitudes, int a, int f, int pA, int d) {
 		
 		this.nom = nom;
-		this.aptitudes = aptitudes;
+		this.setAptitudes(aptitudes);
 		A = a;
 		F = f;
 		PA = pA;
@@ -38,6 +38,8 @@ public abstract class  Arme {
 		liste.add(D);
 		return liste;
 	}
+	
+	
 	
 	//v2
 	public int getD() {
@@ -81,5 +83,15 @@ public abstract class  Arme {
 		this.F = f;
 	}
 	public abstract int getC();
+
+
+	public ArrayList<AptitudeArme> getAptitudes() {
+		return aptitudes;
+	}
+
+
+	public void setAptitudes(ArrayList<AptitudeArme> aptitudes) {
+		this.aptitudes = aptitudes;
+	}
 	
 }

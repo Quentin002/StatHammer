@@ -66,8 +66,13 @@ public class AfficheGestionListe {
 			listeBox.setSpacing(5);
 			listeBox.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
 
-			Label nomListe = new Label(armee.getNom());
-			Label descriptionListe = new Label(armee.getDescription());
+			Label nomListe = new Label(armee.getNomListe());
+			Label descriptionListe = new Label(armee.getDescriptionListe());
+			VBox uniteBox = new VBox();
+		    for (String unite : armee.getUniteListe()) {
+		        Label nomUnite = new Label("- " + unite);
+		        uniteBox.getChildren().add(nomUnite);
+		    }
 
 			// Ajout des boutons (Partage, Modification, Suppression)
 			HBox actions = new HBox();
@@ -79,16 +84,16 @@ public class AfficheGestionListe {
 			actions.getChildren().addAll(partageBtn, modifBtn, supprBtn);
 			actions.setAlignment(Pos.CENTER_RIGHT);
 
-			listeBox.getChildren().addAll(nomListe, descriptionListe, actions);
+			listeBox.getChildren().addAll(nomListe, descriptionListe, uniteBox, actions);
 			liste.getChildren().add(listeBox);
 
 			supprBtn.setOnAction(e -> {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-						"Voulez-vous vraiment supprimer la liste :" + armee.getNom() + "?", ButtonType.YES,
+						"Voulez-vous vraiment supprimer la liste :" + armee.getNomListe() + "?", ButtonType.YES,
 						ButtonType.NO);
 				alert.showAndWait().ifPresent(response -> {
 					if (response == ButtonType.YES) {
-						int idListe = armee.getId();
+						int idListe = armee.getIdListe();
 						SupprListe suppr = new SupprListe();
 						suppr.Suppression(idListe);
 

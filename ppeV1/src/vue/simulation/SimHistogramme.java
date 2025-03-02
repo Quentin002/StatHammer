@@ -98,3 +98,4 @@ public class SimHistogramme extends Pane{
 	//BarChart<String, Number> barChart = new BarChart<String, Number>(xAxis, yAxis);
 
 }
+

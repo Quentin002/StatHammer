@@ -31,7 +31,8 @@ public static void affiche(Stage primaryStage,User session) {
 	VBox vbox = new VBox();
 	VBox vbox2 = new VBox();
 	VBox vboxL = new VBox();
-	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+
+	afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
 	
 	
 	
@@ -65,3 +66,4 @@ public static void affiche(Stage primaryStage,User session) {
 
 
 }
+

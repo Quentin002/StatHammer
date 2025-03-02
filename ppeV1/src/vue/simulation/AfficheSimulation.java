@@ -1,6 +1,8 @@
 package vue.simulation;
 
-import vue.AfficheTopMenu;
+
+import vue.afficheTopMenu;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -60,7 +62,9 @@ public class AfficheSimulation
 		units_names.put("Liste 3", new String[]{"Unité 10", "Unité 11"});
 
 		VBox root_box = new VBox();
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session); // menu du haut de l'écran
+
+		afficheTopMenu menu = new afficheTopMenu(primaryStage,session); // menu du haut de l'écran
+
 		HBox main = new HBox(); // partie principale de la fenêtre
 		
 		
@@ -295,4 +299,6 @@ public class AfficheSimulation
 	 		}
         }
 	}
+
 }
+

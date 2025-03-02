@@ -19,7 +19,8 @@ public class AfficheAccueil {
 		VBox root = new VBox();
 		Scene scene = new Scene(root,800,600);
 	
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+
 		root.getChildren().add(menu);
 		
 		Label titre = new Label("StatHammer");

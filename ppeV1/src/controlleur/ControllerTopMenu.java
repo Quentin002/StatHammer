@@ -21,6 +21,7 @@ public class ControllerTopMenu {
 	public static void go_deco(Stage primaryStage) { 
 		AfficheConnexion.affiche(primaryStage);
 	}
+
 	public static void go_simulation(Stage primaryStage,User session) { 
 		AfficheSimulation.affiche(primaryStage,session);
 	}
@@ -28,4 +29,6 @@ public class ControllerTopMenu {
 		AfficheGestionListe.affiche(primaryStage,session);
 	}
 }
+
+
 

@@ -20,5 +20,4 @@ public class ArmeDist extends Arme {
 	public int getC() {
 		return CT;
 	}
-	
 }

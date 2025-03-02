@@ -1,0 +1,15 @@
+INSERT INTO `tir` (`id_tir`, `CT`) VALUES
+(DEFAULT, 'N/A'),
+(DEFAULT, '2+'),
+(DEFAULT, '3+'),
+(DEFAULT, '4+'),
+(DEFAULT, '5+')
+;
+
+INSERT INTO `melee` (`id_melee`, `CC`) VALUES
+(DEFAULT, 'N/A'),
+(DEFAULT, '2+'),
+(DEFAULT, '3+'),
+(DEFAULT, '4+'),
+(DEFAULT, '5+')
+;

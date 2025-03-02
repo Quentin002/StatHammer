@@ -116,7 +116,7 @@ public class BDD {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void ajouter(Arme a) {
 		try {
 			stat.executeUpdate("INSERT INTO arme (id,prenom,login,password,statut,age) VALUES (NULL,");

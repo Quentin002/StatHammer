@@ -36,6 +36,7 @@ public class Connexion {
 			}
 		} catch (Exception e) {
 			// Affiche une page d'erreur
+
 			AfficheConnexionFailed.affiche(primaryStage);
 		}
 
