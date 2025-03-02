@@ -18,7 +18,7 @@ public class AfficheConnexion {
 		PasswordField mdp = new PasswordField();
 		Label nomPseudo = new Label("Pseudo");
 		Label nomMdp = new Label("Mot de passe");
-		Button envoi = new Button("Appuyer sur moi");
+		Button envoi = new Button("Connexion");
 		
 		root.getChildren().add(nomPseudo);
 		root.getChildren().add(pseudo);

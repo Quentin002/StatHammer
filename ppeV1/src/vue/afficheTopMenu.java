@@ -53,5 +53,9 @@ public class afficheTopMenu extends HBox
 	    btn_simu.setOnAction(e -> {
 	    	ControllerTopMenu.go_simulaton(primaryStage,session);
 		}); 
+	    // vers page Admin
+	    btn_admin.setOnAction(e -> {
+	    	ControllerTopMenu.go_admin(primaryStage, session);
+		});
 	}
 }
