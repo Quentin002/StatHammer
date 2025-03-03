@@ -34,7 +34,6 @@ public class Connexion {
 		catch(Exception e) {
 			AfficheConnexionFailed.affiche(primaryStage);
 		}
-		
 	}
 	
 	public static void updatePseudo(String pseudo,int id) throws SQLException {

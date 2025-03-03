@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import modele.Arme;
 import modele.ArmeeListe;
@@ -218,6 +220,28 @@ public class BDD {
 		return army;
 	}
 	
+	public void newEvent(String nom_evt, String nom_img,String desc, String date) {
+		try {
+	        
+			// Utilisation de requête préparée avec des paramètres
+	        String requete = "INSERT INTO evenement (nom_evenement, nom_image, description_evenement, date_evenement, id_utilisateur) VALUES (?, ?, ?, ?, 3)";
+	        stat = this.getPreparedStatement(requete);
+	        
+	        // Associer les valeurs aux paramètres
+	        stat.setString(1, nom_evt);
+	        stat.setString(2, nom_img);
+	        stat.setString(3, desc);
+	        stat.setString(4, date);
+	        
+	        // Exécution de la requête
+	        stat.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("probleme sur newEvent");
+			e.printStackTrace();
+		}
+	}		
 	
 	public void ajouter(Arme a) {
 		try {
