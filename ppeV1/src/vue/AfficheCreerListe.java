@@ -141,9 +141,7 @@ public class AfficheCreerListe {
 		unitSauv.setContent(gaucheUnit);
 		unitSauv.setFitToHeight(true);
 		
-		creation.setOnAction(e->{
-			armeeListe = new ArmeeListe(new ArrayList<Unit>(),nomArmee.getText(),"","");
-		});
+		
 		
 		corpTete.getChildren().addAll(groupe,iv2);
 		corpTete.setAlignment(Pos.CENTER);
