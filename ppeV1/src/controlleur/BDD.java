@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,6 +132,34 @@ public class BDD {
 		}
 		return role;
 	}		
+	
+	
+	// Pour manipuler les événements
+	public void handleEvent(String nom, String mdp) {
+	    try {
+	        // Prépare la requête pour récupérer les événements
+	        stat = this.getPreparedStatement("SELECT nom_image, nom_evenement, description_evenement, date_evenement FROM evenement;");
+	        
+	        // Exécute la requête
+	        ResultSet rs = stat.executeQuery();
+
+	        // Parcours des résultats et affichage des champs spécifiques
+	        while(rs.next()) {
+	            System.out.print("Nom Image: " + rs.getString("nom_image") + " | "
+	                             + "Nom Événement: " + rs.getString("nom_evenement") + " | "
+	                             + "Description: " + rs.getString("description_evenement") + " | "
+	                             + "Date: " + rs.getDate("date_evenement"));
+	            System.out.println(); // Pour ajouter un saut de ligne après chaque événement
+	        }
+	        rs.close();
+	        
+	    } catch (SQLException e) {
+	        // Gestion des exceptions SQL
+	    	System.out.println("ça coince ici");
+	        System.err.println(e.getMessage());
+	    }
+	}
+
 	
 	public void newEvent(String nom_evt, String nom_img,String desc, String date) {
 		try {

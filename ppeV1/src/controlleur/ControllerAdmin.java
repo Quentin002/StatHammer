@@ -65,10 +65,11 @@ public class ControllerAdmin {
             // Copier le fichier dans le dossier de destination
 			BDD conec = new BDD("400129","stathammer_greta_admin","stathammer_v1");
 			conec.newEvent(nom_evt,file.getName(), desc, date);
-			conec.close();
+			conec.handleEvent(nom_evt, date);
             Files.copy(file.toPath(), destinationFile.toPath());
             System.out.println("Fichier enregistré à : " + destinationFile.getAbsolutePath());
             AfficheAdmin.ajoutEvenement(nom_evt,file.getName(), desc, date);
+			conec.close();
             
         } catch (IOException ioException) {
         	System.out.println("Probleme sur Valider");
