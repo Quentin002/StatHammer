@@ -1,6 +1,8 @@
 package vue.simulation;
 
+
 import vue.afficheTopMenu;
+
 import java.util.ArrayList;
 import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
@@ -59,7 +61,6 @@ public class AfficheSimulation
 		ArrayList<ArmeeListe> listes = session.getListes(); // listes d'objets ArmeeListe
 		String[] list_names = session.getListNames(); // tableau des noms des listes
 		
-
 		VBox root_box = new VBox();
 		afficheTopMenu menu = new afficheTopMenu(primaryStage, session); // menu du haut de l'écran
 		HBox main = new HBox(); // partie principale de la fenêtre
@@ -281,4 +282,6 @@ public class AfficheSimulation
 	 		}
         }
 	}
+
 }
+

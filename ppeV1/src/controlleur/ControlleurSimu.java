@@ -93,4 +93,3 @@ public class ControlleurSimu {
 		SimHistogramme.setHist(c.getTabdegat1(), c.getTabmort1(), c.getDegat_moyen1(), c.getMort_moyen1(),p);
 	}
 }
-

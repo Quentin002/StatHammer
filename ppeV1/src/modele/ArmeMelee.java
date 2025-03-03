@@ -25,5 +25,7 @@ public class ArmeMelee extends Arme {
 	public void setCC(int cC) {
 		CC = cC;
 	}
-	
+
+	//public int getC() {}
 }
+

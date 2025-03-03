@@ -30,9 +30,9 @@ public class BDD {
 			this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
-			
+
 			e.printStackTrace();
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 		}
 	}
@@ -56,7 +56,68 @@ public class BDD {
 		return stat;
 	}
 	
-	
+	public ArrayList<Object> selectUtilisateur(String nom, String mdp) {
+		ArrayList<Object> rendu = new ArrayList<Object>();
+		try {
+
+			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
+			stat = connec.prepareStatement(requete);
+			stat.setString(1, nom);
+			stat.setString(2, mdp);
+
+			ResultSet rs = stat.executeQuery();
+			ResultSetMetaData md = rs.getMetaData();
+			ArrayList<String> column = new ArrayList<String>();
+
+			for (int i = 1; i <= md.getColumnCount(); i++) {
+				column.add(md.getColumnName(i));
+			}
+			while (rs.next()) {
+				rendu.add(rs.getString("nom_utilisateur"));
+				rendu.add(rs.getInt("id_utilisateur"));
+				rendu.add(rs.getString("role_utilisateur"));
+			}
+			return rendu;
+
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+
+		}
+		return rendu;
+	}
+
+	public ArrayList<String> creerUtilisateur(String adresse, String nom, String mdp) {
+		ArrayList<String> crea = new ArrayList<String>();
+
+		String creationRequete = "INSERT INTO utilisateur" + " (nom_utilisateur, email_utilisateur, mdp_utilisateur)"
+				+ "VALUES (?, ?, ?);";
+		try {
+			if (connec == null || connec.isClosed()) {
+				System.err.println("La connexion à la bdd n'est pas possible.");
+				return crea;
+			}
+			PreparedStatement stat = connec.prepareStatement(creationRequete);
+			stat.setString(1, nom);
+			stat.setString(2, adresse);
+			stat.setString(3, mdp);
+
+			int rowsInserted = stat.executeUpdate();
+
+			if (rowsInserted > 0) {
+				crea.add(adresse);
+			}
+			stat.close();
+		} catch (SQLException e) {
+			System.err.println("Erreur SQL : " + e.getMessage());
+		}
+		return crea;
+	}
+
+	public Connection getConnection() {
+		return this.connec;
+	}
+
 	public void close() {
 		try {
 			connec.close();
@@ -65,39 +126,7 @@ public class BDD {
 			e.printStackTrace();
 		}
 	}
-	public ArrayList<String> selectUtilisateur(String nom, String mdp) {
-		ArrayList<String> rendu = new ArrayList<String>();
-		try {
-			stat = this.getPreparedStatement("SELECT nom_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
-				nom, mdp);
-			
-			ResultSet rs = stat.executeQuery();
-			ResultSetMetaData md = rs.getMetaData();
-			ArrayList<String> column = new ArrayList<String>();
-			
-			String res ="";
-			for(int i =1;i<=md.getColumnCount();i++) {
-				column.add(md.getColumnName(i));
-			}
-			while(rs.next()) {
-				for (String col : column) {
-					res += rs.getString(col)+" ";
-				}
-				
-				rendu.add(res);
-				res="";
-				
-			}
-			return rendu;
-			
-		} catch (SQLException e) {
-			// TODO: handle exception
-			System.err.println(e.getMessage());
-			
-			
-		}
-		return rendu;
-	}
+	
 	public ArrayList<String> select(String requete,String... param ) throws SQLException{
 		ArrayList<String> rendu = new ArrayList<String>();
 		try {
@@ -288,6 +317,7 @@ public class BDD {
 			e.printStackTrace();
 		}
 	}
+
 	public void supprimer(Arme a) {
 		try {
 			stat.executeUpdate("DELETE FROM acces WHERE login =''");
@@ -298,7 +328,3 @@ public class BDD {
 
 	}
 }
-	
-
-
-

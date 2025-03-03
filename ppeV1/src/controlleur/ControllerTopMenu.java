@@ -7,6 +7,7 @@ import vue.AfficheAdmin;
 import vue.AfficheConnexion;
 import vue.AfficheCreerListe;
 import vue.AfficheGestionCompte;
+import vue.GestionListe.AfficheGestionListe;
 import vue.simulation.AfficheSimulation;
 
 public class ControllerTopMenu {
@@ -26,8 +27,7 @@ public class ControllerTopMenu {
 	public static void go_deco(Stage primaryStage) { 
 		AfficheConnexion.affiche(primaryStage);
 	}
-	public static void go_simulaton(Stage primaryStage, User session)
-	{
+	public static void go_simulation(Stage primaryStage, User session){
 		db.getArmyLists(session);
 		AfficheSimulation.affiche(primaryStage, session);
 	}
@@ -37,6 +37,10 @@ public class ControllerTopMenu {
 	public static void go_creer_liste(Stage primaryStage, User session) {
 		AfficheCreerListe.afficheCreerListe(primaryStage, session);
 	}
+//	public static void go_gestionliste(Stage primaryStage,User session) { 
+//		AfficheGestionListe.affiche(primaryStage,session);
+//	}
 }
+
 
 

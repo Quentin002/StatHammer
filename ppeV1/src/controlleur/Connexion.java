@@ -16,13 +16,13 @@ public class Connexion {
 		BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");
 		BDD conec = new BDD();
 		
-		ArrayList<String> rendu = conec.selectUtilisateur(login, mdp);
+		ArrayList<Object> rendu = conec.selectUtilisateur(login, mdp);
 		int id = conec.UtilisateurID(login, mdp);
 		String role = conec.UtilisateurRole(login, mdp);
 		//System.out.println(role);
 		conec.close();
 		try {
-			if (login.equals(rendu.getFirst().trim())) {
+			if (login.equals(rendu.get(0))) {
 				User session = new User(login,id,role);
 				//primaryStage.close();
 				AfficheAccueil.affiche(primaryStage,session);

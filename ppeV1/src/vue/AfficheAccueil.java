@@ -20,6 +20,7 @@ public class AfficheAccueil {
 		Scene scene = new Scene(root,800,600);
 	
 		afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+
 		root.getChildren().add(menu);
 		
 		Label titre = new Label("StatHammer");

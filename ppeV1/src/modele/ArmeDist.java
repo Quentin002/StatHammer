@@ -19,9 +19,11 @@ public class ArmeDist extends Arme {
 	public int getCT() {
 		return CT;
 	}
+
 	public void setCT(int cT) {
 		CT = cT;
 	}
-	
-
+	//public int getC() {}
 }
+
+

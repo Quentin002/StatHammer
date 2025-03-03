@@ -8,14 +8,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.User;
 
-public class afficheTopMenu extends HBox
+public class AfficheTopMenu extends HBox
 {
-	private Label pseudo;
-	
-	public afficheTopMenu(Stage primaryStage, User session)
+	public AfficheTopMenu(Stage primaryStage,User session)
 	{
 		this.setStyle("-fx-background-color: gray; -fx-padding: 5px; -fx-spacing: 10px;");
-		//Label title = new Label("Simulation"); // moche, à améliorer ou retirer
+		//Label title = new Label("Simulation"); // moche, à modifier
+	    //Button btn_end = new Button("Fin simulation");
 	    Button btn_account = new Button("Mon compte");
 	    Button btn_logout = new Button("Déconnexion");
 	    Button btn_home = new Button("Accueil");
@@ -25,10 +24,11 @@ public class afficheTopMenu extends HBox
 	    Button btn_simu = new Button("Simulation");
 	    this.getChildren().addAll(btn_home, btn_account,btn_gerer_liste,btn_creer_liste,btn_simu, btn_logout);
 	    this.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+	    //System.out.println(session.getRole().trim());
 	    if(session.getRole().equals("Admin") ) {
 	    	this.getChildren().add(btn_admin);
 	    }
-	    pseudo = new Label(session.getNom());
+	    Label pseudo = new Label(session.getNom());
 	    //pseudo.setStyle("-fx-text-fill: white");
 	    pseudo.setTextFill(Color.WHITE);
 	    pseudo.setStyle("-fx-font-weight: bold;");
@@ -36,38 +36,24 @@ public class afficheTopMenu extends HBox
 	    //scene.getStylesheets().add("styles.css");
 	    
 	    
-	    // menu principal
+	    
+	    // vers le menu principal
 	    btn_home.setOnAction(e -> {
 			ControllerTopMenu.go_accueil(primaryStage,session);
 		});
-	    // gestion de son compte
+	    // vers gestion compte utilisateur
 	    btn_account.setOnAction(e -> {
 	    	ControllerTopMenu.go_gestion_compte(primaryStage,session);
 		});
-		// gestion des listes
-	    btn_gerer_liste.setOnAction(e -> {
-	    	ControllerTopMenu.go_gestion_listes(primaryStage,session);
-		});
-	    // page de connexion
+	    // vers page de connexion
 	    btn_logout.setOnAction(e -> {
 	    	ControllerTopMenu.go_deco(primaryStage);
 		});
-		// simulation
 	    btn_simu.setOnAction(e -> {
 	    	ControllerTopMenu.go_simulation(primaryStage,session);
 		}); 
-	    // options réservées à l'admin
-	    btn_admin.setOnAction(e -> {
-	    	ControllerTopMenu.go_admin(primaryStage, session);
-		});
-	    //vers creer liste
-	    btn_creer_liste.setOnAction(e->{
-	    	ControllerTopMenu.go_creer_liste(primaryStage,session);
+	    btn_gerer_liste.setOnAction(e -> {
+	    	ControllerTopMenu.go_gestion_listes(primaryStage, session);
 	    });
-	}
-	
-	public void setLogin(String login)
-	{
-		pseudo.setText(login);
 	}
 }

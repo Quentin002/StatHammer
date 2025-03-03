@@ -74,7 +74,7 @@ public class AfficheCreerListe {
 		
 		faction.setOnAction(e->{
 			groupe.getItems().clear();
-			armeeListe.getUnites().clear();
+			armeeListe.getUnits().clear();
 			
 			for(Armee armee:Instanciation.getArmee(faction.getValue())) {
 				groupe.getItems().add(armee);
@@ -88,7 +88,7 @@ public class AfficheCreerListe {
 			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(e->{
 				gaucheUnit.getChildren().clear();
 				Instanciation.uniteBouton(unit, armeeListe);
-				for(Unit unit2:armeeListe.getUnites()) {
+				for(Unit unit2:armeeListe.getUnits()) {
 					gaucheUnit.getChildren().add(new Label(unit2.toString()));
 				}
 			})));
@@ -101,7 +101,7 @@ public class AfficheCreerListe {
 				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(y->{
 					gaucheUnit.getChildren().clear();
 					Instanciation.uniteBouton(unit, armeeListe);
-					for(Unit unit2:armeeListe.getUnites()) {
+					for(Unit unit2:armeeListe.getUnits()) {
 						gaucheUnit.getChildren().add(new Label(unit2.toString()));
 					}
 				})));

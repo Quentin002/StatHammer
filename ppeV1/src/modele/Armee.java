@@ -1,7 +1,7 @@
 package modele;
 
 public class Armee {
-	
+
 	private String nom;
 	private String logo;
 	private Faction faction;
