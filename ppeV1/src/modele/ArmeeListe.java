@@ -20,7 +20,9 @@ public class ArmeeListe {
 	public void addUnit(Unit unit) {
 		unites.add(unit);
 	}
-	
+	public ArrayList<Unit> getUnites() {
+		return unites;
+	}
 	
 
 }

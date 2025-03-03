@@ -6,80 +6,71 @@ public abstract class  Arme {
 	
 	private String nom;
 	private ArrayList<AptitudeArme> aptitudes;
-	private int A;
+	private String portee;
+	private String A;
 	private int F;
 	private int PA;
-	private int D;
-	public Arme(String nom, ArrayList<AptitudeArme> aptitudes, int a, int f, int pA, int d) {
+	private String D;
+	public Arme(String nom, ArrayList<AptitudeArme> aptitudes,String portee, String a, int f, int pA, String d) {
 		
 		this.nom = nom;
 		this.aptitudes = aptitudes;
+		this.portee=portee;
 		A = a;
 		F = f;
 		PA = pA;
 		D = d;
 	}
-	
-
-	public Arme(String nom, int F, int PA, int A, int D) {
-			this.nom = nom;
-			this.F = F;
-			this.PA = PA;
-			this.A=A;
-			this.D=D;
-	 }
-
-
 	public ArrayList<Integer> statsAtk(){
 		ArrayList<Integer> liste = new ArrayList<Integer>();
-		liste.add(A);
+		
 		liste.add(F);
 		liste.add(PA);
-		liste.add(D);
+		
 		return liste;
 	}
-	
-	//v2
-	public int getD() {
-		return D;
-	}
-
-	public void setD(int d) {
-		this.D = d;
-	}
-
 	public String getNom() {
 		return nom;
 	}
-
-	public int getA() {
-		return A;
-	}
-
-	public void setA(int a) {
-		this.A = a;
-	}
-
-	public void setPa(int pa) {
-		this.PA = pa;
-	}
-
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-	public int getPa() {
-		return PA;
+	public ArrayList<AptitudeArme> getAptitudes() {
+		return aptitudes;
 	}
-
-
+	public void setAptitudes(ArrayList<AptitudeArme> aptitudes) {
+		this.aptitudes = aptitudes;
+	}
+	public String getPortee() {
+		return portee;
+	}
+	public void setPortee(String portee) {
+		this.portee = portee;
+	}
+	public String getA() {
+		return A;
+	}
+	public void setA(String a) {
+		A = a;
+	}
 	public int getF() {
 		return F;
 	}
-
 	public void setF(int f) {
-		this.F = f;
+		F = f;
 	}
-	public abstract int getC();
+	public int getPA() {
+		return PA;
+	}
+	public void setPA(int pA) {
+		PA = pA;
+	}
+	public String getD() {
+		return D;
+	}
+	public void setD(String d) {
+		D = d;
+	}
+		
 	
 }

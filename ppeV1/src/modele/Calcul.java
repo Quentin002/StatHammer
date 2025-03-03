@@ -137,11 +137,11 @@ public class Calcul {
 		int sum_degat = 0;
 		int blessure = 0;
 		int degat_block = 0;
-		for(int i=0 ;i<f1.getArmes().get(z).getA();i++ ){
+		for(int i=0 ;i<Integer.parseInt(f1.getArmes().get(z).getA());i++ ){
 			boolean jet1=false;   
 			boolean jet2=false;
 			boolean block=true;
-			jet1=jet_de_touche(jet1,f1.getArmes().get(z).getC() );
+			jet1=jet_de_touche(jet1,((ArmeMelee) f1.getArmes().get(z)).getCC() );
 			//apptitude relancer
 				if(jet1==true){
 					touche = touche + 1;
@@ -150,12 +150,12 @@ public class Calcul {
 				}
 				if(jet2==true){
 					blessure = blessure + 1;
-					block=jet_de_sauvegarde(block,f1.getArmes().get(z).getPa(),f2.getSV());
+					block=jet_de_sauvegarde(block,f1.getArmes().get(z).getPA(),f2.getSV());
 					//apptitude relancer
 					//apptitude insensible_douleur
 					if(block==false && f2.getHP() >0){
-						f2.setHP(f2.getHP() - f1.getArmes().get(z).getD())  ;
-						sum_degat = sum_degat +f1.getArmes().get(z).getD();
+						f2.setHP(f2.getHP() - ((ArmeDist) f1.getArmes().get(z)).getCT())  ;
+						sum_degat = sum_degat +((ArmeDist) f1.getArmes().get(z)).getCT();
 					}
 					if(block == true) {
 						degat_block = degat_block + 1;
@@ -186,14 +186,14 @@ public class Calcul {
 			int pvE=u2.getList_unit().get(adv).getHP();
 			int mort = 0;
 			for (int j=0; j<u1.getList_unit().size();j++){ // pour chaque figurine
-				for(int i=0 ;i<u1.getList_unit().get(j).getArmes().get(1).getA();i++ ){ //nbr attq par arme
+				for(int i=0 ;i<Integer.parseInt(u1.getList_unit().get(j).getArmes().get(1).getA());i++ ){ //nbr attq par arme
 					dflag = false;
 					boolean jet1=false;
 					boolean jet2=false;
 					boolean block=true;
 					//System.out.println("F : "+u1.getList_unit().get(j).getArmes().get(1).getF()*u2.getList_unit().get(adv).getE());
 					//System.out.println("E : "+u2.getList_unit().get(adv).getE());
-					jet1=jet_de_touche(jet1,u1.getList_unit().get(j).getArmes().get(1).getC());
+					jet1=jet_de_touche(jet1,((ArmeMelee) u1.getList_unit().get(j).getArmes().get(1)).getCC());
 					//apptitude relancer
 						if(jet1==true){
 							touche = touche + 1;
@@ -202,13 +202,13 @@ public class Calcul {
 						}
 						if(jet2==true){
 							blessure = blessure + 1;
-							block=jet_de_sauvegarde(block,u1.getList_unit().get(j).getArmes().get(1).getPa(),u2.getList_unit().get(adv).getSV());
+							block=jet_de_sauvegarde(block,u1.getList_unit().get(j).getArmes().get(1).getPA(),u2.getList_unit().get(adv).getSV());
 							//apptitude relancer
 							//apptitude insensible_douleur
 							if(block==false && pvE >0){
-								pvE=pvE - u1.getList_unit().get(j).getArmes().get(1).getD()  ;
-								sum_degat = sum_degat + u1.getList_unit().get(j).getArmes().get(1).getD();
-								complet_degat = complet_degat+u1.getList_unit().get(j).getArmes().get(1).getD();
+								pvE=pvE - ((ArmeDist) u1.getList_unit().get(j).getArmes().get(1)).getCT()  ;
+								sum_degat = sum_degat + ((ArmeDist) u1.getList_unit().get(j).getArmes().get(1)).getCT();
+								complet_degat = complet_degat+((ArmeDist) u1.getList_unit().get(j).getArmes().get(1)).getCT();
 								dflag = true;
 							}
 							if(block == true) {

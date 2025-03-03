@@ -3,19 +3,18 @@ package modele;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class Figurine {
 	ArrayList<Arme> armes;
 	ArrayList<Aptitude> aptidudes;
 	String nom;
 	String logoChemin;
-	int M;
+	String M;
 	int E;
 	int SV;
 	int HP;
 	int CD;
 	int CO;
-	public Figurine(ArrayList<Arme> armes, ArrayList<Aptitude> aptidudes, String nom, String logoChemin, int m, int e, int sV, int hP, int cD, int cO) {
+	public Figurine(ArrayList<Arme> armes, ArrayList<Aptitude> aptidudes, String nom, String logoChemin, String m, int e, int sV, int hP, int cD, int cO) {
 		super();
 		this.armes = armes;
 		this.aptidudes = aptidudes;
@@ -29,18 +28,6 @@ public class Figurine {
 		CO = cO;
 	}
 	
-	public Figurine(String nom_figurine, int E, int SV, int HP,ArrayList<Arme> l1) {
-		this.nom = nom_figurine;
-		this.E = E;
-		this.SV = SV;
-		this.HP = HP;
-		this.armes = l1;
-	}
-	
-
-
-
-
 	//renvoi un dico avec en clé les noms des stats des armes et en valeurs une liste de valeur de toute les armes 
 	public HashMap<String,ArrayList<Integer>> statAtk(){
 		HashMap<String,ArrayList<Integer>> liste = new HashMap<String, ArrayList<Integer>>();
@@ -65,14 +52,6 @@ public class Figurine {
 		
 		return liste;
 	}
-	public int getSV() {
-		return SV;
-	}
-
-	public void setSV(int sV) {
-		SV = sV;
-	}
-
 	public void updateHP(int dommage) {
 		this.HP +=dommage;
 	}
@@ -82,38 +61,59 @@ public class Figurine {
 		liste.put("SV", SV);
 		return liste;
 	}
+	
 
 	public ArrayList<Arme> getArmes() {
 		return armes;
 	}
 
-	public void setArmes(ArrayList<Arme> armes) {
-		this.armes = armes;
+	public ArrayList<Aptitude> getAptidudes() {
+		return aptidudes;
 	}
+	
 
 	public String getNom() {
 		return nom;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public String getLogoChemin() {
+		return logoChemin;
+	}
+
+	public String getM() {
+		return M;
 	}
 
 	public int getE() {
 		return E;
 	}
 
-	public void setE(int e) {
-		E = e;
+	public int getSV() {
+		return SV;
 	}
 
 	public int getHP() {
 		return HP;
 	}
 
+	public int getCD() {
+		return CD;
+	}
+
+	public int getCO() {
+		return CO;
+	}
+	
+
 	public void setHP(int hP) {
 		HP = hP;
 	}
 
+	@Override
+	public String toString() {
+		return "" + nom + "";
+	}
+	
+	
 }
 

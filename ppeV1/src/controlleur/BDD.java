@@ -14,14 +14,20 @@ public class BDD {
 
 	private Connection connec;
 	private PreparedStatement stat;
-		
-	public BDD() {}
+private ResultSet rs ;
 	
+	
+	
+	
+	public BDD() {
+		
+	}
 	public BDD(String login,String pwd,String base) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+ base, login, pwd);
+			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+base,login,pwd);
 			this.stat = null;
+			this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
 			
@@ -74,6 +80,45 @@ public class BDD {
 				
 				rendu.add(res);
 				res="";
+				
+			}
+			return rendu;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return rendu;
+	}
+	public ArrayList<String> select(String requete,String... param ) throws SQLException{
+		ArrayList<String> rendu = new ArrayList<String>();
+		try {
+			
+			
+			stat = connec.prepareStatement(requete);
+			if(param.length>0) {
+				for(int i = 1;i<=param.length;i++) {
+					stat.setString(i, param[i-1]);
+				}
+			}
+			
+			rs.close();
+			rs = stat.executeQuery();
+			ResultSetMetaData md = rs.getMetaData();
+			ArrayList<String> column = new ArrayList<String>();
+			
+			
+			for(int i =1;i<=md.getColumnCount();i++) {
+				column.add(md.getColumnName(i));
+			}
+			while(rs.next()) {
+				for (String col : column) {
+					rendu.add(rs.getString(col));
+				}
+				
+				
 				
 			}
 			return rendu;
