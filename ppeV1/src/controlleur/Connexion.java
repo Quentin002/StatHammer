@@ -23,6 +23,7 @@ public class Connexion {
 			
 		
 		if (login.equals(rendu.getFirst().trim())) {
+			
 			User session = new User(login,id,role);
 			//primaryStage.close();
 			AfficheAccueil.affiche(primaryStage,session);

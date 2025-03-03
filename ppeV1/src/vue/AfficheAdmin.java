@@ -3,6 +3,7 @@ package vue;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -19,6 +20,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import controlleur.ControllerAdmin;
 
@@ -31,6 +36,10 @@ public class AfficheAdmin {
         titre.setFill(Color.web("#2C3E50")); 
         titre.setStroke(Color.web("#34495E"));
         titre.setStrokeWidth(1);
+        
+        
+        // Création du DatePicker
+        DatePicker date = new DatePicker();
         
     	VBox vTitre = new VBox(titre);
         Button parcourir = new Button("Parcourir");
@@ -50,13 +59,24 @@ public class AfficheAdmin {
         parcourir.setOnAction(e -> {
         	ControllerAdmin.parcourir(primaryStage, imageView);
         });
+        
         valider.setOnAction(e -> {
-        	ControllerAdmin.valider();
+        	
+        	// Récupération de la date sélectionnée
+        	LocalDate localDate = date.getValue();
+        	if (localDate != null) {
+                // Formater la date en chaîne de caractères au format "yyyy-MM-dd"
+                String dateString = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+                System.out.println("Date sélectionnée : " + dateString);
+                System.out.println(dateString);
+                System.out.println("Date sélectionnée (java.util.Date) : " + dateString);
+                ControllerAdmin.valider(nom.getText(),descEvent.getText(), dateString);
+            }      	
         });
         
         // VBox principal
         HBox hbox = new HBox(20);
-        hbox.getChildren().addAll(nom, imageView, descEvent, parcourir, valider);
+        hbox.getChildren().addAll(nom, imageView, descEvent, date, parcourir, valider);
         hbox.setAlignment(Pos.CENTER);
 
         VBox root = new VBox();
@@ -69,5 +89,8 @@ public class AfficheAdmin {
         primaryStage.setTitle("StatHammer : Admin");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+    public static void ajoutEvenement(String nom_evt, String nom_img,String desc, String date) {
+    
     }
 }
