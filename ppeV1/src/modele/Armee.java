@@ -16,22 +16,10 @@ public class Armee {
 		return faction;
 	}
 
+	
 	public String getNom() {
 		return nom;
 	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	@Override
-	public String toString() {
-		return "" + nom + "";
-	}
-	
-
-	
-	
 	
 	
 }

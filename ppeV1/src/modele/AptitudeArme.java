@@ -2,22 +2,17 @@ package modele;
 
 public class AptitudeArme {
 
-	private String nomAptitude;
+	private String nomArme;
 	
 	
-	public AptitudeArme(String nomAptitude) {
-		this.nomAptitude = nomAptitude;
+	public AptitudeArme(String nomArme) {
+		this.nomArme = nomArme;
 		
 	}
 
 	public void ArmeAptitude() {
 		
 	}
-
-	public String getNomAptitude() {
-		return nomAptitude;
-	}
-	
 
 	
 	

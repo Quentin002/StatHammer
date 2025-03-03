@@ -29,6 +29,48 @@ public abstract class  Arme {
 		
 		return liste;
 	}
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public ArrayList<AptitudeArme> getAptitudes() {
+		return aptitudes;
+	}
+	public void setAptitudes(ArrayList<AptitudeArme> aptitudes) {
+		this.aptitudes = aptitudes;
+	}
+	public String getPortee() {
+		return portee;
+	}
+	public void setPortee(String portee) {
+		this.portee = portee;
+	}
+	public String getA() {
+		return A;
+	}
+	public void setA(String a) {
+		A = a;
+	}
+	public int getF() {
+		return F;
+	}
+	public void setF(int f) {
+		F = f;
+	}
+	public int getPA() {
+		return PA;
+	}
+	public void setPA(int pA) {
+		PA = pA;
+	}
+	public String getD() {
+		return D;
+	}
+	public void setD(String d) {
+		D = d;
+	}
 		
 	
 }

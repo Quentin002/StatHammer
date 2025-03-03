@@ -1,8 +1,6 @@
 package vue;
 
-
-
-import java.awt.Dimension;
+import vue.simulation.AfficheSimulation;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,17 +12,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modele.User;
 
 public class AfficheAccueil {
-	public static void affiche(Stage primaryStage) {
-		
-		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		double hauteur = tailleEcran.getHeight()/2;
-		double largeur = tailleEcran.getWidth()/2;
-		
-		
+	public static void affiche(Stage primaryStage,User session) {
 		VBox root = new VBox();
-		Scene scene = new Scene(root,largeur,hauteur);
+		Scene scene = new Scene(root,800,600);
+	
+		afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+		root.getChildren().add(menu);
 		
 		Label titre = new Label("StatHammer");
 		VBox cadre = new VBox();
@@ -38,7 +34,7 @@ public class AfficheAccueil {
 		Image accueil = new Image("/images/accueil.jpg");
 		ImageView iv1 = new ImageView();
 		iv1.setImage(accueil);
-		iv1.setFitWidth(largeur*0.66);
+		iv1.setFitWidth(700);
 		iv1.setPreserveRatio(true);
 		iv1.setSmooth(true);
 		iv1.setCache(true);
@@ -73,24 +69,21 @@ public class AfficheAccueil {
 		cadreImage.setAlignment(Pos.CENTER);
 		
 		cadreImage.getChildren().add(iv1);
-		cadre.getChildren().add(simulation);
+		/*cadre.getChildren().add(simulation);
 		cadre.getChildren().add(creeListe);
 		cadre.getChildren().add(gererListe);
 		
 		
 		
-		root.setAlignment(Pos.TOP_CENTER);
+		
 		
 		simulation.setOnAction(e -> {
 			primaryStage.close();
 			AfficheSimulation.affiche(primaryStage);
-		});
-		creeListe.setOnAction(e ->{
 			
-			AfficheCreerListe.afficheCreerListe(primaryStage);
 		});
-		
-		
+		*/
+		root.setAlignment(Pos.TOP_CENTER);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}

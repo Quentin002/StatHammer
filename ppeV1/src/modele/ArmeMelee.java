@@ -18,4 +18,12 @@ public class ArmeMelee extends Arme {
 		return null;
 	}
 
+	public int getCC() {
+		return CC;
+	}
+
+	public void setCC(int cC) {
+		CC = cC;
+	}
+	
 }

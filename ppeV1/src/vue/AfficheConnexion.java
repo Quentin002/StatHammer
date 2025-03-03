@@ -1,7 +1,5 @@
 package vue;
 
-import java.awt.Dimension;
-
 import controlleur.Connexion;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,18 +12,13 @@ import javafx.stage.Stage;
 
 public class AfficheConnexion {
 	public static void affiche(Stage primaryStage) {
-		
-		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		double hauteur = tailleEcran.getHeight()/2;
-		double largeur = tailleEcran.getWidth()/2;
-		
 		VBox root = new VBox();
-		Scene scene = new Scene(root,largeur,hauteur);		
+		Scene scene = new Scene(root,800,600);		
 		TextField pseudo = new TextField();
 		PasswordField mdp = new PasswordField();
 		Label nomPseudo = new Label("Pseudo");
 		Label nomMdp = new Label("Mot de passe");
-		Button envoi = new Button("Appuyer sur moi");
+		Button envoi = new Button("Connexion");
 		
 		root.getChildren().add(nomPseudo);
 		root.getChildren().add(pseudo);

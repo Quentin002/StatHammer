@@ -16,6 +16,12 @@ public class ArmeDist extends Arme {
 		liste.add(CT);
 		return liste;
 	}
+	public int getCT() {
+		return CT;
+	}
+	public void setCT(int cT) {
+		CT = cT;
+	}
 	
 
 }

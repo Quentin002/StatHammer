@@ -61,6 +61,53 @@ public class Figurine {
 		liste.put("SV", SV);
 		return liste;
 	}
+	
+
+	public ArrayList<Arme> getArmes() {
+		return armes;
+	}
+
+	public ArrayList<Aptitude> getAptidudes() {
+		return aptidudes;
+	}
+	
+
+	public String getNom() {
+		return nom;
+	}
+
+	public String getLogoChemin() {
+		return logoChemin;
+	}
+
+	public String getM() {
+		return M;
+	}
+
+	public int getE() {
+		return E;
+	}
+
+	public int getSV() {
+		return SV;
+	}
+
+	public int getHP() {
+		return HP;
+	}
+
+	public int getCD() {
+		return CD;
+	}
+
+	public int getCO() {
+		return CO;
+	}
+	
+
+	public void setHP(int hP) {
+		HP = hP;
+	}
 
 	@Override
 	public String toString() {
