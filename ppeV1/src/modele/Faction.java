@@ -12,4 +12,10 @@ public class Faction {
 		return nom;
 	}
 
+	@Override
+	public String toString() {
+		return "" + nom + "";
+	}
+	
+
 }
