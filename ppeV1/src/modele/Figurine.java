@@ -3,6 +3,7 @@ package modele;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 public class Figurine {
 	ArrayList<Arme> armes;
 	ArrayList<Aptitude> aptidudes;
@@ -28,6 +29,18 @@ public class Figurine {
 		CO = cO;
 	}
 	
+	public Figurine(String nom_figurine, int E, int SV, int HP,ArrayList<Arme> l1) {
+		this.nom = nom_figurine;
+		this.E = E;
+		this.SV = SV;
+		this.HP = HP;
+		this.armes = l1;
+	}
+	
+
+
+
+
 	//renvoi un dico avec en clé les noms des stats des armes et en valeurs une liste de valeur de toute les armes 
 	public HashMap<String,ArrayList<Integer>> statAtk(){
 		HashMap<String,ArrayList<Integer>> liste = new HashMap<String, ArrayList<Integer>>();
@@ -52,6 +65,14 @@ public class Figurine {
 		
 		return liste;
 	}
+	public int getSV() {
+		return SV;
+	}
+
+	public void setSV(int sV) {
+		SV = sV;
+	}
+
 	public void updateHP(int dommage) {
 		this.HP +=dommage;
 	}
@@ -61,6 +82,38 @@ public class Figurine {
 		liste.put("SV", SV);
 		return liste;
 	}
-	
+
+	public ArrayList<Arme> getArmes() {
+		return armes;
+	}
+
+	public void setArmes(ArrayList<Arme> armes) {
+		this.armes = armes;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public int getE() {
+		return E;
+	}
+
+	public void setE(int e) {
+		E = e;
+	}
+
+	public int getHP() {
+		return HP;
+	}
+
+	public void setHP(int hP) {
+		HP = hP;
+	}
+
 }
 
