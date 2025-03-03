@@ -22,6 +22,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import modele.Armee;
 import modele.ArmeeListe;
+import modele.Bouton;
 import modele.Faction;
 import modele.Unit;
 
@@ -54,7 +55,7 @@ public class AfficheCreerListe {
 		VBox gaucheUnit = new VBox();
 		ChoiceBox<Faction> faction = new ChoiceBox<>();
 		Instanciation.conec =new BDD("400129","stathammer_greta_admin","stathammer_v1");;
-		ArmeeListe armeeListe;
+		ArmeeListe armeeListe = new ArmeeListe(new ArrayList<Unit>(),"temp","","");
 		
 		for(Faction fac:Instanciation.getFaction()) {
 			faction.getItems().add(fac);
@@ -72,6 +73,8 @@ public class AfficheCreerListe {
 		
 		faction.setOnAction(e->{
 			groupe.getItems().clear();
+			armeeListe.getUnites().clear();
+			
 			for(Armee armee:Instanciation.getArmee(faction.getValue())) {
 				groupe.getItems().add(armee);
 			}
@@ -81,14 +84,26 @@ public class AfficheCreerListe {
 		
 		for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
 			
-			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Button("+")));
+			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(e->{
+				gaucheUnit.getChildren().clear();
+				Instanciation.uniteBouton(unit, armeeListe);
+				for(Unit unit2:armeeListe.getUnites()) {
+					gaucheUnit.getChildren().add(new Label(unit2.toString()));
+				}
+			})));
 		}
 		groupe.setOnAction(e->{
 			droiteCorps.getChildren().clear();
 			
 			for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
 				
-				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Button("+")));
+				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(y->{
+					gaucheUnit.getChildren().clear();
+					Instanciation.uniteBouton(unit, armeeListe);
+					for(Unit unit2:armeeListe.getUnites()) {
+						gaucheUnit.getChildren().add(new Label(unit2.toString()));
+					}
+				})));
 				
 			}
 			

@@ -6,14 +6,16 @@ public abstract class  Arme {
 	
 	private String nom;
 	private ArrayList<AptitudeArme> aptitudes;
+	private String portee;
 	private String A;
 	private int F;
 	private int PA;
 	private String D;
-	public Arme(String nom, ArrayList<AptitudeArme> aptitudes, String a, int f, int pA, String d) {
+	public Arme(String nom, ArrayList<AptitudeArme> aptitudes,String portee, String a, int f, int pA, String d) {
 		
 		this.nom = nom;
 		this.aptitudes = aptitudes;
+		this.portee=portee;
 		A = a;
 		F = f;
 		PA = pA;

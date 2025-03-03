@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class ArmeDist extends Arme {
 	private int CT;
-	public ArmeDist(String nom, ArrayList<AptitudeArme> aptitudes, String a, int f, int pA, String d,int ct) {
-		super(nom, aptitudes, a, f, pA, d);
+	public ArmeDist(String nom, ArrayList<AptitudeArme> aptitudes,String portee, String a, int f, int pA, String d,int ct) {
+		super(nom, aptitudes,portee, a, f, pA, d);
 		this.CT=ct;
 		// TODO Auto-generated constructor stub
 	}

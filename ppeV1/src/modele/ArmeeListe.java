@@ -20,6 +20,16 @@ public class ArmeeListe {
 	public void addUnit(Unit unit) {
 		unites.add(unit);
 	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public ArrayList<Unit> getUnites() {
+		return unites;
+	}
+
+	
 	
 	
 
