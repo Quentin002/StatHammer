@@ -1,20 +1,5 @@
 package modele;
 
-import javafx.application.Application;
-import javafx.geometry.Bounds;
-import javafx.scene.Scene;
-import javafx.scene.chart.Axis;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
 public class Calcul {
 	private int[] tabdegat1; 
 	private float degat_moyen1; 
@@ -183,32 +168,32 @@ public class Calcul {
 		for (int k=0;k<10000;k++){ //simulation 100000
 			int sum_degat = 0;
 			int adv = 0;
-			int pvE=u2.getList_unit().get(adv).getHP();
+			int pvE=u2.getFigurines().get(adv).getHP();
 			int mort = 0;
-			for (int j=0; j<u1.getList_unit().size();j++){ // pour chaque figurine
-				for(int i=0 ;i<u1.getList_unit().get(j).getArmes().get(1).getA();i++ ){ //nbr attq par arme
+			for (int j=0; j<u1.getFigurines().size();j++){ // pour chaque figurine
+				for(int i=0 ;i<u1.getFigurines().get(j).getArmes().get(1).getA();i++ ){ //nbr attq par arme
 					dflag = false;
 					boolean jet1=false;
 					boolean jet2=false;
 					boolean block=true;
 					//System.out.println("F : "+u1.getList_unit().get(j).getArmes().get(1).getF()*u2.getList_unit().get(adv).getE());
 					//System.out.println("E : "+u2.getList_unit().get(adv).getE());
-					jet1=jet_de_touche(jet1,u1.getList_unit().get(j).getArmes().get(1).getC());
+					jet1=jet_de_touche(jet1,u1.getFigurines().get(j).getArmes().get(1).getC());
 					//apptitude relancer
 						if(jet1==true){
 							touche = touche + 1;
-							jet2=jet_de_blessure(jet2,u1.getList_unit().get(j).getArmes().get(1).getF(),u2.getList_unit().get(adv).getE());
+							jet2=jet_de_blessure(jet2,u1.getFigurines().get(j).getArmes().get(1).getF(),u2.getFigurines().get(adv).getE());
 							//apptitude relancer
 						}
 						if(jet2==true){
 							blessure = blessure + 1;
-							block=jet_de_sauvegarde(block,u1.getList_unit().get(j).getArmes().get(1).getPa(),u2.getList_unit().get(adv).getSV());
+							block=jet_de_sauvegarde(block,u1.getFigurines().get(j).getArmes().get(1).getPa(),u2.getFigurines().get(adv).getSV());
 							//apptitude relancer
 							//apptitude insensible_douleur
 							if(block==false && pvE >0){
-								pvE=pvE - u1.getList_unit().get(j).getArmes().get(1).getD()  ;
-								sum_degat = sum_degat + u1.getList_unit().get(j).getArmes().get(1).getD();
-								complet_degat = complet_degat+u1.getList_unit().get(j).getArmes().get(1).getD();
+								pvE=pvE - u1.getFigurines().get(j).getArmes().get(1).getD()  ;
+								sum_degat = sum_degat + u1.getFigurines().get(j).getArmes().get(1).getD();
+								complet_degat = complet_degat+u1.getFigurines().get(j).getArmes().get(1).getD();
 								dflag = true;
 							}
 							if(block == true) {
@@ -221,9 +206,9 @@ public class Calcul {
 						}
 					}
 					if(pvE  <=0 ) {
-					if (adv+1<u2.getList_unit().size()){	 
+					if (adv+1<u2.getFigurines().size()){	 
 			            adv=adv+1;
-			            pvE=u2.getList_unit().get(adv).getHP();
+			            pvE=u2.getFigurines().get(adv).getHP();
 			     
 					}
 				}

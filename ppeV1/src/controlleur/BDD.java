@@ -9,18 +9,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import modele.Arme;
+import modele.ArmeeListe;
+import modele.Armee;
+import modele.Unit;
+import modele.User;
 
 public class BDD {
 
 	private Connection connec;
 	private PreparedStatement stat;
-		
-	public BDD() {}
 	
-	public BDD(String login,String pwd,String base) {
+	private static String user;
+	private static String password;
+	private static String dbname;
+		
+	public BDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+ base, login, pwd);
+			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+ dbname, user, password);
 			this.stat = null;
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
@@ -31,6 +37,12 @@ public class BDD {
 		}
 	}
 	
+	public static void setInfos(String login, String pwd, String base)
+	{
+		user = login;
+		password = pwd;
+		dbname = base;
+	}
 	
 	public PreparedStatement getPreparedStatement(String sql, Object... params) throws SQLException
 	{
@@ -169,8 +181,44 @@ public class BDD {
 		return mdp;
 	}
 	
-		
-		
+	public void getArmyLists(User session)
+	{
+		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
+		try {
+			stat = this.getPreparedStatement(sql, session.getId());
+			ResultSet rs = stat.executeQuery();
+			session.getListes().clear();
+			while(rs.next()){
+				ArmeeListe one_list = new ArmeeListe(rs.getString("nom_liste"), rs.getString("description_liste"), rs.getString("data_liste"));
+				session.addArmee(one_list);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void getUnits(ArmeeListe list) {
+		String sql = "";
+		//list.addUnit(null);
+	}
+	
+	public Armee getArmy(Unit unit) {
+		String sql = "SELECT nom_armee, logo_armee JOIN unite USING (id_armee) WHERE id_unite = ?;";
+		Armee army = null;
+		try {
+			stat = this.getPreparedStatement(sql, unit.getId());
+			ResultSet rs = stat.executeQuery();
+			
+			while(rs.next()){
+				army = new Armee(rs.getString("nom_armee"), rs.getString("logo_armee"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return army;
+	}
+	
+	
 	public void ajouter(Arme a) {
 		try {
 			stat.executeUpdate("INSERT INTO arme (id,prenom,login,password,statut,age) VALUES (NULL,");
