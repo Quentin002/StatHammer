@@ -52,7 +52,6 @@ public class ControlleurSimu {
 		
 		// noms des unités
 		String[] unit_names = new String[list.getUnits().size()];
-		//String[] unit_names = new String[]{"Unité 1", "Unité 2", "Unité 3", "Unité 4", "Unité 5"};
 		
 		for(int i = 0; i < list.getUnits().size(); i++) {
 			unit_names[i] = list.getUnits().get(i).getName();
@@ -64,9 +63,14 @@ public class ControlleurSimu {
 		}
 		
 		// logo de faction
-		String file_name = AfficheSimulation.getArmy().getLogo();
+		Image logo_faction = null;
+		if(AfficheSimulation.getArmy() != null) // possibilité d'une liste vide
+		{
+			String file_name = AfficheSimulation.getArmy().getLogo();
+			logo_faction = new Image("/images/" + file_name);
+		}
 		ImageView logo_box = new ImageView();
-		Image logo_faction = new Image("/images/" + file_name);
+		
 		logo_box.setPreserveRatio(true);
 		logo_box.fitHeightProperty().bind(dropdown_menu_box.heightProperty());
 		logo_box.setImage(logo_faction);
