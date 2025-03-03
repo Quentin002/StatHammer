@@ -15,6 +15,13 @@ public class ArmeeListe {
 		this.data = data;
 	}
 	
+	public ArmeeListe(ArrayList<Unit> unit_list, String nom, String description, String data) {
+		this.unites = unit_list;
+		this.nom = nom;
+		this.description = description;
+		this.data = data;
+	}
+
 	// getters
 	public String getName() {
 		return nom;
@@ -31,5 +38,9 @@ public class ArmeeListe {
 	
 	public void addUnit(Unit unit) {
 		unites.add(unit);
+	}
+	
+	public ArrayList<Unit> getUnites() {
+		return unites;
 	}
 }

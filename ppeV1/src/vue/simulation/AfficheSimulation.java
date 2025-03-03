@@ -157,7 +157,7 @@ public class AfficheSimulation
 		main.getChildren().addAll(column1_box, column2, column3_box);
 		root_box.getChildren().addAll(menu, main);
 		
-		
+		/*
 		btn_simulate.setOnAction(e -> {
 			ArmeMelee w1 = new ArmeMelee("t1",3,4,1,2,1);
 			ArmeMelee w2 = new ArmeMelee("t2",8,2,3,2,3);
@@ -186,7 +186,7 @@ public class AfficheSimulation
 			Unit u2 = new Unit("unite2",fu2);
 			//Calcul.bataille(u1, u2,big_image_pane);
 			ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
-		});
+		});*/
 		
 		
 		Scene scene = new Scene(root_box,800,600);

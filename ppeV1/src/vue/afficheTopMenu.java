@@ -60,6 +60,10 @@ public class afficheTopMenu extends HBox
 	    btn_admin.setOnAction(e -> {
 	    	ControllerTopMenu.go_admin(primaryStage, session);
 		});
+	    //vers creer liste
+	    btn_creer_liste.setOnAction(e->{
+	    	ControllerTopMenu.go_creer_liste(primaryStage,session);
+	    });
 	}
 	
 	public void setLogin(String login)

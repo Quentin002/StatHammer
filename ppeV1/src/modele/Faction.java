@@ -8,6 +8,14 @@ public class Faction {
 		this.nom = nom;
 	}
 	
+	public String getNom() {
+		return nom;
+	}
+
+	@Override
+	public String toString() {
+		return "" + nom + "";
+	}
 	
 
 }

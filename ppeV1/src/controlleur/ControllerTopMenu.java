@@ -5,6 +5,7 @@ import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheAdmin;
 import vue.AfficheConnexion;
+import vue.AfficheCreerListe;
 import vue.AfficheGestionCompte;
 import vue.simulation.AfficheSimulation;
 
@@ -32,6 +33,9 @@ public class ControllerTopMenu {
 	}
 	public static void go_admin(Stage primaryStage,User session) { 
 		AfficheAdmin.affiche(primaryStage,session);
+	}
+	public static void go_creer_liste(Stage primaryStage, User session) {
+		AfficheCreerListe.afficheCreerListe(primaryStage, session);
 	}
 }
 

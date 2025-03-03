@@ -41,4 +41,9 @@ public class Unit {
 	public void killFigurine(Figurine mort) {
 		figurines.remove(mort);
 	}
+	
+	@Override
+	public String toString() {
+		return "" + nom + "";
+	}
 }
