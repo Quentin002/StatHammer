@@ -62,7 +62,7 @@ public class AfficheSimulation
 		String[] list_names = session.getListNames(); // tableau des noms des listes
 		
 		VBox root_box = new VBox();
-		afficheTopMenu menu = new afficheTopMenu(primaryStage, session); // menu du haut de l'écran
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session); // menu du haut de l'écran
 		HBox main = new HBox(); // partie principale de la fenêtre
 		
 		

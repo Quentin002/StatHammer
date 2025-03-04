@@ -8,11 +8,11 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.User;
 
-public class afficheTopMenu extends HBox
+public class AfficheTopMenu extends HBox
 {
 	private Label pseudo;
 	
-	public afficheTopMenu(Stage primaryStage, User session)
+	public AfficheTopMenu(Stage primaryStage, User session)
 	{
 		this.setStyle("-fx-background-color: gray; -fx-padding: 5px; -fx-spacing: 10px;");
 		//Label title = new Label("Simulation"); // moche, à améliorer ou retirer

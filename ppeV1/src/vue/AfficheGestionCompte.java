@@ -37,7 +37,7 @@ public static void affiche(Stage primaryStage,User session) {
 	vboxT.getChildren().add(etiquetteM);
 	//VBox vboxL = new VBox();
 	
-	afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 	
 	VBox vbox1 = new VBox();
 	vbox1.getChildren().add(etiquette);

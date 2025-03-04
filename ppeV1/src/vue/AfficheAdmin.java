@@ -30,7 +30,7 @@ import controlleur.ControllerAdmin;
 public class AfficheAdmin {
     public static void affiche(Stage primaryStage, User session) {
     	
-    	afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+    	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
     	Text titre = new Text("Mes évènements");
     	titre.setFont(Font.font("Arial", 30));
         titre.setFill(Color.web("#2C3E50")); 
