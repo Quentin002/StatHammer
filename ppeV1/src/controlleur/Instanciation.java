@@ -60,7 +60,7 @@ public class Instanciation {
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
-			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getNom() );
+			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
 			
 			
 			for (int i = 0;i<nom.size();i = i+2) {

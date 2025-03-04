@@ -11,11 +11,13 @@ public abstract class  Arme {
 	private int F;
 	private int PA;
 	private String D;
-	public Arme(String nom, ArrayList<AptitudeArme> aptitudes,String portee, String a, int f, int pA, String d) {
-		
+	public Arme(String nom, ArrayList<AptitudeArme> aptitudes,String portee, String a, int f, int pA, String d)
+	{		
 		this.nom = nom;
 		this.aptitudes = aptitudes;
 		this.portee=portee;
+		this.setAptitudes(aptitudes);
+
 		A = a;
 		F = f;
 		PA = pA;
@@ -29,18 +31,22 @@ public abstract class  Arme {
 		
 		return liste;
 	}
+	
+	//v2
+	public String getD() {
+		return D;
+	}
+	public void setD(String d) {
+		D = d;
+	}
+	
 	public String getNom() {
 		return nom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public ArrayList<AptitudeArme> getAptitudes() {
-		return aptitudes;
-	}
-	public void setAptitudes(ArrayList<AptitudeArme> aptitudes) {
-		this.aptitudes = aptitudes;
-	}
+	
 	public String getPortee() {
 		return portee;
 	}
@@ -59,18 +65,20 @@ public abstract class  Arme {
 	public void setF(int f) {
 		F = f;
 	}
+	
 	public int getPA() {
 		return PA;
 	}
 	public void setPA(int pA) {
 		PA = pA;
 	}
-	public String getD() {
-		return D;
-	}
-	public void setD(String d) {
-		D = d;
-	}
-		
 	
+	//public abstract int getC();
+
+	public ArrayList<AptitudeArme> getAptitudes() {
+		return aptitudes;
+	}
+	public void setAptitudes(ArrayList<AptitudeArme> aptitudes) {
+		this.aptitudes = aptitudes;
+	}	
 }

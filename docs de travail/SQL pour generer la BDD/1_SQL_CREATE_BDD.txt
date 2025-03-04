@@ -1,0 +1,139 @@
+CREATE DATABASE stathammer;
+USE stathammer;
+
+CREATE TABLE figurine(
+   id_figurine INT NOT NULL AUTO_INCREMENT,
+   nom_figurine VARCHAR(200),
+   M VARCHAR(50),
+   E INT,
+   SV VARCHAR(50),
+   PV INT,
+   CD VARCHAR(50),
+   CO INT,
+   PRIMARY KEY(id_figurine)
+);
+
+CREATE TABLE faction(
+   id_faction INT NOT NULL AUTO_INCREMENT,
+   nom_faction VARCHAR(50),
+   PRIMARY KEY(id_faction)
+);
+
+CREATE TABLE aptitude(
+   id_aptitude INT NOT NULL AUTO_INCREMENT,
+   nom_aptitude VARCHAR(50),
+   PRIMARY KEY(id_aptitude)
+);
+
+CREATE TABLE tir(
+   id_tir INT NOT NULL AUTO_INCREMENT,
+   CT VARCHAR(3) NOT NULL,
+   PRIMARY KEY(id_tir)
+);
+
+CREATE TABLE melee(
+   id_melee INT NOT NULL AUTO_INCREMENT,
+   CC VARCHAR(3),
+   PRIMARY KEY(id_melee)
+);
+
+CREATE TABLE aptitude_arme(
+   id_aptitude_arme INT NOT NULL AUTO_INCREMENT,
+   nom_aptitude_arme VARCHAR(50),
+   PRIMARY KEY(id_aptitude_arme)
+);
+
+CREATE TABLE utilisateur(
+   id_utilisateur INT NOT NULL AUTO_INCREMENT,
+   nom_utilisateur VARCHAR(50) NOT NULL,
+   email_utilisateur VARCHAR(50) NOT NULL,
+   mdp_utilisateur VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_utilisateur),
+   UNIQUE(nom_utilisateur),
+   UNIQUE(email_utilisateur)
+);
+
+CREATE TABLE armee(
+   id_armee INT NOT NULL AUTO_INCREMENT,
+   nom_armee VARCHAR(50),
+   logo_armee VARCHAR(50),
+   id_faction INT NOT NULL,
+   PRIMARY KEY(id_armee),
+   FOREIGN KEY(id_faction) REFERENCES FACTION(id_faction)
+);
+
+CREATE TABLE arme(
+   id_arme INT NOT NULL AUTO_INCREMENT,
+   nom_arme VARCHAR(200),
+   PORTEE VARCHAR(50),
+   A VARCHAR(50),
+   F INT,
+   PA INT,
+   D VARCHAR(50),
+   id_tir INT,
+   id_melee INT,
+   PRIMARY KEY(id_arme),
+   FOREIGN KEY(id_tir) REFERENCES TIR(id_tir),
+   FOREIGN KEY(id_melee) REFERENCES MELEE(id_melee)
+);
+
+CREATE TABLE liste(
+   id_liste INT NOT NULL AUTO_INCREMENT,
+   nom_liste VARCHAR(50),
+   description_liste VARCHAR(50),
+   data_liste VARCHAR(500),
+   id_utilisateur INT NOT NULL,
+   PRIMARY KEY(id_liste),
+   FOREIGN KEY(id_utilisateur) REFERENCES UTILISATEUR(id_utilisateur)
+);
+
+CREATE TABLE unite(
+   id_unite INT NOT NULL AUTO_INCREMENT,
+   nom_unite VARCHAR(200),
+   points_unite INT,
+   logo_unite VARCHAR(50),
+   id_armee INT NOT NULL,
+   PRIMARY KEY(id_unite),
+   FOREIGN KEY(id_armee) REFERENCES ARMEE(id_armee)
+);
+
+CREATE TABLE remplir(
+   id_figurine INT,
+   id_unite INT,
+   nb_figurine INT,
+   PRIMARY KEY(id_figurine, id_unite),
+   FOREIGN KEY(id_figurine) REFERENCES FIGURINE(id_figurine),
+   FOREIGN KEY(id_unite) REFERENCES UNITE(id_unite)
+);
+
+CREATE TABLE posseder(
+   id_arme INT,
+   id_aptitude_arme INT,
+   PRIMARY KEY(id_arme, id_aptitude_arme),
+   FOREIGN KEY(id_arme) REFERENCES ARME(id_arme),
+   FOREIGN KEY(id_aptitude_arme) REFERENCES APTITUDE_ARME(id_aptitude_arme)
+);
+
+CREATE TABLE permettre(
+   id_figurine INT,
+   id_aptitude INT,
+   PRIMARY KEY(id_figurine, id_aptitude),
+   FOREIGN KEY(id_figurine) REFERENCES FIGURINE(id_figurine),
+   FOREIGN KEY(id_aptitude) REFERENCES APTITUDE(id_aptitude)
+);
+
+CREATE TABLE contenir(
+   id_unite INT,
+   id_liste INT,
+   PRIMARY KEY(id_unite, id_liste),
+   FOREIGN KEY(id_unite) REFERENCES UNITE(id_unite),
+   FOREIGN KEY(id_liste) REFERENCES LISTE(id_liste)
+);
+
+CREATE TABLE equiper(
+   id_figurine INT,
+   id_arme INT,
+   PRIMARY KEY(id_figurine, id_arme),
+   FOREIGN KEY(id_figurine) REFERENCES FIGURINE(id_figurine),
+   FOREIGN KEY(id_arme) REFERENCES ARME(id_arme)
+);

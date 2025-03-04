@@ -85,3 +85,4 @@ public class SimAptAndWeaponsVBox extends VBox
 		
 	}
 }
+

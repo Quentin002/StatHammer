@@ -2,25 +2,19 @@ package vue;
 
 import java.sql.SQLException;
 
-import controlleur.BDD;
 import controlleur.Connexion;
-import controlleur.ControllerTopMenu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import modele.User;
+
 public class AfficheGestionCompte {
 
 public static void affiche(Stage primaryStage,User session) {
@@ -41,12 +35,9 @@ public static void affiche(Stage primaryStage,User session) {
 	
 	VBox vboxT = new VBox();
 	vboxT.getChildren().add(etiquetteM);
+	//VBox vboxL = new VBox();
 	
-	
-	
-	
-	
-	afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 	
 	VBox vbox1 = new VBox();
 	vbox1.getChildren().add(etiquette);
@@ -62,11 +53,6 @@ public static void affiche(Stage primaryStage,User session) {
 	vboxb.getChildren().add(bouton2);
 	vbox2.getChildren().add(vboxb);
 	
-	
-	
-	
-	
-
 	
 	Scene scene = new Scene(vbox, 800, 600);
 	vbox.getChildren().add(menu);
@@ -93,10 +79,10 @@ public static void affiche(Stage primaryStage,User session) {
 	bouton1.setOnAction(e -> {
 		if(texte.getText() != null && !texte.getText().trim().isEmpty() && texte.getText().trim().contains(" ")==false)
 		try {
-			Connexion.updatePseudo(texte.getText().trim(),session.getId());
-			
+			Connexion.updatePseudo(texte.getText().trim(),session.getId()); // bdd
+			session.setNom(texte.getText().trim()); // instance de l'utilisateur
+			menu.setLogin(session.getNom()); // barre de menu
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	});
@@ -105,7 +91,6 @@ public static void affiche(Stage primaryStage,User session) {
 		
 		try {
 			String mdp =Connexion.selectMdp(session.getId());
-			//System.out.println(mdp);
 			if (texte3.getText().trim().equals(mdp)==true) {
 
 				if(texte2.getText() != null && !texte2.getText().trim().isEmpty() && texte2.getText().trim().contains(" ")==false)
@@ -113,13 +98,11 @@ public static void affiche(Stage primaryStage,User session) {
 					Connexion.updateMdp(texte2.getText().trim(), session.getId());
 				
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		}
 		 catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		});
@@ -127,7 +110,5 @@ public static void affiche(Stage primaryStage,User session) {
 	primaryStage.setScene(scene);
 	primaryStage.show();
 	}
-
-
 }
 

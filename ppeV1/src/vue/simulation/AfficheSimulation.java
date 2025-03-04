@@ -1,9 +1,9 @@
 package vue.simulation;
 
-import vue.afficheTopMenu;
-import java.util.ArrayList;
-import java.util.HashMap;
 
+import vue.AfficheTopMenu;
+
+import java.util.ArrayList;
 import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,48 +19,50 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Arme;
 import modele.ArmeMelee;
+import modele.Armee;
+import modele.ArmeeListe;
 import modele.Figurine;
 import modele.Unit;
 import modele.User;
 
 public class AfficheSimulation
-//public class Main extends Application
 {
+	private static ArmeeListe selected_list;
+	private static Armee army;
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
 	
 	public static void setColumn1Bottom(SimAptAndWeaponsVBox wap)
 	{
 		weapons_aptitudes_menu.getChildren().clear();
-		//weapons_aptitudes_menu = wap; // marche pas
-		weapons_aptitudes_menu.getChildren().addAll(wap.getChildren());
+		weapons_aptitudes_menu.getChildren().addAll(wap.getChildren()); // copie profonde
 		weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
 	}
 	
-	// run config: --module-path "C:\Users\greta\CODE\eclipse-java\javafx-sdk-21.0.6\lib" --add-modules javafx.controls
-//	public static void main(String[] args){
-//		launch(args);
-//	}
+	public static ArmeeListe getSelectedList() {
+		return selected_list;
+	}
+	public static void setSelectedList(ArmeeListe list) {
+		selected_list = list;
+	}
+	public static Armee getArmy() {
+		return army;
+	}
+	public static void setArmy(Armee a) {
+		army = a;
+	}
 	
-//	@Override
-//	public void start(Stage primaryStage)
-	public static void affiche(Stage primaryStage,User session)
-	//public static void affiche(Stage primaryStage, ArrayList<ArmeeListe> liste)
+	public static SimAptAndWeaponsVBox getWeaponsAtitudesMenu() {
+		return weapons_aptitudes_menu;
+	}
+	
+	public static void affiche(Stage primaryStage, User session)
 	{
 		// listes d'armées
-		// y mettre en réalité les noms des listes d'armée
-//		for(ArmeeListe one_list : liste)
-//			String[] attacker_lists =
-//			String[] defenser_lists =
-//		{}
-		String[] attacker_lists = {"Liste 1", "Liste 2", "Liste 3"};
-		String[] defender_lists = {"Liste 1", "Liste 2", "Liste 3"};
-		HashMap<String, String[]> units_names =  new HashMap<String, String[]>();
-		units_names.put("Liste 1", new String[]{"Unité 1", "Unité 2", "Unité 3", "Unité 4", "Unité 5"});
-		units_names.put("Liste 2", new String[]{"Unité 6", "Unité 7", "Unité 8", "Unité 9"});
-		units_names.put("Liste 3", new String[]{"Unité 10", "Unité 11"});
-
+		ArrayList<ArmeeListe> listes = session.getListes(); // listes d'objets ArmeeListe
+		String[] list_names = session.getListNames(); // tableau des noms des listes
+		
 		VBox root_box = new VBox();
-		afficheTopMenu menu = new afficheTopMenu(primaryStage,session); // menu du haut de l'écran
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session); // menu du haut de l'écran
 		HBox main = new HBox(); // partie principale de la fenêtre
 		
 		
@@ -76,13 +78,13 @@ public class AfficheSimulation
         
         
         // menu choix armée
-        HBox col1_first_row = new HBox();
+        HBox col1_first_row = new HBox(); // menu déroulant + logo faction
         ChoiceBox<String> list1_drop_down = new ChoiceBox<>();
         list1_drop_down.setStyle("-fx-font-size: 15;");
         list1_drop_down.prefWidthProperty().bind(column1_scrollpane.widthProperty());
-        for(int i = 0; i < attacker_lists.length; i++)
+        for(int i = 0; i < list_names.length; i++)
         {
-        	list1_drop_down.getItems().add(attacker_lists[i]);
+        	list1_drop_down.getItems().add(list_names[i]);
         }
         col1_first_row.getChildren().add(list1_drop_down);
         column1.getChildren().add(col1_first_row);
@@ -135,13 +137,13 @@ public class AfficheSimulation
         VBox column3 = new VBox();
         column3.prefWidthProperty().bind(column3_box.widthProperty());
         
-        HBox col3_first_row = new HBox();
+        HBox col3_first_row = new HBox(); // menu déroulant + logo faction
         ChoiceBox<String> list2_drop_down = new ChoiceBox<>();
         list2_drop_down.setStyle("-fx-font-size: 15;");
         list2_drop_down.prefWidthProperty().bind(column1_scrollpane.widthProperty());
-        for(int i = 0; i < defender_lists.length; i++)
+        for(int i = 0; i < list_names.length; i++)
         {
-        	list2_drop_down.getItems().add(defender_lists[i]);
+        	list2_drop_down.getItems().add(list_names[i]);
         }
         col3_first_row.getChildren().add(list2_drop_down);
         column3.getChildren().add(col3_first_row);
@@ -208,28 +210,9 @@ public class AfficheSimulation
         {
         	final int j = i;
         	lists_drop_down.get(i).setOnAction(e -> {
+        		ControlleurSimu.selectAList(listes, lists_drop_down.get(j).getValue());
+        		ControlleurSimu.PullDownUnits(first_rows.get(j), lists.get(j));
         		
-        		// Passer par un contrôleur pour obtenir les logos de factions et les unités!!
-        		//ControlleurSimu.changeList(lists_drop_down.get(j).getValue());
-        		
-        		// logo de faction
-        		String file_name = "android-fill.png"; // à récupérer par le contrôleur
-        		Image logo_faction = new Image("/images/" + file_name);
-        		ImageView logo_box = new ImageView();
-        		logo_box.setPreserveRatio(true);
-        		logo_box.fitHeightProperty().bind(lists_drop_down.get(j).heightProperty());
-        		logo_box.setImage(logo_faction);
-        		if(first_rows.get(j).getChildren().size() == 2){
-        			first_rows.get(j).getChildren().remove(1);
-        		}
-        		first_rows.get(j).getChildren().add(logo_box);
-        		
-        		// effacer la zone armes et aptitudes
-        		weapons_aptitudes_menu.setStyle("-fx-border-width: 0;");
-        		weapons_aptitudes_menu.getChildren().clear();
-        		// effacer et recréer les unités
-        		lists.get(j).getChildren().clear();
-        		lists.get(j).setList(units_names.get(lists_drop_down.get(j).getValue()));
         		// remettre la capture des boutons pour dérouler les unités
         		dropdownUnitButtonsAction(lists);
             });
@@ -299,4 +282,6 @@ public class AfficheSimulation
 	 		}
         }
 	}
+
 }
+

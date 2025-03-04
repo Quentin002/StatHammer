@@ -1,23 +1,23 @@
 package modele;
 
 public class Armee {
-	
+
 	private String nom;
 	private String logo;
 	private Faction faction;
 	
-	public Armee(String nom, String logo, Faction faction) {
+	public Armee(String nom, String logo) {
 		this.nom = nom;
 		this.logo = logo;
-		this.faction = faction;
 	}
 
-	public Faction getFaction() {
-		return faction;
+	public Armee(String nom, String logo, Faction fact) {
+		this.nom = nom;
+		this.logo = logo;
+		this.faction = fact;
 	}
 
-	
-	public String getNom() {
+	public String getName() {
 		return nom;
 	}
 
@@ -26,5 +26,11 @@ public class Armee {
 		return "" + nom + "";
 	}
 	
+	public String getLogo() {
+		return logo;
+	}
 	
+	public Faction getFaction() {
+		return faction;
+	}
 }

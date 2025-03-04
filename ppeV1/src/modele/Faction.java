@@ -1,7 +1,7 @@
 package modele;
 
 public class Faction {
-	
+
 	private String nom;
 
 	public Faction(String nom) {
@@ -16,6 +16,4 @@ public class Faction {
 	public String toString() {
 		return "" + nom + "";
 	}
-	
-
 }
