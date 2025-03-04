@@ -6,12 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import modele.Arme;
-import modele.ArmeeListe;
-import modele.Armee;
-import modele.Unit;
-import modele.User;
 
 public class BDD {
 
@@ -44,6 +41,10 @@ public class BDD {
 		dbname = base;
 	}
 	
+	public Statement getStatement() throws SQLException
+	{
+		return connec.createStatement();
+	}
 	public PreparedStatement getPreparedStatement(String sql, Object... params) throws SQLException
 	{
 		stat = connec.prepareStatement(sql);
@@ -247,43 +248,6 @@ public class BDD {
 			
 		}
 		return mdp;
-	}
-	
-	public void getArmyLists(User session)
-	{
-		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
-		try {
-			stat = this.getPreparedStatement(sql, session.getId());
-			ResultSet rs = stat.executeQuery();
-			session.getListes().clear();
-			while(rs.next()){
-				ArmeeListe one_list = new ArmeeListe(rs.getString("nom_liste"), rs.getString("description_liste"), rs.getString("data_liste"));
-				session.addArmee(one_list);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void getUnits(ArmeeListe list) {
-		String sql = "";
-		//list.addUnit(null);
-	}
-	
-	public Armee getArmy(Unit unit) {
-		String sql = "SELECT nom_armee, logo_armee JOIN unite USING (id_armee) WHERE id_unite = ?;";
-		Armee army = null;
-		try {
-			stat = this.getPreparedStatement(sql, unit.getId());
-			ResultSet rs = stat.executeQuery();
-			
-			while(rs.next()){
-				army = new Armee(rs.getString("nom_armee"), rs.getString("logo_armee"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return army;
 	}
 	
 	public void newEvent(String nom_evt, String nom_img,String desc, String date) {

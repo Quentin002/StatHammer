@@ -21,14 +21,15 @@ public class ControllerTopMenu {
 		AfficheGestionCompte.affiche(primaryStage,session);
 	}
 	public static void go_gestion_listes(Stage primaryStage,User session) { 
-		db.getArmyLists(session);
 		//
 	}
 	public static void go_deco(Stage primaryStage) { 
 		AfficheConnexion.affiche(primaryStage);
 	}
 	public static void go_simulation(Stage primaryStage, User session){
-		db.getArmyLists(session);
+		Instanciation.conec = new BDD();
+		Instanciation.getArmyLists(session);
+		Instanciation.conec.close();
 		AfficheSimulation.affiche(primaryStage, session);
 	}
 	public static void go_admin(Stage primaryStage,User session) { 

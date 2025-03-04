@@ -39,11 +39,20 @@ public class ArmeeListe
 	public String getName() {
 		return nom;
 	}
+	public void setName(String name) {
+		nom = name;
+	}
 	public String getDescription() {
 		return description;
 	}
+	public void setDescription(String desc) {
+		description = desc;
+	}
 	public String getData() {
 		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
 	}
     public int getIdUtilisateur() {
     	return idUtilisateur;
@@ -51,6 +60,9 @@ public class ArmeeListe
     
 	public ArrayList<Unit> getUnits() {
 		return unites;
+	}
+	public void setUnits(ArrayList<Unit> units) {
+		unites = units;
 	}
 	public String[] getUnitNames() {
 		String[] unit_names = new String[unites.size()];
