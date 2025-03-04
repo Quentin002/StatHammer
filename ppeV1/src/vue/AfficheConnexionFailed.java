@@ -18,7 +18,8 @@ public class AfficheConnexionFailed {
 		TextField mdp = new TextField();
 		Label nomPseudo = new Label("Pseudo");
 		Label nomMdp = new Label("Mot de passe");
-		Button envoi = new Button("Appuyer sur moi");
+		Button envoi = new Button("Connexion");
+		Button creaCompte = new Button("Créer un compte");
 		Label erreur = new Label("Mauvais Login et/ou MDP");
 
 		erreur.setTextFill(Color.RED);
@@ -29,6 +30,7 @@ public class AfficheConnexionFailed {
 		root.getChildren().add(nomMdp);
 		root.getChildren().add(mdp);
 		root.getChildren().add(envoi);
+		root.getChildren().add(creaCompte);
 		root.getChildren().add(erreur);
 
 		mdp.setMaxWidth(200);
@@ -41,6 +43,9 @@ public class AfficheConnexionFailed {
 		envoi.setOnAction(e -> {
 
 			Connexion.verif(pseudo.getText(), mdp.getText(), primaryStage);
+		});
+		creaCompte.setOnAction(e -> {
+			AfficheCreationCompte.affiche(primaryStage);
 		});
 
 		primaryStage.setScene(scene);

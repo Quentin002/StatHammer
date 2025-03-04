@@ -1,7 +1,7 @@
 package vue.simulation;
 
 
-import vue.afficheTopMenu;
+import vue.AfficheTopMenu;
 
 import java.util.ArrayList;
 import controlleur.ControlleurSimu;

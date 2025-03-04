@@ -1,5 +1,6 @@
 package vue;
 
+import controlleur.BDD;
 import controlleur.Connexion;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,6 +35,8 @@ public class AfficheConnexion {
 		pseudo.setAlignment(Pos.CENTER);
 		mdp.setAlignment(Pos.CENTER);
 		root.setAlignment(Pos.CENTER);
+		
+		BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");
 
 		creaCompte.setOnAction(e -> {
 			AfficheCreationCompte.affiche(primaryStage);
