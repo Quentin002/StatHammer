@@ -300,7 +300,7 @@ public class BDD {
 	}
 	
 	public void getUnits(ArmeeListe list) {
-		String sql = "";
+		//String sql = "";
 		//list.addUnit(null);
 	}
 	

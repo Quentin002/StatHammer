@@ -7,7 +7,6 @@ import vue.AfficheAdmin;
 import vue.AfficheConnexion;
 import vue.AfficheCreerListe;
 import vue.AfficheGestionCompte;
-import vue.GestionListe.AfficheGestionListe;
 import vue.simulation.AfficheSimulation;
 
 public class ControllerTopMenu {

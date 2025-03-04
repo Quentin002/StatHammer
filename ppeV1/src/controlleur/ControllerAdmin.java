@@ -3,22 +3,11 @@ package controlleur;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import vue.AfficheAccueil;
 import vue.AfficheAdmin;
-import vue.AfficheConnexionFailed;
-import modele.Evenement;
-import modele.User;
 
 public class ControllerAdmin {
 	private static String destinationDir;

@@ -14,10 +14,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import modele.Armee;
@@ -33,6 +31,8 @@ public class AfficheCreerListe {
 		double hauteur = tailleEcran.getHeight()/2;
 		double largeur = tailleEcran.getWidth()/2;
 		
+		
+		//initialisation de toute les variables
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
 		
 		VBox root = new VBox();
@@ -50,7 +50,6 @@ public class AfficheCreerListe {
 		ImageView iv2 = new ImageView(logoFaction);
 		Button creation = new Button("Créer et sauvegarder une Armée");
 		TextField nomArmee = new TextField();
-		
 		ScrollPane toutUnit = new ScrollPane();
 		ScrollPane unitSauv = new ScrollPane();
 		VBox gaucheUnit = new VBox();
@@ -58,6 +57,8 @@ public class AfficheCreerListe {
 		ChoiceBox<Armee> groupe = new ChoiceBox<>();
 		Instanciation.conec =new BDD();
 		ArmeeListe armeeListe = new ArmeeListe(new ArrayList<Unit>(),"temp","","");
+		
+		
 		
 		for(Faction fac:Instanciation.getFaction()) {
 			faction.getItems().add(fac);
@@ -86,16 +87,18 @@ public class AfficheCreerListe {
 		});
 		
 		
-		/*for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
+		for(Unit unit : Instanciation.getUniteOfArmy(groupe.getValue())) {
 			
 			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(e->{
 				gaucheUnit.getChildren().clear();
-				Instanciation.uniteBouton(unit, armeeListe);
+				armeeListe.addUnit(unit);
 				for(Unit unit2:armeeListe.getUnits()) {
 					gaucheUnit.getChildren().add(new Label(unit2.toString()));
 				}
 			})));
-		}*/
+		}
+		
+		
 		groupe.setOnAction(e->{
 			droiteCorps.getChildren().clear();
 			armeeListe.getUnits().clear();
