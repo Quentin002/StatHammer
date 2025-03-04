@@ -17,12 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.Arme;
-import modele.ArmeMelee;
 import modele.Armee;
 import modele.ArmeeListe;
-import modele.Figurine;
-import modele.Unit;
 import modele.User;
 
 public class AfficheSimulation
