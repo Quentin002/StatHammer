@@ -23,6 +23,13 @@ public abstract class  Arme {
 		PA = pA;
 		D = d;
 	}
+	public Arme(String nom, int F, int PA, String A, String D) {
+		this.nom = nom;
+		this.F = F;
+		this.PA = PA;
+		this.A=A;
+		this.D=D;
+ }
 	public ArrayList<Integer> statsAtk(){
 		ArrayList<Integer> liste = new ArrayList<Integer>();
 		
@@ -73,7 +80,7 @@ public abstract class  Arme {
 		PA = pA;
 	}
 	
-	//public abstract int getC();
+	public abstract int getC();
 
 	public ArrayList<AptitudeArme> getAptitudes() {
 		return aptitudes;

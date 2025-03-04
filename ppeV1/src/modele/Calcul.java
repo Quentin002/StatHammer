@@ -108,7 +108,7 @@ public class Calcul {
 				case 1:
 					block = false;
 				default :
-					if ( d3 - pa < sv ){
+					if ( d3 + pa < sv ){
 						block = false;
 					}
 		}
@@ -193,9 +193,9 @@ public class Calcul {
 							//apptitude relancer
 							//apptitude insensible_douleur
 							if(block==false && pvE >0){
-								pvE=pvE - ((ArmeDist) u1.getFigurines().get(j).getArmes().get(1)).getCT()  ;
-								sum_degat = sum_degat + ((ArmeDist) u1.getFigurines().get(j).getArmes().get(1)).getCT();
-								complet_degat = complet_degat+((ArmeDist) u1.getFigurines().get(j).getArmes().get(1)).getCT();
+								pvE=pvE - ((u1.getFigurines().get(j).getArmes().get(1)).getC())  ;
+								sum_degat = sum_degat + ( u1.getFigurines().get(j).getArmes().get(1)).getC();
+								complet_degat = complet_degat+( u1.getFigurines().get(j).getArmes().get(1)).getC();
 
 								dflag = true;
 							}
