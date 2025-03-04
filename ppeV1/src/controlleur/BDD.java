@@ -177,6 +177,40 @@ public class BDD {
 			System.err.println(e.getMessage());
 		}
 	}
+	
+	public void insertListe(ArmeeListe armee,User session) {
+		try {
+			int id;
+			ArrayList<String> rendu = new ArrayList<String>();
+			String requete = "INSERT INTO liste VALUES(DEFAULT,?,?,?,?);";
+			stat = this.getPreparedStatement(requete);
+			stat.setString(1, armee.getName());
+			stat.setString(2, armee.getDescription());
+			stat.setString(3, armee.getData());
+			stat.setInt(4, session.getId());
+			stat.executeUpdate();
+			
+			requete = "SELECT id_liste FROM liste WHERE nom_liste = '"+armee.getName()+"';";
+			
+			rendu = this.select(requete);
+			id = Integer.parseInt(rendu.getFirst());
+			requete = "INSERT INTO contenir VALUES(?,?);";
+			
+			for(Unit unit : armee.getUnits()) {
+				
+				
+				stat = this.getPreparedStatement(requete);
+				stat.setInt(1, unit.getId());
+				stat.setInt(2, id);
+				stat.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
 	public void updateMp(String mdp,int id) {
 		try {
 			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp,id);

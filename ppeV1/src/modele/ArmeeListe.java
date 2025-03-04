@@ -63,6 +63,11 @@ public class ArmeeListe
 		unites.add(unit);
 	}
 	
+	
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
 	@Override
     public String toString() {
         return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 

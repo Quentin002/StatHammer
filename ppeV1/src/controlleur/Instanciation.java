@@ -1,7 +1,5 @@
 package controlleur;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -15,6 +13,7 @@ import modele.ArmeeListe;
 import modele.Faction;
 import modele.Figurine;
 import modele.Unit;
+import modele.User;
 
 public class Instanciation {
 
@@ -55,16 +54,16 @@ public class Instanciation {
 		return rendu;
 	}
 	
-	public static ArrayList<Unit> getUnite(Armee armee){
+	public static ArrayList<Unit> getUniteOfArmy(Armee armee){
 		ArrayList<Unit> rendu = new ArrayList<>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
-			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
+			nom = conec.select("SELECT u.id_unite, u.nom_unite,  u.points_unite,u.logo_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ? LIMIT 20;",armee.getName() );
 			
 			
-			for (int i = 0;i<nom.size();i = i+2) {
-				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
+			for (int i = 0;i<nom.size();i = i+4) {
+				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i+1)),Integer.parseInt(nom.get(i)),nom.get(i+1), Integer.parseInt(nom.get(i+2)),nom.get(i+3),armee));
 			}
 			
 			
@@ -176,9 +175,8 @@ public class Instanciation {
 		
 		return rendu;
 	}
-	public static void uniteBouton(Unit u,ArmeeListe a) {
-		a.addUnit(u);
-		
+	public static void insertListe(ArmeeListe armee,User session) {
+		conec.insertListe(armee, session);
 	}
 	
 }

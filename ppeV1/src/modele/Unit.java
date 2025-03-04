@@ -6,13 +6,16 @@ public class Unit {
 	
 	private ArrayList<Figurine> figurines;
 	private int id;
+	private String logo;
 	private String nom;
 	private int points;
 	private Armee armee;
 	
-	public Unit(ArrayList<Figurine> figurines, String nom, int points, Armee armee) {
+	public Unit(ArrayList<Figurine> figurines,int id, String nom, int points,String logo, Armee armee) {
+		this.id = id;
 		this.figurines = figurines;
 		this.nom = nom;
+		this.logo = logo;
 		this.points = points;
 		this.armee = armee;
 	}
@@ -36,6 +39,9 @@ public class Unit {
 	}
 	public Armee getArmee() {
 		return armee;
+	}
+	public String getLogo() {
+		return logo;
 	}
 	
 	public void killFigurine(Figurine mort) {
