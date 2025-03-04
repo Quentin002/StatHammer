@@ -160,8 +160,8 @@ public class AfficheSimulation
 		
 		
 		btn_simulate.setOnAction(e -> {
-			ArmeMelee w1 = new ArmeMelee("t1",3,-4,"1","2",1);
-			ArmeMelee w2 = new ArmeMelee("t2",8,-2,"3","2",3);
+			ArmeMelee w1 = new ArmeMelee("t1",3,-4,"D6+4","2",1);
+			ArmeMelee w2 = new ArmeMelee("t2",8,-2,"D6+1","D8",3);
 			ArrayList<Arme> l1= new ArrayList<>();
 			l1.add(w1);
 			l1.add(w2);
@@ -176,7 +176,7 @@ public class AfficheSimulation
 			ArrayList<Figurine> fu1 = new ArrayList<Figurine>();
 			fu1.add(fi1);
 			fu1.add(fi2);
-			fu1.add(fi3);
+			//fu1.add(fi3);
 			fu1.add(fi4);
 			fu1.add(fi5);
 			fu1.add(fi6);
