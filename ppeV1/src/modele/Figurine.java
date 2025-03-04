@@ -28,6 +28,14 @@ public class Figurine {
 		CO = cO;
 	}
 	
+	public Figurine(String nom_figurine, int E, int SV, int HP,ArrayList<Arme> l1) {
+		this.nom = nom_figurine;
+		this.E = E;
+		this.SV = SV;
+		this.HP = HP;
+		this.armes = l1;
+	}
+	
 	//renvoi un dico avec en clé les noms des stats des armes et en valeurs une liste de valeur de toute les armes 
 	public HashMap<String,ArrayList<Integer>> statAtk(){
 		HashMap<String,ArrayList<Integer>> liste = new HashMap<String, ArrayList<Integer>>();
