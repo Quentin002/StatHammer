@@ -13,7 +13,6 @@ public class Connexion {
 		
 		login = login.trim();
 		mdp = mdp.trim();
-		BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");
 		BDD conec = new BDD();
 		
 		ArrayList<Object> rendu = conec.selectUtilisateur(login, mdp);
