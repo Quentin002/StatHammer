@@ -253,6 +253,8 @@ public class AfficheSimulation
 	 			/* -- BOUTONS des unités --*/
 	 			dropdown_unit_buttons.get(i).setOnAction(e ->
 	 			{
+	 				//ControllerSimu.dropDownUnit(j);
+	 				
 	 				// dérouler ou replier les figurines
 	 				fig_boxes.get(j).changeState();
 	 				

@@ -15,6 +15,7 @@ import vue.simulation.SimUnitsVBox;
 
 public class ControlleurSimu
 {
+	// appui sur lists_drop_down.get(i) dans AfficheSimulation
 	public static void selectAList(int num_list, ArrayList<ArmeeListe> lists, String choice) {
 		// choix de la liste
 		for(ArmeeListe one_list : lists)
@@ -38,6 +39,7 @@ public class ControlleurSimu
 		AfficheSimulation.getSelectedList(num_list).getUnits().get(0).getArmee());
 	}
 	
+	// appui sur lists_drop_down.get(i) dans AfficheSimulation
 	public static void PullDownUnits(int num_list, HBox dropdown_menu_box, SimUnitsVBox list_box) {
 		ArmeeListe list = AfficheSimulation.getSelectedList(num_list);
 		
@@ -72,7 +74,7 @@ public class ControlleurSimu
 		
 		// effacer et recréer les unités
 		list_box.getChildren().clear();
-		list_box.setList(unit_names);
+		list_box.setList(num_list);
 	}
 	
 	// histogramme

@@ -123,7 +123,7 @@ public class Instanciation {
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
 		try {
-			
+			// pour un exemple avec plusieurs types de figurines, choisir Escouade Centurion Devastator'
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
 					+ "JOIN remplir r USING (id_figurine) JOIN unite u USING(id_unite) WHERE u.nom_unite = ?;",unitName );
 			

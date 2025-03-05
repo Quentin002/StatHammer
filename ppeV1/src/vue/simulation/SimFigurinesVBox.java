@@ -19,12 +19,11 @@ public class SimFigurinesVBox extends VBox
 {
 	private int column;
 	private ArrayList<SimAptAndWeaponsVBox> weapons_aptitudes_menu_view = new ArrayList<SimAptAndWeaponsVBox>();
-	private String[][] figs;
+	//private String[][] figs;
 	private boolean open = false; // les figurines sont cachées par défaut
 	
-	public SimFigurinesVBox(int col, String[][] figs_names){
+	public SimFigurinesVBox(int col){
 		column = col;
-		figs = figs_names;
 		this.setStyle("-fx-padding: 2px;");
 	}
 	
@@ -35,12 +34,15 @@ public class SimFigurinesVBox extends VBox
 		open ^= true; // inversion de bouléen avec un masque 00000001
 	}
 	
-	public String[][] getFigurines(){
-		return figs;
-	}
+//	public String[][] getFigurines(){
+//		return figs;
+//	}
 	
 	public void setFigurines()
 	{
+		String[][] figs = {{"Héros"},
+				{"Figurine 1", "Figurine 2", "Figurine 3", "Figurine 4", "Figurine 5", "Figurine 6"},
+				{"Figurine 6", "Figurine 7", "Figurine 8"}};
 		// parcours des groupes de figurines = 1ère dimension du String[][]
 		for(int i = 0; i < figs.length; i++)
 		{
@@ -58,7 +60,7 @@ public class SimFigurinesVBox extends VBox
 				
 				// zone des armes et aptitudes
 				SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
-				weapons_aptitudes_menu.setFigGroup(i + 1, "nom de la figurine", figs[i].length);
+				weapons_aptitudes_menu.setFigGroup(i + 1, figs[i][0], figs[i].length);
 				String[][] weapon_list = {{"arme 1", "arme 2", "arme 3", "arme 4"},
 					{"arme 5", "arme 6"},
 					{"arme 7", "arme 8", "arme 9"}};
