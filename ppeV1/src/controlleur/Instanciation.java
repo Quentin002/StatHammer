@@ -65,9 +65,9 @@ public class Instanciation {
 			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
 			
 			
-			for (int i = 0;i<nom.size();i = i+2) {
-				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
-			}
+//			for (int i = 0;i<nom.size();i = i+2) {
+//				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
+//			}
 			
 			
 			
@@ -122,6 +122,7 @@ public class Instanciation {
 	public static ArrayList<Figurine> getFigurine(String unitName){
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
+		//unitName = "Escouade Centurion Devastator";
 		try {
 			// pour un exemple avec plusieurs types de figurines, choisir Escouade Centurion Devastator'
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "

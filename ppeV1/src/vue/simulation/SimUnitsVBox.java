@@ -48,7 +48,7 @@ public class SimUnitsVBox extends VBox
 			buttons.add(tmp_button);
 			
 			// créer une zone de figurines par unité
-			SimFigurinesVBox one_fig_box = new SimFigurinesVBox(column);
+			SimFigurinesVBox one_fig_box = new SimFigurinesVBox(column, units.get(i));
 			one_unit.getChildren().add(one_fig_box);
 			fig_boxes.add(one_fig_box);
 			

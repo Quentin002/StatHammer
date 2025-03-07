@@ -1,7 +1,7 @@
 package vue.simulation;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,19 +11,23 @@ import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import modele.Figurine;
+import modele.Unit;
 
 public class SimFigurinesVBox extends VBox
 {
+	private Unit unit;
+	//private ArrayList<Figurine> figs;
 	private int column;
 	private ArrayList<SimAptAndWeaponsVBox> weapons_aptitudes_menu_view = new ArrayList<SimAptAndWeaponsVBox>();
 	//private String[][] figs;
 	private boolean open = false; // les figurines sont cachées par défaut
 	
-	public SimFigurinesVBox(int col){
+	public SimFigurinesVBox(int col, Unit unit){
 		column = col;
+		this.unit = unit;
 		this.setStyle("-fx-padding: 2px;");
 	}
 	
@@ -40,18 +44,30 @@ public class SimFigurinesVBox extends VBox
 	
 	public void setFigurines()
 	{
-		String[][] figs = {{"Héros"},
-				{"Figurine 1", "Figurine 2", "Figurine 3", "Figurine 4", "Figurine 5", "Figurine 6"},
-				{"Figurine 6", "Figurine 7", "Figurine 8"}};
+		HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
+		
+		for(Figurine fig : unit.getFigurines())
+		{
+			if(!identical_figs.containsKey(fig.getNom())) // si nouveau type de figurines
+			{
+				identical_figs.put(fig.getNom(), new ArrayList<Figurine>()); // création d'uné paire clé/liste dans la hashmap
+			}
+			identical_figs.get(fig.getNom()).add(fig); // récupérer la liste correspondante à la clé et ajouter la figurine
+		}
+		
 		// parcours des groupes de figurines = 1ère dimension du String[][]
-		for(int i = 0; i < figs.length; i++)
+		//for(int i = 0; i < identical_figs.size(); i++)
+		int i = 0; // pour les boutons numérotés
+		for(HashMap.Entry<String, ArrayList<Figurine>> entry : identical_figs.entrySet())
 		{
 			FlowPane fig_group = new FlowPane();
-			
+			String key = entry.getKey();
+			ArrayList<Figurine> value = entry.getValue();
+			i++;
 			if(column == 1)
 			{
 				// boutons numérotés des groupes de figurines
-				Button number = new Button(Integer.toString(i + 1));
+				Button number = new Button(Integer.toString(i));
 				number.setAlignment(Pos.CENTER);
 				number.setMinHeight(25);
 				number.setMinWidth(25);
@@ -60,7 +76,7 @@ public class SimFigurinesVBox extends VBox
 				
 				// zone des armes et aptitudes
 				SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
-				weapons_aptitudes_menu.setFigGroup(i + 1, figs[i][0], figs[i].length);
+				weapons_aptitudes_menu.setFigGroup(i, key, value.size());
 				String[][] weapon_list = {{"arme 1", "arme 2", "arme 3", "arme 4"},
 					{"arme 5", "arme 6"},
 					{"arme 7", "arme 8", "arme 9"}};
@@ -80,8 +96,11 @@ public class SimFigurinesVBox extends VBox
 			}
 			
 			// boutons des figurines
-			for(int j = 0; j < figs[i].length; j++)
+//			for(int j = 0; j < value.size(); j++)
+			for(Figurine fig : value)
 			{
+				//value = entry2.getValue();
+				
 				HBox one_fig_box = new HBox();
 				
 				Image one_image = new Image("/images/android-fill.png");
@@ -103,13 +122,15 @@ public class SimFigurinesVBox extends VBox
 					checkbox.setGraphic(one_image_box);
 					fig_group.getChildren().add(checkbox);
 				}
-				Label hp = new Label("PV: ");
-				Spinner<Integer> spinner = new Spinner<>(0, 5, 5);
+				Label hp_label = new Label("PV: ");
+				Spinner<Integer> spinner = new Spinner<>(0, fig.getHP(), fig.getHP());
 				spinner.setMaxWidth(45);
-				one_fig_box.getChildren().addAll(hp, spinner);
+				one_fig_box.getChildren().addAll(hp_label, spinner);
 				SimFigurinesVBox.setMargin(one_fig_box, new Insets(5));
 				fig_group.getChildren().add(one_fig_box);
 				
+				// test si les PV d'une figurine sont à 0
+				// => logo android transparent
 			}
 			SimFigurinesVBox.setMargin(fig_group, new Insets(3));
 			
