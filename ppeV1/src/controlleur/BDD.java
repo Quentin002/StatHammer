@@ -63,7 +63,8 @@ public class BDD {
 			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
 			stat = connec.prepareStatement(requete);
 			stat.setString(1, nom);
-			stat.setString(2,String.valueOf(mdp.hashCode()));
+			stat.setString(2,String.valueOf(mdp));
+			//stat.setString(2,String.valueOf(mdp.hashCode()));
 
 			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
@@ -179,7 +180,8 @@ public class BDD {
 	}
 	public void updateMp(String mdp,int id) {
 		try {
-			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
+			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp,id);
 			stat.executeUpdate();
 			
 		} catch (SQLException e) {

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import modele.ArmeeListe;
 import modele.User;
 import vue.AfficheAccueil;
+import vue.AfficheTopMenu;
 import controlleur.SupprListe;
 
 import java.util.ArrayList;
@@ -26,7 +27,10 @@ public class AfficheGestionListe {
 		HBox boite = new HBox(); // Box contenant les parties bouton et liste
 		VBox selectBouton = new VBox(); // Partie bouton
 		VBox liste = new VBox(); // Partie Liste
-		Scene scene = new Scene(root, 1200, 800); // taille de la scène
+		Scene scene = new Scene(root, 800, 600); // taille de la scène
+		
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		root.getChildren().add(menu);
 
 		// _______________ HEADER _______________
 		// Création et configuration du titre
@@ -108,7 +112,6 @@ public class AfficheGestionListe {
 
 		// Bouton Retour
 		Retour.setOnAction(e -> {
-			primaryStage.close();
 			AfficheAccueil.affiche(primaryStage, session);
 		});
 

@@ -34,10 +34,10 @@ public static void affiche(Stage primaryStage,User session) {
 	Label etiquette3 = new Label("Confirmer avec mot de passe actuel : ");
 	PasswordField texte3 =  new PasswordField();
 	VBox vbox = new VBox();
-	
 	VBox vboxT = new VBox();
 	vboxT.getChildren().add(etiquetteM);
 	//VBox vboxL = new VBox();
+	//etiquette.setText("test");
 	
 	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 	
