@@ -1,8 +1,9 @@
 package controlleur;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import modele.Aptitude;
@@ -15,6 +16,7 @@ import modele.ArmeeListe;
 import modele.Faction;
 import modele.Figurine;
 import modele.Unit;
+import modele.User;
 
 public class Instanciation {
 
@@ -63,9 +65,9 @@ public class Instanciation {
 			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
 			
 			
-			for (int i = 0;i<nom.size();i = i+2) {
-				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
-			}
+			//for (int i = 0;i<nom.size();i = i+2) {
+				//rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
+			//}
 			
 			
 			
@@ -79,6 +81,44 @@ public class Instanciation {
 		
 		return rendu;
 	}
+	
+	public static void getArmyLists(User session)
+	{
+		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
+		try {
+			PreparedStatement stat = conec.getPreparedStatement(sql, session.getId());
+			ResultSet rs = stat.executeQuery();
+			session.getListes().clear();
+			while(rs.next()){
+				ArmeeListe one_list = new ArmeeListe(rs.getString("nom_liste"), rs.getString("description_liste"), rs.getString("data_liste"));
+				session.addArmee(one_list);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getUnitsOfAList(ArmeeListe list) {
+		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
+			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
+			+ " WHERE unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
+		
+		try {
+			Statement stat = conec.getStatement();
+			ResultSet rs = stat.executeQuery(sql);
+			
+			while(rs.next()) {
+				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
+					rs.getString(1), rs.getInt(2), rs.getString(3),
+					new Armee(rs.getString(4), rs.getString(5))));
+			}
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static ArrayList<Figurine> getFigurine(String unitName){
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();

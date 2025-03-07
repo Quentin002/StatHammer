@@ -8,12 +8,14 @@ public class Unit {
 	private int id;
 	private String nom;
 	private int points;
+	private String logo;
 	private Armee armee;
 	
-	public Unit(ArrayList<Figurine> figurines, String nom, int points, Armee armee) {
+	public Unit(ArrayList<Figurine> figurines, String nom, int points, String logo, Armee armee) {
 		this.figurines = figurines;
 		this.nom = nom;
 		this.points = points;
+		this.logo = logo;
 		this.armee = armee;
 	}
 	public Unit(String nom_unit,ArrayList<Figurine> list_unit) {
@@ -33,6 +35,9 @@ public class Unit {
 	}
 	public int getPoints() {
 		return points;
+	}
+	public String getLogo() {
+		return nom;
 	}
 	public Armee getArmee() {
 		return armee;

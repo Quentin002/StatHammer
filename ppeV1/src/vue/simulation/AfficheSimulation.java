@@ -27,8 +27,10 @@ import modele.User;
 
 public class AfficheSimulation
 {
-	private static ArmeeListe selected_list;
-	private static Armee army;
+	private static ArmeeListe selected_list1;
+	private static ArmeeListe selected_list2;
+	private static Armee army1;
+	private static Armee army2;
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
 	
 	public static void setColumn1Bottom(SimAptAndWeaponsVBox wap)
@@ -38,17 +40,27 @@ public class AfficheSimulation
 		weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
 	}
 	
-	public static ArmeeListe getSelectedList() {
-		return selected_list;
+	public static ArmeeListe getSelectedList(int nb) {
+		return (nb == 1 ? selected_list1 : selected_list2);
 	}
-	public static void setSelectedList(ArmeeListe list) {
-		selected_list = list;
+	public static void setSelectedList(int nb, ArmeeListe list) {
+		if(nb == 1) {
+			selected_list1 = list;
+		}
+		else if(nb == 2) {
+			selected_list2 = list;
+		}
 	}
-	public static Armee getArmy() {
-		return army;
+	public static Armee getArmy(int nb) {
+		return (nb == 1 ? army1 : army2);
 	}
-	public static void setArmy(Armee a) {
-		army = a;
+	public static void setArmy(int nb, Armee a) {
+		if(nb == 1) {
+			army1 = a;
+		}
+		else if(nb == 2) {
+			army2 = a;
+		}
 	}
 	
 	public static SimAptAndWeaponsVBox getWeaponsAtitudesMenu() {
@@ -210,8 +222,8 @@ public class AfficheSimulation
         {
         	final int j = i;
         	lists_drop_down.get(i).setOnAction(e -> {
-        		ControlleurSimu.selectAList(listes, lists_drop_down.get(j).getValue());
-        		ControlleurSimu.PullDownUnits(first_rows.get(j), lists.get(j));
+        		ControlleurSimu.selectAList(j + 1, listes, lists_drop_down.get(j).getValue());
+        		ControlleurSimu.PullDownUnits(j + 1, first_rows.get(j), lists.get(j));
         		
         		// remettre la capture des boutons pour dérouler les unités
         		dropdownUnitButtonsAction(lists);
