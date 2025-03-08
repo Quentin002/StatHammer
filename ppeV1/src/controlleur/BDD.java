@@ -23,7 +23,9 @@ public class BDD {
 	public BDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+ dbname, user, password);
+			String host = "mysql-stathammer.alwaysdata.net";
+			//String host = "ordipolo.fr";
+			this.connec = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/"+ dbname, user, password);
 			this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
