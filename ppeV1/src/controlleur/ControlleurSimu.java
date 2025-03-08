@@ -2,6 +2,7 @@ package controlleur;
 
 import java.util.ArrayList;
 
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -10,12 +11,13 @@ import modele.ArmeeListe;
 import modele.Calcul;
 import modele.Unit;
 import vue.simulation.AfficheSimulation;
+import vue.simulation.SimFigurinesVBox;
 import vue.simulation.SimHistogramme;
 import vue.simulation.SimUnitsVBox;
 
 public class ControlleurSimu
 {
-	// appui sur lists_drop_down.get(i) dans AfficheSimulation
+	// déroulement des unités d'une liste (appui sur lists_drop_down.get(i) dans AfficheSimulation)
 	public static void selectAList(int num_list, ArrayList<ArmeeListe> lists, String choice) {
 		// choix de la liste
 		for(ArmeeListe one_list : lists)
@@ -75,6 +77,51 @@ public class ControlleurSimu
 		// effacer et recréer les unités
 		list_box.getChildren().clear();
 		list_box.setList(num_list);
+	}
+	
+	// déroulement des figurines d'une unité (appui sur dropdown_unit_buttons.get(i) dans AfficheSimulation)
+	public static void selectAnUnit(ArrayList<SimUnitsVBox> lists, int col, int j)
+	{
+		ArrayList<Button> dropdown_unit_buttons = lists.get(col).getButtons();
+        ArrayList<SimFigurinesVBox> fig_boxes = lists.get(col).getFigBoxes();
+        
+        // dérouler ou replier les figurines
+		fig_boxes.get(j).changeState();
+		
+		// retirer bordure unité désélectionnée
+		if(lists.get(col).getSelectedUnit() > 0)
+		{
+			dropdown_unit_buttons.get(lists.get(col).getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");
+		}
+		
+		if(fig_boxes.get(j).isOpen())
+		{
+			// afficher figurines
+			fig_boxes.get(j).setFigurines();
+			if(lists.get(col).getSelectedUnit() != j + 1)
+			{
+				lists.get(col).setSelectedUnit(j + 1);
+				if(col == 0)
+				{
+					AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear();
+				}
+			}
+			// bordure unité sélectionnée
+			dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;");
+		}
+		else
+		{
+			// cacher figurine
+			fig_boxes.get(j).getChildren().clear(); // index est constant dans sa portée, alors que i change
+			if(col == 0)
+			{
+				AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear();
+			}
+			lists.get(col).setSelectedUnit(0); // valeur "impossible"
+			
+			// retirer bordure unité désélectionnée
+			dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 0;");
+		}
 	}
 	
 	// histogramme

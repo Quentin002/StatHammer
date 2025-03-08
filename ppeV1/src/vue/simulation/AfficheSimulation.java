@@ -197,7 +197,7 @@ public class AfficheSimulation
 			fu2.add(fi7);
 			Unit u1 = new Unit("unite1",fu1);
 			Unit u2 = new Unit("unite2",fu2);
-			//Calcul.bataille(u1, u2,big_image_pane);
+			// les données ci-dessus sont à mettre ailleurs
 			ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
 		});
 		
@@ -233,65 +233,23 @@ public class AfficheSimulation
         dropdownUnitButtonsAction(lists); // 1ère fois
 	}
 	
+	/* activer les boutons "unités" qui en déplient ou replient les figurines */
+	// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
 	private static void dropdownUnitButtonsAction(ArrayList<SimUnitsVBox> lists)
 	{
-		// boutons qui déplient les unités
-		// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
-        // cette évènement devait être géré dans SimUnitsVBox, mais on a besoin de le faire ici
-        for(int c = 0; c < 2; c++) // les c 1 et 2 correspondent aux colonnes 1 et 3
+        for(int c = 0; c < 2; c++) // c = 0 -> colonne 1, c = 1 -> colonne 3
         {
-        	ArrayList<Button> dropdown_unit_buttons = lists.get(c).getButtons();
-            ArrayList<SimFigurinesVBox> fig_boxes = lists.get(c).getFigBoxes();
-            
-	 		for(int i = 0; i < dropdown_unit_buttons.size(); i++)
+	 		for(int i = 0; i < lists.get(c).getButtons().size(); i++)
 	 		{
-	 			//buttons_units_list1.get(i).setStyle("-fx-border-width: 0; -fx-border-color: yellow; -fx-border-radius: 2;"); // style des bordures
 	 			final int col = c;
 	 			final int j = i; // merci chatgpt pour le trick!
-	 			// impossible d'écrire unit_box.get(i), i ne peut entrer dans la fonction lambda parce qu'il est susceptible de changer à l'extérieur de celle-ci
+	 			// java interdit à i et c d'être paramètres de la fonction lambda parce qu'ils changent à chaque itération
+	 			// on garantit que col et j seront constants (final) dans la méthode setOnAction
 	 			
 	 			/* -- BOUTONS des unités --*/
-	 			dropdown_unit_buttons.get(i).setOnAction(e ->
+	 			lists.get(c).getButtons().get(i).setOnAction(e ->
 	 			{
-	 				//ControllerSimu.dropDownUnit(j);
-	 				
-	 				// dérouler ou replier les figurines
-	 				fig_boxes.get(j).changeState();
-	 				
-	 				// retirer bordure unité désélectionnée
-	 				if(lists.get(col).getSelectedUnit() > 0)
-	 				{
-	 					dropdown_unit_buttons.get(lists.get(col).getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");
-	 				}
-	 				
-	 				if(fig_boxes.get(j).isOpen())
-	 				{
-	 					// afficher figurines
-	 					fig_boxes.get(j).setFigurines();
-	 					if(lists.get(col).getSelectedUnit() != j + 1)
-	 					{
-	 						lists.get(col).setSelectedUnit(j + 1);
-	 						if(col == 0)
-	 						{
-	 							weapons_aptitudes_menu.getChildren().clear();
-	 						}
-	 					}
-	 					// bordure unité sélectionnée
-	 					dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;");
-	 				}
-	 				else
-	 				{
-	 					// cacher figurine
-	 					fig_boxes.get(j).getChildren().clear(); // index est constant dans sa portée, alors que i change
-	 					if(col == 0)
-	 					{
-	 						weapons_aptitudes_menu.getChildren().clear();
-	 					}
-	 					lists.get(col).setSelectedUnit(0); // valeur "impossible"
-	 					
-	 					// retirer bordure unité désélectionnée
-	 					dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 0;");
-	 				}
+	 				ControlleurSimu.selectAnUnit(lists, col, j);
 	 			});
 	 		}
         }
