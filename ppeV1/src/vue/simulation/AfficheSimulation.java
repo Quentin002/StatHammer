@@ -35,11 +35,12 @@ public class AfficheSimulation
 		return battle_data;
 	}
 	
-	public static void setColumn1Bottom(SimAptAndWeaponsVBox wap)
+	public static void refreshWeaponAndAptitude(SimAptAndWeaponsVBox wap)
 	{
 		weapons_aptitudes_menu.getChildren().clear();
 		weapons_aptitudes_menu.getChildren().addAll(wap.getChildren()); // copie profonde
-		weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
+		//weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
+		weapons_aptitudes_menu.setStyle("-fx-background-color: rgb(210, 210, 210); -fx-padding: 4px; -fx-border-color: black; -fx-border-radius: 4;");
 	}
 	
 	public static SimAptAndWeaponsVBox getWeaponsAtitudesMenu() {
@@ -140,7 +141,7 @@ public class AfficheSimulation
         column3.getChildren().add(col3_first_row);
         
         // unités colonne 3
-        SimUnitsVBox units_list2 = new SimUnitsVBox(3);
+        SimUnitsVBox units_list2 = new SimUnitsVBox(2);
         column3.getChildren().add(units_list2);
         column3_box.setContent(column3);
         
@@ -207,39 +208,10 @@ public class AfficheSimulation
         for(int i = 0; i < 2; i++)
         {
         	final int j = i;
-        	lists_drop_down.get(i).setOnAction(e -> {
-        		ControlleurSimu.selectAList(j + 1, listes, lists_drop_down.get(j).getValue());
+        	lists_drop_down.get(i).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)  -> {
+        		ControlleurSimu.selectAList(j + 1, listes, newValue);
         		ControlleurSimu.PullDownUnits(j + 1, first_rows.get(j), lists.get(j));
-        		
-        		// remettre la capture des boutons pour dérouler les unités
-        		dropdownUnitButtonsAction(lists);
             });
         }
-        
-        dropdownUnitButtonsAction(lists); // 1ère fois
 	}
-	
-	/* activer les boutons "unités" qui en déplient ou replient les figurines */
-	// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
-	private static void dropdownUnitButtonsAction(ArrayList<SimUnitsVBox> lists)
-	{
-        for(int c = 0; c < 2; c++) // c = 0 -> colonne 1, c = 1 -> colonne 3
-        {
-	 		for(int i = 0; i < lists.get(c).getButtons().size(); i++)
-	 		{
-	 			final int col = c;
-	 			final int j = i; // merci chatgpt pour le trick!
-	 			// java interdit à i et c d'être paramètres de la fonction lambda parce qu'ils changent à chaque itération
-	 			// on garantit que col et j seront constants (final) dans la méthode setOnAction
-	 			
-	 			/* -- BOUTONS des unités --*/
-	 			lists.get(c).getButtons().get(i).setOnAction(e ->
-	 			{
-	 				ControlleurSimu.selectAnUnit(lists, col, j);
-	 			});
-	 		}
-        }
-	}
-
 }
-

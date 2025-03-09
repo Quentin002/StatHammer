@@ -25,6 +25,9 @@ public class Battle
 		else if(nb == 2) {
 			selected_list2 = list;
 		}
+		else {
+			System.out.println("le paramètre nb doit valoir 1 ou 2");
+		}
 	}
 	public Armee getArmy(int nb) {
 		return (nb == 1 ? army1 : army2);
@@ -36,6 +39,9 @@ public class Battle
 		else if(nb == 2) {
 			army2 = a;
 		}
+		else {
+			System.out.println("le paramètre nb doit valoir 1 ou 2");
+		}
 	}
 	public Unit getSelectedUnit(int nb) {
 		return (nb == 1 ? selected_list1.getUnits().get(index_selected_unit1) : selected_list2.getUnits().get(index_selected_unit2));
@@ -46,6 +52,9 @@ public class Battle
 		}
 		else if(nb == 2) {
 			index_selected_unit2 = unit_list_index;
+		}
+		else {
+			System.out.println("le paramètre nb doit valoir 1 ou 2");
 		}
 	}
 }

@@ -122,7 +122,6 @@ public class Instanciation {
 	public static ArrayList<Figurine> getFigurine(String unitName){
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
-		//unitName = "Escouade Centurion Devastator";
 		try {
 			// pour un exemple avec plusieurs types de figurines, choisir Escouade Centurion Devastator'
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "

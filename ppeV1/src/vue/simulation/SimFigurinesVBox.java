@@ -38,29 +38,14 @@ public class SimFigurinesVBox extends VBox
 		open ^= true; // inversion de bouléen avec un masque 00000001
 	}
 	
-//	public String[][] getFigurines() {}
-	
 	public void setFigurines()
 	{
-		HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
-		
-		for(Figurine fig : unit.getFigurines())
-		{
-			if(!identical_figs.containsKey(fig.getNom())) // si nouveau type de figurines
-			{
-				identical_figs.put(fig.getNom(), new ArrayList<Figurine>()); // création d'uné paire clé/liste dans la hashmap
-			}
-			identical_figs.get(fig.getNom()).add(fig); // récupérer la liste correspondante à la clé et ajouter la figurine
-		}
-		
-		// parcours des groupes de figurines = 1ère dimension du String[][]
-		//for(int i = 0; i < identical_figs.size(); i++)
 		int i = 0; // pour les boutons numérotés
-		for(HashMap.Entry<String, ArrayList<Figurine>> entry : identical_figs.entrySet())
+		for(HashMap.Entry<String, ArrayList<Figurine>> entry : unit.getIdenticalFigsGroups().entrySet())
 		{
 			FlowPane fig_group = new FlowPane();
-			String key = entry.getKey();
-			ArrayList<Figurine> valueFigList = entry.getValue();
+			String fig_name = entry.getKey();
+			ArrayList<Figurine> fig_list = entry.getValue();
 			i++;
 			if(column == 1)
 			{
@@ -74,27 +59,22 @@ public class SimFigurinesVBox extends VBox
 				
 				// zone des armes et aptitudes
 				SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
-				weapons_aptitudes_menu.setFigGroup(i, key, valueFigList.size());
-				String[][] weapon_list = {{"arme 1", "arme 2", "arme 3", "arme 4"},
-					{"arme 5", "arme 6"},
-					{"arme 7", "arme 8", "arme 9"}};
-				String[][] aptitude_list = {{"aptitude 1", "aptitude 2"},
-					{"aptitude 3", "aptitude 4", "aptitude 5"},
-					{"aptitude 6", "aptitude 7", "aptitude 8", "aptitude 9"}};
-				weapons_aptitudes_menu.setArmes(weapon_list);
-				weapons_aptitudes_menu.setAptitudes(aptitude_list);
+				weapons_aptitudes_menu.setFigGroup(i, fig_name, fig_list.size());
 				weapons_aptitudes_menu_view.add(weapons_aptitudes_menu);
 
 				number.setOnAction(e ->
 				{
-					weapons_aptitudes_menu.set_apt_and_weapons();
-					//weapons_aptitudes_menu.prefWidthProperty().bind(this.widthProperty().multiply(0.2));
-					AfficheSimulation.setColumn1Bottom(weapons_aptitudes_menu);
+					ControlleurSimu.makeWeaponsAndAptitudeZone(fig_list, weapons_aptitudes_menu);
 				});
+			}
+			else {
+				Label fig_name_label = new Label(fig_name);
+				fig_name_label.setStyle("-fx-padding: 0 5px 0 0");
+				fig_group.getChildren().add(fig_name_label);
 			}
 			
 			// figurines: checkbox, image, PV et spinner
-			for(Figurine fig : valueFigList)
+			for(Figurine fig : fig_list)
 			{
 				HBox one_fig_box = new HBox();
 				Image one_image;
