@@ -4,6 +4,8 @@ package vue.simulation;
 import vue.AfficheTopMenu;
 
 import java.util.ArrayList;
+
+import application.Battle;
 import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import modele.Arme;
 import modele.ArmeMelee;
-import modele.Armee;
 import modele.ArmeeListe;
 import modele.Figurine;
 import modele.Unit;
@@ -27,40 +28,18 @@ import modele.User;
 
 public class AfficheSimulation
 {
-	private static ArmeeListe selected_list1;
-	private static ArmeeListe selected_list2;
-	private static Armee army1;
-	private static Armee army2;
+	private static Battle battle_data = new Battle(); // mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
+	
+	public static Battle getBattleData() {
+		return battle_data;
+	}
 	
 	public static void setColumn1Bottom(SimAptAndWeaponsVBox wap)
 	{
 		weapons_aptitudes_menu.getChildren().clear();
 		weapons_aptitudes_menu.getChildren().addAll(wap.getChildren()); // copie profonde
 		weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
-	}
-	
-	public static ArmeeListe getSelectedList(int nb) {
-		return (nb == 1 ? selected_list1 : selected_list2);
-	}
-	public static void setSelectedList(int nb, ArmeeListe list) {
-		if(nb == 1) {
-			selected_list1 = list;
-		}
-		else if(nb == 2) {
-			selected_list2 = list;
-		}
-	}
-	public static Armee getArmy(int nb) {
-		return (nb == 1 ? army1 : army2);
-	}
-	public static void setArmy(int nb, Armee a) {
-		if(nb == 1) {
-			army1 = a;
-		}
-		else if(nb == 2) {
-			army2 = a;
-		}
 	}
 	
 	public static SimAptAndWeaponsVBox getWeaponsAtitudesMenu() {
@@ -172,6 +151,7 @@ public class AfficheSimulation
 		
 		
 		btn_simulate.setOnAction(e -> {
+			// version dev
 			ArmeMelee w1 = new ArmeMelee("t1",3,-4,"D6+4","2",1);
 			ArmeMelee w2 = new ArmeMelee("t2",8,-2,"D6+1","D8",3);
 			ArrayList<Arme> l1= new ArrayList<>();
@@ -197,8 +177,14 @@ public class AfficheSimulation
 			fu2.add(fi7);
 			Unit u1 = new Unit("unite1",fu1);
 			Unit u2 = new Unit("unite2",fu2);
-			// les données ci-dessus sont à mettre ailleurs
-			ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
+			//ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
+			
+			// version finale
+			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null
+				// ajouter d'autres contrôles
+			) {
+				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
+			}
 		});
 		
 		

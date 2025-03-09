@@ -2,6 +2,8 @@ package vue.simulation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,10 +21,8 @@ import modele.Unit;
 public class SimFigurinesVBox extends VBox
 {
 	private Unit unit;
-	//private ArrayList<Figurine> figs;
 	private int column;
 	private ArrayList<SimAptAndWeaponsVBox> weapons_aptitudes_menu_view = new ArrayList<SimAptAndWeaponsVBox>();
-	//private String[][] figs;
 	private boolean open = false; // les figurines sont cachées par défaut
 	
 	public SimFigurinesVBox(int col, Unit unit){
@@ -38,9 +38,7 @@ public class SimFigurinesVBox extends VBox
 		open ^= true; // inversion de bouléen avec un masque 00000001
 	}
 	
-//	public String[][] getFigurines(){
-//		return figs;
-//	}
+//	public String[][] getFigurines() {}
 	
 	public void setFigurines()
 	{
@@ -62,7 +60,7 @@ public class SimFigurinesVBox extends VBox
 		{
 			FlowPane fig_group = new FlowPane();
 			String key = entry.getKey();
-			ArrayList<Figurine> value = entry.getValue();
+			ArrayList<Figurine> valueFigList = entry.getValue();
 			i++;
 			if(column == 1)
 			{
@@ -76,7 +74,7 @@ public class SimFigurinesVBox extends VBox
 				
 				// zone des armes et aptitudes
 				SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
-				weapons_aptitudes_menu.setFigGroup(i, key, value.size());
+				weapons_aptitudes_menu.setFigGroup(i, key, valueFigList.size());
 				String[][] weapon_list = {{"arme 1", "arme 2", "arme 3", "arme 4"},
 					{"arme 5", "arme 6"},
 					{"arme 7", "arme 8", "arme 9"}};
@@ -95,17 +93,19 @@ public class SimFigurinesVBox extends VBox
 				});
 			}
 			
-			// boutons des figurines
-//			for(int j = 0; j < value.size(); j++)
-			for(Figurine fig : value)
+			// figurines: checkbox, image, PV et spinner
+			for(Figurine fig : valueFigList)
 			{
-				//value = entry2.getValue();
-				
 				HBox one_fig_box = new HBox();
-				
-				Image one_image = new Image("/images/android-fill.png");
+				Image one_image;
+				if(fig.getHP() > 0) {
+					one_image = new Image("/images/android-fill.png");
+				}
+				else { // utile?
+					one_image = new Image("/images/android-line.png");
+				}
 				ImageView one_image_box = new ImageView();
-				
+				//one_fig_box.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 0 3px 0 0;");
 				// dimensions
 				one_image_box.setPreserveRatio(true);
 				//one_image_box.setFitHeight(24); // appeler une des deux méthodes de dimensionnement
@@ -120,17 +120,27 @@ public class SimFigurinesVBox extends VBox
 				{
 					CheckBox checkbox = new CheckBox();
 					checkbox.setGraphic(one_image_box);
-					fig_group.getChildren().add(checkbox);
+					one_fig_box.getChildren().add(checkbox);
 				}
-				Label hp_label = new Label("PV: ");
-				Spinner<Integer> spinner = new Spinner<>(0, fig.getHP(), fig.getHP());
-				spinner.setMaxWidth(45);
-				one_fig_box.getChildren().addAll(hp_label, spinner);
+				if(column == 1) {
+					Label hp_label = new Label(fig.getHP() + " PV ");
+					one_fig_box.getChildren().add(hp_label);
+				}
+				else {
+					Label hp_label = new Label("PV:");
+					Spinner<Integer> spinner = new Spinner<>(0, fig.getHP(), fig.getHP());
+					spinner.setMaxWidth(45);
+					one_fig_box.getChildren().add(hp_label);
+					one_fig_box.getChildren().add(spinner);
+					one_fig_box.setStyle("-fx-padding: 0 3px 0 0;");
+					
+					spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+						ControlleurSimu.hpUpdate(newValue, fig, one_image_box);
+			        });
+				}
+				
 				SimFigurinesVBox.setMargin(one_fig_box, new Insets(5));
 				fig_group.getChildren().add(one_fig_box);
-				
-				// test si les PV d'une figurine sont à 0
-				// => logo android transparent
 			}
 			SimFigurinesVBox.setMargin(fig_group, new Insets(3));
 			

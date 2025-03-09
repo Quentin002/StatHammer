@@ -2,6 +2,7 @@ package controlleur;
 
 import java.util.ArrayList;
 
+import application.Battle;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import modele.ArmeeListe;
 import modele.Calcul;
+import modele.Figurine;
 import modele.Unit;
 import vue.simulation.AfficheSimulation;
 import vue.simulation.SimFigurinesVBox;
@@ -17,14 +19,18 @@ import vue.simulation.SimUnitsVBox;
 
 public class ControlleurSimu
 {
+	private static Battle battle_data;
+	
 	// déroulement des unités d'une liste (appui sur lists_drop_down.get(i) dans AfficheSimulation)
 	public static void selectAList(int num_list, ArrayList<ArmeeListe> lists, String choice) {
+		battle_data = AfficheSimulation.getBattleData();
+		
 		// choix de la liste
 		for(ArmeeListe one_list : lists)
 		{
 			if(one_list.getName().equals(choice)) {
 				ArmeeListe list = new ArmeeListe(one_list.getName(), one_list.getDescription(), one_list.getData());
-				AfficheSimulation.setSelectedList(num_list, list);
+				battle_data.setSelectedList(num_list, list);
 				list.setName(one_list.getName());
 				list.setDescription(one_list.getDescription());
 				list.setData(one_list.getData());
@@ -35,15 +41,14 @@ public class ControlleurSimu
 		
 		// obtenir les unités, l'armée, les figurines, armes et aptitudes
 		Instanciation.conec = new BDD();
-		Instanciation.getUnitsOfAList(AfficheSimulation.getSelectedList(num_list));
+		Instanciation.getUnitsOfAList(battle_data.getSelectedList(num_list));
 		Instanciation.conec.close();
-		AfficheSimulation.setArmy(num_list,
-		AfficheSimulation.getSelectedList(num_list).getUnits().get(0).getArmee());
+		battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
 	}
 	
 	// appui sur lists_drop_down.get(i) dans AfficheSimulation
 	public static void PullDownUnits(int num_list, HBox dropdown_menu_box, SimUnitsVBox list_box) {
-		ArmeeListe list = AfficheSimulation.getSelectedList(num_list);
+		ArmeeListe list = battle_data.getSelectedList(num_list);
 		
 		// noms des unités
 		String[] unit_names = new String[list.getUnits().size()];
@@ -58,9 +63,9 @@ public class ControlleurSimu
 		
 		// logo de faction
 		Image logo_faction = null;
-		if(AfficheSimulation.getArmy(num_list) != null) // possibilité d'une liste vide
+		if(battle_data.getArmy(num_list) != null) // possibilité d'une liste vide
 		{
-			String file_name = AfficheSimulation.getArmy(num_list).getLogo();
+			String file_name = battle_data.getArmy(num_list).getLogo();
 			logo_faction = new Image("/images/armees/" + file_name);
 		}
 		ImageView logo_box = new ImageView();
@@ -121,6 +126,22 @@ public class ControlleurSimu
 			
 			// retirer bordure unité désélectionnée
 			dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 0;");
+		}
+	}
+	
+	// slider des PV des figurines
+	public static void hpUpdate(int hp, Figurine fig, ImageView one_image_box) {
+		int old_hp = fig.getHP();
+		fig.setHP(hp);
+		
+		Image one_image;
+		if(old_hp == 0 && fig.getHP() > 0) {
+			one_image = new Image("/images/android-fill.png");
+			one_image_box.setImage(one_image);
+		}
+		else if(old_hp > 0 && fig.getHP() == 0){ // utile?
+			one_image = new Image("/images/android-line.png");
+			one_image_box.setImage(one_image);
 		}
 	}
 	
