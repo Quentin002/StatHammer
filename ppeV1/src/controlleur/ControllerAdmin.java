@@ -70,6 +70,8 @@ public class ControllerAdmin {
 	public static VBox valider(String nom_evt, String nom_img, String desc, String date) {
 		Evenement evt = new Evenement(nom_evt, nom_img, desc, date);
 		VBox event = new VBox();
+		event.setPrefHeight(50);
+        event.setAlignment(Pos.CENTER);
 		try {
             // Copier le fichier dans le dossier de destination
             Files.copy(file.toPath(), destinationFile.toPath());

@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,10 +20,16 @@ import modele.Evenement;
 import vue.AfficheAdmin;
 
 public class EvenementController {
-	
-	//private static Evenement evenement; 
+	private static ArrayList<String> nom_event;
+	private static ArrayList<String> nom_image;
+	private static ArrayList<String> desc_event;
+	private static ArrayList<String> date_event;
 	
     public static void getEvenementsFromDB() {
+    	nom_event.clear();
+    	nom_image.clear();
+    	desc_event.clear();
+    	date_event.clear();
         // Créer une instance de BDD
         BDD bdd = new BDD();
 
@@ -36,11 +43,16 @@ public class EvenementController {
 
             // Traiter les résultats
             while (rs.next()) {
+            	
             	String nom_evt = rs.getString("nom_evenement");
                 String nom_img = rs.getString("nom_image");
                 String desc_evt = rs.getString("description_evenement");
                 String date_evt = rs.getString("date_evenement");
                 
+                nom_event.add(nom_evt);
+            	nom_image.add(nom_img);
+            	desc_event.add(desc_evt);
+            	date_event.add(date_evt);
 
                 // Afficher les résultats ou les ajouter à une liste/structure de données
                 System.out.println("Image : " + nom_img);
