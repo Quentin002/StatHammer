@@ -59,7 +59,7 @@ public class BDD {
 	public ArrayList<Object> selectUtilisateur(String nom, String mdp) {
 		ArrayList<Object> rendu = new ArrayList<Object>();
 		try {
-
+			
 			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
 			stat = connec.prepareStatement(requete);
 			stat.setString(1, nom);
@@ -100,7 +100,8 @@ public class BDD {
 			PreparedStatement stat = connec.prepareStatement(creationRequete);
 			stat.setString(1, nom);
 			stat.setString(2, adresse);
-			stat.setString(3, mdp);
+			stat.setString(3, Integer.toString(mdp.hashCode()));
+			
 
 			int rowsInserted = stat.executeUpdate();
 

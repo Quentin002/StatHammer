@@ -21,7 +21,7 @@ public class AfficheConnexion {
 		Label nomMdp = new Label("Mot de passe");
 		Button envoi = new Button("Connexion");
 		Button creaCompte = new Button("Créer un compte");
-
+		
 		root.getChildren().add(nomPseudo);
 		root.getChildren().add(pseudo);
 		root.getChildren().add(nomMdp);
