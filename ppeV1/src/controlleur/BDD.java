@@ -128,10 +128,10 @@ public class BDD {
 		}
 	}
 	
-	public ArrayList<String> select(String requete, PreparedStatement pstat ,String... param ) throws SQLException{
+	public ArrayList<String> select(String requete,String... param ) throws SQLException{
 		ArrayList<String> rendu = new ArrayList<String>();
 		try {
-			
+			PreparedStatement pstat = null;
 			
 			pstat = connec.prepareStatement(requete);
 			if(param.length>0) {
@@ -157,6 +157,7 @@ public class BDD {
 				
 				
 			}
+			
 			return rendu;
 			
 		} catch (SQLException e) {
@@ -192,9 +193,9 @@ public class BDD {
 			stat.executeUpdate();
 			
 			requete = "SELECT id_liste FROM liste WHERE nom_liste = '"+armee.getName()+"';";
-			PreparedStatement pstat = null;
-			rendu = this.select(requete,pstat);
-			pstat=null;
+			
+			rendu = this.select(requete);
+			
 			id = Integer.parseInt(rendu.getFirst());
 			requete = "INSERT INTO contenir VALUES(?,?);";
 			
