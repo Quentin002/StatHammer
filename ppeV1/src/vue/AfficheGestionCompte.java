@@ -6,10 +6,12 @@ import controlleur.Connexion;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -32,10 +34,10 @@ public static void affiche(Stage primaryStage,User session) {
 	Label etiquette3 = new Label("Confirmer avec mot de passe actuel : ");
 	PasswordField texte3 =  new PasswordField();
 	VBox vbox = new VBox();
-	
 	VBox vboxT = new VBox();
 	vboxT.getChildren().add(etiquetteM);
 	//VBox vboxL = new VBox();
+	//etiquette.setText("test");
 	
 	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 	
@@ -82,6 +84,11 @@ public static void affiche(Stage primaryStage,User session) {
 			Connexion.updatePseudo(texte.getText().trim(),session.getId()); // bdd
 			session.setNom(texte.getText().trim()); // instance de l'utilisateur
 			menu.setLogin(session.getNom()); // barre de menu
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information");
+			alert.setHeaderText(null);
+			alert.setContentText("Le pseudo a été changé !");
+			alert.showAndWait();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
@@ -96,6 +103,11 @@ public static void affiche(Stage primaryStage,User session) {
 				if(texte2.getText() != null && !texte2.getText().trim().isEmpty() && texte2.getText().trim().contains(" ")==false)
 				try {
 					Connexion.updateMdp(texte2.getText().trim(), session.getId());
+					Alert alert2 = new Alert(AlertType.INFORMATION);
+					alert2.setTitle("Information");
+					alert2.setHeaderText(null);
+					alert2.setContentText("Le mot de passe !");
+					alert2.showAndWait();
 				
 				} catch (SQLException e1) {
 					e1.printStackTrace();

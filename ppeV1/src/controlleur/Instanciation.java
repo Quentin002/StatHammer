@@ -65,9 +65,9 @@ public class Instanciation {
 			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
 			
 			
-			for (int i = 0;i<nom.size();i = i+2) {
-				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
-			}
+//			for (int i = 0;i<nom.size();i = i+2) {
+//				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
+//			}
 			
 			
 			
@@ -101,11 +101,11 @@ public class Instanciation {
 	public static void getUnitsOfAList(ArmeeListe list) {
 		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
 			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
-			+ " WHERE unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
+			+ " WHERE liste.id_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
 		
 		try {
-			Statement stat = conec.getStatement();
-			ResultSet rs = stat.executeQuery(sql);
+			PreparedStatement stat = conec.getPreparedStatement(sql, list.getId());
+			ResultSet rs = stat.executeQuery();
 			
 			while(rs.next()) {
 				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
@@ -123,7 +123,7 @@ public class Instanciation {
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
 		try {
-			
+			// pour un exemple avec plusieurs types de figurines, choisir Escouade Centurion Devastator'
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
 					+ "JOIN remplir r USING (id_figurine) JOIN unite u USING(id_unite) WHERE u.nom_unite = ?;",unitName );
 			

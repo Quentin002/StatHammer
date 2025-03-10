@@ -8,5 +8,7 @@ public class Aptitude {
 		this.nom = nom;
 	}
 
-
+	public String getName() {
+		return nom;
+	}
 }

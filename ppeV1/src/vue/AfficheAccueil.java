@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ public class AfficheAccueil {
 		Scene scene = new Scene(root,800,600);
 	
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		//AfficheTopMenu.setHgrow(root, Priority.ALWAYS);
 
 		root.getChildren().add(menu);
 		

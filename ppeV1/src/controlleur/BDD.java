@@ -28,7 +28,9 @@ public class BDD {
 	public BDD() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/"+ dbname, user, password);
+			String host = "mysql-stathammer.alwaysdata.net";
+			//String host = "ordipolo.fr";
+			this.connec = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/"+ dbname, user, password);
 			this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
@@ -70,7 +72,8 @@ public class BDD {
 			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
 			stat = connec.prepareStatement(requete);
 			stat.setString(1, nom);
-			stat.setString(2, mdp);
+			stat.setString(2,String.valueOf(mdp));
+			//stat.setString(2,String.valueOf(mdp.hashCode()));
 
 			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
@@ -186,7 +189,8 @@ public class BDD {
 	}
 	public void updateMp(String mdp,int id) {
 		try {
-			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp,id);
+			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
 			stat.executeUpdate();
 			
 		} catch (SQLException e) {
