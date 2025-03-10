@@ -68,9 +68,6 @@ public class Instanciation {
 			
 			
 			
-			//while(tab.next()) {
-			//	rendu.add(new Unit(Instanciation.getFigurine(tab.getString("nom_unit")),tab.getString("nom_unit"),tab.getInt("points_unit"),armee));
-			//}
 			
 		}catch(SQLException e) {
 			

@@ -93,7 +93,16 @@ public class AfficheCreerListe {
 				gaucheUnit.getChildren().clear();
 				armeeListe.addUnit(unit);
 				for(Unit unit2:armeeListe.getUnits()) {
-					gaucheUnit.getChildren().add(new Label(unit2.toString()));
+					gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
+						armeeListe.removeUnit(unit2);
+						gaucheUnit.getChildren().clear();
+						for(Unit unit3:armeeListe.getUnits()) {
+							gaucheUnit.getChildren().add(new HBox(new Label(unit3.toString()),new Bouton("-").setOnAction2(a->{
+								armeeListe.removeUnit(unit3);
+								
+							})));
+						}
+					})));
 				}
 			})));
 		}
@@ -107,15 +116,20 @@ public class AfficheCreerListe {
 				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(y->{
 					gaucheUnit.getChildren().clear();
 					armeeListe.addUnit(unit);
-					
 					for(Unit unit2:armeeListe.getUnits()) {
-						gaucheUnit.getChildren().add(new Label(unit2.toString()));
+						gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
+							armeeListe.removeUnit(unit2);
+							gaucheUnit.getChildren().clear();
+							for(Unit unit3:armeeListe.getUnits()) {
+								gaucheUnit.getChildren().add(new HBox(new Label(unit3.toString()),new Bouton("-").setOnAction2(a->{
+									armeeListe.removeUnit(unit3);
+									
+								})));
+							}
+						})));
 					}
 				})));
-				
 			}
-			
-			
 		});
 			
 		
@@ -200,3 +214,4 @@ public class AfficheCreerListe {
 		primaryStage.show();
 	}
 }
+	
