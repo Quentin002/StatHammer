@@ -101,11 +101,11 @@ public class Instanciation {
 	public static void getUnitsOfAList(ArmeeListe list) {
 		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
 			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
-			+ " WHERE unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
+			+ " WHERE liste.id_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
 		
 		try {
-			Statement stat = conec.getStatement();
-			ResultSet rs = stat.executeQuery(sql);
+			PreparedStatement stat = conec.getPreparedStatement(sql, list.getId());
+			ResultSet rs = stat.executeQuery();
 			
 			while(rs.next()) {
 				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),

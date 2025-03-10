@@ -72,9 +72,9 @@ public class Figurine {
 		
 		return liste;
 	}
-	public void updateHP(int dommage) {
-		this.HP +=dommage;
-	}
+//	public void updateHP(int dommage) {
+//		this.HP +=dommage;
+//	}
 	public HashMap<String,Integer> defense(){
 		HashMap<String,Integer> liste = new HashMap<String,Integer>();
 		liste.put("E", E);

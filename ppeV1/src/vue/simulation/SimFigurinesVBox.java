@@ -40,7 +40,8 @@ public class SimFigurinesVBox extends VBox
 	
 	public void setFigurines()
 	{
-		int i = 0; // pour les boutons numérotés
+		/* -- boucle sur les groupes de figuriones -- */
+		int i = 0; // valeurs des boutons numérotés
 		for(HashMap.Entry<String, ArrayList<Figurine>> entry : unit.getIdenticalFigsGroups().entrySet())
 		{
 			FlowPane fig_group = new FlowPane();
@@ -71,9 +72,14 @@ public class SimFigurinesVBox extends VBox
 				Label fig_name_label = new Label(fig_name);
 				fig_name_label.setStyle("-fx-padding: 0 5px 0 0");
 				fig_group.getChildren().add(fig_name_label);
+				
+				CheckBox checkbox = new CheckBox();
+				fig_group.getChildren().add(checkbox);
+				//checkbox.setGraphic(one_image_box);
 			}
 			
-			// figurines: checkbox, image, PV et spinner
+			
+			/* -- boucle sur les figurines d'un groupe: checkbox, image, PV et spinner -- */
 			for(Figurine fig : fig_list)
 			{
 				HBox one_fig_box = new HBox();
@@ -81,7 +87,7 @@ public class SimFigurinesVBox extends VBox
 				if(fig.getHP() > 0) {
 					one_image = new Image("/images/android-fill.png");
 				}
-				else { // utile?
+				else {
 					one_image = new Image("/images/android-line.png");
 				}
 				ImageView one_image_box = new ImageView();
@@ -98,9 +104,8 @@ public class SimFigurinesVBox extends VBox
 				}
 				else
 				{
-					CheckBox checkbox = new CheckBox();
-					checkbox.setGraphic(one_image_box);
-					one_fig_box.getChildren().add(checkbox);
+					
+					one_fig_box.getChildren().add(one_image_box);
 				}
 				if(column == 1) {
 					Label hp_label = new Label(fig.getHP() + " PV ");
@@ -108,7 +113,7 @@ public class SimFigurinesVBox extends VBox
 				}
 				else {
 					Label hp_label = new Label("PV:");
-					Spinner<Integer> spinner = new Spinner<>(0, fig.getHP(), fig.getHP());
+					Spinner<Integer> spinner = new Spinner<>(0, fig.getHPMax(), fig.getHP());
 					spinner.setMaxWidth(45);
 					one_fig_box.getChildren().add(hp_label);
 					one_fig_box.getChildren().add(spinner);
