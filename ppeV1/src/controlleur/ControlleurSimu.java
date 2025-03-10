@@ -173,7 +173,7 @@ public class ControlleurSimu
 	}
 	
 	public static void weaponNumberChoice(int value, String group_name) {
-		HashMap<String, Integer> numbers_of_weapons = AfficheSimulation.getBattleData().getSelectedUnit(1).getNumbersOfWeapons();
+		HashMap<String, Integer> numbers_of_weapons = AfficheSimulation.getBattleData().getSelectedUnit(1).getNumbersOfWeapons(group_name);
 		numbers_of_weapons.replace(group_name, value);
 		
 		// on considère que ceux qui n'attaquent pas sont morts

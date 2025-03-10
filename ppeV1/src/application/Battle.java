@@ -9,6 +9,8 @@ public class Battle
 {
 	private ArmeeListe selected_list1;
 	private ArmeeListe selected_list2;
+	private ArmeeListe attaquant;
+	private ArmeeListe defenseur;
 	private Armee army1;
 	private Armee army2;
 	private int index_selected_unit1;

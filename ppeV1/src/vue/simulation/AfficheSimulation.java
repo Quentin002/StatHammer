@@ -186,6 +186,9 @@ public class AfficheSimulation
 			) {
 				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
 			}
+			else {
+				System.out.println("conditions non remplies pour faire un simulation");
+			}
 		});
 		
 		
