@@ -184,7 +184,7 @@ public class BDD {
 	public void updateMp(String mdp,int id) {
 		try {
 			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
-			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp,id);
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
 			stat.executeUpdate();
 			
 		} catch (SQLException e) {
