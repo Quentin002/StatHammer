@@ -1,9 +1,15 @@
 package controlleur;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -171,6 +177,7 @@ public class EvenementController {
 		    // Exécution de la requête
 		    int rowsAffected = ps.executeUpdate();
 		    if (rowsAffected > 0) {
+		    	EvenementController.effacerImage(evt.getNom_image());
 		    	AfficheAdmin.setEvents(EvenementController.EvenementVBox());
 		    	AfficheAdmin.affiche(AfficheAdmin.getStage(), AfficheAdmin.getSess());
 		        System.out.println("Suppression réussie dans la base de données");
@@ -187,5 +194,21 @@ public class EvenementController {
 		    bdd.close();
 		}
 		
+	}
+	
+	public static void effacerImage(String nom_img) {
+	    String file_name = ControllerAdmin.getDestinationDir()+"/"+nom_img;
+	    
+	    Path path = Paths.get(file_name);
+	    try {
+	      boolean result = Files.deleteIfExists(path);
+	      if (result) {
+	        System.out.println("File is deleted!");
+	      } else {
+	        System.out.println("Sorry, could not delete the file.");
+	      }
+	    } catch (IOException e) {
+	      e.printStackTrace();
+	    }
 	}
 }

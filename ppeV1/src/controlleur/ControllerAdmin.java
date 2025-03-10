@@ -87,6 +87,11 @@ public class ControllerAdmin {
 	public static File getFile() {
 		return file;
 	}
+
+
+	public static String getDestinationDir() {
+		return destinationDir;
+	}
 	
 
 	
