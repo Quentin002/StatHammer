@@ -198,50 +198,57 @@ public class Calcul {
 			int pvE=u2.getFigurines().get(adv).getHP();
 			int mort = 0;
 			for (int j=0; j<u1.getFigurines().size();j++){ // pour chaque figurine
-				int attaque = chgt_a(u1.getFigurines().get(j).getArmes().get(1).getA());
-				for(int i=0 ;i<attaque;i++ ){ //nbr attq par arme
-					dflag = false;
-					boolean jet1=false;
-					boolean jet2=false;
-					boolean block=true;
-					//System.out.println("F : "+u1.getList_unit().get(j).getArmes().get(1).getF()*u2.getList_unit().get(adv).getE());
-					//System.out.println("E : "+u2.getList_unit().get(adv).getE());
-
-					jet1=jet_de_touche(jet1,(u1.getFigurines().get(j).getArmes().get(1)).getC());
-
-					//apptitude relancer
-						if(jet1==true){
-							touche = touche + 1;
-							jet2=jet_de_blessure(jet2,u1.getFigurines().get(j).getArmes().get(1).getF(),u2.getFigurines().get(adv).getE());
-							//apptitude relancer
-						}
-						if(jet2==true){
-							blessure = blessure + 1;
-							block=jet_de_sauvegarde(block,u1.getFigurines().get(j).getArmes().get(1).getPA(),u2.getFigurines().get(adv).getSV());
-							//apptitude relancer
-							//apptitude insensible_douleur
-							if(block==false && pvE >0){
-								int degat= chgt_d((u1.getFigurines().get(j).getArmes().get(1)).getD());
-								
-								pvE=pvE - degat  ;
-								if(pvE<0) {
-									sum_degat = sum_degat + degat + pvE;
-									complet_degat = complet_degat +degat +pvE;
-								}
-								else {
-									sum_degat = sum_degat + degat;
-									complet_degat = degat+complet_degat;
-								}
-								
-
-								dflag = true;
+				if(u1.getFigurines().get(j).getHP()>0) {
+					int attaque = chgt_a(u1.getFigurines().get(j).getSelectedWeapon().getA());
+					while(pvE  <=0 && adv+1<u2.getFigurines().size()) {	 
+			            adv=adv+1;
+			            pvE=u2.getFigurines().get(adv).getHP();
+			     
+					}
+					for(int i=0 ;i<attaque;i++ ){ //nbr attq par arme
+						dflag = false;
+						boolean jet1=false;
+						boolean jet2=false;
+						boolean block=true;
+						//System.out.println("F : "+u1.getList_unit().get(j).ees().get(1).getF()*u2.getList_unit().get(adv).getE());
+						//System.out.println("E : "+u2.getList_unit().get(adv).getE());
+	
+						jet1=jet_de_touche(jet1,(u1.getFigurines().get(j).getSelectedWeapon().getC()));
+	
+						//apptitude relancer
+							if(jet1==true){
+								touche = touche + 1;
+								jet2=jet_de_blessure(jet2,u1.getFigurines().get(j).getSelectedWeapon().getF(),u2.getFigurines().get(adv).getE());
+								//apptitude relancer
 							}
-							if(block == true) {
-								degat_block = degat_block + 1;
-							}
-							if(pvE  <=0 && dflag == true ) {
-								mort = mort+1;
-								mort_moyen = mort_moyen+1;
+							if(jet2==true){
+								blessure = blessure + 1;
+								block=jet_de_sauvegarde(block,u1.getFigurines().get(j).getSelectedWeapon().getPA(),u2.getFigurines().get(adv).getSV());
+								//apptitude relancer
+								//apptitude insensible_douleur
+								if(block==false && pvE >0){
+									int degat= chgt_d((u1.getFigurines().get(j).getSelectedWeapon().getD()));
+									
+									pvE=pvE - degat  ;
+									if(pvE<0) {
+										sum_degat = sum_degat + degat + pvE;
+										complet_degat = complet_degat +degat +pvE;
+									}
+									else {
+										sum_degat = sum_degat + degat;
+										complet_degat = degat+complet_degat;
+									}
+									
+	
+									dflag = true;
+								}
+								if(block == true) {
+									degat_block = degat_block + 1;
+								}
+								if(pvE  <=0 && dflag == true ) {
+									mort = mort+1;
+									mort_moyen = mort_moyen+1;
+								}
 							}
 						}
 					}
@@ -259,17 +266,18 @@ public class Calcul {
 		
 		degat_moyen =(float)complet_degat/10000;
 		mort_moyen = (float)mort_moyen/10000;
-		//System.out.println("nbr touche :"+touche);
-		//System.out.println("nbr blessure :"+blessure);
-		//System.out.println("degat bloquer :"+degat_block);
-		//System.out.println("degat moyen : "+ degat_moyen);
-		//System.out.println("mort moyen : "+mort_moyen);
+		System.out.println("nbr touche :"+touche);
+		System.out.println("nbr blessure :"+blessure);
+		System.out.println("degat bloquer :"+degat_block);
+		System.out.println("degat moyen : "+ degat_moyen);
+		System.out.println("mort moyen : "+mort_moyen);
+		for(int i=0;i<50;i++) {
+			if(tabdegat[i]!=0) {
+				System.out.println(tabdegat[i]);
+			}
+		}
 		Calcul c1 = new Calcul(tabdegat,degat_moyen,mort_moyen,tabmort);
-		return c1;
-		
-		
-
-	       
+		return c1;	       
 	}
 
 }
