@@ -127,20 +127,20 @@ public class BDD {
 		}
 	}
 	
-	public ArrayList<String> select(String requete,String... param ) throws SQLException{
+	public ArrayList<String> select(String requete, PreparedStatement pstat ,String... param ) throws SQLException{
 		ArrayList<String> rendu = new ArrayList<String>();
 		try {
 			
 			
-			stat = connec.prepareStatement(requete);
+			pstat = connec.prepareStatement(requete);
 			if(param.length>0) {
 				for(int i = 1;i<=param.length;i++) {
-					stat.setString(i, param[i-1]);
+					pstat.setString(i, param[i-1]);
 				}
 			}
 			
 			rs.close();
-			rs = stat.executeQuery();
+			rs = pstat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
 			ArrayList<String> column = new ArrayList<String>();
 			
@@ -191,8 +191,9 @@ public class BDD {
 			stat.executeUpdate();
 			
 			requete = "SELECT id_liste FROM liste WHERE nom_liste = '"+armee.getName()+"';";
-			
-			rendu = this.select(requete);
+			PreparedStatement pstat = null;
+			rendu = this.select(requete,pstat);
+			pstat=null;
 			id = Integer.parseInt(rendu.getFirst());
 			requete = "INSERT INTO contenir VALUES(?,?);";
 			
