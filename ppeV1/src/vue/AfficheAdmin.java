@@ -25,12 +25,40 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import controlleur.BDD;
 import controlleur.ControllerAdmin;
+import controlleur.EvenementController;
 
 public class AfficheAdmin {
-    public static void affiche(Stage primaryStage, User session) {
-    	
-    	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+	private static VBox events;
+	private static Stage stage;
+	private static User sess;
+
+	public static Stage getStage() {
+		return stage;
+	}
+
+	public static void setStage(Stage stage) {
+		AfficheAdmin.stage = stage;
+	}
+
+	public static User getSess() {
+		return sess;
+	}
+
+	public static void setSess(User sess) {
+		AfficheAdmin.sess = sess;
+	}
+
+	public static VBox getEvents() {
+		return events;
+	}
+
+	public static void affiche(Stage primaryStage, User session) {
+		stage = primaryStage;
+		sess = session;
+		events = EvenementController.EvenementVBox();
+		AfficheTopMenu menu = new AfficheTopMenu(stage,sess);
     	Text titre = new Text("Mes évènements");
     	titre.setFont(Font.font("Arial", 30));
         titre.setFill(Color.web("#2C3E50")); 
@@ -40,6 +68,7 @@ public class AfficheAdmin {
         
         // Création du DatePicker
         DatePicker date = new DatePicker();
+        date.setMaxWidth(60);
         
     	VBox vTitre = new VBox(titre);
         Button parcourir = new Button("Parcourir");
@@ -57,20 +86,22 @@ public class AfficheAdmin {
 
         // Action des boutons
         parcourir.setOnAction(e -> {
-        	ControllerAdmin.parcourir(primaryStage, imageView);
+        	ControllerAdmin.parcourir(stage, imageView);
         });
         
         valider.setOnAction(e -> {
         	
         	// Récupération de la date sélectionnée
         	LocalDate localDate = date.getValue();
+        	
         	if (localDate != null) {
                 // Formater la date en chaîne de caractères au format "yyyy-MM-dd"
                 String dateString = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
                 System.out.println("Date sélectionnée : " + dateString);
                 System.out.println(dateString);
                 System.out.println("Date sélectionnée (java.util.Date) : " + dateString);
-                ControllerAdmin.valider(nom.getText(),descEvent.getText(), dateString);
+                events = ControllerAdmin.valider(nom.getText(),ControllerAdmin.getFile().getName(),descEvent.getText(), dateString);
+                AfficheAdmin.affiche(stage, sess);
             }      	
         });
         
@@ -80,7 +111,7 @@ public class AfficheAdmin {
         hbox.setAlignment(Pos.CENTER);
 
         VBox root = new VBox();
-        root.getChildren().addAll(menu,vTitre,hbox);
+        root.getChildren().addAll(menu,vTitre,hbox,events);
         
         // Ajout du VBox à la scène
         Scene scene = new Scene(root, 800, 600);
@@ -90,7 +121,9 @@ public class AfficheAdmin {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    public static void ajoutEvenement(String nom_evt, String nom_img,String desc, String date) {
-    
-    }
+
+	public static void setEvents(VBox events) {
+		AfficheAdmin.events = events;
+	}
+
 }
