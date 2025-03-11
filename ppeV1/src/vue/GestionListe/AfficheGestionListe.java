@@ -26,7 +26,7 @@ public class AfficheGestionListe {
 		HBox boite = new HBox(); // Box contenant les parties bouton et liste
 		VBox selectBouton = new VBox(); // Partie bouton
 		VBox liste = new VBox(); // Partie Liste
-		Scene scene = new Scene(root, 1200, 800); // taille de la scène
+		Scene scene = new Scene(root, 1000, 800); // taille de la scène
 
 		afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
 

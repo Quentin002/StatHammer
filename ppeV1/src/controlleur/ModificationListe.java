@@ -97,6 +97,26 @@ public class ModificationListe {
         }
         return listesFigurine;
     }
+    public ArrayList<ArmeeListe> getAllUnites() {
+        ArrayList<ArmeeListe> toutesUnites = new ArrayList<>();
+        String requete = "SELECT nom_unite FROM unite;";
+
+        try (Connection conn = reopenConnection();
+             PreparedStatement stmt = conn.prepareStatement(requete);
+             ResultSet recup = stmt.executeQuery()) {
+
+            while (recup.next()) {
+                String nomUnite = recup.getString("nom_unite");
+                ArmeeListe armee = new ArmeeListe(0, nomUnite, nomUnite, nomUnite);
+                armee.setUniteListe(new ArrayList<>());
+                armee.getUniteListe().add(nomUnite);
+                toutesUnites.add(armee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return toutesUnites;
+    }
 
     private Connection reopenConnection() throws SQLException {
         if (conec.getConnection().isClosed()) {
