@@ -214,9 +214,8 @@ public class BDD {
 			// TODO: handle exception
 			System.err.println(e.getMessage());
 			
-			
+			return 0;
 		}
-		return 0;
 	}
 	public String UtilisateurRole(String nom, String mdp) {
 		String role = "null";

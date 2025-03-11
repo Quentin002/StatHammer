@@ -98,7 +98,7 @@ public static void affiche(Stage primaryStage,User session) {
 		
 		try {
 			String mdp =Connexion.selectMdp(session.getId());
-			if (texte3.getText().trim().equals(mdp)==true) {
+			if (Integer.toString(texte3.getText().trim().hashCode()).equals(mdp)==true) {
 
 				if(texte2.getText() != null && !texte2.getText().trim().isEmpty() && texte2.getText().trim().contains(" ")==false)
 				try {
