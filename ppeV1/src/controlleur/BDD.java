@@ -221,13 +221,14 @@ public class BDD {
 	public String UtilisateurRole(String nom, String mdp) {
 		String role = "null";
 		try {
+			
 			stat = this.getPreparedStatement("SELECT role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
 				nom, mdp);
 			
 			ResultSet rs = stat.executeQuery();
 			rs.next();
 			role = rs.getString("role_utilisateur");
-
+			
 			return role;
 			
 		} catch (SQLException e) {

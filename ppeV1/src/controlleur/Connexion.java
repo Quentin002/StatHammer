@@ -16,8 +16,8 @@ public class Connexion {
 		BDD conec = new BDD();
 		
 		ArrayList<Object> rendu = conec.selectUtilisateur(login, Integer.toString(mdp.hashCode()));
-		int id = conec.UtilisateurID(login, mdp);
-		String role = conec.UtilisateurRole(login, mdp);
+		int id = conec.UtilisateurID(login, Integer.toString(mdp.hashCode()));
+		String role = conec.UtilisateurRole(login, Integer.toString(mdp.hashCode()));
 		//System.out.println(role);
 		conec.close();
 		try {
