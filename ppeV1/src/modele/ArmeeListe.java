@@ -1,29 +1,33 @@
 package modele;
 
-public class ArmeeListe {
-    private int id;
-    private String nom;
-    private String description;
-    private String data;
-    private int idUtilisateur;
+import java.util.ArrayList;
 
-    public ArmeeListe(int id, String nom, String description, String data, int idUtilisateur) {
-        this.id = id;
-        this.nom = nom;
-        this.description = description;
-        this.data = data;
-        this.idUtilisateur = idUtilisateur;
+public class ArmeeListe {
+    private int idListe;
+    private String nomListe;
+    private String descriptionListe;
+    private String dataListe;
+    private ArrayList<String> unite;
+
+    public ArmeeListe(int id, String nom, String description, String data) {
+        this.idListe = id;
+        this.nomListe = nom;
+        this.descriptionListe = description;
+        this.dataListe = data;
     }
 
-    public int getId() { return id; }
-    public String getNom() { return nom; }
-    public String getDescription() { return description; }
-    public String getData() { return data; }
-    public int getIdUtilisateur() { return idUtilisateur; }
+    public int getIdListe() { return idListe; }
+    public String getNomListe() { return nomListe; }
+    public String getDescriptionListe() { return descriptionListe; }
+    public String getDataListe() { return dataListe; }
+    public ArrayList<String> getUniteListe() { return unite; }
 
+    public void setUniteListe(ArrayList<String> unite) {
+        this.unite = unite;
+    }
     @Override
     public String toString() {
-        return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 
-               ", Data: " + data + ", ID Utilisateur: " + idUtilisateur;
+        return "Liste ID: " + idListe + ", Nom: " + nomListe + ", Description: " + descriptionListe + 
+               ", Data: " + dataListe + ", unite: " + unite;
     }
 }
