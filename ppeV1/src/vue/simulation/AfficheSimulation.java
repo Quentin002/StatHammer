@@ -154,8 +154,8 @@ public class AfficheSimulation
 		/* ACTION !! */
 		btn_simulate.setOnAction(e -> {
 			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null
-				// ajouter d'autres contrôles
-			) {
+				&& battle_data.getSelectedUnit(1) != null && battle_data.getSelectedUnit(2) != null)
+			{
 				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
 			}
 			else {
