@@ -35,17 +35,20 @@ public class Unit {
 	public HashMap<String, ArrayList<Figurine>> getIdenticalFigsGroups(){
 		return identical_figs;
 	}
-	public HashMap<String, Integer> getNumbersOfWeapons(String group_name) {
-		HashMap<String, Integer> armes = new HashMap<String, Integer>();
-		armes.put(group_name, 0);
-		for(Figurine fig : identical_figs.get("group_name"))
+	
+	// est exécuté dès qu'on touche au slider
+	public int getAliveFigsOfAGroup(String group_name) {
+		int nb = 0;
+		System.out.println("hashmap groupe de figs: " + identical_figs);
+		for(Figurine fig : identical_figs.get(group_name))
 		{
 			if(fig.getHP() > 0) {
-				armes.replace(group_name, armes.get("group_name") + 1);
+				nb++;
 			}
 		}
-		return armes;
+		return nb;
 	}
+	
 	public int getId() {
 		return id;
 	}

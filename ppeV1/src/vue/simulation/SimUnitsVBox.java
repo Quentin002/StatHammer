@@ -9,8 +9,8 @@ import modele.Unit;
 
 public class SimUnitsVBox extends VBox
 {
-	ArrayList<Button> buttons = new ArrayList<Button>();
-	ArrayList<SimFigurinesVBox> fig_boxes = new ArrayList<SimFigurinesVBox>();
+	private ArrayList<Button> buttons = new ArrayList<Button>();
+	private ArrayList<SimFigurinesVBox> fig_boxes = new ArrayList<SimFigurinesVBox>();
 	private int selected_unit = 0;
 	private int column; // = 1 ou 2
 	
@@ -38,7 +38,6 @@ public class SimUnitsVBox extends VBox
 	public void setList(int num_list)
 	{
 		ArrayList<Unit> units = AfficheSimulation.getBattleData().getSelectedList(num_list).getUnits();
-		
 		for(int i = 0; i < units.size(); i++)
 		{
 			VBox one_unit = new VBox();

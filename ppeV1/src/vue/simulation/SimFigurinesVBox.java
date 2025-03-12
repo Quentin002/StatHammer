@@ -45,6 +45,7 @@ public class SimFigurinesVBox extends VBox
 		for(HashMap.Entry<String, ArrayList<Figurine>> entry : unit.getIdenticalFigsGroups().entrySet())
 		{
 			FlowPane fig_group = new FlowPane();
+			//fig_group.setStyle("-fx-background-color: rgb(220, 220, 220);");
 			String fig_name = entry.getKey();
 			ArrayList<Figurine> fig_list = entry.getValue();
 			i++;
@@ -69,13 +70,12 @@ public class SimFigurinesVBox extends VBox
 				});
 			}
 			else {
+				CheckBox checkbox = new CheckBox();
+				fig_group.getChildren().add(checkbox);
+				
 				Label fig_name_label = new Label(fig_name);
 				fig_name_label.setStyle("-fx-padding: 0 5px 0 0");
 				fig_group.getChildren().add(fig_name_label);
-				
-				CheckBox checkbox = new CheckBox();
-				fig_group.getChildren().add(checkbox);
-				//checkbox.setGraphic(one_image_box);
 			}
 			
 			

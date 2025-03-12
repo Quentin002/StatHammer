@@ -99,47 +99,44 @@ public class ControlleurSimu
 	public static void selectAnUnit(SimUnitsVBox lists, int col, int j)
 	{
 		ArrayList<Button> buttons = lists.getButtons();
-        SimFigurinesVBox fig_boxes = lists.getFigBoxes().get(j);
+		SimFigurinesVBox old_fig_boxes = null;
+        SimFigurinesVBox new_fig_boxes = lists.getFigBoxes().get(j);
         
-        // dérouler ou replier les figurines
-		fig_boxes.changeState();
-		
-		// retirer bordure unité désélectionnée
-		if(lists.getSelectedUnit() > 0)
-		{
-			buttons.get(lists.getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");
-		}
-		
-		if(fig_boxes.isOpen())
-		{
-			// afficher figurines
-			fig_boxes.setFigurines();
-			if(lists.getSelectedUnit() != j + 1)
-			{
-				lists.setSelectedUnit(j + 1);
-				if(col == 0)
-				{
-					AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear();
+        // dérouler ou replier les figurines du bouton cliqué
+        //new_fig_boxes.changeState();
+        
+        // il y a déjà une unité sélectionnée
+        if(lists.getSelectedUnit() > 0)
+        {
+        	// getSelectedUnit() - 1 parce qu'on compte à partir de 1
+			buttons.get(lists.getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
+        	AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear(); // supprimer fenêtre combat si existe
+        	
+        	// bouton même unité => ferme
+        	if(lists.getSelectedUnit() - 1 == j)
+            {
+        		new_fig_boxes.getChildren().clear();
+        		lists.setSelectedUnit(0);
+            }
+        	// bouton autre unité
+        	else
+        	{
+        		old_fig_boxes = lists.getFigBoxes().get(lists.getSelectedUnit() - 1);
+	        	if(old_fig_boxes != null) {
+					old_fig_boxes.getChildren().clear(); // supprimer ancienne zone de figurines
 				}
-			}
-			// bordure unité sélectionnée
-			buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;");
-		}
-		else
-		{
-			// cacher figurine
-			fig_boxes.getChildren().clear(); // index est constant dans sa portée, alors que i change
-			if(col == 0)
-			{
-				AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear();
-			}
-			lists.setSelectedUnit(0); // valeur "impossible"
-			
-			// retirer bordure unité désélectionnée
-			buttons.get(j).setStyle("-fx-border-width: 0;");
-		}
-		
-		AfficheSimulation.getBattleData().setSelectedUnit(col, j);
+	        	lists.setSelectedUnit(j + 1);
+	        	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
+	        	new_fig_boxes.setFigurines(); // on ouvre
+        	}
+        }
+        // pas d'unité sélectionnée => on ouvre
+        else
+        {
+        	lists.setSelectedUnit(j + 1);
+        	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
+        	new_fig_boxes.setFigurines();
+        }
 	}
 	
 	// slider des PV des figurines
@@ -178,20 +175,16 @@ public class ControlleurSimu
 	}
 	
 	public static void weaponNumberChoice(int value, String group_name) {
-		HashMap<String, Integer> numbers_of_weapons = AfficheSimulation.getBattleData().getSelectedUnit(1).getNumbersOfWeapons(group_name);
-		numbers_of_weapons.replace(group_name, value);
-		
 		// on considère que ceux qui n'attaquent pas sont morts
 		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(1).getIdenticalFigsGroups().get(group_name);
-		for(int i = 0; i < numbers_of_weapons.get(group_name); i++) {
+		for(int i = 0; i < value; i++) {
 			fig_group.get(i).setHP(fig_group.get(i).getHPMax());
 		}
-		for(int i = numbers_of_weapons.get(group_name); i < fig_group.size(); i++) {
+		for(int i = value; i < fig_group.size(); i++) {
 			fig_group.get(i).setHP(0);
 		}
 		
-		// trouver un moyen de modifier instantanément les images
-		
+		System.out.println("weaponNumberChoice => trouver un moyen de modifier instantanément les images");
 	}
 	
 	// méthode pas encore testée

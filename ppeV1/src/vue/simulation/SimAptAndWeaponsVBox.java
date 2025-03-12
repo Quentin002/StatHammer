@@ -77,7 +77,8 @@ public class SimAptAndWeaponsVBox extends VBox
         });
 		
 		// choix du nombre d'attaquants (= nombre d'armes)
-		Slider nb_of_attackers = new Slider(0, group_size, group_size);
+		Slider nb_of_attackers = new Slider(0, group_size,
+			AfficheSimulation.getBattleData().getSelectedUnit(1).getAliveFigsOfAGroup(group_name));
 		nb_of_attackers.setMajorTickUnit(1);
 		nb_of_attackers.setMinorTickCount(0);
 		nb_of_attackers.setSnapToTicks(true);
