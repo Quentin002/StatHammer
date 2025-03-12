@@ -13,8 +13,8 @@ public class Battle
 	private ArmeeListe defenseur;
 	private Armee army1;
 	private Armee army2;
-	private int index_selected_unit1 = 0;
-	private int index_selected_unit2 = 0;
+	private int index_selected_unit1 = -1;
+	private int index_selected_unit2 = -1;
 	
 	// getters/setters
 	public ArmeeListe getSelectedList(int nb) {
