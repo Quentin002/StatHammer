@@ -102,30 +102,26 @@ public class ControlleurSimu
 		SimFigurinesVBox old_fig_boxes = null;
         SimFigurinesVBox new_fig_boxes = lists.getFigBoxes().get(j);
         
-        // dérouler ou replier les figurines du bouton cliqué
-        //new_fig_boxes.changeState();
-        
         // il y a déjà une unité sélectionnée
-        if(lists.getSelectedUnit() > 0)
+        if(battle_data.getSelectedUnitIndex(col) > 0)
         {
-        	// getSelectedUnit() - 1 parce qu'on compte à partir de 1
-			buttons.get(lists.getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
+			buttons.get(battle_data.getSelectedUnitIndex(col)).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
         	AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear(); // supprimer fenêtre combat si existe
         	
         	// bouton même unité => ferme
-        	if(lists.getSelectedUnit() - 1 == j)
+        	if(battle_data.getSelectedUnitIndex(col) == j)
             {
         		new_fig_boxes.getChildren().clear();
-        		lists.setSelectedUnit(0);
+        		battle_data.setSelectedUnit(col, 0);
             }
         	// bouton autre unité
         	else
         	{
-        		old_fig_boxes = lists.getFigBoxes().get(lists.getSelectedUnit() - 1);
+        		old_fig_boxes = lists.getFigBoxes().get(battle_data.getSelectedUnitIndex(col));
 	        	if(old_fig_boxes != null) {
 					old_fig_boxes.getChildren().clear(); // supprimer ancienne zone de figurines
 				}
-	        	lists.setSelectedUnit(j + 1);
+	        	battle_data.setSelectedUnit(col, j);
 	        	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
 	        	new_fig_boxes.setFigurines(); // on ouvre
         	}
@@ -133,7 +129,7 @@ public class ControlleurSimu
         // pas d'unité sélectionnée => on ouvre
         else
         {
-        	lists.setSelectedUnit(j + 1);
+        	battle_data.setSelectedUnit(col, j);
         	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
         	new_fig_boxes.setFigurines();
         }

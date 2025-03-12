@@ -13,8 +13,8 @@ public class Battle
 	private ArmeeListe defenseur;
 	private Armee army1;
 	private Armee army2;
-	private int index_selected_unit1;
-	private int index_selected_unit2;
+	private int index_selected_unit1 = 0;
+	private int index_selected_unit2 = 0;
 	
 	// getters/setters
 	public ArmeeListe getSelectedList(int nb) {
@@ -47,6 +47,9 @@ public class Battle
 	}
 	public Unit getSelectedUnit(int nb) {
 		return (nb == 1 ? selected_list1.getUnits().get(index_selected_unit1) : selected_list2.getUnits().get(index_selected_unit2));
+	}
+	public int getSelectedUnitIndex(int nb) {
+		return (nb == 1 ? index_selected_unit1 : index_selected_unit2);
 	}
 	public void setSelectedUnit(int nb, int unit_list_index) {
 		if(nb == 1) {

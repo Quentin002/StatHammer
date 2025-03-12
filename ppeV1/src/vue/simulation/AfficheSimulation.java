@@ -93,18 +93,16 @@ public class AfficheSimulation
         /* -- colonne centrale -- */
         VBox column2 = new VBox();
         column2.prefWidthProperty().bind(main.widthProperty().multiply(0.4));
+        column2.setAlignment(Pos.CENTER);
         
         	// boutons inverser et simuler   
+		Button btn_simulate = new Button("Action !!");
+		btn_simulate.setStyle("-fx-font-size: 15;");
+		
 		Image icons_inversion = new Image("/images/inversion_icons.png");
 		ImageView icons_inversion_box = new ImageView(icons_inversion);
 		Button reverse_armies = new Button();
 		reverse_armies.setGraphic(icons_inversion_box);
-		Button btn_simulate = new Button("Action !!");
-		btn_simulate.setStyle("-fx-font-size: 15;");
-		
-		HBox column2_top = new HBox();
-        column2_top.setAlignment(Pos.CENTER);
-		column2_top.getChildren().addAll(reverse_armies, btn_simulate);
         
         	// grande image
         Image image_col2 = new Image("/images/wip.jpg");
@@ -118,7 +116,7 @@ public class AfficheSimulation
 		big_image_pane.getChildren().add(image_box);
 		
 			// assemblage
-		column2.getChildren().addAll(column2_top, big_image_pane);
+		column2.getChildren().addAll(btn_simulate, big_image_pane, reverse_armies);
 		
 		
         /* -- colonne de droite -- */
@@ -154,7 +152,7 @@ public class AfficheSimulation
 		/* ACTION !! */
 		btn_simulate.setOnAction(e -> {
 			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null
-				&& battle_data.getSelectedUnit(1) != null && battle_data.getSelectedUnit(2) != null)
+				&& battle_data.getSelectedUnitIndex(1) > 0 && battle_data.getSelectedUnitIndex(2)  > 0)
 			{
 				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
 			}
