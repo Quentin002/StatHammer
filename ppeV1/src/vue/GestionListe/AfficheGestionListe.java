@@ -16,27 +16,18 @@ import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheTopMenu;
 import controlleur.SupprListe;
-
 import java.util.ArrayList;
 
 public class AfficheGestionListe {
 	public static void affiche(Stage primaryStage, User session) {
 		// Liste des conteneurs principaux structurant l'interface
 		VBox root = new VBox(); // page principa
-		HBox header = new HBox(); // le header
 		HBox boite = new HBox(); // Box contenant les parties bouton et liste
 		VBox selectBouton = new VBox(); // Partie bouton
 		VBox liste = new VBox(); // Partie Liste
-		Scene scene = new Scene(root, 800, 600); // taille de la scène
-		
+		Scene scene = new Scene(root, 1000, 800); // taille de la scène
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 		root.getChildren().add(menu);
-
-		// _______________ HEADER _______________
-		// Création et configuration du titre
-		Label titre = new Label("StatHammer");
-		header.setAlignment(Pos.CENTER);
-		header.setPrefHeight(100);
 
 		// _______________ BOX BOITE _______________
 		// Partie bouton
@@ -90,6 +81,11 @@ public class AfficheGestionListe {
 
 			listeBox.getChildren().addAll(nomListe, descriptionListe, uniteBox, actions);
 			liste.getChildren().add(listeBox);
+			
+			modifBtn.setOnAction(e ->{
+				primaryStage.close();
+				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe());
+			});
 
 			supprBtn.setOnAction(e -> {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
@@ -108,7 +104,7 @@ public class AfficheGestionListe {
 		}
 		// ajout des conteneurs principaux à la scène
 		boite.getChildren().addAll(selectBouton, liste);
-		root.getChildren().addAll(titre, header, boite);
+		root.getChildren().addAll(boite);
 
 		// Bouton Retour
 		Retour.setOnAction(e -> {
