@@ -25,7 +25,7 @@ public class GestionListe {
 
 	    // Requête pour récupérer les listes d'armée avec leurs unités associées
 	    String requete = """
-	        SELECT l.id_liste, l.nom_liste, l.description_liste, l.data_liste, u.nom_unite
+	        SELECT l.id_liste, l.nom_liste, l.description_liste, l.data_liste, u.nom_unite, u.id_armee
 	        FROM liste l
 	        LEFT JOIN contenir c ON l.id_liste = c.id_liste
 	        LEFT JOIN unite u ON c.id_unite = u.id_unite
@@ -37,7 +37,6 @@ public class GestionListe {
 
 	        stmt.setInt(1, idUtilisateur);
 	        ResultSet recup = stmt.executeQuery();
-
 	        // Stocker les objets ArmeeListe par ID pour éviter les doublons
 	        HashMap<Integer, ArmeeListe> mapListes = new HashMap<>();
 
@@ -47,11 +46,11 @@ public class GestionListe {
 	            String description = recup.getString("description_liste");
 	            String data = recup.getString("data_liste");
 	            String nomUnite = recup.getString("nom_unite");
-
+	            int idArmee = recup.getInt("id_armee");
 	            // Vérifier si la liste existe déjà dans la map
 	            ArmeeListe liste = mapListes.get(id);
 	            if (liste == null) {
-	                liste = new ArmeeListe(id, nom, description, data);
+	                liste = new ArmeeListe(id, idArmee, nom, description, data);
 	                liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
 	                mapListes.put(id, liste);
 	            }

@@ -44,7 +44,7 @@ public class ModificationListe {
 
                 ArmeeListe liste = mapListes.get(id);
                 if (liste == null) {
-                    liste = new ArmeeListe(id, nom, description, data);
+                    liste = new ArmeeListe(id, id, nom, description, data);
                     liste.setUniteListe(new ArrayList<>());
                     mapListes.put(id, liste);
                 }
@@ -97,17 +97,18 @@ public class ModificationListe {
         }
         return listesFigurine;
     }
-    public ArrayList<ArmeeListe> getAllUnites() {
+    public ArrayList<ArmeeListe> getAllUnites(int idArmee) {
         ArrayList<ArmeeListe> toutesUnites = new ArrayList<>();
-        String requete = "SELECT nom_unite FROM unite;";
-
+        String requete = "SELECT nom_unite FROM unite WHERE id_armee=?;";
+        
         try (Connection conn = reopenConnection();
-             PreparedStatement stmt = conn.prepareStatement(requete);
-             ResultSet recup = stmt.executeQuery()) {
-
+            PreparedStatement stmt = conn.prepareStatement(requete)){
+            stmt.setInt(1, idArmee);
+        	ResultSet recup = stmt.executeQuery();
+        	
             while (recup.next()) {
                 String nomUnite = recup.getString("nom_unite");
-                ArmeeListe armee = new ArmeeListe(0, nomUnite, nomUnite, nomUnite);
+                ArmeeListe armee = new ArmeeListe(0, 0, nomUnite, nomUnite, nomUnite);
                 armee.setUniteListe(new ArrayList<>());
                 armee.getUniteListe().add(nomUnite);
                 toutesUnites.add(armee);
@@ -116,6 +117,59 @@ public class ModificationListe {
             e.printStackTrace();
         }
         return toutesUnites;
+    }
+    public ArrayList<Figurine> getAllFigurineListe(int idArmee, String unit) {
+        ArrayList<Figurine> listesAllFigurine = new ArrayList<>();
+        String requete = """
+            SELECT DISTINCT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO
+            FROM unite u 
+            JOIN remplir r ON u.id_unite = r.id_unite
+            JOIN figurine f ON r.id_figurine = f.id_figurine
+            WHERE u.id_armee=? AND u.nom_unite=?;
+        """;
+
+        try (Connection conn = reopenConnection();
+             PreparedStatement stmt = conn.prepareStatement(requete)) {
+        	System.out.println(idArmee);
+            stmt.setInt(1, idArmee);
+            stmt.setString(2, unit);
+            ResultSet recup = stmt.executeQuery();
+
+            while (recup.next()) { // récupère toutes les info de la figurine
+                String nomFigurine = recup.getString("nom_figurine");
+                String M = recup.getString("M");
+                int E = recup.getInt("E");
+                int SV = recup.getInt("SV");
+                int PV = recup.getInt("PV");
+                int CD = recup.getInt("CD");
+                int CO = recup.getInt("CO");
+
+                Figurine figurine = new Figurine(new ArrayList<>(), new ArrayList<>(), nomFigurine, "", M, E, SV, PV, CD, CO);
+                listesAllFigurine.add(figurine);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listesAllFigurine;
+    }
+
+    public void validerModifications(int idListe, ArrayList<ArmeeListe> listes) {
+        // Mettre à jour la base de données avec les modifications
+        String requete = "UPDATE liste SET data_liste = ? WHERE id_liste = ?;";
+
+        try (Connection conn = reopenConnection();
+             PreparedStatement stmt = conn.prepareStatement(requete)) {
+
+            for (ArmeeListe armee : listes) {
+                String dataListe = String.join(",", armee.getUniteListe());
+                stmt.setString(1, dataListe);
+                stmt.setInt(2, idListe);
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Connection reopenConnection() throws SQLException {

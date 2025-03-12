@@ -87,7 +87,7 @@ public class AfficheGestionListe {
 			
 			modifBtn.setOnAction(e ->{
 				primaryStage.close();
-				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe());
+				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe(), armee.getIdArmee());
 			});
 
 			supprBtn.setOnAction(e -> {

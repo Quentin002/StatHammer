@@ -4,19 +4,22 @@ import java.util.ArrayList;
 
 public class ArmeeListe {
     private int idListe;
+    private int idArmee;
     private String nomListe;
     private String descriptionListe;
     private String dataListe;
     private ArrayList<String> unite;
 
-    public ArmeeListe(int id, String nom, String description, String data) {
+    public ArmeeListe(int id, int idArmee, String nom, String description, String data) {
         this.idListe = id;
         this.nomListe = nom;
         this.descriptionListe = description;
         this.dataListe = data;
+        this.idArmee = idArmee;
     }
 
     public int getIdListe() { return idListe; }
+    public int getIdArmee() { return idArmee;}
     public String getNomListe() { return nomListe; }
     public String getDescriptionListe() { return descriptionListe; }
     public String getDataListe() { return dataListe; }
