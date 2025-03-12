@@ -103,7 +103,7 @@ public class ControlleurSimu
         SimFigurinesVBox new_fig_boxes = lists.getFigBoxes().get(j);
         
         // il y a déjà une unité sélectionnée
-        if(battle_data.getSelectedUnitIndex(col) > 0)
+        if(battle_data.getSelectedUnitIndex(col) > -1)
         {
 			buttons.get(battle_data.getSelectedUnitIndex(col)).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
         	AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear(); // supprimer fenêtre combat si existe
@@ -112,7 +112,7 @@ public class ControlleurSimu
         	if(battle_data.getSelectedUnitIndex(col) == j)
             {
         		new_fig_boxes.getChildren().clear();
-        		battle_data.setSelectedUnit(col, 0);
+        		battle_data.setSelectedUnit(col, -1);
             }
         	// bouton autre unité
         	else
