@@ -176,19 +176,12 @@ public class Instanciation {
 		ArrayList<Aptitude> rendu = new ArrayList<>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
-			
 			nom = conec.select("SELECT a.nom_aptitude FROM aptitude a JOIN permettre USING (id_aptitude) JOIN figurine f USING(id_figurine) WHERE f.nom_figurine = ?;",figNom );
-			
-			for (int i = 0;i<nom.size();i = i++) {
+			for (int i = 0; i < nom.size(); i++) {
 				rendu.add(new Aptitude(nom.get(i)));
 			}
-			
-			
-			
-			
-			
-			
-		}catch(SQLException e) {
+		}
+		catch(SQLException e) {
 			
 		}
 		

@@ -183,7 +183,6 @@ public class ControlleurSimu
 		System.out.println("weaponNumberChoice => trouver un moyen de modifier instantanément les images");
 	}
 	
-	// méthode pas encore testée
 	public static void checkOrUncheckAnAptitude(boolean isSelected, String aptitude_name, ArrayList<Figurine> fig_group) {
 		for(Aptitude apti : fig_group.get(0).getAptitudes()) // recherche dans les aptitudes de la 1ère figurine
 		{
@@ -193,12 +192,10 @@ public class ControlleurSimu
 					HashMap<String, Aptitude> selectedAptitudes = fig.getSelectedAptitudes();
 					if(isSelected) {
 						selectedAptitudes.put(aptitude_name, apti);
-						System.out.println("debug: " + fig.getSelectedAptitudes().get(aptitude_name) + " is selected");
 					}
 					else {
 						if(selectedAptitudes.containsKey(aptitude_name)) {
 							selectedAptitudes.remove(aptitude_name);
-							System.out.println("taille de selectedAptitudes = " + fig.getSelectedAptitudes().size());
 						}
 					}
 				}

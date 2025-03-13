@@ -7,7 +7,6 @@ import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
@@ -92,7 +91,7 @@ public class SimFigurinesVBox extends VBox
 			}
 			
 			
-			/* -- boucle sur les figurines d'un groupe: checkbox, image, PV et spinner -- */
+			/* -- figurines d'un groupe -- */
 			for(Figurine fig : fig_list)
 			{
 				HBox one_fig_box = new HBox();
@@ -104,8 +103,6 @@ public class SimFigurinesVBox extends VBox
 					one_image = new Image("/images/android-line.png");
 				}
 				ImageView one_image_box = new ImageView();
-				//one_fig_box.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 0 3px 0 0;");
-				// dimensions
 				one_image_box.setPreserveRatio(true);
 				//one_image_box.setFitHeight(24); // appeler une des deux méthodes de dimensionnement
 				one_image_box.setFitWidth(24);
