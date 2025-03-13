@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -70,12 +71,24 @@ public class SimFigurinesVBox extends VBox
 				});
 			}
 			else {
-				CheckBox checkbox = new CheckBox();
-				fig_group.getChildren().add(checkbox);
-				
 				Label fig_name_label = new Label(fig_name);
 				fig_name_label.setStyle("-fx-padding: 0 5px 0 0");
 				fig_group.getChildren().add(fig_name_label);
+				
+				Slider nb_of_defenders = new Slider(0, fig_list.size(),
+					AfficheSimulation.getBattleData().getSelectedUnit(2).getAliveFigsOfAGroup(fig_name));
+				nb_of_defenders.setMajorTickUnit(1);
+				nb_of_defenders.setMinorTickCount(0);
+				nb_of_defenders.setSnapToTicks(true);
+				//nb_of_attackers.setShowTickMarks(true);
+				nb_of_defenders.setShowTickLabels(true);
+				//nb_of_attackers.setBlockIncrement(1);
+				
+				fig_group.getChildren().add(nb_of_defenders);
+				
+				nb_of_defenders.valueProperty().addListener((observable, oldValue, newValue) -> {
+					ControlleurSimu.AliveFigsChoice(2, newValue.intValue(), fig_name);
+		        });
 			}
 			
 			
@@ -97,16 +110,8 @@ public class SimFigurinesVBox extends VBox
 				//one_image_box.setFitHeight(24); // appeler une des deux méthodes de dimensionnement
 				one_image_box.setFitWidth(24);
 				one_image_box.setImage(one_image);
+				one_fig_box.getChildren().add(one_image_box);
 				
-				if(column == 1)
-				{
-					one_fig_box.getChildren().add(one_image_box);
-				}
-				else
-				{
-					
-					one_fig_box.getChildren().add(one_image_box);
-				}
 				if(column == 1) {
 					Label hp_label = new Label(fig.getHP() + " PV ");
 					one_fig_box.getChildren().add(hp_label);

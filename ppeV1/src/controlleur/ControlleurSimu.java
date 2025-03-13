@@ -170,9 +170,9 @@ public class ControlleurSimu
 		}
 	}
 	
-	public static void weaponNumberChoice(int value, String group_name) {
+	public static void AliveFigsChoice(int col, int value, String group_name) {
 		// on considère que ceux qui n'attaquent pas sont morts
-		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(1).getIdenticalFigsGroups().get(group_name);
+		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
 		for(int i = 0; i < value; i++) {
 			fig_group.get(i).setHP(fig_group.get(i).getHPMax());
 		}

@@ -93,7 +93,7 @@ public class AfficheSimulation
         /* -- colonne centrale -- */
         VBox column2 = new VBox();
         column2.prefWidthProperty().bind(main.widthProperty().multiply(0.4));
-        column2.setAlignment(Pos.CENTER);
+        column2.setAlignment(Pos.TOP_CENTER);
         
         	// boutons inverser et simuler   
 		Button btn_simulate = new Button("Action !!");

@@ -87,7 +87,7 @@ public class SimAptAndWeaponsVBox extends VBox
 		//nb_of_attackers.setBlockIncrement(1);
 		
 		nb_of_attackers.valueProperty().addListener((observable, oldValue, newValue) -> {
-			ControlleurSimu.weaponNumberChoice(newValue.intValue(), group_name);
+			ControlleurSimu.AliveFigsChoice(1, newValue.intValue(), group_name);
         });
 		
 		// checkbox
