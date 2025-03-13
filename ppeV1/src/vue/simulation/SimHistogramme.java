@@ -1,4 +1,6 @@
 package vue.simulation;
+import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -7,6 +9,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class SimHistogramme extends Pane{
 	private Pane p;

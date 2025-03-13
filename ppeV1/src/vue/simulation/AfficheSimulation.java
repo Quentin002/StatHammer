@@ -4,6 +4,8 @@ package vue.simulation;
 import vue.AfficheTopMenu;
 
 import java.util.ArrayList;
+
+import application.Battle;
 import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,34 +19,28 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.Armee;
+import modele.Arme;
+import modele.ArmeMelee;
 import modele.ArmeeListe;
+import modele.Figurine;
+import modele.Unit;
 import modele.User;
 
 public class AfficheSimulation
 {
-	private static ArmeeListe selected_list;
-	private static Armee army;
+	private static Battle battle_data = new Battle(); // mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
 	
-	public static void setColumn1Bottom(SimAptAndWeaponsVBox wap)
+	public static Battle getBattleData() {
+		return battle_data;
+	}
+	
+	public static void refreshWeaponAndAptitude(SimAptAndWeaponsVBox wap)
 	{
 		weapons_aptitudes_menu.getChildren().clear();
 		weapons_aptitudes_menu.getChildren().addAll(wap.getChildren()); // copie profonde
-		weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
-	}
-	
-	public static ArmeeListe getSelectedList() {
-		return selected_list;
-	}
-	public static void setSelectedList(ArmeeListe list) {
-		selected_list = list;
-	}
-	public static Armee getArmy() {
-		return army;
-	}
-	public static void setArmy(Armee a) {
-		army = a;
+		//weapons_aptitudes_menu.setStyle("-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 2; -fx-padding: 3px;");
+		weapons_aptitudes_menu.setStyle("-fx-background-color: rgb(210, 210, 210); -fx-padding: 4px; -fx-border-color: black; -fx-border-radius: 4;");
 	}
 	
 	public static SimAptAndWeaponsVBox getWeaponsAtitudesMenu() {
@@ -145,7 +141,7 @@ public class AfficheSimulation
         column3.getChildren().add(col3_first_row);
         
         // unités colonne 3
-        SimUnitsVBox units_list2 = new SimUnitsVBox(3);
+        SimUnitsVBox units_list2 = new SimUnitsVBox(2);
         column3.getChildren().add(units_list2);
         column3_box.setContent(column3);
         
@@ -154,36 +150,18 @@ public class AfficheSimulation
 		main.getChildren().addAll(column1_box, column2, column3_box);
 		root_box.getChildren().addAll(menu, main);
 		
-		/*
+		
+		/* ACTION !! */
 		btn_simulate.setOnAction(e -> {
-			ArmeMelee w1 = new ArmeMelee("t1",3,4,1,2,1);
-			ArmeMelee w2 = new ArmeMelee("t2",8,2,3,2,3);
-			ArrayList<Arme> l1= new ArrayList<>();
-			l1.add(w1);
-			l1.add(w2);
-			Figurine fi1 = new Figurine("test1",6,2,3,l1);
-			
-			Figurine fi3 = new Figurine("test15",4,4,2,l1);
-			Figurine fi4 = new Figurine("test14",6,2,3,l1);
-			Figurine fi5 = new Figurine("test13",6,2,3,l1);
-			Figurine fi6 = new Figurine("test12",6,2,3,l1);
-			Figurine fi2 = new Figurine("test9",6,2,2,l1);
-			Figurine fi7 = new Figurine("test76",4,4,2,l1);
-			ArrayList<Figurine> fu1 = new ArrayList<Figurine>();
-			fu1.add(fi1);
-			fu1.add(fi2);
-			fu1.add(fi3);
-			fu1.add(fi4);
-			fu1.add(fi5);
-			fu1.add(fi6);
-			ArrayList<Figurine> fu2 = new ArrayList<Figurine>();
-			fu2.add(fi3);
-			fu2.add(fi7);
-			Unit u1 = new Unit("unite1",fu1);
-			Unit u2 = new Unit("unite2",fu2);
-			//Calcul.bataille(u1, u2,big_image_pane);
-			ControlleurSimu.afficheSimu(big_image_pane,u1,u2);
-		});*/
+			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null
+				&& battle_data.getSelectedUnit(1) != null && battle_data.getSelectedUnit(2) != null)
+			{
+				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
+			}
+			else {
+				System.out.println("conditions non remplies pour faire une simulation");
+			}
+		});
 		
 		
 		Scene scene = new Scene(root_box,800,600);
@@ -205,79 +183,10 @@ public class AfficheSimulation
         for(int i = 0; i < 2; i++)
         {
         	final int j = i;
-        	lists_drop_down.get(i).setOnAction(e -> {
-        		ControlleurSimu.selectAList(listes, lists_drop_down.get(j).getValue());
-        		ControlleurSimu.PullDownUnits(first_rows.get(j), lists.get(j));
-        		
-        		// remettre la capture des boutons pour dérouler les unités
-        		dropdownUnitButtonsAction(lists);
+        	lists_drop_down.get(i).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)  -> {
+        		ControlleurSimu.selectAList(j + 1, listes, newValue);
+        		ControlleurSimu.PullDownUnits(j + 1, first_rows.get(j), lists.get(j));
             });
         }
-        
-        dropdownUnitButtonsAction(lists); // 1ère fois
 	}
-	
-	private static void dropdownUnitButtonsAction(ArrayList<SimUnitsVBox> lists)
-	{
-		// boutons qui déplient les unités
-		// on met ça ici et non dans SimUnitsVBox parce qu'on gère en même temps la SimAptAndWeaponsVBox
-        // cette évènement devait être géré dans SimUnitsVBox, mais on a besoin de le faire ici
-        for(int c = 0; c < 2; c++) // les c 1 et 2 correspondent aux colonnes 1 et 3
-        {
-        	ArrayList<Button> dropdown_unit_buttons = lists.get(c).getButtons();
-            ArrayList<SimFigurinesVBox> fig_boxes = lists.get(c).getFigBoxes();
-            
-	 		for(int i = 0; i < dropdown_unit_buttons.size(); i++)
-	 		{
-	 			//buttons_units_list1.get(i).setStyle("-fx-border-width: 0; -fx-border-color: yellow; -fx-border-radius: 2;"); // style des bordures
-	 			final int col = c;
-	 			final int j = i; // merci chatgpt pour le trick!
-	 			// impossible d'écrire unit_box.get(i), i ne peut entrer dans la fonction lambda parce qu'il est susceptible de changer à l'extérieur de celle-ci
-	 			
-	 			/* -- BOUTONS des unités --*/
-	 			dropdown_unit_buttons.get(i).setOnAction(e ->
-	 			{
-	 				// dérouler ou replier les figurines
-	 				fig_boxes.get(j).changeState();
-	 				
-	 				// retirer bordure unité désélectionnée
-	 				if(lists.get(col).getSelectedUnit() > 0)
-	 				{
-	 					dropdown_unit_buttons.get(lists.get(col).getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");
-	 				}
-	 				
-	 				if(fig_boxes.get(j).isOpen())
-	 				{
-	 					// afficher figurines
-	 					fig_boxes.get(j).setFigurines();
-	 					if(lists.get(col).getSelectedUnit() != j + 1)
-	 					{
-	 						lists.get(col).setSelectedUnit(j + 1);
-	 						if(col == 0)
-	 						{
-	 							weapons_aptitudes_menu.getChildren().clear();
-	 						}
-	 					}
-	 					// bordure unité sélectionnée
-	 					dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;");
-	 				}
-	 				else
-	 				{
-	 					// cacher figurine
-	 					fig_boxes.get(j).getChildren().clear(); // index est constant dans sa portée, alors que i change
-	 					if(col == 0)
-	 					{
-	 						weapons_aptitudes_menu.getChildren().clear();
-	 					}
-	 					lists.get(col).setSelectedUnit(0); // valeur "impossible"
-	 					
-	 					// retirer bordure unité désélectionnée
-	 					dropdown_unit_buttons.get(j).setStyle("-fx-border-width: 0;");
-	 				}
-	 			});
-	 		}
-        }
-	}
-
 }
-

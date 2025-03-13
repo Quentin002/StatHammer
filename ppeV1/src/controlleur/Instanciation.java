@@ -1,6 +1,7 @@
 package controlleur;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -77,6 +78,43 @@ public class Instanciation {
 		
 		return rendu;
 	}
+	public static void getArmyLists(User session)
+	{
+		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
+		try {
+			PreparedStatement stat = conec.getPreparedStatement(sql, session.getId());
+			ResultSet rs = stat.executeQuery();
+			session.getListes().clear();
+			while(rs.next()){
+				ArmeeListe one_list = new ArmeeListe(rs.getString("nom_liste"), rs.getString("description_liste"), rs.getString("data_liste"));
+				session.addArmee(one_list);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getUnitsOfAList(ArmeeListe list) {
+		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
+			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
+			+ " WHERE liste.nom_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
+		
+		try {
+			PreparedStatement stat = conec.getPreparedStatement(sql, list.getName());
+			ResultSet rs = stat.executeQuery();
+			
+			while(rs.next()) {
+				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
+					rs.getString(1), rs.getInt(2), rs.getString(3),
+					new Armee(rs.getString(4), rs.getString(5))));
+			}
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static ArrayList<Figurine> getFigurine(String unitName){
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();

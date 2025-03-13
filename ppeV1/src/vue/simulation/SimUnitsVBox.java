@@ -1,15 +1,18 @@
 package vue.simulation;
 
 import java.util.ArrayList;
+
+import controlleur.ControlleurSimu;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import modele.Unit;
 
 public class SimUnitsVBox extends VBox
 {
-	ArrayList<Button> buttons = new ArrayList<Button>();
-	ArrayList<SimFigurinesVBox> fig_boxes = new ArrayList<SimFigurinesVBox>();
+	private ArrayList<Button> buttons = new ArrayList<Button>();
+	private ArrayList<SimFigurinesVBox> fig_boxes = new ArrayList<SimFigurinesVBox>();
 	private int selected_unit = 0;
-	private int column;
+	private int column; // = 1 ou 2
 	
 	public SimUnitsVBox(int col){
 		column = col;
@@ -31,29 +34,39 @@ public class SimUnitsVBox extends VBox
 		return fig_boxes;
 	}
 
-	// générer les listes d'unités à afficher 
-	public void setList(String[] units_names)
+	// afficher les unités de la liste déroulée 
+	public void setList(int num_list)
 	{
-		String[][] figs_names = {{"Héros"},
-				{"Figurine 1", "Figurine 2", "Figurine 3", "Figurine 4", "Figurine 5", "Figurine 6"},
-				{"Figurine 6", "Figurine 7", "Figurine 8"}};
-		
-		for(int i = 0; i < units_names.length; i++)
+		ArrayList<Unit> units = AfficheSimulation.getBattleData().getSelectedList(num_list).getUnits();
+		for(int i = 0; i < units.size(); i++)
 		{
 			VBox one_unit = new VBox();
 			
-			// boutons pour déplier
-			Button tmp_button = new Button(units_names[i]);
+			// chaque unité est un bouton pour dérouler des figurines
+			Button tmp_button = new Button(units.get(i).getName());
 			tmp_button.setMaxWidth(Double.MAX_VALUE);
 			one_unit.getChildren().add(tmp_button);
 			buttons.add(tmp_button);
 			
-			// zones de figurines
-			SimFigurinesVBox one_fig_box = new SimFigurinesVBox(column, figs_names);
+			// créer une zone de figurines par unité
+			SimFigurinesVBox one_fig_box = new SimFigurinesVBox(column, units.get(i));
 			one_unit.getChildren().add(one_fig_box);
 			fig_boxes.add(one_fig_box);
 			
 			this.getChildren().add(one_unit);
 		}
+		
+		/* -- activation des boutons pour dérouler les unités --*/
+		for(int i = 0; i < buttons.size(); i++)
+ 		{
+ 			final int j = i; // merci chatgpt pour le trick!
+ 			// java interdit à i et c d'être paramètres de la fonction lambda parce qu'ils changent à chaque itération
+ 			// on garantit que col et j seront constants (final) dans la méthode setOnAction
+ 			
+ 			buttons.get(i).setOnAction(e ->
+ 			{
+ 				ControlleurSimu.selectAnUnit(this, column, j);
+ 			});
+ 		}
 	}
 }

@@ -1,5 +1,8 @@
 package vue.simulation;
 
+import java.util.ArrayList;
+
+import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
@@ -9,14 +12,17 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import modele.Aptitude;
+import modele.Arme;
+import modele.Figurine;
 
 public class SimAptAndWeaponsVBox extends VBox
 {
 	private int group_number;
 	private String group_name;
 	int group_size;
-	String[][] weapon_list;
-	String[][] aptitude_list;
+	String[] weapon_names;
+	String[] aptitude_names;
 	
 	//public SimAptAndWeaponsVBox(){}
 	
@@ -26,14 +32,20 @@ public class SimAptAndWeaponsVBox extends VBox
 		group_name = fig_group_name;
 		group_size = fig_group_size;
 	}
-	public void setArmes(String[][] weapons){
-		weapon_list = weapons;
+	public void setArmes(ArrayList<Arme> weapon_list){
+		weapon_names = new String[weapon_list.size()];
+		for(int i = 0; i < weapon_list.size(); i++) {
+			weapon_names[i] = weapon_list.get(i).getNom();
+		}
 	}
-	public void setAptitudes(String[][] aptitudes){
-		aptitude_list = aptitudes;
+	public void setAptitudes(ArrayList<Aptitude> aptitude_list){
+		aptitude_names = new String[aptitude_list.size()];
+		for(int i = 0; i < aptitude_list.size(); i++) {
+			weapon_names[i] = aptitude_list.get(i).getName();
+		}
 	}
 	
-	public void set_apt_and_weapons()
+	public void setAptAndWeapons(ArrayList<Figurine> fig_group)
 	{
 		/* -- ligne 1: numéro du group et nom figurine -- */
 		HBox first_row = new HBox();
@@ -46,37 +58,49 @@ public class SimAptAndWeaponsVBox extends VBox
 		number.setStyle("-fx-text-fill: white; -fx-background-color: black;");
 		HBox.setMargin(number, new Insets(0, 2, 2, 0));
 				
-		Label figurine = new Label(group_name);
-		first_row.getChildren().addAll(number, figurine);
+		Label figurine_name = new Label(group_name);
+		first_row.getChildren().addAll(number, figurine_name);
 		
 		
 		/* -- ligne 2: menu déroulant choix de l'arme -- */
 		ChoiceBox<String> select_weapon = new ChoiceBox<String>();
-		for(int i = 0; i < weapon_list[group_number - 1].length; i++)
+		for(int i = 0; i < weapon_names.length; i++)
         {
-			select_weapon.getItems().add(weapon_list[group_number - 1][i]);
+			select_weapon.getItems().add(weapon_names[i]);
         }
-		select_weapon.setValue(weapon_list[group_number - 1][0]);
+		if(weapon_names.length > 0) {
+			select_weapon.setValue(weapon_names[0]);
+		}
+		
+		select_weapon.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            ControlleurSimu.selectAWeapon(newValue, fig_group);
+        });
 		
 		// choix du nombre d'attaquants (= nombre d'armes)
-		Slider nb_of_attackers = new Slider(1, group_size, 1);
+		Slider nb_of_attackers = new Slider(0, group_size,
+			AfficheSimulation.getBattleData().getSelectedUnit(1).getAliveFigsOfAGroup(group_name));
 		nb_of_attackers.setMajorTickUnit(1);
 		nb_of_attackers.setMinorTickCount(0);
 		nb_of_attackers.setSnapToTicks(true);
 		//nb_of_attackers.setShowTickMarks(true);
 		nb_of_attackers.setShowTickLabels(true);
 		//nb_of_attackers.setBlockIncrement(1);
+		
 		nb_of_attackers.valueProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println("Valeur: " + newValue.intValue()); // debug
+			ControlleurSimu.weaponNumberChoice(newValue.intValue(), group_name);
         });
 		
 		// checkbox
 		TilePane aptitudes = new TilePane();
-		for(int i = 0; i < aptitude_list[group_number - 1].length; i++)
+		for(int i = 0; i < aptitude_names.length; i++)
         {
-			CheckBox one_aptitude = new CheckBox(aptitude_list[group_number - 1][i]);
+			CheckBox one_aptitude = new CheckBox(aptitude_names[i]);
 			one_aptitude.setStyle("-fx-padding: 2px;");
 			aptitudes.getChildren().add(one_aptitude);
+			
+			one_aptitude.setOnAction(e -> {
+				ControlleurSimu.checkOrUncheckAnAptitude(one_aptitude.isSelected(), one_aptitude.getText(), fig_group);
+			});
         }
 		
 		//SimAptAndWeaponsVBox.setMargin(this.getChildren(), new Insets(5));

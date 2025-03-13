@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ public class AfficheAccueil {
 		Scene scene = new Scene(root,800,600);
 	
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		//AfficheTopMenu.setHgrow(root, Priority.ALWAYS);
 
 		root.getChildren().add(menu);
 		
@@ -29,15 +31,15 @@ public class AfficheAccueil {
 		Button simulation = new Button("SIMULATION");
 		Button creeListe = new Button("CREER LISTE");
 		Button gererListe = new Button("GERER LISTE");
-		
-		Image accueil = new Image("/images/accueil.jpg");
+		/*
+		Image accueil = new Image("images/accueil.jpg");
 		ImageView iv1 = new ImageView();
 		iv1.setImage(accueil);
 		iv1.setFitWidth(700);
 		iv1.setPreserveRatio(true);
 		iv1.setSmooth(true);
 		iv1.setCache(true);
-		
+		*/
 		
 		
 		
@@ -63,11 +65,11 @@ public class AfficheAccueil {
 		cadre.setPrefSize(300, 800);
 		cadre.setAlignment(Pos.CENTER);
 		
-		
+		/*
 		cadreImage.setPrefSize(900, 800);
 		cadreImage.setAlignment(Pos.CENTER);
 		
-		cadreImage.getChildren().add(iv1);
+		cadreImage.getChildren().add(iv1);*/
 		/*cadre.getChildren().add(simulation);
 		cadre.getChildren().add(creeListe);
 		cadre.getChildren().add(gererListe);

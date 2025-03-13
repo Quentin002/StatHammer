@@ -6,17 +6,24 @@ public class ArmeeListe
 {
 	private int id;
 	private ArrayList<Unit> unites = new ArrayList<Unit>();
+    private ArrayList<String> unit_names;
 	private String nom;
 	private String description;
 	private String data;
 	private int idUtilisateur;
+
 	
 	public ArmeeListe(String nom, String description, String data) {
 		this.nom = nom;
 		this.description = description;
 		this.data = data;
 	}
-	
+	 public ArmeeListe(int id, String nom, String description, String data) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.data = data;
+    }
 	public ArmeeListe(ArrayList<Unit> unit_list, String nom, String description, String data) {
 		this.unites = unit_list;
 		this.nom = nom;
@@ -31,6 +38,16 @@ public class ArmeeListe
         this.data = data;
         this.idUtilisateur = idUtilisateur;
     }
+	
+	public int getIdListe() { return id; }
+    public String getNomListe() { return nom; }
+    public String getDescriptionListe() { return description; }
+    public String getDataListe() { return data; }
+    public ArrayList<String> getUniteListe() { return unit_names; }
+
+    public void setUniteListe(ArrayList<String> unite) {
+        this.unit_names = unite;
+    }
 
 	// getters
 	public int getId() {
@@ -39,11 +56,20 @@ public class ArmeeListe
 	public String getName() {
 		return nom;
 	}
+	public void setName(String name) {
+		nom = name;
+	}
 	public String getDescription() {
 		return description;
 	}
+	public void setDescription(String desc) {
+		description = desc;
+	}
 	public String getData() {
 		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
 	}
     public int getIdUtilisateur() {
     	return idUtilisateur;
@@ -51,6 +77,9 @@ public class ArmeeListe
     
 	public ArrayList<Unit> getUnits() {
 		return unites;
+	}
+	public void setUnits(ArrayList<Unit> units) {
+		unites = units;
 	}
 	public String[] getUnitNames() {
 		String[] unit_names = new String[unites.size()];
@@ -65,16 +94,13 @@ public class ArmeeListe
 	public void removeUnit(Unit unit) {
 		unites.remove(unit);
 	}
-	
-	
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-
-	@Override
+	
     public String toString() {
         return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 
-               ", Data: " + data + ", ID Utilisateur: " + idUtilisateur;
+               ", Data: " + data + ", unite: " + unit_names;
     }
 }
     

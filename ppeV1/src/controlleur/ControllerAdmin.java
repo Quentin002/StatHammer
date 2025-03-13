@@ -3,11 +3,29 @@ package controlleur;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import vue.AfficheAccueil;
 import vue.AfficheAdmin;
+import vue.AfficheConnexionFailed;
+import modele.Evenement;
+import modele.User;
 
 public class ControllerAdmin {
 	private static String destinationDir;
@@ -49,19 +67,34 @@ public class ControllerAdmin {
 	
 	
 	//méthode "valider"
-	public static void valider(String nom_evt, String desc, String date) {
+	public static VBox valider(String nom_evt, String nom_img, String desc, String date) {
+		Evenement evt = new Evenement(nom_evt, nom_img, desc, date);
+		VBox event = new VBox();
+		event.setPrefHeight(50);
+        event.setAlignment(Pos.CENTER);
 		try {
             // Copier le fichier dans le dossier de destination
-			BDD conec = new BDD();
-			conec.newEvent(nom_evt,file.getName(), desc, date);
-			conec.close();
             Files.copy(file.toPath(), destinationFile.toPath());
             System.out.println("Fichier enregistré à : " + destinationFile.getAbsolutePath());
-            AfficheAdmin.ajoutEvenement(nom_evt,file.getName(), desc, date);
-            
+            EvenementController.insererEvenement(evt);
+			event = EvenementController.EvenementVBox();
+			
         } catch (IOException ioException) {
         	System.out.println("Probleme sur Valider");
             ioException.printStackTrace();
         }
+		return event;
     }
+	
+	public static File getFile() {
+		return file;
+	}
+
+
+	public static String getDestinationDir() {
+		return destinationDir;
+	}
+	
+
+	
 }

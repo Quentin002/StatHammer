@@ -23,7 +23,9 @@ public class ArmeDist extends Arme {
 	public void setCT(int cT) {
 		CT = cT;
 	}
-	//public int getC() {}
+	public int getC() {
+		return CT;
+	}
 }
 
 

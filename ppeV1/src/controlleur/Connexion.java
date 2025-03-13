@@ -12,10 +12,10 @@ public class Connexion {
 	public static void verif(String login, String mdp,Stage primaryStage) {
 		
 		login = login.trim();
-		mdp = mdp.trim();
+		mdp = Integer.toString(mdp.hashCode());
 		BDD conec = new BDD();
 		
-		ArrayList<Object> rendu = conec.selectUtilisateur(login, Integer.toString(mdp.hashCode()));
+		ArrayList<Object> rendu = conec.selectUtilisateur(login, mdp);
 		int id = conec.UtilisateurID(login, mdp);
 		String role = conec.UtilisateurRole(login, mdp);
 		//System.out.println(role);
