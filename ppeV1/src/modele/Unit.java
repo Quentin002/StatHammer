@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Unit {
 	
 	private ArrayList<Figurine> figurines;
-	HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
+	private HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
 	private int id;
 	private String nom;
 	private int points;
@@ -19,6 +19,14 @@ public class Unit {
 		this.nom = nom;
 		this.points = points;
 		this.logo = logo;
+		this.armee = armee;
+	}
+	public Unit(ArrayList<Figurine> figurines,int id, String nom, int points,String logo, Armee armee) {
+		this.id = id;
+		this.figurines = figurines;
+		this.nom = nom;
+		this.logo = logo;
+		this.points = points;
 		this.armee = armee;
 	}
 	

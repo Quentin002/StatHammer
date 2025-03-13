@@ -3,7 +3,6 @@ package controlleur;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import modele.Aptitude;
@@ -28,6 +27,7 @@ public class Instanciation {
 		try {
 			
 			nom = conec.select("SELECT nom_faction FROM faction;" );
+			
 			for (String string : nom) {
 				rendu.add(new Faction(string));
 			}
@@ -57,23 +57,20 @@ public class Instanciation {
 		return rendu;
 	}
 	
-	public static ArrayList<Unit> getUnite(Armee armee){
+	public static ArrayList<Unit> getUniteOfArmy(Armee armee){
 		ArrayList<Unit> rendu = new ArrayList<>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
-			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
+			nom = conec.select("SELECT u.id_unite, u.nom_unite,  u.points_unite,u.logo_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ? LIMIT 20;",armee.getName() );
 			
 			
-//			for (int i = 0;i<nom.size();i = i+2) {
-//				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
-//			}
+			for (int i = 0;i<nom.size();i = i+4) {
+				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i+1)),Integer.parseInt(nom.get(i)),nom.get(i+1), Integer.parseInt(nom.get(i+2)),nom.get(i+3),armee));
+			}
 			
 			
 			
-			//while(tab.next()) {
-			//	rendu.add(new Unit(Instanciation.getFigurine(tab.getString("nom_unit")),tab.getString("nom_unit"),tab.getInt("points_unit"),armee));
-			//}
 			
 		}catch(SQLException e) {
 			
@@ -81,7 +78,6 @@ public class Instanciation {
 		
 		return rendu;
 	}
-	
 	public static void getArmyLists(User session)
 	{
 		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
@@ -123,7 +119,7 @@ public class Instanciation {
 		ArrayList<Figurine> rendu = new ArrayList<>();
 		ArrayList<String> temp = new ArrayList<>();
 		try {
-			// pour un exemple avec plusieurs types de figurines, choisir Escouade Centurion Devastator'
+			
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
 					+ "JOIN remplir r USING (id_figurine) JOIN unite u USING(id_unite) WHERE u.nom_unite = ?;",unitName );
 			
@@ -209,9 +205,8 @@ public class Instanciation {
 		
 		return rendu;
 	}
-	public static void uniteBouton(Unit u,ArmeeListe a) {
-		a.addUnit(u);
-		
+	public static void insertListe(ArmeeListe armee,User session) {
+		conec.insertListe(armee, session);
 	}
 	
 }

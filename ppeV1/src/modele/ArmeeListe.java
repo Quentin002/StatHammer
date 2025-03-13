@@ -91,6 +91,12 @@ public class ArmeeListe
 	public void addUnit(Unit unit) {
 		unites.add(unit);
 	}
+	public void removeUnit(Unit unit) {
+		unites.remove(unit);
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 	
     public String toString() {
         return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 
