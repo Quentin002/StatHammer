@@ -7,6 +7,7 @@ import modele.Unit;
 /* mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes */
 public class Battle
 {
+	
 	private ArmeeListe selected_list1;
 	private ArmeeListe selected_list2;
 	private ArmeeListe attaquant;

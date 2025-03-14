@@ -27,7 +27,7 @@ public class ControlleurSimu
 	
 	// déroulement des unités d'une liste (appui sur lists_drop_down.get(i) dans AfficheSimulation)
 	public static void selectAList(int num_list, ArrayList<ArmeeListe> lists, String choice) {
-		battle_data = AfficheSimulation.getBattleData();
+		battle_data = Instanciation.getBattleData();
 		
 		// choix de la liste
 		for(ArmeeListe one_list : lists)
@@ -44,9 +44,9 @@ public class ControlleurSimu
 		}
 		
 		// obtenir les unités, l'armée, les figurines, armes et aptitudes
-		Instanciation.conec = new BDD();
+		
 		Instanciation.getUnitsOfAList(battle_data.getSelectedList(num_list));
-		Instanciation.conec.close();
+		
 		if(battle_data.getSelectedList(num_list).getUnits().size() > 0) {
 			battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
 		}
@@ -176,7 +176,7 @@ public class ControlleurSimu
 	
 	public static void weaponNumberChoice(int value, String group_name) {
 		// on considère que ceux qui n'attaquent pas sont morts
-		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(1).getIdenticalFigsGroups().get(group_name);
+		ArrayList<Figurine> fig_group = Instanciation.getBattleData().getSelectedUnit(1).getIdenticalFigsGroups().get(group_name);
 		for(int i = 0; i < value; i++) {
 			fig_group.get(i).setHP(fig_group.get(i).getHPMax());
 		}

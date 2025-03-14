@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import application.Battle;
 import controlleur.ControlleurSimu;
+import controlleur.Instanciation;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -28,12 +29,9 @@ import modele.User;
 
 public class AfficheSimulation
 {
-	private static Battle battle_data = new Battle(); // mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes
+	 // mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
 	
-	public static Battle getBattleData() {
-		return battle_data;
-	}
 	
 	public static void refreshWeaponAndAptitude(SimAptAndWeaponsVBox wap)
 	{
@@ -153,10 +151,10 @@ public class AfficheSimulation
 		
 		/* ACTION !! */
 		btn_simulate.setOnAction(e -> {
-			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null
-				&& battle_data.getSelectedUnit(1) != null && battle_data.getSelectedUnit(2) != null)
+			if(Instanciation.getBattleData().getSelectedList(1) != null && Instanciation.getBattleData().getSelectedList(2) != null
+				&& Instanciation.getBattleData().getSelectedUnit(1) != null && Instanciation.getBattleData().getSelectedUnit(2) != null)
 			{
-				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
+				ControlleurSimu.afficheSimu(big_image_pane, Instanciation.getBattleData().getSelectedUnit(1), Instanciation.getBattleData().getSelectedUnit(2));
 			}
 			else {
 				System.out.println("conditions non remplies pour faire une simulation");
