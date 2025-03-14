@@ -1,5 +1,6 @@
 package application;
 
+import modele.Arme;
 import modele.Armee;
 import modele.ArmeeListe;
 import modele.Unit;
@@ -61,5 +62,8 @@ public class Battle
 		else {
 			System.out.println("le paramètre nb doit valoir 1 ou 2");
 		}
+	}
+	public Arme getSeletedWeapon(int nb, String group_name) {
+		return getSelectedUnit(nb).getIdenticalFigsGroups().get(group_name).get(0).getSelectedWeapon();
 	}
 }

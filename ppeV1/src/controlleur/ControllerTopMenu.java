@@ -28,7 +28,10 @@ public class ControllerTopMenu {
 		//
 
 	}
-	public static void go_deco(Stage primaryStage) { 
+	public static void go_deco(Stage primaryStage, User session) { 
+		AfficheSimulation.cleanWeaponsAtitudesMenu();
+		AfficheSimulation.cleanBattle();
+		session = null;
 		AfficheConnexion.affiche(primaryStage);
 	}
 	public static void go_simulation(Stage primaryStage, User session){

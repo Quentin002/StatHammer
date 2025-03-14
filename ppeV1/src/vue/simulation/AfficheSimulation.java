@@ -46,6 +46,12 @@ public class AfficheSimulation
 	public static SimAptAndWeaponsVBox getWeaponsAtitudesMenu() {
 		return weapons_aptitudes_menu;
 	}
+	public static void cleanWeaponsAtitudesMenu() {
+		weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
+	}
+	public static void cleanBattle() {
+		battle_data = new Battle();
+	}
 	
 	public static void affiche(Stage primaryStage, User session)
 	{

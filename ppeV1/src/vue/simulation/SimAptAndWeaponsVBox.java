@@ -64,11 +64,18 @@ public class SimAptAndWeaponsVBox extends VBox
 		
 		/* -- ligne 2: menu déroulant choix de l'arme -- */
 		ChoiceBox<String> select_weapon = new ChoiceBox<String>();
+		
+		// sécurité
 		for(int i = 0; i < weapon_names.length; i++)
         {
 			select_weapon.getItems().add(weapon_names[i]);
         }
-		if(weapon_names.length > 0) {
+		
+		// valeur initiale menu déroulante
+		if(AfficheSimulation.getBattleData().getSeletedWeapon(1, group_name) != null) {
+			select_weapon.setValue(AfficheSimulation.getBattleData().getSeletedWeapon(1, group_name).getNom());
+		}
+		else {
 			select_weapon.setValue(weapon_names[0]);
 		}
 		
