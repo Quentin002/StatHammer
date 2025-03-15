@@ -7,6 +7,7 @@ import application.Battle;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import modele.Aptitude;
@@ -162,12 +163,14 @@ public class ControlleurSimu
 		AfficheSimulation.refreshWeaponAndAptitude(weapons_aptitudes_menu); // insersion dans la vue principale
 	}
 	
-	public static void selectAWeapon(String weapon_name, ArrayList<Figurine> fig_group) {
+	public static void selectAWeapon(SimAptAndWeaponsVBox view, String weapon_name, ArrayList<Figurine> fig_group, FlowPane weapon_stats) {
 		Arme weapon = fig_group.get(0).getWeaponByName(weapon_name); // recherche dans les armes de la 1ère figurine
 		// on équipe le groupe
 		for(Figurine fig : fig_group) {
 			fig.setWeapon(weapon);
 		}
+		weapon_stats.getChildren().clear();
+		view.setWeaponStats(weapon, weapon_stats);
 	}
 	
 	public static void AliveFigsChoice(int col, int value, String group_name) {

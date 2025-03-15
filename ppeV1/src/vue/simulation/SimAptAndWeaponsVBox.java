@@ -72,15 +72,19 @@ public class SimAptAndWeaponsVBox extends VBox
         }
 		
 		// valeur initiale menu déroulante
-		if(AfficheSimulation.getBattleData().getSeletedWeapon(1, group_name) != null) {
-			select_weapon.setValue(AfficheSimulation.getBattleData().getSeletedWeapon(1, group_name).getNom());
+		Arme weapon = AfficheSimulation.getBattleData().getSeletedWeapon(1, group_name);
+		if(weapon != null) {
+			select_weapon.setValue(weapon.getNom());
 		}
 		else {
 			select_weapon.setValue(weapon_names[0]);
 		}
+		// caractéristiques
+		FlowPane weapon_stats = new FlowPane();
+		setWeaponStats(weapon, weapon_stats);
 		
 		select_weapon.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            ControlleurSimu.selectAWeapon(newValue, fig_group);
+            ControlleurSimu.selectAWeapon(this, newValue, fig_group, weapon_stats);
         });
 		
 		// choix du nombre d'attaquants (= nombre d'armes)
@@ -110,7 +114,17 @@ public class SimAptAndWeaponsVBox extends VBox
 			});
         }
 		
-		this.getChildren().addAll(first_row, select_weapon, nb_of_attackers, aptitudes);
+		this.getChildren().addAll(first_row, select_weapon, weapon_stats, nb_of_attackers, aptitudes);
+	}
+	
+	public void setWeaponStats(Arme weapon, FlowPane weapon_stats) {
+		weapon_stats.setStyle("-fx-padding: 3px;");
+		Label A = new Label("A " + weapon.getA() + " | ");
+		Label F = new Label("F " + weapon.getF() + " | ");
+		Label PA = new Label("PA " + weapon.getPA() + " | ");
+		Label D = new Label("D " + weapon.getD() + " | ");
+		Label portee = new Label("portée " + weapon.getPortee());
+		weapon_stats.getChildren().addAll(A, F, PA, D, portee);
 	}
 }
 
