@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.ArmeeListe;
+import modele.Evenement;
 import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheTopMenu;
@@ -19,14 +20,14 @@ import controlleur.SupprListe;
 import java.util.ArrayList;
 
 public class AfficheGestionListe {
-	public static void affiche(Stage primaryStage, User session) {
+	public static void affiche(Stage primaryStage, User session, Evenement evt) {
 		// Liste des conteneurs principaux structurant l'interface
 		VBox root = new VBox(); // page principa
 		HBox boite = new HBox(); // Box contenant les parties bouton et liste
 		VBox selectBouton = new VBox(); // Partie bouton
 		VBox liste = new VBox(); // Partie Liste
 		Scene scene = new Scene(root, 1000, 800); // taille de la scène
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session, evt);
 		root.getChildren().add(menu);
 
 		// _______________ BOX BOITE _______________
@@ -84,7 +85,7 @@ public class AfficheGestionListe {
 			
 			modifBtn.setOnAction(e ->{
 				primaryStage.close();
-				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe());
+				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe(),evt);
 			});
 
 			supprBtn.setOnAction(e -> {
@@ -108,7 +109,7 @@ public class AfficheGestionListe {
 
 		// Bouton Retour
 		Retour.setOnAction(e -> {
-			AfficheAccueil.affiche(primaryStage, session);
+			AfficheAccueil.affiche(primaryStage, session,evt);
 		});
 
 		primaryStage.setScene(scene);

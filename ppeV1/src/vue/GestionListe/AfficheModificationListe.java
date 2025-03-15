@@ -4,6 +4,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.ArmeeListe;
+import modele.Evenement;
 import modele.Figurine;
 import modele.User;
 import vue.AfficheTopMenu;
@@ -19,14 +20,14 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 
 public class AfficheModificationListe {
-    public static void affiche(Stage primaryStage, User session, int idListe) {
+    public static void affiche(Stage primaryStage, User session, int idListe, Evenement evt) {
         VBox root = new VBox();
         HBox boite = new HBox();
         VBox afficheListe = new VBox();
         ScrollPane modifListe = new ScrollPane();
         VBox modif = new VBox();
         Scene scene = new Scene(root, 800, 600);
-        AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
+        AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session, evt);
 
         root.getChildren().add(menu);
 

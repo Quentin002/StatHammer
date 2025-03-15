@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import modele.Arme;
 import modele.ArmeMelee;
 import modele.ArmeeListe;
+import modele.Evenement;
 import modele.Figurine;
 import modele.Unit;
 import modele.User;
@@ -47,14 +48,14 @@ public class AfficheSimulation
 		return weapons_aptitudes_menu;
 	}
 	
-	public static void affiche(Stage primaryStage, User session)
+	public static void affiche(Stage primaryStage, User session, Evenement evt)
 	{
 		// listes d'armées
 		ArrayList<ArmeeListe> listes = session.getListes(); // listes d'objets ArmeeListe
 		String[] list_names = session.getListNames(); // tableau des noms des listes
 		
 		VBox root_box = new VBox();
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session); // menu du haut de l'écran
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session, evt); // menu du haut de l'écran
 		HBox main = new HBox(); // partie principale de la fenêtre
 		
 		

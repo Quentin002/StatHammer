@@ -15,11 +15,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modele.Evenement;
 import modele.User;
 
 public class AfficheGestionCompte {
 
-public static void affiche(Stage primaryStage,User session) {
+public static void affiche(Stage primaryStage,User session, Evenement evt) {
 
 
 	
@@ -39,7 +40,7 @@ public static void affiche(Stage primaryStage,User session) {
 	//VBox vboxL = new VBox();
 	//etiquette.setText("test");
 	
-	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session,evt);
 	
 	VBox vbox1 = new VBox();
 	vbox1.getChildren().add(etiquette);

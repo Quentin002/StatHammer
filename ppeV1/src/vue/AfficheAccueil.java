@@ -1,5 +1,8 @@
 package vue;
 
+import java.util.ArrayList;
+
+import controlleur.EvenementController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,17 +14,25 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import modele.Evenement;
 import modele.User;
 
 public class AfficheAccueil {
-	public static void affiche(Stage primaryStage,User session) {
+	
+	private static VBox vEvt;
+	
+	public static void affiche(Stage primaryStage,User session, Evenement evt) {
+		
 		VBox root = new VBox();
 		Scene scene = new Scene(root,800,600);
 	
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session,evt);
 		//AfficheTopMenu.setHgrow(root, Priority.ALWAYS);
-
+		
+		vEvt = AfficheEvenement.NewAfficheEvenement(primaryStage, session, evt);
 		root.getChildren().add(menu);
+		
+
 		
 		Label titre = new Label("StatHammer");
 		VBox cadre = new VBox();
@@ -56,7 +67,9 @@ public class AfficheAccueil {
 		gererListe.setPrefHeight(50);
 		
 		root.getChildren().add(titre);
+		root.getChildren().add(vEvt);
 		root.getChildren().add(capsule);
+		
 		
 		capsule.getChildren().add(cadreImage);
 		capsule.getChildren().add(cadre);

@@ -1,6 +1,7 @@
 package controlleur;
 
 import javafx.stage.Stage;
+import modele.Evenement;
 import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheAdmin;
@@ -13,17 +14,17 @@ import vue.simulation.AfficheSimulation;
 public class ControllerTopMenu {
 	static BDD db = new BDD();
 	
-	public static void go_accueil(Stage primaryStage,User session) { 
+	public static void go_accueil(Stage primaryStage,User session,Evenement evt) { 
 		//primaryStage.close(); pour fermer stage
-		AfficheAccueil.affiche(primaryStage,session);
+		AfficheAccueil.affiche(primaryStage,session,evt);
 	}
-	public static void go_gestion_compte(Stage primaryStage,User session) { 
-		AfficheGestionCompte.affiche(primaryStage,session);
+	public static void go_gestion_compte(Stage primaryStage,User session, Evenement evt) { 
+		AfficheGestionCompte.affiche(primaryStage,session,evt);
 	}
-	public static void go_gestion_listes(Stage primaryStage,User session) { 
+	public static void go_gestion_listes(Stage primaryStage,User session, Evenement evt) { 
 
 //		db.getArmyLists(session);
-		AfficheGestionListe.affiche(primaryStage, session);
+		AfficheGestionListe.affiche(primaryStage, session, evt);
 
 		//
 
@@ -31,17 +32,17 @@ public class ControllerTopMenu {
 	public static void go_deco(Stage primaryStage) { 
 		AfficheConnexion.affiche(primaryStage);
 	}
-	public static void go_simulation(Stage primaryStage, User session){
+	public static void go_simulation(Stage primaryStage, User session, Evenement evt){
 		Instanciation.conec = new BDD();
 		Instanciation.getArmyLists(session);
 		Instanciation.conec.close();
-		AfficheSimulation.affiche(primaryStage, session);
+		AfficheSimulation.affiche(primaryStage, session,evt);
 	}
-	public static void go_admin(Stage primaryStage,User session) { 
-		AfficheAdmin.affiche(primaryStage,session);
+	public static void go_admin(Stage primaryStage,User session, Evenement evt) { 
+		AfficheAdmin.affiche(primaryStage,session,evt);
 	}
-	public static void go_creer_liste(Stage primaryStage, User session) {
-		AfficheCreerListe.afficheCreerListe(primaryStage, session);
+	public static void go_creer_liste(Stage primaryStage, User session, Evenement evt) {
+		AfficheCreerListe.afficheCreerListe(primaryStage, session,evt);
 	}
 //	public static void go_gestionliste(Stage primaryStage,User session) { 
 //		AfficheGestionListe.affiche(primaryStage,session);

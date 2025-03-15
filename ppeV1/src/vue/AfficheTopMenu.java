@@ -12,13 +12,14 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import modele.Evenement;
 import modele.User;
 
 public class AfficheTopMenu extends HBox
 {
 	private Label pseudo;
 	
-	public AfficheTopMenu(Stage primaryStage, User session)
+	public AfficheTopMenu(Stage primaryStage, User session, Evenement evt)
 	{
 		this.setStyle("-fx-background-color: gray; -fx-padding: 5px;");
 		//-fx-spacing: 10px;
@@ -78,15 +79,15 @@ public class AfficheTopMenu extends HBox
 	    
 	    // menu principal
 	    btn_home.setOnAction(e -> {
-			ControllerTopMenu.go_accueil(primaryStage,session);
+			ControllerTopMenu.go_accueil(primaryStage,session,evt);
 		});
 	    // gestion de son compte
 	    btn_account.setOnAction(e -> {
-	    	ControllerTopMenu.go_gestion_compte(primaryStage,session);
+	    	ControllerTopMenu.go_gestion_compte(primaryStage,session,evt);
 		});
 		// gestion des listes
 	    btn_gerer_liste.setOnAction(e -> {
-	    	ControllerTopMenu.go_gestion_listes(primaryStage,session);
+	    	ControllerTopMenu.go_gestion_listes(primaryStage,session,evt);
 		});
 	    // page de connexion
 	    btn_logout.setOnAction(e -> {
@@ -94,15 +95,15 @@ public class AfficheTopMenu extends HBox
 		});
 		// simulation
 	    btn_simu.setOnAction(e -> {
-	    	ControllerTopMenu.go_simulation(primaryStage,session);
+	    	ControllerTopMenu.go_simulation(primaryStage,session,evt);
 		}); 
 	    // options réservées à l'admin
 	    btn_admin.setOnAction(e -> {
-	    	ControllerTopMenu.go_admin(primaryStage, session);
+	    	ControllerTopMenu.go_admin(primaryStage, session,evt);
 		});
 	    //vers creer liste
 	    btn_creer_liste.setOnAction(e->{
-	    	ControllerTopMenu.go_creer_liste(primaryStage,session);
+	    	ControllerTopMenu.go_creer_liste(primaryStage,session,evt);
 	    });
 	}
 	

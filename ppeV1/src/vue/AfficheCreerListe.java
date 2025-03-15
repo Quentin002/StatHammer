@@ -23,12 +23,13 @@ import javafx.stage.Stage;
 import modele.Armee;
 import modele.ArmeeListe;
 import modele.Bouton;
+import modele.Evenement;
 import modele.Faction;
 import modele.Unit;
 import modele.User;
 
 public class AfficheCreerListe {
-	public static void afficheCreerListe(Stage primaryStage,User session) {
+	public static void afficheCreerListe(Stage primaryStage,User session, Evenement evt) {
 		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		double hauteur = tailleEcran.getHeight()/2;
 		double largeur = tailleEcran.getWidth()/2;
@@ -171,7 +172,7 @@ public class AfficheCreerListe {
 		retour.setOnAction(e->{
 			Instanciation.conec.close();
 			primaryStage.close();
-			AfficheAccueil.affiche(primaryStage,session);
+			AfficheAccueil.affiche(primaryStage,session,evt);
 			
 		});
 		
