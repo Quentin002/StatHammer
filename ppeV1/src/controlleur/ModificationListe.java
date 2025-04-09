@@ -17,7 +17,8 @@ public class ModificationListe {
     public ModificationListe() {
         this.conec = new BDD("400129", "stathammer_greta_admin", "stathammer_v1");
     }
-    // Récupère la liste des armées en fonction de l'id de la liste choisi
+
+    // Récupère la liste des armées en fonction de l'id de la liste choisie
     public ArrayList<ArmeeListe> getArmeeListe(int idListe) {
         ArrayList<ArmeeListe> listes = new ArrayList<>();
         String requete = """
@@ -97,18 +98,29 @@ public class ModificationListe {
         }
         return listesFigurine;
     }
-    public ArrayList<ArmeeListe> getAllUnites(int idArmee) {
+
+    public ArrayList<ArmeeListe> getAllUnites(int idArmee, int idListe) {
         ArrayList<ArmeeListe> toutesUnites = new ArrayList<>();
-        String requete = "SELECT nom_unite FROM unite WHERE id_armee=?;";
-        
+        String requete = "SELECT u.nom_unite\r\n"
+        		+ "FROM unite u\r\n"
+        		+ "WHERE u.id_armee = ?\r\n"
+        		+ "AND u.nom_unite NOT IN (\r\n"
+        		+ "    SELECT un.nom_unite\r\n"
+        		+ "    FROM unite un\r\n"
+        		+ "    JOIN contenir c ON un.id_unite = c.id_unite\r\n"
+        		+ "    WHERE c.id_liste = ?\r\n"
+        		+ ");";
+
         try (Connection conn = reopenConnection();
-            PreparedStatement stmt = conn.prepareStatement(requete)){
+             PreparedStatement stmt = conn.prepareStatement(requete)) {
+
             stmt.setInt(1, idArmee);
-        	ResultSet recup = stmt.executeQuery();
-        	
+            stmt.setInt(2, idListe);
+            ResultSet recup = stmt.executeQuery();
+
             while (recup.next()) {
                 String nomUnite = recup.getString("nom_unite");
-                ArmeeListe armee = new ArmeeListe(0, 0, nomUnite, nomUnite, nomUnite);
+                ArmeeListe armee = new ArmeeListe(idArmee, idArmee, nomUnite, nomUnite, nomUnite);
                 armee.setUniteListe(new ArrayList<>());
                 armee.getUniteListe().add(nomUnite);
                 toutesUnites.add(armee);
@@ -118,19 +130,20 @@ public class ModificationListe {
         }
         return toutesUnites;
     }
+
     public ArrayList<Figurine> getAllFigurineListe(int idArmee, String unit) {
         ArrayList<Figurine> listesAllFigurine = new ArrayList<>();
         String requete = """
             SELECT DISTINCT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO
-            FROM unite u 
+            FROM unite u
             JOIN remplir r ON u.id_unite = r.id_unite
             JOIN figurine f ON r.id_figurine = f.id_figurine
-            WHERE u.id_armee=? AND u.nom_unite=?;
+            WHERE u.id_armee = ? AND u.nom_unite = ?;
         """;
 
         try (Connection conn = reopenConnection();
              PreparedStatement stmt = conn.prepareStatement(requete)) {
-        	System.out.println(idArmee);
+
             stmt.setInt(1, idArmee);
             stmt.setString(2, unit);
             ResultSet recup = stmt.executeQuery();
@@ -153,30 +166,44 @@ public class ModificationListe {
         return listesAllFigurine;
     }
 
-    public void validerModifications(int idListe, ArrayList<ArmeeListe> listes) {
-        // Mettre à jour la base de données avec les modifications
-        String requete = "UPDATE liste SET data_liste = ? WHERE id_liste = ?;";
-
-        try (Connection conn = reopenConnection();
-             PreparedStatement stmt = conn.prepareStatement(requete)) {
-
-            for (ArmeeListe armee : listes) {
-                String dataListe = String.join(",", armee.getUniteListe());
-                stmt.setString(1, dataListe);
-                stmt.setInt(2, idListe);
-                stmt.addBatch();
-            }
-            stmt.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     private Connection reopenConnection() throws SQLException {
         if (conec.getConnection().isClosed()) {
             conec = new BDD("400129", "stathammer_greta_admin", "stathammer_v1");
         }
         return conec.getConnection();
     }
-    
+
+    public void ajouterUnites(int idListe, ArrayList<String> unites) {
+        String query = "INSERT INTO contenir (id_liste, id_unite) VALUES ((SELECT id_liste FROM liste WHERE id_liste = ?), (SELECT id_unite FROM unite WHERE nom_unite = ?))";
+        try (Connection conn = reopenConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            for (String unite : unites) {
+                pstmt.setInt(1, idListe);
+                pstmt.setString(2, unite);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void supprimerUnites(int idListe, ArrayList<String> unites) {
+        String query = "DELETE FROM contenir WHERE id_liste = ? AND id_unite = (SELECT id_unite FROM unite WHERE nom_unite = ?)";
+        try (Connection conn = reopenConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            for (String unite : unites) {
+                pstmt.setInt(1, idListe);
+                pstmt.setString(2, unite);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
