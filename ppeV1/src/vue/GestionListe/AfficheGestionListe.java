@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import modele.ArmeeListe;
 import modele.User;
 import vue.AfficheAccueil;
-import vue.afficheTopMenu;
+import vue.AfficheTopMenu;
 import controlleur.SupprListe;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class AfficheGestionListe {
 		VBox liste = new VBox(); // Partie Liste
 		Scene scene = new Scene(root, 1000, 800); // taille de la scène
 
-		afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 
 		root.getChildren().add(menu);
 

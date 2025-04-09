@@ -53,7 +53,7 @@ public class AfficheTopMenu extends HBox
 	    	ControllerTopMenu.go_simulation(primaryStage,session);
 		}); 
 	    btn_gerer_liste.setOnAction(e -> {
-	    	ControllerTopMenu.go_gestionliste(primaryStage, session);
-	    });
+	    	ControllerTopMenu.go_gestionliste(primaryStage,session);
+		}); 
 	}
 }

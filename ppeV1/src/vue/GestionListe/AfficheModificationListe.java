@@ -6,7 +6,7 @@ import javafx.stage.Stage;
 import modele.ArmeeListe;
 import modele.Figurine;
 import modele.User;
-import vue.afficheTopMenu;
+import vue.AfficheTopMenu;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class AfficheModificationListe {
         ScrollPane scrollAfficheListe = new ScrollPane();
         VBox unitDispo = new VBox();
         Scene scene = new Scene(root, 1200, 600);
-        afficheTopMenu menu = new afficheTopMenu(primaryStage, session);
+        AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
 
         root.getChildren().add(menu);
 

@@ -3,8 +3,6 @@ package vue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -32,11 +30,7 @@ public static void affiche(Stage primaryStage,User session) {
 	VBox vbox2 = new VBox();
 	VBox vboxL = new VBox();
 
-	afficheTopMenu menu = new afficheTopMenu(primaryStage,session);
-	
-	
-	
-
+	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 	
 	Scene scene = new Scene(vbox, 800, 600);
 	vbox.getChildren().add(menu);
