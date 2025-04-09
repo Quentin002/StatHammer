@@ -174,13 +174,17 @@ public class ModificationListe {
     }
 
     public void ajouterUnites(int idListe, ArrayList<String> unites) {
-        String query = "INSERT INTO contenir (id_liste, id_unite) VALUES ((SELECT id_liste FROM liste WHERE id_liste = ?), (SELECT id_unite FROM unite WHERE nom_unite = ?))";
+        String query =  """
+        	    INSERT INTO contenir (id_unite, id_liste)
+        	    SELECT id_unite, ? FROM unite WHERE nom_unite = ? LIMIT 1
+        	""";
         try (Connection conn = reopenConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             for (String unite : unites) {
                 pstmt.setInt(1, idListe);
                 pstmt.setString(2, unite);
+                System.out.println("Requête: " + pstmt);
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -191,13 +195,14 @@ public class ModificationListe {
     }
 
     public void supprimerUnites(int idListe, ArrayList<String> unites) {
-        String query = "DELETE FROM contenir WHERE id_liste = ? AND id_unite = (SELECT id_unite FROM unite WHERE nom_unite = ?)";
+        String query = "DELETE FROM contenir WHERE id_liste = ? AND id_unite = (SELECT id_unite FROM unite WHERE nom_unite = ? LIMIT 1)";
         try (Connection conn = reopenConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             for (String unite : unites) {
                 pstmt.setInt(1, idListe);
                 pstmt.setString(2, unite);
+                System.out.println("Requête: " + pstmt);
                 pstmt.addBatch();
             }
             pstmt.executeBatch();

@@ -94,7 +94,7 @@ public class AfficheModificationListe {
                 Button ajouterUnit = new Button("ajouter");
                 uniteBox.getChildren().add(ajouterUnit);
                 ajouterUnit.setOnAction(e -> {
-                    if (!unitesAjoutees.contains(unite) && !armee.getUniteListe().contains(unite)) {
+                    if (!unitesAjoutees.contains(unite)) {
                         unitesAjoutees.add(unite);
 
                         // Ajouter l'unité et ses figurines à l'affichage
