@@ -6,7 +6,7 @@ public class ArmeeListe
 {
 	private int id;
 	private ArrayList<Unit> unites = new ArrayList<Unit>();
-    private ArrayList<String> unit_names;
+    private ArrayList<String> unit_names = new ArrayList<String>();
 	private String nom;
 	private String description;
 	private String data;

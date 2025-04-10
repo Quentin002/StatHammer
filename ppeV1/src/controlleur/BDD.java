@@ -203,9 +203,9 @@ public class BDD {
 			stat.setInt(4, session.getId());
 			stat.executeUpdate();
 			
-			requete = "SELECT id_liste FROM liste WHERE nom_liste = '"+armee.getName()+"';";
+			requete = "SELECT id_liste FROM liste WHERE nom_liste = ?;";
 			
-			rendu = this.select(requete);
+			rendu = this.select(requete,armee.getName());
 			
 			id = Integer.parseInt(rendu.getFirst());
 			requete = "INSERT INTO contenir VALUES(?,?);";

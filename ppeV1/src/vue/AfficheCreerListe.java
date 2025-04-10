@@ -88,7 +88,10 @@ public class AfficheCreerListe {
 			
 			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(e->{
 			gaucheUnit.getChildren().clear();
+			
+			
 			StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+			
 			for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {
 				gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
 					gaucheUnit.getChildren().remove(
@@ -113,6 +116,7 @@ public class AfficheCreerListe {
 				
 				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(y->{
 				gaucheUnit.getChildren().clear();
+				
 				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
 				for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {
 					gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
