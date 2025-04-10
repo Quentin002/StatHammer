@@ -3,7 +3,6 @@ package vue.simulation;
 import java.util.ArrayList;
 
 import controlleur.ControlleurSimu;
-import controlleur.Instanciation;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import modele.Unit;
@@ -12,19 +11,11 @@ public class SimUnitsVBox extends VBox
 {
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 	private ArrayList<SimFigurinesVBox> fig_boxes = new ArrayList<SimFigurinesVBox>();
-	private int selected_unit = 0;
 	private int column; // = 1 ou 2
 	
 	public SimUnitsVBox(int col){
 		column = col;
 		this.setStyle("-fx-padding: 2px;");
-	}
-	
-	public int getSelectedUnit(){
-		return selected_unit;
-	}
-	public void setSelectedUnit(int unit) {
-		selected_unit = unit;
 	}
 	
 	// getters
@@ -38,7 +29,7 @@ public class SimUnitsVBox extends VBox
 	// afficher les unités de la liste déroulée 
 	public void setList(int num_list)
 	{
-		ArrayList<Unit> units = Instanciation.getBattleData().getSelectedList(num_list).getUnits();
+		ArrayList<Unit> units = AfficheSimulation.getBattleData().getSelectedList(num_list).getUnits();
 		for(int i = 0; i < units.size(); i++)
 		{
 			VBox one_unit = new VBox();

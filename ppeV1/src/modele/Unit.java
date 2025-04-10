@@ -47,7 +47,6 @@ public class Unit {
 	// est exécuté dès qu'on touche au slider
 	public int getAliveFigsOfAGroup(String group_name) {
 		int nb = 0;
-		System.out.println("hashmap groupe de figs: " + identical_figs);
 		for(Figurine fig : identical_figs.get(group_name))
 		{
 			if(fig.getHP() > 0) {

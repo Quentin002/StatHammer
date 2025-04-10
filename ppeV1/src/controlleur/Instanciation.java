@@ -26,6 +26,10 @@ public class Instanciation {
 	public static Battle getBattleData() {
 		return battle_data;
 	}
+	public static void resetBattle() {
+		battle_data = null;
+		battle_data = new Battle();
+	}
 	
 	public static ArrayList<Faction> getFaction() {
 		
@@ -117,9 +121,9 @@ public class Instanciation {
 			ResultSet rs = stat.executeQuery();
 			
 			while(rs.next()) {
-				/*list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
-					rs.getString(1), rs.getInt(2), rs.getString(3),
-					new Armee(rs.getString(4), rs.getString(5))));*/
+				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
+						rs.getString(1), rs.getInt(2), rs.getString(3),
+						new Armee(rs.getString(4), rs.getString(5))));
 			}
 		}
 		catch (SQLException e) {
