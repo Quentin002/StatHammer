@@ -19,17 +19,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modele.Arme;
-import modele.ArmeMelee;
 import modele.ArmeeListe;
-import modele.Figurine;
-import modele.Unit;
 import modele.User;
 
 public class AfficheSimulation
 {
 	private static Battle battle_data = new Battle(); // mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
+	public static boolean inversion = false; // pour le bouton inversion
 	
 	public static Battle getBattleData() {
 		return battle_data;
@@ -56,7 +53,7 @@ public class AfficheSimulation
 	public static void affiche(Stage primaryStage, User session)
 	{
 		// listes d'armées
-		ArrayList<ArmeeListe> listes = session.getListes(); // listes d'objets ArmeeListe
+		ArrayList<ArmeeListe> lists_of_lists = session.getListes(); // listes d'objets ArmeeListe
 		String[] list_names = session.getListNames(); // tableau des noms des listes
 		
 		VBox root_box = new VBox();
@@ -107,8 +104,8 @@ public class AfficheSimulation
 		
 		Image icons_inversion = new Image("/images/inversion_icons.png");
 		ImageView icons_inversion_box = new ImageView(icons_inversion);
-		Button reverse_armies = new Button();
-		reverse_armies.setGraphic(icons_inversion_box);
+		Button btn_reverse_armies = new Button();
+		btn_reverse_armies.setGraphic(icons_inversion_box);
         
         	// grande image
         Image image_col2 = new Image("/images/wip.jpg");
@@ -122,7 +119,7 @@ public class AfficheSimulation
 		big_image_pane.getChildren().add(image_box);
 		
 			// assemblage
-		column2.getChildren().addAll(btn_simulate, big_image_pane, reverse_armies);
+		column2.getChildren().addAll(btn_simulate, big_image_pane, btn_reverse_armies);
 		
 		
         /* -- colonne de droite -- */
@@ -175,9 +172,9 @@ public class AfficheSimulation
 		
 		
 		// choix des listes d'armées
-		ArrayList<SimUnitsVBox> lists = new ArrayList<SimUnitsVBox>();
-		lists.add(units_list1);
-		lists.add(units_list2);
+		ArrayList<SimUnitsVBox> unit_lists = new ArrayList<SimUnitsVBox>();
+		unit_lists.add(units_list1);
+		unit_lists.add(units_list2);
         ArrayList<ChoiceBox<String>> lists_drop_down = new ArrayList<ChoiceBox<String>>();
         lists_drop_down.add(list1_drop_down);
         lists_drop_down.add(list2_drop_down);;
@@ -188,9 +185,21 @@ public class AfficheSimulation
         {
         	final int j = i;
         	lists_drop_down.get(i).getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue)  -> {
-        		ControlleurSimu.selectAList(j + 1, listes, newValue);
-        		ControlleurSimu.PullDownUnits(j + 1, first_rows.get(j), lists.get(j));
+        		if(!inversion) {
+        			ControlleurSimu.selectAList(j + 1, lists_of_lists, newValue);
+        		}
+        		ControlleurSimu.PullDownUnits(j + 1, first_rows.get(j), unit_lists.get(j));
             });
         }
+        
+        // inversion de l'attaquant et du défenseur
+ 		btn_reverse_armies.setOnAction(e -> {
+ 			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null) {
+ 				ControlleurSimu.reverseArmies(lists_drop_down);
+ 			}
+ 			else {
+ 				System.out.println("conditions non remplies pour inverser listes");
+ 			}
+ 		});
 	}
 }

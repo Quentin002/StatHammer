@@ -2,9 +2,9 @@ package controlleur;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import application.Battle;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -34,26 +34,16 @@ public class ControlleurSimu
 		for(ArmeeListe one_list : lists)
 		{
 			if(one_list.getName().equals(choice)) {
+				// "copie profonde" d'une liste
 				ArmeeListe list = new ArmeeListe(one_list.getName(), one_list.getDescription(), one_list.getData());
 				battle_data.setSelectedList(num_list, list);
-				list.setName(one_list.getName());
-				list.setDescription(one_list.getDescription());
-				list.setData(one_list.getData());
-				
 				break; // choix unique
 			}
 		}
 		
 		// obtenir les unités, l'armée, les figurines, armes et aptitudes
-		
 		Instanciation.getUnitsOfAList(battle_data.getSelectedList(num_list));
-		
-		if(battle_data.getSelectedList(num_list).getUnits().size() > 0) {
-			battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
-		}
-		else {
-			System.out.println("liste vide ma gueule");
-		}
+		battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
 	}
 	
 	// déroulement des figurines d'une unité (appui sur buttons.get(i) dans SimUnitsVBox)
@@ -213,5 +203,17 @@ public class ControlleurSimu
 		Calcul c =Calcul.bataille(u1, u2);
 		
 		SimHistogramme.setHist(c.getTabdegat1(), c.getTabmort1(), c.getDegat_moyen1(), c.getMort_moyen1(),p);
+	}
+
+	public static void reverseArmies(ArrayList<ChoiceBox<String>> lists_drop_down) {
+		battle_data.reverseArmies();
+		AfficheSimulation.inversion = true;
+		for(int i = 0; i < 2; i++)
+        {
+			// déclenche la sélection d'une liste dans le menu déroulant, mais avec du code
+			lists_drop_down.get(i).getSelectionModel().select(battle_data.getSelectedList(i + 1).getName());
+			battle_data.setSelectedUnit(i + 1, -1); // plus d'unité sélectionnée
+        }
+		AfficheSimulation.inversion = false;
 	}
 }
