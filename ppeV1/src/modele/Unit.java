@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Unit {
 	
 	private ArrayList<Figurine> figurines;
-	HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
+	private HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
 	private int id;
 	private String nom;
 	private int points;
@@ -19,6 +19,14 @@ public class Unit {
 		this.nom = nom;
 		this.points = points;
 		this.logo = logo;
+		this.armee = armee;
+	}
+	public Unit(ArrayList<Figurine> figurines,int id, String nom, int points,String logo, Armee armee) {
+		this.id = id;
+		this.figurines = figurines;
+		this.nom = nom;
+		this.logo = logo;
+		this.points = points;
 		this.armee = armee;
 	}
 	
@@ -35,17 +43,19 @@ public class Unit {
 	public HashMap<String, ArrayList<Figurine>> getIdenticalFigsGroups(){
 		return identical_figs;
 	}
-	public HashMap<String, Integer> getNumbersOfWeapons(String group_name) {
-		HashMap<String, Integer> armes = new HashMap<String, Integer>();
-		armes.put(group_name, 0);
-		for(Figurine fig : identical_figs.get("group_name"))
+	
+	// est exécuté dès qu'on touche au slider
+	public int getAliveFigsOfAGroup(String group_name) {
+		int nb = 0;
+		for(Figurine fig : identical_figs.get(group_name))
 		{
 			if(fig.getHP() > 0) {
-				armes.replace(group_name, armes.get("group_name") + 1);
+				nb++;
 			}
 		}
-		return armes;
+		return nb;
 	}
+	
 	public int getId() {
 		return id;
 	}

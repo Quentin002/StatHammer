@@ -15,7 +15,7 @@ public class ModificationListe {
     private BDD conec; // Instance de la classe BDD qui gère la connexion à la bdd
 
     public ModificationListe() {
-        this.conec = new BDD("400129", "stathammer_greta_admin", "stathammer_v1");
+        this.conec = new BDD();
     }
 
     // Récupère la liste des armées en fonction de l'id de la liste choisie
@@ -45,7 +45,7 @@ public class ModificationListe {
 
                 ArmeeListe liste = mapListes.get(id);
                 if (liste == null) {
-                    liste = new ArmeeListe(id, id, nom, description, data);
+                    liste = new ArmeeListe(id, id, nom, description, data, id);
                     liste.setUniteListe(new ArrayList<>());
                     mapListes.put(id, liste);
                 }
@@ -120,7 +120,7 @@ public class ModificationListe {
 
             while (recup.next()) {
                 String nomUnite = recup.getString("nom_unite");
-                ArmeeListe armee = new ArmeeListe(idArmee, idArmee, nomUnite, nomUnite, nomUnite);
+                ArmeeListe armee = new ArmeeListe(idArmee, idArmee, nomUnite, nomUnite, nomUnite, idListe);
                 armee.setUniteListe(new ArrayList<>());
                 armee.getUniteListe().add(nomUnite);
                 toutesUnites.add(armee);
@@ -168,7 +168,7 @@ public class ModificationListe {
 
     private Connection reopenConnection() throws SQLException {
         if (conec.getConnection().isClosed()) {
-            conec = new BDD("400129", "stathammer_greta_admin", "stathammer_v1");
+            conec = new BDD();
         }
         return conec.getConnection();
     }

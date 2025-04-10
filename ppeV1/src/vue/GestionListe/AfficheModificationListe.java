@@ -24,10 +24,12 @@ public class AfficheModificationListe {
         VBox root = new VBox();
         HBox boite = new HBox();
         VBox afficheListe = new VBox();
+
         ScrollPane scrollModifListe = new ScrollPane();
         ScrollPane scrollAfficheListe = new ScrollPane();
         VBox unitDispo = new VBox();
         Scene scene = new Scene(root, 1200, 600);
+
         AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
 
         root.getChildren().add(menu);

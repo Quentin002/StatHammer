@@ -1,30 +1,33 @@
 package vue.simulation;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Spinner;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import modele.Figurine;
+import modele.Unit;
 
 public class SimFigurinesVBox extends VBox
 {
+	private Unit unit;
 	private int column;
 	private ArrayList<SimAptAndWeaponsVBox> weapons_aptitudes_menu_view = new ArrayList<SimAptAndWeaponsVBox>();
-	private String[][] figs;
 	private boolean open = false; // les figurines sont cachées par défaut
 	
-	public SimFigurinesVBox(int col, String[][] figs_names){
+	public SimFigurinesVBox(int col, Unit unit){
 		column = col;
-		figs = figs_names;
+		this.unit = unit;
 		this.setStyle("-fx-padding: 2px;");
 	}
 	
@@ -35,21 +38,21 @@ public class SimFigurinesVBox extends VBox
 		open ^= true; // inversion de bouléen avec un masque 00000001
 	}
 	
-	public String[][] getFigurines(){
-		return figs;
-	}
-	
 	public void setFigurines()
 	{
-		// parcours des groupes de figurines = 1ère dimension du String[][]
-		for(int i = 0; i < figs.length; i++)
+		/* -- boucle sur les groupes de figuriones -- */
+		int i = 0; // valeurs des boutons numérotés
+		for(HashMap.Entry<String, ArrayList<Figurine>> entry : unit.getIdenticalFigsGroups().entrySet())
 		{
 			FlowPane fig_group = new FlowPane();
-			
+			//fig_group.setStyle("-fx-background-color: rgb(220, 220, 220);");
+			String fig_name = entry.getKey();
+			ArrayList<Figurine> fig_list = entry.getValue();
+			i++;
 			if(column == 1)
 			{
 				// boutons numérotés des groupes de figurines
-				Button number = new Button(Integer.toString(i + 1));
+				Button number = new Button(Integer.toString(i));
 				number.setAlignment(Pos.CENTER);
 				number.setMinHeight(25);
 				number.setMinWidth(25);
@@ -58,56 +61,73 @@ public class SimFigurinesVBox extends VBox
 				
 				// zone des armes et aptitudes
 				SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
-				weapons_aptitudes_menu.setFigGroup(i + 1, "nom de la figurine", figs[i].length);
-				String[][] weapon_list = {{"arme 1", "arme 2", "arme 3", "arme 4"},
-					{"arme 5", "arme 6"},
-					{"arme 7", "arme 8", "arme 9"}};
-				String[][] aptitude_list = {{"aptitude 1", "aptitude 2"},
-					{"aptitude 3", "aptitude 4", "aptitude 5"},
-					{"aptitude 6", "aptitude 7", "aptitude 8", "aptitude 9"}};
-				weapons_aptitudes_menu.setArmes(weapon_list);
-				weapons_aptitudes_menu.setAptitudes(aptitude_list);
+				weapons_aptitudes_menu.setFigGroup(i, fig_name, fig_list.size());
 				weapons_aptitudes_menu_view.add(weapons_aptitudes_menu);
 
 				number.setOnAction(e ->
 				{
-					weapons_aptitudes_menu.set_apt_and_weapons();
-					//weapons_aptitudes_menu.prefWidthProperty().bind(this.widthProperty().multiply(0.2));
-					AfficheSimulation.setColumn1Bottom(weapons_aptitudes_menu);
+					ControlleurSimu.makeWeaponsAndAptitudeZone(fig_list, weapons_aptitudes_menu);
 				});
 			}
+			else {
+				Label fig_name_label = new Label(fig_name);
+				fig_name_label.setStyle("-fx-padding: 0 5px 0 0");
+				fig_group.getChildren().add(fig_name_label);
+				
+				Slider nb_of_defenders = new Slider(0, fig_list.size(),
+					AfficheSimulation.getBattleData().getSelectedUnit(2).getAliveFigsOfAGroup(fig_name));
+				nb_of_defenders.setMajorTickUnit(1);
+				nb_of_defenders.setMinorTickCount(0);
+				nb_of_defenders.setSnapToTicks(true);
+				//nb_of_attackers.setShowTickMarks(true);
+				nb_of_defenders.setShowTickLabels(true);
+				//nb_of_attackers.setBlockIncrement(1);
+				
+				fig_group.getChildren().add(nb_of_defenders);
+				
+				nb_of_defenders.valueProperty().addListener((observable, oldValue, newValue) -> {
+					ControlleurSimu.AliveFigsChoice(2, newValue.intValue(), fig_name);
+		        });
+			}
 			
-			// boutons des figurines
-			for(int j = 0; j < figs[i].length; j++)
+			
+			/* -- figurines d'un groupe -- */
+			for(Figurine fig : fig_list)
 			{
 				HBox one_fig_box = new HBox();
-				
-				Image one_image = new Image("/images/android-fill.png");
+				Image one_image;
+				if(fig.getHP() > 0) {
+					one_image = new Image("/images/android-fill.png");
+				}
+				else {
+					one_image = new Image("/images/android-line.png");
+				}
 				ImageView one_image_box = new ImageView();
-				
-				// dimensions
 				one_image_box.setPreserveRatio(true);
 				//one_image_box.setFitHeight(24); // appeler une des deux méthodes de dimensionnement
 				one_image_box.setFitWidth(24);
 				one_image_box.setImage(one_image);
+				one_fig_box.getChildren().add(one_image_box);
 				
-				if(column == 1)
-				{
-					one_fig_box.getChildren().add(one_image_box);
+				if(column == 1) {
+					Label hp_label = new Label(fig.getHP() + " PV ");
+					one_fig_box.getChildren().add(hp_label);
 				}
-				else
-				{
-					CheckBox checkbox = new CheckBox();
-					checkbox.setGraphic(one_image_box);
-					fig_group.getChildren().add(checkbox);
+				else {
+					Label hp_label = new Label("PV:");
+					Spinner<Integer> spinner = new Spinner<>(0, fig.getHPMax(), fig.getHP());
+					spinner.setMaxWidth(45);
+					one_fig_box.getChildren().add(hp_label);
+					one_fig_box.getChildren().add(spinner);
+					one_fig_box.setStyle("-fx-padding: 0 3px 0 0;");
+					
+					spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+						ControlleurSimu.hpUpdate(newValue, fig, one_image_box);
+			        });
 				}
-				Label hp = new Label("PV: ");
-				Spinner<Integer> spinner = new Spinner<>(0, 5, 5);
-				spinner.setMaxWidth(45);
-				one_fig_box.getChildren().addAll(hp, spinner);
+				
 				SimFigurinesVBox.setMargin(one_fig_box, new Insets(5));
 				fig_group.getChildren().add(one_fig_box);
-				
 			}
 			SimFigurinesVBox.setMargin(fig_group, new Insets(3));
 			

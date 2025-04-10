@@ -1,30 +1,40 @@
 package controlleur;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
+import javafx.scene.layout.VBox;
 import modele.Arme;
+import modele.ArmeeListe;
+import modele.Evenement;
+import modele.Unit;
+import modele.User;
 
 public class BDD {
 
 	private Connection connec;
-	private PreparedStatement stat;
-
+	private PreparedStatement stat = null;
+	private ResultSet rs ;
+	
+	private static String user;
+	private static String password;
+	private static String dbname;
+		
 	public BDD() {
-
-	}
-
-	public BDD(String login, String pwd, String base) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			this.connec = DriverManager.getConnection("jdbc:mysql://mysql-stathammer.alwaysdata.net:3306/" + base,
-					login, pwd);
-			this.stat = null;
+			String host = "mysql-stathammer.alwaysdata.net";
+			//String host = "ordipolo.fr";
+			this.connec = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/"+ dbname, user, password);
+			this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
 		} catch (ClassNotFoundException e) {
 			// TODO: handle exception
 
@@ -33,7 +43,19 @@ public class BDD {
 			System.err.println(e.getMessage());
 		}
 	}
-
+	
+	public static void setInfos(String login, String pwd, String base)
+	{
+		user = login;
+		password = pwd;
+		dbname = base;
+	}
+	
+	public Statement getStatement() throws SQLException
+	{
+		return connec.createStatement();
+	}
+	
 	public PreparedStatement getPreparedStatement(String sql, Object... params) throws SQLException
 	{
 		stat = connec.prepareStatement(sql);
@@ -53,7 +75,8 @@ public class BDD {
 			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
 			stat = connec.prepareStatement(requete);
 			stat.setString(1, nom);
-			stat.setString(2, mdp);
+			stat.setString(2,String.valueOf(mdp));
+			//stat.setString(2,String.valueOf(mdp.hashCode()));
 
 			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
@@ -116,6 +139,165 @@ public class BDD {
 			e.printStackTrace();
 		}
 	}
+	
+	public ArrayList<String> select(String requete,String... param ) throws SQLException{
+		ArrayList<String> rendu = new ArrayList<String>();
+		try {
+			PreparedStatement pstat = null;
+			
+			pstat = connec.prepareStatement(requete);
+			if(param.length>0) {
+				for(int i = 1;i<=param.length;i++) {
+					pstat.setString(i, param[i-1]);
+				}
+			}
+			
+			rs.close();
+			rs = pstat.executeQuery();
+			ResultSetMetaData md = rs.getMetaData();
+			ArrayList<String> column = new ArrayList<String>();
+			
+			
+			for(int i =1;i<=md.getColumnCount();i++) {
+				column.add(md.getColumnName(i));
+			}
+			while(rs.next()) {
+				for (String col : column) {
+					rendu.add(rs.getString(col));
+				}
+				
+				
+				
+			}
+			
+			return rendu;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return rendu;
+	}
+	
+	public void updateUtilisateur(String pseudo,int id) {
+		try {
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET nom_utilisateur=? WHERE id_utilisateur=?;",pseudo,id);
+			stat.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+		}
+	}
+	public void insertListe(ArmeeListe armee,User session) {
+		try {
+			int id;
+			ArrayList<String> rendu = new ArrayList<String>();
+			String requete = "INSERT INTO liste VALUES(DEFAULT,?,?,?,?);";
+			stat = this.getPreparedStatement(requete);
+			stat.setString(1, armee.getName());
+			stat.setString(2, armee.getDescription());
+			stat.setString(3, armee.getData());
+			stat.setInt(4, session.getId());
+			stat.executeUpdate();
+			
+			requete = "SELECT id_liste FROM liste WHERE nom_liste = '"+armee.getName()+"';";
+			
+			rendu = this.select(requete);
+			
+			id = Integer.parseInt(rendu.getFirst());
+			requete = "INSERT INTO contenir VALUES(?,?);";
+			
+			for(Unit unit : armee.getUnits()) {
+				
+				
+				stat = this.getPreparedStatement(requete);
+				stat.setInt(1, unit.getId());
+				stat.setInt(2, id);
+				stat.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
+	public void updateMp(String mdp,int id) {
+		try {
+			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
+			stat.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	public int UtilisateurID(String nom, String mdp) {
+		try {
+			stat = this.getPreparedStatement("SELECT id_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
+				nom, mdp);
+			
+			ResultSet rs = stat.executeQuery();
+			rs.next();
+			int id = rs.getInt("id_utilisateur");
+
+			return id;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			return 0;
+		}
+	}
+	public String UtilisateurRole(String nom, String mdp) {
+		String role = "null";
+		try {
+			
+			stat = this.getPreparedStatement("SELECT role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
+				nom, mdp);
+			
+			ResultSet rs = stat.executeQuery();
+			rs.next();
+			role = rs.getString("role_utilisateur");
+			
+			return role;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return role;
+	}
+	
+	public String UtilisateurMdp(int id) {
+		String mdp = "test null";
+		try {
+			stat = this.getPreparedStatement("SELECT mdp_utilisateur FROM utilisateur WHERE id_utilisateur=?;",
+				id);
+			
+			ResultSet rs = stat.executeQuery();
+			rs.next();
+			mdp = rs.getString("mdp_utilisateur");
+
+			return mdp;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return mdp;
+	}
+	
 	
 	public void ajouter(Arme a) {
 		try {

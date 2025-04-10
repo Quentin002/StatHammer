@@ -16,7 +16,6 @@ import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheTopMenu;
 import controlleur.SupprListe;
-
 import java.util.ArrayList;
 
 public class AfficheGestionListe {
@@ -56,7 +55,6 @@ public class AfficheGestionListe {
 		GestionListe gestionListe = new GestionListe();
 		ArrayList<ArmeeListe> listes = gestionListe.getArmeeListe(session.getId()); // récupération des listes avec l'id
 																					// utilisateur
-
 		// Boucle pour afficher les listes
 		for (ArmeeListe armee : listes) {
 			VBox listeBox = new VBox();
@@ -65,10 +63,10 @@ public class AfficheGestionListe {
 			listeBox.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
 
 			Label nomListe = new Label(armee.getNomListe());
-			Label descriptionListe = new Label(armee.getDescriptionListe());
+			Label descriptionListe = new Label(armee.getDescription());
 			VBox uniteBox = new VBox();
-		    for (String unite : armee.getUniteListe()) {
-		        Label nomUnite = new Label("- " + unite);
+		    for (String unit_name : armee.getUniteListe()) {
+		        Label nomUnite = new Label("- " + unit_name);
 		        uniteBox.getChildren().add(nomUnite);
 		    }
 
@@ -92,11 +90,11 @@ public class AfficheGestionListe {
 
 			supprBtn.setOnAction(e -> {
 				Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-						"Voulez-vous vraiment supprimer la liste :" + armee.getNomListe() + "?", ButtonType.YES,
+						"Voulez-vous vraiment supprimer la liste :" + armee.getName() + "?", ButtonType.YES,
 						ButtonType.NO);
 				alert.showAndWait().ifPresent(response -> {
 					if (response == ButtonType.YES) {
-						int idListe = armee.getIdListe();
+						int idListe = armee.getId();
 						SupprListe suppr = new SupprListe();
 						suppr.Suppression(idListe);
 
@@ -111,7 +109,6 @@ public class AfficheGestionListe {
 
 		// Bouton Retour
 		Retour.setOnAction(e -> {
-			primaryStage.close();
 			AfficheAccueil.affiche(primaryStage, session);
 		});
 

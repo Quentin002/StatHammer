@@ -155,6 +155,4 @@ public class Figurine {
 	public String toString() {
 		return "" + nom + "";
 	}
-	
-	
 }

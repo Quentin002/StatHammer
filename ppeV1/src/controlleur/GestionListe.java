@@ -16,13 +16,12 @@ public class GestionListe {
 
 	// Constructeur de la clasee qui initialise la connexion à la bdd
 	public GestionListe() {
-		this.conec = new BDD("400129", "stathammer_greta_admin", "stathammer_v1");
+		this.conec = new BDD();
 	}
 
 	// récupération de l'id utilisateur et les listes d'armée
 	public ArrayList<ArmeeListe> getArmeeListe(int idUtilisateur) {
 	    ArrayList<ArmeeListe> listes = new ArrayList<>();
-
 	    // Requête pour récupérer les listes d'armée avec leurs unités associées
 	    String requete = """
 	        SELECT l.id_liste, l.nom_liste, l.description_liste, l.data_liste, u.nom_unite, u.id_armee
@@ -39,7 +38,7 @@ public class GestionListe {
 	        ResultSet recup = stmt.executeQuery();
 	        // Stocker les objets ArmeeListe par ID pour éviter les doublons
 	        HashMap<Integer, ArmeeListe> mapListes = new HashMap<>();
-
+	        System.out.print(stmt + "côté controlleur");
 	        while (recup.next()) {
 	            int id = recup.getInt("id_liste");
 	            String nom = recup.getString("nom_liste");
@@ -50,7 +49,7 @@ public class GestionListe {
 	            // Vérifier si la liste existe déjà dans la map
 	            ArmeeListe liste = mapListes.get(id);
 	            if (liste == null) {
-	                liste = new ArmeeListe(id, idArmee, nom, description, data);
+	                liste = new ArmeeListe(id, idArmee, nom, description, data, idArmee);
 	                liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
 	                mapListes.put(id, liste);
 	            }

@@ -3,34 +3,91 @@ package modele;
 import java.util.ArrayList;
 
 public class ArmeeListe {
-    private int idListe;
+    private int id;
     private int idArmee;
-    private String nomListe;
-    private String descriptionListe;
-    private String dataListe;
-    private ArrayList<String> unite;
-
-    public ArmeeListe(int id, int idArmee, String nom, String description, String data) {
-        this.idListe = id;
-        this.nomListe = nom;
-        this.descriptionListe = description;
-        this.dataListe = data;
+    private String nom;
+    private String description;
+    private String data;
+    private ArrayList<String> unit_names;
+	private ArrayList<Unit> unites = new ArrayList<Unit>();
+	private int idUtilisateur;
+	
+	
+    public ArmeeListe(int id, int idArmee, String nom, String description, String data, int idUtilisateur) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.data= data;
         this.idArmee = idArmee;
+        this.idUtilisateur = idUtilisateur;
     }
 
-    public int getIdListe() { return idListe; }
+    public ArmeeListe(ArrayList<Unit> arrayList, String string, String string2, String string3) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getIdListe() { return id; }
     public int getIdArmee() { return idArmee;}
-    public String getNomListe() { return nomListe; }
-    public String getDescriptionListe() { return descriptionListe; }
-    public String getDataListe() { return dataListe; }
-    public ArrayList<String> getUniteListe() { return unite; }
+    public String getNomListe() { return nom; }
+    public String getDescriptionListe() { return description; }
+    public String getDataListe() { return data; }
+    public ArrayList<String> getUniteListe() { return unit_names; }
 
     public void setUniteListe(ArrayList<String> unite) {
-        this.unite = unite;
+        this.unit_names = unite;
     }
-    @Override
+
+	// getters
+	public int getId() {
+    	return id;
+    }
+	public String getName() {
+		return nom;
+	}
+	public void setName(String name) {
+		nom = name;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String desc) {
+		description = desc;
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
+    public int getIdUtilisateur() {
+    	return idUtilisateur;
+    }
+    
+	public ArrayList<Unit> getUnits() {
+		return unites;
+	}
+	public void setUnits(ArrayList<Unit> units) {
+		unites = units;
+	}
+	public String[] getUnitNames() {
+		String[] unit_names = new String[unites.size()];
+		for(int i = 0; i < unites.size(); i++) {
+			unit_names[i] = unites.get(i).getName();
+		}
+		return unit_names;
+	}
+	public void addUnit(Unit unit) {
+		unites.add(unit);
+	}
+	public void removeUnit(Unit unit) {
+		unites.remove(unit);
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
     public String toString() {
-        return "Liste ID: " + idListe + ", Nom: " + nomListe + ", Description: " + descriptionListe + 
-               ", Data: " + dataListe + ", unite: " + unite;
+        return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 
+               ", Data: " + data + ", unite: " + unit_names;
     }
 }

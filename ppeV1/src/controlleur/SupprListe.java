@@ -8,7 +8,7 @@ public class SupprListe {
 	private BDD conec;
 
 	public SupprListe() {
-		this.conec = new BDD("400129", "stathammer_greta_admin", "stathammer_v1");
+		this.conec = new BDD();
 	}
 
 	public void Suppression(int idListe) {
