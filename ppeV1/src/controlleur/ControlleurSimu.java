@@ -2,11 +2,12 @@ package controlleur;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import application.Battle;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import modele.Aptitude;
@@ -33,26 +34,16 @@ public class ControlleurSimu
 		for(ArmeeListe one_list : lists)
 		{
 			if(one_list.getName().equals(choice)) {
+				// "copie profonde" d'une liste
 				ArmeeListe list = new ArmeeListe(one_list.getName(), one_list.getDescription(), one_list.getData());
 				battle_data.setSelectedList(num_list, list);
-				list.setName(one_list.getName());
-				list.setDescription(one_list.getDescription());
-				list.setData(one_list.getData());
-				
 				break; // choix unique
 			}
 		}
 		
 		// obtenir les unités, l'armée, les figurines, armes et aptitudes
-		Instanciation.conec = new BDD();
 		Instanciation.getUnitsOfAList(battle_data.getSelectedList(num_list));
-		Instanciation.conec.close();
-		if(battle_data.getSelectedList(num_list).getUnits().size() > 0) {
-			battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
-		}
-		else {
-			System.out.println("liste vide ma gueule");
-		}
+		battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
 	}
 	
 	// déroulement des figurines d'une unité (appui sur buttons.get(i) dans SimUnitsVBox)
@@ -102,30 +93,26 @@ public class ControlleurSimu
 		SimFigurinesVBox old_fig_boxes = null;
         SimFigurinesVBox new_fig_boxes = lists.getFigBoxes().get(j);
         
-        // dérouler ou replier les figurines du bouton cliqué
-        //new_fig_boxes.changeState();
-        
         // il y a déjà une unité sélectionnée
-        if(lists.getSelectedUnit() > 0)
+        if(battle_data.getSelectedUnitIndex(col) > -1)
         {
-        	// getSelectedUnit() - 1 parce qu'on compte à partir de 1
-			buttons.get(lists.getSelectedUnit() - 1).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
+			buttons.get(battle_data.getSelectedUnitIndex(col)).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
         	AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear(); // supprimer fenêtre combat si existe
         	
         	// bouton même unité => ferme
-        	if(lists.getSelectedUnit() - 1 == j)
+        	if(battle_data.getSelectedUnitIndex(col) == j)
             {
         		new_fig_boxes.getChildren().clear();
-        		lists.setSelectedUnit(0);
+        		battle_data.setSelectedUnit(col, -1);
             }
         	// bouton autre unité
         	else
         	{
-        		old_fig_boxes = lists.getFigBoxes().get(lists.getSelectedUnit() - 1);
+        		old_fig_boxes = lists.getFigBoxes().get(battle_data.getSelectedUnitIndex(col));
 	        	if(old_fig_boxes != null) {
 					old_fig_boxes.getChildren().clear(); // supprimer ancienne zone de figurines
 				}
-	        	lists.setSelectedUnit(j + 1);
+	        	battle_data.setSelectedUnit(col, j);
 	        	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
 	        	new_fig_boxes.setFigurines(); // on ouvre
         	}
@@ -133,7 +120,7 @@ public class ControlleurSimu
         // pas d'unité sélectionnée => on ouvre
         else
         {
-        	lists.setSelectedUnit(j + 1);
+        	battle_data.setSelectedUnit(col, j);
         	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
         	new_fig_boxes.setFigurines();
         }
@@ -166,17 +153,19 @@ public class ControlleurSimu
 		AfficheSimulation.refreshWeaponAndAptitude(weapons_aptitudes_menu); // insersion dans la vue principale
 	}
 	
-	public static void selectAWeapon(String weapon_name, ArrayList<Figurine> fig_group) {
+	public static void selectAWeapon(SimAptAndWeaponsVBox view, String weapon_name, ArrayList<Figurine> fig_group, FlowPane weapon_stats) {
 		Arme weapon = fig_group.get(0).getWeaponByName(weapon_name); // recherche dans les armes de la 1ère figurine
 		// on équipe le groupe
 		for(Figurine fig : fig_group) {
 			fig.setWeapon(weapon);
 		}
+		weapon_stats.getChildren().clear();
+		view.setWeaponStats(weapon, weapon_stats);
 	}
 	
-	public static void weaponNumberChoice(int value, String group_name) {
+	public static void AliveFigsChoice(int col, int value, String group_name) {
 		// on considère que ceux qui n'attaquent pas sont morts
-		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(1).getIdenticalFigsGroups().get(group_name);
+		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
 		for(int i = 0; i < value; i++) {
 			fig_group.get(i).setHP(fig_group.get(i).getHPMax());
 		}
@@ -187,7 +176,6 @@ public class ControlleurSimu
 		System.out.println("weaponNumberChoice => trouver un moyen de modifier instantanément les images");
 	}
 	
-	// méthode pas encore testée
 	public static void checkOrUncheckAnAptitude(boolean isSelected, String aptitude_name, ArrayList<Figurine> fig_group) {
 		for(Aptitude apti : fig_group.get(0).getAptitudes()) // recherche dans les aptitudes de la 1ère figurine
 		{
@@ -197,12 +185,10 @@ public class ControlleurSimu
 					HashMap<String, Aptitude> selectedAptitudes = fig.getSelectedAptitudes();
 					if(isSelected) {
 						selectedAptitudes.put(aptitude_name, apti);
-						System.out.println("debug: " + fig.getSelectedAptitudes().get(aptitude_name) + " is selected");
 					}
 					else {
 						if(selectedAptitudes.containsKey(aptitude_name)) {
 							selectedAptitudes.remove(aptitude_name);
-							System.out.println("taille de selectedAptitudes = " + fig.getSelectedAptitudes().size());
 						}
 					}
 				}
@@ -217,5 +203,17 @@ public class ControlleurSimu
 		Calcul c =Calcul.bataille(u1, u2);
 		
 		SimHistogramme.setHist(c.getTabdegat1(), c.getTabmort1(), c.getDegat_moyen1(), c.getMort_moyen1(),p);
+	}
+
+	public static void reverseArmies(ArrayList<ChoiceBox<String>> lists_drop_down) {
+		battle_data.reverseArmies();
+		AfficheSimulation.inversion = true;
+		for(int i = 0; i < 2; i++)
+        {
+			// déclenche la sélection d'une liste dans le menu déroulant, mais avec du code
+			lists_drop_down.get(i).getSelectionModel().select(battle_data.getSelectedList(i + 1).getName());
+			battle_data.setSelectedUnit(i + 1, -1); // plus d'unité sélectionnée
+        }
+		AfficheSimulation.inversion = false;
 	}
 }

@@ -13,7 +13,10 @@ import java.util.List;
 
 import javafx.scene.layout.VBox;
 import modele.Arme;
+import modele.ArmeeListe;
 import modele.Evenement;
+import modele.Unit;
+import modele.User;
 
 public class BDD {
 
@@ -140,17 +143,17 @@ public class BDD {
 	public ArrayList<String> select(String requete,String... param ) throws SQLException{
 		ArrayList<String> rendu = new ArrayList<String>();
 		try {
+			PreparedStatement pstat = null;
 			
-			
-			stat = connec.prepareStatement(requete);
+			pstat = connec.prepareStatement(requete);
 			if(param.length>0) {
 				for(int i = 1;i<=param.length;i++) {
-					stat.setString(i, param[i-1]);
+					pstat.setString(i, param[i-1]);
 				}
 			}
 			
 			rs.close();
-			rs = stat.executeQuery();
+			rs = pstat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
 			ArrayList<String> column = new ArrayList<String>();
 			
@@ -166,6 +169,7 @@ public class BDD {
 				
 				
 			}
+			
 			return rendu;
 			
 		} catch (SQLException e) {
@@ -187,6 +191,40 @@ public class BDD {
 			System.err.println(e.getMessage());
 		}
 	}
+	public void insertListe(ArmeeListe armee,User session) {
+		try {
+			int id;
+			ArrayList<String> rendu = new ArrayList<String>();
+			String requete = "INSERT INTO liste VALUES(DEFAULT,?,?,?,?);";
+			stat = this.getPreparedStatement(requete);
+			stat.setString(1, armee.getName());
+			stat.setString(2, armee.getDescription());
+			stat.setString(3, armee.getData());
+			stat.setInt(4, session.getId());
+			stat.executeUpdate();
+			
+			requete = "SELECT id_liste FROM liste WHERE nom_liste = '"+armee.getName()+"';";
+			
+			rendu = this.select(requete);
+			
+			id = Integer.parseInt(rendu.getFirst());
+			requete = "INSERT INTO contenir VALUES(?,?);";
+			
+			for(Unit unit : armee.getUnits()) {
+				
+				
+				stat = this.getPreparedStatement(requete);
+				stat.setInt(1, unit.getId());
+				stat.setInt(2, id);
+				stat.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	
 	public void updateMp(String mdp,int id) {
 		try {
 			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);

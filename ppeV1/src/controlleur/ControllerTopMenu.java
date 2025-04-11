@@ -29,13 +29,16 @@ public class ControllerTopMenu {
 		//
 
 	}
-	public static void go_deco(Stage primaryStage) { 
+	public static void go_deco(Stage primaryStage, User session) { 
+		AfficheSimulation.cleanWeaponsAtitudesMenu();
+		AfficheSimulation.cleanBattle();
+		session = null;
 		AfficheConnexion.affiche(primaryStage);
 	}
 	public static void go_simulation(Stage primaryStage, User session){
-		Instanciation.conec = new BDD();
+		
 		Instanciation.getArmyLists(session);
-		Instanciation.conec.close();
+		
 		AfficheSimulation.affiche(primaryStage, session);
 	}
 	public static void go_admin(Stage primaryStage,User session) { 

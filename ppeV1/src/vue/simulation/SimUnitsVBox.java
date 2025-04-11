@@ -11,19 +11,11 @@ public class SimUnitsVBox extends VBox
 {
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 	private ArrayList<SimFigurinesVBox> fig_boxes = new ArrayList<SimFigurinesVBox>();
-	private int selected_unit = 0;
 	private int column; // = 1 ou 2
 	
 	public SimUnitsVBox(int col){
 		column = col;
 		this.setStyle("-fx-padding: 2px;");
-	}
-	
-	public int getSelectedUnit(){
-		return selected_unit;
-	}
-	public void setSelectedUnit(int unit) {
-		selected_unit = unit;
 	}
 	
 	// getters

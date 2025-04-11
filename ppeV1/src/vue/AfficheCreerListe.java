@@ -1,10 +1,8 @@
 package vue;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-
-import controlleur.BDD;
 import controlleur.Instanciation;
+import controlleur.StockageCreerListe;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,18 +12,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import modele.Armee;
-import modele.ArmeeListe;
 import modele.Bouton;
-import modele.Evenement;
-import modele.Faction;
-import modele.Unit;
 import modele.User;
 
 public class AfficheCreerListe {
@@ -35,6 +26,10 @@ public class AfficheCreerListe {
 		double largeur = tailleEcran.getWidth()/2;
 		
 		
+		
+		
+		//initialisation de toute les variables
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
 		
 		VBox root = new VBox();
 		HBox boite = new HBox();
@@ -49,17 +44,18 @@ public class AfficheCreerListe {
 		Image logoFaction = new Image("images/wip.jpg");
 		ImageView iv1 = new ImageView(logoFaction);
 		ImageView iv2 = new ImageView(logoFaction);
-		Button creation = new Button("Créer une Armée");
+		Button creation = new Button("Créer et sauvegarder une Armée");
 		TextField nomArmee = new TextField();
-		Button retour = new Button("RETOUR");
 		ScrollPane toutUnit = new ScrollPane();
 		ScrollPane unitSauv = new ScrollPane();
 		VBox gaucheUnit = new VBox();
-		ChoiceBox<Faction> faction = new ChoiceBox<>();
-		Instanciation.conec =new BDD();;
-		ArmeeListe armeeListe = new ArmeeListe(new ArrayList<Unit>(),"temp","","");
+		ChoiceBox<String> faction = new ChoiceBox<>();
+		ChoiceBox<String> groupe = new ChoiceBox<>();
+		StockageCreerListe.initArmeeListe();
 		
-		for(Faction fac:Instanciation.getFaction()) {
+		
+		StockageCreerListe.initFaction();
+		for(String fac:StockageCreerListe.getNomFac()) {
 			faction.getItems().add(fac);
 		}
 		faction.setValue(faction.getItems().getFirst());
@@ -67,49 +63,68 @@ public class AfficheCreerListe {
 		
 		
 		
-		ChoiceBox<Armee> groupe = new ChoiceBox<>();
-		for(Armee armee:Instanciation.getArmee(faction.getValue())) {
+		
+		StockageCreerListe.initArmee(faction.getValue());
+		for(String armee:StockageCreerListe.getNomArmee()) {
 			groupe.getItems().add(armee);
 		}
 		groupe.setValue(groupe.getItems().getFirst());
 		
+		
+		
 		faction.setOnAction(e->{
 			groupe.getItems().clear();
-			armeeListe.getUnits().clear();
 			
-			for(Armee armee:Instanciation.getArmee(faction.getValue())) {
+			StockageCreerListe.initArmee(faction.getValue());
+			for(String armee:StockageCreerListe.getNomArmee()) {
 				groupe.getItems().add(armee);
 			}
 			groupe.setValue(groupe.getItems().getFirst());
 		});
 		
+		StockageCreerListe.initUnit(groupe.getValue());
 		
-		for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
+		for(String unit : StockageCreerListe.getNomUnit()) {
 			
 			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(e->{
-				gaucheUnit.getChildren().clear();
-				Instanciation.uniteBouton(unit, armeeListe);
-				for(Unit unit2:armeeListe.getUnits()) {
-					gaucheUnit.getChildren().add(new Label(unit2.toString()));
-				}
+			gaucheUnit.getChildren().clear();
+			StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+			for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {
+				gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
+					gaucheUnit.getChildren().remove(
+					StockageCreerListe.getArmeeListe().getUnits().indexOf(StockageCreerListe.getUnit(unit2)));
+					StockageCreerListe.getArmeeListe().removeUnit(StockageCreerListe.getUnit(unit2));
+					
+					
+				})));
+			}
+				
 			})));
-		}
-		groupe.setOnAction(e->{
-			droiteCorps.getChildren().clear();
 			
-			for(Unit unit : Instanciation.getUnite(groupe.getValue())) {
+		}
+		
+		
+		groupe.setOnAction(e->{
+			
+			StockageCreerListe.initUnit(groupe.getValue());
+			droiteCorps.getChildren().clear();
+			StockageCreerListe.getArmeeListe().getUnits().clear();
+			for(String unit : StockageCreerListe.getNomUnit()) {
 				
 				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(y->{
-					gaucheUnit.getChildren().clear();
-					Instanciation.uniteBouton(unit, armeeListe);
-					for(Unit unit2:armeeListe.getUnits()) {
-						gaucheUnit.getChildren().add(new Label(unit2.toString()));
-					}
+				gaucheUnit.getChildren().clear();
+				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+				for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {
+					gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
+						gaucheUnit.getChildren().remove(
+						StockageCreerListe.getArmeeListe().getUnits().indexOf(StockageCreerListe.getUnit(unit2)));
+						StockageCreerListe.getArmeeListe().removeUnit(StockageCreerListe.getUnit(unit2));
+												
+					})));
+				}
 				})));
 				
 			}
-			
-			
 		});
 			
 		
@@ -136,14 +151,14 @@ public class AfficheCreerListe {
 		gauche.setPrefHeight(hauteur);
 		gauche.setMaxWidth(largeur/2);
 		gauche.setMaxHeight(hauteur);
-		gauche.setBackground(Background.fill(Color.BLUE));
+		
 		
 		droite.getChildren().add(toutUnit);
 		droite.setPrefWidth(largeur/2);
 		droite.setPrefHeight(hauteur);
 		droite.setMaxWidth(largeur/2);
 		droite.setMaxHeight(hauteur);
-		droite.setBackground(Background.fill(Color.RED));
+		
 		
 		toutUnit.setFitToHeight(true);
 		toutUnit.setContent(droiteCorps);
@@ -151,6 +166,22 @@ public class AfficheCreerListe {
 		entete.getChildren().addAll(creation,nomArmee,faction,iv1);
 		entete.setAlignment(Pos.CENTER);
 		entete.setMaxHeight(hauteur/15);
+		
+		creation.setOnAction(e->{
+			StockageCreerListe.getArmeeListe().setNom(nomArmee.getText());
+			session.getListes().add(StockageCreerListe.getArmeeListe());
+			try {
+				Instanciation.insertListe(StockageCreerListe.getArmeeListe(), session);
+				
+				AfficheAccueil.affiche(primaryStage, session);
+				
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+			
+			
+		});
+		
 		
 		gaucheCorps.getChildren().add(corpTete);
 		gaucheCorps.getChildren().add(unitSauv);
@@ -164,17 +195,12 @@ public class AfficheCreerListe {
 		corpTete.setAlignment(Pos.CENTER);
 		corpTete.setMaxHeight(hauteur/15);
 		
+		root.getChildren().add(menu);
 		root.setAlignment(Pos.CENTER);
 		root.getChildren().add(titre);
-		root.getChildren().add(retour);
 		root.getChildren().add(boite);
 		
-		retour.setOnAction(e->{
-			Instanciation.conec.close();
-			primaryStage.close();
-			AfficheAccueil.affiche(primaryStage,session);
-			
-		});
+		
 		
 		
 		
@@ -183,3 +209,4 @@ public class AfficheCreerListe {
 		primaryStage.show();
 	}
 }
+	

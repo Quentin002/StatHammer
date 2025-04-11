@@ -3,9 +3,9 @@ package controlleur;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
+import application.Battle;
 import modele.Aptitude;
 import modele.AptitudeArme;
 import modele.Arme;
@@ -20,14 +20,25 @@ import modele.User;
 
 public class Instanciation {
 
-	public static BDD conec;
+	private static BDD conec;
+	private static Battle battle_data = new Battle();
+	
+	public static Battle getBattleData() {
+		return battle_data;
+	}
+	public static void resetBattle() {
+		battle_data = null;
+		battle_data = new Battle();
+	}
 	
 	public static ArrayList<Faction> getFaction() {
+		
 		ArrayList<Faction> rendu = new ArrayList<Faction>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
-			
+			conec = new BDD();
 			nom = conec.select("SELECT nom_faction FROM faction;" );
+			
 			for (String string : nom) {
 				rendu.add(new Faction(string));
 			}
@@ -35,7 +46,7 @@ public class Instanciation {
 		}catch(SQLException e) {
 			
 		}
-		
+		conec.close();
 		return rendu;
 	}
 	
@@ -43,47 +54,47 @@ public class Instanciation {
 		ArrayList<Armee> rendu = new ArrayList<Armee>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
+			conec = new BDD();
 			
 			nom = conec.select("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",faction.getNom() );
 			
+			
 			for (int i = 0;i<nom.size();i = i+2) {
+				
 				rendu.add(new Armee(nom.get(i),nom.get(i+1),faction));
 			}
 			
 		}catch(SQLException e) {
 			
 		}
-		
+		conec.close();
 		return rendu;
 	}
 	
-	public static ArrayList<Unit> getUnite(Armee armee){
-		ArrayList<Unit> rendu = new ArrayList<>();
+	public static ArrayList<Unit> getUniteOfArmy(Armee armee){
+		ArrayList<Unit> rendu = new ArrayList<Unit>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
-			
-			nom = conec.select("SELECT u.nom_unite,  u.points_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ?;",armee.getName() );
-			
-			
-//			for (int i = 0;i<nom.size();i = i+2) {
-//				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i)),nom.get(i), Integer.parseInt(nom.get(i+1)),armee));
-//			}
+			conec = new BDD();
+			nom = conec.select("SELECT u.id_unite, u.nom_unite,  u.points_unite,u.logo_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ? LIMIT 20;",armee.getName() );
 			
 			
+			for (int i = 0;i<nom.size();i = i+4) {
+				rendu.add(new Unit(Instanciation.getFigurine(nom.get(i+1)),Integer.parseInt(nom.get(i)),nom.get(i+1), Integer.parseInt(nom.get(i+2)),nom.get(i+3),armee));
+			}
 			
-			//while(tab.next()) {
-			//	rendu.add(new Unit(Instanciation.getFigurine(tab.getString("nom_unit")),tab.getString("nom_unit"),tab.getInt("points_unit"),armee));
-			//}
+			
+			
 			
 		}catch(SQLException e) {
 			
 		}
-		
+		conec.close();
 		return rendu;
 	}
-	
 	public static void getArmyLists(User session)
 	{
+		conec = new BDD();
 		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
 		try {
 			PreparedStatement stat = conec.getPreparedStatement(sql, session.getId());
@@ -96,9 +107,11 @@ public class Instanciation {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		conec.close();
 	}
 	
 	public static void getUnitsOfAList(ArmeeListe list) {
+		conec = new BDD();
 		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
 			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
 			+ " WHERE liste.nom_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
@@ -109,21 +122,22 @@ public class Instanciation {
 			
 			while(rs.next()) {
 				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
-					rs.getString(1), rs.getInt(2), rs.getString(3),
-					new Armee(rs.getString(4), rs.getString(5))));
+						rs.getString(1), rs.getInt(2), rs.getString(3),
+						new Armee(rs.getString(4), rs.getString(5))));
 			}
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		conec.close();
 	}
 	
 	public static ArrayList<Figurine> getFigurine(String unitName){
-		ArrayList<Figurine> rendu = new ArrayList<>();
-		ArrayList<String> temp = new ArrayList<>();
+		ArrayList<Figurine> rendu = new ArrayList<Figurine>();
+		ArrayList<String> temp = new ArrayList<String>();
 		try {
-			// pour un exemple avec plusieurs types de figurines, choisir Escouade Centurion Devastator'
+			
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
 					+ "JOIN remplir r USING (id_figurine) JOIN unite u USING(id_unite) WHERE u.nom_unite = ?;",unitName );
 			
@@ -146,7 +160,7 @@ public class Instanciation {
 	}
 	
 	public static ArrayList<Arme> getArme(String figNom){
-		ArrayList<Arme> rendu = new ArrayList<>();
+		ArrayList<Arme> rendu = new ArrayList<Arme>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
@@ -173,13 +187,14 @@ public class Instanciation {
 	}
 	
 	public static ArrayList<Aptitude> getAptitude(String figNom){
-		ArrayList<Aptitude> rendu = new ArrayList<>();
+		ArrayList<Aptitude> rendu = new ArrayList<Aptitude>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
 			nom = conec.select("SELECT a.nom_aptitude FROM aptitude a JOIN permettre USING (id_aptitude) JOIN figurine f USING(id_figurine) WHERE f.nom_figurine = ?;",figNom );
 			
-			for (int i = 0;i<nom.size();i = i++) {
+			
+			for (int i = 0;i<nom.size(); i++) {
 				rendu.add(new Aptitude(nom.get(i)));
 			}
 			
@@ -195,7 +210,7 @@ public class Instanciation {
 		return rendu;
 	}
 	public static ArrayList<AptitudeArme> getAptitudeArme(String armeNom){
-		ArrayList<AptitudeArme> rendu = new ArrayList<>();
+		ArrayList<AptitudeArme> rendu = new ArrayList<AptitudeArme>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
@@ -216,9 +231,10 @@ public class Instanciation {
 		
 		return rendu;
 	}
-	public static void uniteBouton(Unit u,ArmeeListe a) {
-		a.addUnit(u);
-		
+	public static void insertListe(ArmeeListe armee,User session) {
+		conec = new BDD();
+		conec.insertListe(armee, session);
+		conec.close();
 	}
 	
 }

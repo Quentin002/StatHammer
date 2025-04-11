@@ -91,7 +91,7 @@ public class AfficheTopMenu extends HBox
 		});
 	    // page de connexion
 	    btn_logout.setOnAction(e -> {
-	    	ControllerTopMenu.go_deco(primaryStage);
+	    	ControllerTopMenu.go_deco(primaryStage, session);
 		});
 		// simulation
 	    btn_simu.setOnAction(e -> {
