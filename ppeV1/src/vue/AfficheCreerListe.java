@@ -176,17 +176,30 @@ public class AfficheCreerListe {
 		entete.setMaxHeight(hauteur/15);
 		
 		creation.setOnAction(e->{
-			StockageCreerListe.getArmeeListe().setNom(nomArmee.getText());
-			session.getListes().add(StockageCreerListe.getArmeeListe());
-			try {
-				Instanciation.insertListe(StockageCreerListe.getArmeeListe(), session);
-				
-				AfficheAccueil.affiche(primaryStage, session);
-				
-			} catch (Exception e2) {
-				// TODO: handle exception
+			if(nomArmee.getText().trim().equals("") || StockageCreerListe.getArmeeListe().getUnits().size()==0) {
+				System.out.println("Vide");
+				Stage secondaryStage = new Stage();
+				HBox boitesecondaire = new HBox();
+				Scene secondScene = new Scene(boitesecondaire,200,100);
+				Label error = new Label("ERREUR Armee vide ET/OU sans nom");
+				boitesecondaire.getChildren().add(error);
+				boitesecondaire.setAlignment(Pos.CENTER);
+				secondaryStage.setScene(secondScene);
+				secondaryStage.setTitle("Error");
+				secondaryStage.show();
+			}else {
+				StockageCreerListe.getArmeeListe().setNom(nomArmee.getText());
+				session.getListes().add(StockageCreerListe.getArmeeListe());
+				try {
+					
+					Instanciation.insertListe(StockageCreerListe.getArmeeListe(), session);
+					
+					AfficheAccueil.affiche(primaryStage, session);
+					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 			}
-			
 			
 		});
 		
