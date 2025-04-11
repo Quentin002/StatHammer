@@ -2,6 +2,7 @@ package vue;
 
 import java.util.ArrayList;
 
+import controlleur.Connexion;
 import controlleur.EvenementController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,15 +22,16 @@ public class AfficheAccueil {
 	
 	private static VBox vEvt;
 	
-	public static void affiche(Stage primaryStage,User session, Evenement evt) {
+	public static void affiche(Stage primaryStage,User session) {
+		
 		
 		VBox root = new VBox();
 		Scene scene = new Scene(root,800,600);
 	
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session,evt);
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 		//AfficheTopMenu.setHgrow(root, Priority.ALWAYS);
 		
-		vEvt = AfficheEvenement.NewAfficheEvenement(primaryStage, session, evt);
+		vEvt = AfficheEvenement.NewAfficheEvenement(primaryStage, session);
 		root.getChildren().add(menu);
 		
 

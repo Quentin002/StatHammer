@@ -19,7 +19,7 @@ public class AfficheTopMenu extends HBox
 {
 	private Label pseudo;
 	
-	public AfficheTopMenu(Stage primaryStage, User session, Evenement evt)
+	public AfficheTopMenu(Stage primaryStage, User session)
 	{
 		this.setStyle("-fx-background-color: gray; -fx-padding: 5px;");
 		//-fx-spacing: 10px;
@@ -79,15 +79,15 @@ public class AfficheTopMenu extends HBox
 	    
 	    // menu principal
 	    btn_home.setOnAction(e -> {
-			ControllerTopMenu.go_accueil(primaryStage,session,evt);
+			ControllerTopMenu.go_accueil(primaryStage,session);
 		});
 	    // gestion de son compte
 	    btn_account.setOnAction(e -> {
-	    	ControllerTopMenu.go_gestion_compte(primaryStage,session,evt);
+	    	ControllerTopMenu.go_gestion_compte(primaryStage,session);
 		});
 		// gestion des listes
 	    btn_gerer_liste.setOnAction(e -> {
-	    	ControllerTopMenu.go_gestion_listes(primaryStage,session,evt);
+	    	ControllerTopMenu.go_gestion_listes(primaryStage,session);
 		});
 	    // page de connexion
 	    btn_logout.setOnAction(e -> {
@@ -95,15 +95,15 @@ public class AfficheTopMenu extends HBox
 		});
 		// simulation
 	    btn_simu.setOnAction(e -> {
-	    	ControllerTopMenu.go_simulation(primaryStage,session,evt);
+	    	ControllerTopMenu.go_simulation(primaryStage,session);
 		}); 
 	    // options réservées à l'admin
 	    btn_admin.setOnAction(e -> {
-	    	ControllerTopMenu.go_admin(primaryStage, session,evt);
+	    	ControllerTopMenu.go_admin(primaryStage, session);
 		});
 	    //vers creer liste
 	    btn_creer_liste.setOnAction(e->{
-	    	ControllerTopMenu.go_creer_liste(primaryStage,session,evt);
+	    	ControllerTopMenu.go_creer_liste(primaryStage,session);
 	    });
 	}
 	

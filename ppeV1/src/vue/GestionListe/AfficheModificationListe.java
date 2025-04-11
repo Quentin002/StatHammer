@@ -20,14 +20,14 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 
 public class AfficheModificationListe {
-    public static void affiche(Stage primaryStage, User session, int idListe, Evenement evt) {
+    public static void affiche(Stage primaryStage, User session, int idListe) {
         VBox root = new VBox();
         HBox boite = new HBox();
         VBox afficheListe = new VBox();
         ScrollPane modifListe = new ScrollPane();
         VBox modif = new VBox();
         Scene scene = new Scene(root, 800, 600);
-        AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session, evt);
+        AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
 
         root.getChildren().add(menu);
 

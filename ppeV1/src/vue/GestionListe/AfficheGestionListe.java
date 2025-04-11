@@ -20,14 +20,14 @@ import controlleur.SupprListe;
 import java.util.ArrayList;
 
 public class AfficheGestionListe {
-	public static void affiche(Stage primaryStage, User session, Evenement evt) {
+	public static void affiche(Stage primaryStage, User session) {
 		// Liste des conteneurs principaux structurant l'interface
 		VBox root = new VBox(); // page principa
 		HBox boite = new HBox(); // Box contenant les parties bouton et liste
 		VBox selectBouton = new VBox(); // Partie bouton
 		VBox liste = new VBox(); // Partie Liste
 		Scene scene = new Scene(root, 1000, 800); // taille de la scène
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session, evt);
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 		root.getChildren().add(menu);
 
 		// _______________ BOX BOITE _______________
@@ -85,7 +85,7 @@ public class AfficheGestionListe {
 			
 			modifBtn.setOnAction(e ->{
 				primaryStage.close();
-				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe(),evt);
+				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe());
 			});
 
 			supprBtn.setOnAction(e -> {
@@ -109,7 +109,7 @@ public class AfficheGestionListe {
 
 		// Bouton Retour
 		Retour.setOnAction(e -> {
-			AfficheAccueil.affiche(primaryStage, session,evt);
+			AfficheAccueil.affiche(primaryStage, session);
 		});
 
 		primaryStage.setScene(scene);

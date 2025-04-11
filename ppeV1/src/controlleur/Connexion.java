@@ -10,15 +10,16 @@ import vue.AfficheAccueil;
 import vue.AfficheConnexionFailed;
 
 public class Connexion {
-
+	public static EvenementController eventC ;
+	public static Evenement event ;
 	public static void verif(String login, String mdp,Stage primaryStage) {
 		
 		login = login.trim();
 		mdp = Integer.toString(mdp.hashCode());
 		BDD conec = new BDD();
 		
-		EvenementController eventC = new EvenementController();
-    	Evenement evt = new Evenement(eventC.getNom_event().get(0),
+		eventC = new EvenementController();
+    	event = new Evenement(eventC.getNom_event().get(0),
 				eventC.getNom_image().get(0),
 				eventC.getDesc_event().get(0),
 				eventC.getDate_event().get(0));
@@ -34,7 +35,7 @@ public class Connexion {
 				User session = new User(login,id,role);
 				
 				//primaryStage.close();
-				AfficheAccueil.affiche(primaryStage,session,evt);
+				AfficheAccueil.affiche(primaryStage,session);
 			}
 			else {
 				System.out.println(rendu);

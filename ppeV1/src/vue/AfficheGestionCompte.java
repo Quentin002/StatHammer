@@ -20,7 +20,7 @@ import modele.User;
 
 public class AfficheGestionCompte {
 
-public static void affiche(Stage primaryStage,User session, Evenement evt) {
+public static void affiche(Stage primaryStage,User session) {
 
 
 	
@@ -40,7 +40,7 @@ public static void affiche(Stage primaryStage,User session, Evenement evt) {
 	//VBox vboxL = new VBox();
 	//etiquette.setText("test");
 	
-	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session,evt);
+	AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 	
 	VBox vbox1 = new VBox();
 	vbox1.getChildren().add(etiquette);

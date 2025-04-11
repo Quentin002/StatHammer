@@ -55,11 +55,11 @@ public class AfficheAdmin {
 		return events;
 	}
 	
-	public static void affiche(Stage primaryStage, User session, Evenement evt) {
+	public static void affiche(Stage primaryStage, User session) {
 		stage = primaryStage;
 		sess = session;
 		events = EvenementController.EvenementVBox();
-		AfficheTopMenu menu = new AfficheTopMenu(stage,sess, evt);
+		AfficheTopMenu menu = new AfficheTopMenu(stage,sess);
     	Text titre = new Text("Mes évènements");
     	titre.setFont(Font.font("Arial", 30));
         titre.setFill(Color.web("#2C3E50")); 
@@ -102,7 +102,7 @@ public class AfficheAdmin {
                 System.out.println(dateString);
                 System.out.println("Date sélectionnée (java.util.Date) : " + dateString);
                 events = ControllerAdmin.valider(nom.getText(),ControllerAdmin.getFile().getName(),descEvent.getText(), dateString);
-                AfficheAdmin.affiche(stage, sess,evt);
+                AfficheAdmin.affiche(stage, sess);
             }      	
         });
         
