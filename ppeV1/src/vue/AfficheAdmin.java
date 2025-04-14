@@ -2,6 +2,7 @@ package vue;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
@@ -91,19 +92,30 @@ public class AfficheAdmin {
         });
         
         valider.setOnAction(e -> {
-        	
-        	// Récupération de la date sélectionnée
-        	LocalDate localDate = date.getValue();
-        	
-        	if (localDate != null) {
-                // Formater la date en chaîne de caractères au format "yyyy-MM-dd"
-                String dateString = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
-                System.out.println("Date sélectionnée : " + dateString);
-                System.out.println(dateString);
-                System.out.println("Date sélectionnée (java.util.Date) : " + dateString);
-                events = ControllerAdmin.valider(nom.getText(),ControllerAdmin.getFile().getName(),descEvent.getText(), dateString);
-                AfficheAdmin.affiche(stage, sess);
-            }      	
+        	if (nom.getText().isEmpty() || descEvent.getText().isEmpty()||ControllerAdmin.getFile() == null){
+        		
+        		// Affichage du message d'erreur si n champ est vide
+                showErrorMessage("Tous les champs doivent être remplis.");
+        	}
+        	else {
+	        	// Récupération de la date sélectionnée
+	        	LocalDate localDate = date.getValue();
+	        	
+	        	if (localDate != null) {
+	                // Formater la date en chaîne de caractères au format "yyyy-MM-dd"
+	                String dateString = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
+	                System.out.println("Date sélectionnée : " + dateString);
+	                System.out.println(dateString);
+	                System.out.println("Date sélectionnée (java.util.Date) : " + dateString);
+	                events = ControllerAdmin.valider(nom.getText(),ControllerAdmin.getFile().getName(),descEvent.getText(), dateString);
+	                AfficheAdmin.affiche(stage, sess);
+	            }
+	        	else {
+	        		
+	        		// Affichage du message d'erreur si n champ est vide
+	                showErrorMessage("Tous les champs doivent être remplis.");
+	        	}
+        	}
         });
         
         // VBox principal
@@ -126,5 +138,14 @@ public class AfficheAdmin {
 	public static void setEvents(VBox events) {
 		AfficheAdmin.events = events;
 	}
+	
+    // Méthode pour afficher une erreur
+    private static void showErrorMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("AbiStock : Erreur de connexion");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }
