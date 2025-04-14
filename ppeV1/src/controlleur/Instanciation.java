@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import application.Battle;
 import modele.Aptitude;
 import modele.AptitudeArme;
 import modele.Arme;
@@ -20,12 +21,21 @@ import modele.User;
 public class Instanciation {
 
 	public static BDD conec;
+	private static Battle battle_data = new Battle();
+	
+	public static Battle getBattleData() {
+		return battle_data;
+	}
+	public static void resetBattle() {
+		battle_data = null;
+		battle_data = new Battle();
+	}
 	
 	public static ArrayList<Faction> getFaction() {
 		ArrayList<Faction> rendu = new ArrayList<Faction>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
-			
+			conec = new BDD();
 			nom = conec.select("SELECT nom_faction FROM faction;" );
 			
 			for (String string : nom) {
@@ -35,7 +45,7 @@ public class Instanciation {
 		}catch(SQLException e) {
 			
 		}
-		
+		conec.close();
 		return rendu;
 	}
 	
@@ -43,7 +53,7 @@ public class Instanciation {
 		ArrayList<Armee> rendu = new ArrayList<Armee>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
-			
+			conec = new BDD();
 			nom = conec.select("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",faction.getNom() );
 			
 			for (int i = 0;i<nom.size();i = i+2) {
@@ -53,15 +63,15 @@ public class Instanciation {
 		}catch(SQLException e) {
 			
 		}
-		
+		conec.close();
 		return rendu;
 	}
 	
 	public static ArrayList<Unit> getUniteOfArmy(Armee armee){
-		ArrayList<Unit> rendu = new ArrayList<>();
+		ArrayList<Unit> rendu = new ArrayList<Unit>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
-			
+			conec = new BDD();
 			nom = conec.select("SELECT u.id_unite, u.nom_unite,  u.points_unite,u.logo_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ? LIMIT 20;",armee.getName() );
 			
 			
@@ -75,26 +85,29 @@ public class Instanciation {
 		}catch(SQLException e) {
 			
 		}
-		
+		conec.close();
 		return rendu;
 	}
 	public static void getArmyLists(User session)
 	{
+		conec = new BDD();
 		String sql = "SELECT nom_liste, description_liste, data_liste FROM liste WHERE id_utilisateur = ?;";
 		try {
 			PreparedStatement stat = conec.getPreparedStatement(sql, session.getId());
 			ResultSet rs = stat.executeQuery();
 			session.getListes().clear();
 			while(rs.next()){
-				ArmeeListe one_list = new ArmeeListe(null, rs.getString("nom_liste"), rs.getString("description_liste"), rs.getString("data_liste"));
+				ArmeeListe one_list = new ArmeeListe(rs.getString("nom_liste"), rs.getString("description_liste"), rs.getString("data_liste"));
 				session.addArmee(one_list);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		conec.close();
 	}
 	
 	public static void getUnitsOfAList(ArmeeListe list) {
+		conec = new BDD();
 		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
 			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
 			+ " WHERE liste.nom_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
@@ -113,11 +126,12 @@ public class Instanciation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		conec.close();
 	}
 	
 	public static ArrayList<Figurine> getFigurine(String unitName){
-		ArrayList<Figurine> rendu = new ArrayList<>();
-		ArrayList<String> temp = new ArrayList<>();
+		ArrayList<Figurine> rendu = new ArrayList<Figurine>();
+		ArrayList<String> temp = new ArrayList<String>();
 		try {
 			
 			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
@@ -142,7 +156,7 @@ public class Instanciation {
 	}
 	
 	public static ArrayList<Arme> getArme(String figNom){
-		ArrayList<Arme> rendu = new ArrayList<>();
+		ArrayList<Arme> rendu = new ArrayList<Arme>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
@@ -169,7 +183,7 @@ public class Instanciation {
 	}
 	
 	public static ArrayList<Aptitude> getAptitude(String figNom){
-		ArrayList<Aptitude> rendu = new ArrayList<>();
+		ArrayList<Aptitude> rendu = new ArrayList<Aptitude>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			nom = conec.select("SELECT a.nom_aptitude FROM aptitude a JOIN permettre USING (id_aptitude) JOIN figurine f USING(id_figurine) WHERE f.nom_figurine = ?;",figNom );
@@ -184,7 +198,7 @@ public class Instanciation {
 		return rendu;
 	}
 	public static ArrayList<AptitudeArme> getAptitudeArme(String armeNom){
-		ArrayList<AptitudeArme> rendu = new ArrayList<>();
+		ArrayList<AptitudeArme> rendu = new ArrayList<AptitudeArme>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			
@@ -206,7 +220,9 @@ public class Instanciation {
 		return rendu;
 	}
 	public static void insertListe(ArmeeListe armee,User session) {
+		conec = new BDD();
 		conec.insertListe(armee, session);
+		conec.close();
 	}
 	
 }

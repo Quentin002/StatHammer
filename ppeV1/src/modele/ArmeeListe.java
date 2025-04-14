@@ -8,10 +8,23 @@ public class ArmeeListe {
     private String nom;
     private String description;
     private String data;
-    private ArrayList<String> unit_names;
 	private ArrayList<Unit> unites = new ArrayList<Unit>();
+	private ArrayList<String> unit_names;
 	private int idUtilisateur;
 	
+	
+	
+	 public ArmeeListe(String nom, String description, String data) {
+        this.nom = nom;
+        this.description = description;
+        this.data = data;
+    }
+	public ArmeeListe(ArrayList<Unit> unit_list, String nom, String description, String data) {
+		this.unites = unit_list;
+		this.nom = nom;
+		this.description = description;
+		this.data = data;
+	}
 	
     public ArmeeListe(int id, int idArmee, String nom, String description, String data, int idUtilisateur) {
         this.id = id;
@@ -22,9 +35,6 @@ public class ArmeeListe {
         this.idUtilisateur = idUtilisateur;
     }
 
-    public ArmeeListe(ArrayList<Unit> arrayList, String string, String string2, String string3) {
-		// TODO Auto-generated constructor stub
-	}
 
 	public int getIdListe() { return id; }
     public int getIdArmee() { return idArmee;}

@@ -59,6 +59,7 @@ public class AfficheSimulation
 		ArrayList<ArmeeListe> listes = session.getListes(); // listes d'objets ArmeeListe
 		String[] list_names = session.getListNames(); // tableau des noms des listes
 		
+		System.out.print(session.getListes() + "wawa" + session.getListNames() + "wiwi");
 		VBox root_box = new VBox();
 
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session); // menu du haut de l'écran

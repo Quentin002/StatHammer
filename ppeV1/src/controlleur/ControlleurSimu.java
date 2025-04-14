@@ -34,7 +34,7 @@ public class ControlleurSimu
 		for(ArmeeListe one_list : lists)
 		{
 			if(one_list.getName().equals(choice)) {
-				ArmeeListe list = new ArmeeListe(null, one_list.getName(), one_list.getDescription(), one_list.getData());
+				ArmeeListe list = new ArmeeListe(one_list.getName(), one_list.getDescription(), one_list.getData());
 				battle_data.setSelectedList(num_list, list);
 				list.setName(one_list.getName());
 				list.setDescription(one_list.getDescription());
@@ -45,9 +45,7 @@ public class ControlleurSimu
 		}
 		
 		// obtenir les unités, l'armée, les figurines, armes et aptitudes
-		Instanciation.conec = new BDD();
 		Instanciation.getUnitsOfAList(battle_data.getSelectedList(num_list));
-		Instanciation.conec.close();
 		if(battle_data.getSelectedList(num_list).getUnits().size() > 0) {
 			battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
 		}

@@ -35,9 +35,7 @@ public class ControllerTopMenu {
 		AfficheConnexion.affiche(primaryStage);
 	}
 	public static void go_simulation(Stage primaryStage, User session){
-		Instanciation.conec = new BDD();
 		Instanciation.getArmyLists(session);
-		Instanciation.conec.close();
 		AfficheSimulation.affiche(primaryStage, session);
 	}
 	public static void go_admin(Stage primaryStage,User session) { 
