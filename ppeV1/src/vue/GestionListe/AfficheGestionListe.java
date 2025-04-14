@@ -12,11 +12,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.ArmeeListe;
-import modele.Evenement;
 import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheTopMenu;
 import controlleur.SupprListe;
+
+import java.io.File;
 import java.util.ArrayList;
 
 public class AfficheGestionListe {
@@ -27,6 +28,7 @@ public class AfficheGestionListe {
 		VBox selectBouton = new VBox(); // Partie bouton
 		VBox liste = new VBox(); // Partie Liste
 		Scene scene = new Scene(root, 1000, 800); // taille de la scène
+		File file = null;
 
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 
@@ -74,9 +76,9 @@ public class AfficheGestionListe {
 			// Ajout des boutons (Partage, Modification, Suppression)
 			HBox actions = new HBox();
 			actions.setSpacing(10);
-			Button partageBtn = new Button("P");
-			Button modifBtn = new Button("Para");
-			Button supprBtn = new Button("X");
+			Button partageBtn = new Button("Exporter");
+			Button modifBtn = new Button("Modifier");
+			Button supprBtn = new Button("Supprimer");
 
 			actions.getChildren().addAll(partageBtn, modifBtn, supprBtn);
 			actions.setAlignment(Pos.CENTER_RIGHT);
@@ -112,6 +114,10 @@ public class AfficheGestionListe {
 		Retour.setOnAction(e -> {
 			AfficheAccueil.affiche(primaryStage, session);
 		});
+		
+		Import.setOnAction(e -> {
+			GestionListe.importer(primaryStage, file);
+        });
 
 		primaryStage.setScene(scene);
 		primaryStage.show();

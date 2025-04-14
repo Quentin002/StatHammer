@@ -1,5 +1,6 @@
 package controlleur;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import modele.ArmeeListe;
 
 public class GestionListe {
@@ -67,5 +70,13 @@ public class GestionListe {
 	    }
 
 	    return listes;
+	}
+	
+	public static void importer(Stage primaryStage, File file) {
+		FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichier de liste d'armée", "*.*"));
+        file = fileChooser.showOpenDialog(primaryStage);
+        
+        // parsing du fichier
 	}
 }
