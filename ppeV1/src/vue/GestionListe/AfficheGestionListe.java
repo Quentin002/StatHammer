@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.ArmeeListe;
+import modele.Evenement;
 import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheTopMenu;

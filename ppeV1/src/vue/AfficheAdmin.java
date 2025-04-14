@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import modele.Evenement;
 import modele.User;
 import javafx.scene.control.TextField;
 import java.awt.TextArea;
@@ -53,7 +54,7 @@ public class AfficheAdmin {
 	public static VBox getEvents() {
 		return events;
 	}
-
+	
 	public static void affiche(Stage primaryStage, User session) {
 		stage = primaryStage;
 		sess = session;
@@ -83,7 +84,7 @@ public class AfficheAdmin {
         ImageView imageView = new ImageView();
         imageView.setPreserveRatio(true);
         imageView.setFitWidth(80);
-
+        
         // Action des boutons
         parcourir.setOnAction(e -> {
         	ControllerAdmin.parcourir(stage, imageView);

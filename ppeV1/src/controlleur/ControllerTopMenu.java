@@ -1,6 +1,7 @@
 package controlleur;
 
 import javafx.stage.Stage;
+import modele.Evenement;
 import modele.User;
 import vue.AfficheAccueil;
 import vue.AfficheAdmin;

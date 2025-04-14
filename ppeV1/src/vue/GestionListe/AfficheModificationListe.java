@@ -4,6 +4,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.ArmeeListe;
+import modele.Evenement;
 import modele.Figurine;
 import modele.User;
 import vue.AfficheTopMenu;
