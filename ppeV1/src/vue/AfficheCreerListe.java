@@ -21,6 +21,8 @@ import modele.User;
 
 public class AfficheCreerListe {
 	public static void afficheCreerListe(Stage primaryStage,User session) {
+		
+		//Definission hauteur largeur pour afficher un peu responsive
 		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		double hauteur = tailleEcran.getHeight()/2;
 		double largeur = tailleEcran.getWidth()/2;
@@ -28,9 +30,9 @@ public class AfficheCreerListe {
 		
 		
 		
-		//initialisation de toute les variables
-		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
 		
+		AfficheTopMenu menu = new AfficheTopMenu(primaryStage, session);
+		//initialisation de toute les variables pour l'affichage
 		VBox root = new VBox();
 		HBox boite = new HBox();
 		VBox gauche = new VBox();
@@ -53,8 +55,10 @@ public class AfficheCreerListe {
 		ChoiceBox<String> groupe = new ChoiceBox<>();
 		StockageCreerListe.initArmeeListe();
 		
-		
+		//remplissage de la liste des factions disponibles dans une variable static
 		StockageCreerListe.initFaction();
+		
+		//Affichage des noms des faction récuperer dans le stockage static
 		for(String fac:StockageCreerListe.getNomFac()) {
 			faction.getItems().add(fac);
 		}
@@ -63,15 +67,17 @@ public class AfficheCreerListe {
 		
 		
 		
-		
+		//remplissage de la liste des Armée disponibles dans une variable static
 		StockageCreerListe.initArmee(faction.getValue());
+		
+		//affichage des Armée disponible dans un faction séléctionnée
 		for(String armee:StockageCreerListe.getNomArmee()) {
 			groupe.getItems().add(armee);
 		}
 		groupe.setValue(groupe.getItems().getFirst());
 		
 		
-		
+		//action liste déroulante pour changer de faction et les armée afficher en conséquence
 		faction.setOnAction(e->{
 			groupe.getItems().clear();
 			
@@ -82,14 +88,23 @@ public class AfficheCreerListe {
 			groupe.setValue(groupe.getItems().getFirst());
 		});
 		
+		//remplissage des unitéd d'une armée séléctionnée dans une variable static
 		StockageCreerListe.initUnit(groupe.getValue());
 		
+		//affichage de la liste des unité présente dans l'armée séléctionnée
 		for(String unit : StockageCreerListe.getNomUnit()) {
 			
+			//action sur le bouton + permettant d'ajouter l'unité à la liste de l'armée en création
 			droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(e->{
 			gaucheUnit.getChildren().clear();
-			StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+			//verification que l'unité ne fait pas déjà parti de l'armée en cours de création
+			if(!StockageCreerListe.getArmeeListe().getUnits().contains(StockageCreerListe.getUnit(unit))) {
+				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+			}
+			
+			//affichage des unité de l'armée en cours de création
 			for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {
+				//action du bouton - permettant de retirer une unité de l'armée en cours de création
 				gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
 					gaucheUnit.getChildren().remove(
 					StockageCreerListe.getArmeeListe().getUnits().indexOf(StockageCreerListe.getUnit(unit2)));
@@ -103,7 +118,7 @@ public class AfficheCreerListe {
 			
 		}
 		
-		
+		//Meme action que plus haut à faire au moment du changement de choix d'une armée
 		groupe.setOnAction(e->{
 			
 			StockageCreerListe.initUnit(groupe.getValue());
@@ -113,7 +128,10 @@ public class AfficheCreerListe {
 				
 				droiteCorps.getChildren().add(new HBox(new Label(unit.toString() ),new Bouton("+").setOnAction2(y->{
 				gaucheUnit.getChildren().clear();
-				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+				
+				if(!StockageCreerListe.getArmeeListe().getUnits().contains(StockageCreerListe.getUnit(unit))) {
+					StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
+				}
 				for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {
 					gaucheUnit.getChildren().add(new HBox(new Label(unit2.toString() ),new Bouton("-").setOnAction2(z->{
 						gaucheUnit.getChildren().remove(
@@ -127,7 +145,7 @@ public class AfficheCreerListe {
 			}
 		});
 			
-		
+		//assemblage des éléments visuels 
 		iv1.setFitHeight(hauteur/15);
 		iv1.setPreserveRatio(true);
 		iv1.setSmooth(true);
@@ -167,18 +185,34 @@ public class AfficheCreerListe {
 		entete.setAlignment(Pos.CENTER);
 		entete.setMaxHeight(hauteur/15);
 		
+		//Bouton de validation de création d'une armée pour sauvegarder l'armée en base de donnée
 		creation.setOnAction(e->{
-			StockageCreerListe.getArmeeListe().setNom(nomArmee.getText());
-			session.getListes().add(StockageCreerListe.getArmeeListe());
-			try {
-				Instanciation.insertListe(StockageCreerListe.getArmeeListe(), session);
-				
-				AfficheAccueil.affiche(primaryStage, session);
-				
-			} catch (Exception e2) {
-				// TODO: handle exception
+			//verification que l'armée soit nommé et NON VIDE
+			if(nomArmee.getText().trim().equals("") || StockageCreerListe.getArmeeListe().getUnits().size()==0) {
+				//affichage d'une boite d'erreur si nom vide ou armée sans unité
+				Stage secondaryStage = new Stage();
+				HBox boitesecondaire = new HBox();
+				Scene secondScene = new Scene(boitesecondaire,200,100);
+				Label error = new Label("ERREUR Armee vide ET/OU sans nom");
+				boitesecondaire.getChildren().add(error);
+				boitesecondaire.setAlignment(Pos.CENTER);
+				secondaryStage.setScene(secondScene);
+				secondaryStage.setTitle("Error");
+				secondaryStage.show();
+			}else {
+				//sauvegarde de l'armée dans la variable de session ainsi que dans la BDD
+				StockageCreerListe.getArmeeListe().setNom(nomArmee.getText());
+				session.getListes().add(StockageCreerListe.getArmeeListe());
+				try {
+					
+					Instanciation.insertListe(StockageCreerListe.getArmeeListe(), session);
+					
+					AfficheAccueil.affiche(primaryStage, session);
+					
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 			}
-			
 			
 		});
 		

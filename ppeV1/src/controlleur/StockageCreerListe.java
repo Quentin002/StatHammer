@@ -9,6 +9,9 @@ import modele.Faction;
 import modele.Unit;
 
 public class StockageCreerListe {
+	
+	//sauvegarde les nom des armée, des unités et des factions pour ne pas refaire appel à la BDD en boucle
+	
 	private static final HashMap<String,Faction> faction = new HashMap<String, Faction>();
 	private static final HashMap<String,Armee> armee = new HashMap<String, Armee>();
 	private static final HashMap<String,Unit> unit = new HashMap<String, Unit>();
