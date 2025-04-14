@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import modele.Evenement;
 import vue.AfficheAdmin;
 
+
 public class EvenementController {
 	private static int nbrEvt;
 	
@@ -48,7 +49,8 @@ public class EvenementController {
 		return date_event;
 	}
 
-	
+	//EvenementController permet de recenser tous les évènements sous forme d'ArrayList<String> 
+	//Le rôle de ce constructeur a changé pas mal de fois, d'où un nom peu cohérent...
 	public EvenementController() {
 		
 		nbrEvt = 0;
@@ -101,6 +103,7 @@ public class EvenementController {
         }
     }
     
+	//Méthode pour insérer un évènement dans la BDD ainsi que d'ajouter cet évènement dans EvenementController
     public static void insererEvenement(Evenement evt) {
         // Créer une instance de BDD
         BDD bdd = new BDD();
