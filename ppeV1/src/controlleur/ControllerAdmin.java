@@ -49,7 +49,7 @@ public class ControllerAdmin {
         		if (file.getName().equals(Connexion.eventC.getNom_image().get(i))) {
         			
         	        Alert alert = new Alert(Alert.AlertType.ERROR);
-        	        alert.setTitle("AbiStock : Erreur de connexion");
+        	        alert.setTitle("StatHammer : Nom d'image déjà existant");
         	        alert.setHeaderText(null);
         	        alert.setContentText("Le nom de l'image est déjà prise.");
         	        alert.showAndWait();
