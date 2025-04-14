@@ -142,7 +142,7 @@ public class AfficheAdmin {
     // Méthode pour afficher une erreur
     private static void showErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("AbiStock : Erreur de connexion");
+        alert.setTitle("StatHammer : Erreur dans le formulaire");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
