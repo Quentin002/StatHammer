@@ -92,7 +92,7 @@ public class AfficheAdmin {
         });
         
         valider.setOnAction(e -> {
-        	if (nom.getText().isEmpty() || descEvent.getText().isEmpty()){
+        	if (nom.getText().isEmpty() || descEvent.getText().isEmpty()||ControllerAdmin.getFile() == null){
         		
         		// Affichage du message d'erreur si n champ est vide
                 showErrorMessage("Tous les champs doivent être remplis.");
@@ -109,7 +109,12 @@ public class AfficheAdmin {
 	                System.out.println("Date sélectionnée (java.util.Date) : " + dateString);
 	                events = ControllerAdmin.valider(nom.getText(),ControllerAdmin.getFile().getName(),descEvent.getText(), dateString);
 	                AfficheAdmin.affiche(stage, sess);
-	            }  
+	            }
+	        	else {
+	        		
+	        		// Affichage du message d'erreur si n champ est vide
+	                showErrorMessage("Tous les champs doivent être remplis.");
+	        	}
         	}
         });
         
