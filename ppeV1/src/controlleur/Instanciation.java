@@ -20,7 +20,10 @@ import modele.User;
 
 public class Instanciation {
 
-	public static BDD conec;
+	
+	//classe qui fait des appel à la BDD pour instancier les classes modele
+	
+	private static BDD conec;
 	private static Battle battle_data = new Battle();
 	
 	public static Battle getBattleData() {
@@ -31,7 +34,9 @@ public class Instanciation {
 		battle_data = new Battle();
 	}
 	
+	//recupere la liste des faction de la BDD
 	public static ArrayList<Faction> getFaction() {
+		
 		ArrayList<Faction> rendu = new ArrayList<Faction>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
@@ -49,14 +54,18 @@ public class Instanciation {
 		return rendu;
 	}
 	
+	//recupere la liste des armée d'une Faction précise
 	public static ArrayList<Armee> getArmee(Faction faction){
 		ArrayList<Armee> rendu = new ArrayList<Armee>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			conec = new BDD();
+
 			nom = conec.select("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",faction.getNom() );
 			
+			
 			for (int i = 0;i<nom.size();i = i+2) {
+				
 				rendu.add(new Armee(nom.get(i),nom.get(i+1),faction));
 			}
 			
@@ -67,6 +76,7 @@ public class Instanciation {
 		return rendu;
 	}
 	
+	//Récupere la liste des unités d'une armée précise
 	public static ArrayList<Unit> getUniteOfArmy(Armee armee){
 		ArrayList<Unit> rendu = new ArrayList<Unit>();
 		ArrayList<String> nom = new ArrayList<String>();
@@ -118,8 +128,8 @@ public class Instanciation {
 			
 			while(rs.next()) {
 				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
-					rs.getString(1), rs.getInt(2), rs.getString(3),
-					new Armee(rs.getString(4), rs.getString(5))));
+						rs.getString(1), rs.getInt(2), rs.getString(3),
+						new Armee(rs.getString(4), rs.getString(5))));
 			}
 		}
 		catch (SQLException e) {
@@ -129,6 +139,7 @@ public class Instanciation {
 		conec.close();
 	}
 	
+	//Récupere les Figurine présente dans une unité précise
 	public static ArrayList<Figurine> getFigurine(String unitName){
 		ArrayList<Figurine> rendu = new ArrayList<Figurine>();
 		ArrayList<String> temp = new ArrayList<String>();
@@ -155,6 +166,7 @@ public class Instanciation {
 		return rendu;
 	}
 	
+	//Récupère les armes d'une figurine donnée
 	public static ArrayList<Arme> getArme(String figNom){
 		ArrayList<Arme> rendu = new ArrayList<Arme>();
 		ArrayList<String> nom = new ArrayList<String>();
@@ -182,21 +194,32 @@ public class Instanciation {
 		return rendu;
 	}
 	
+	//Récupère les Aptitude d'une figurine donnée
 	public static ArrayList<Aptitude> getAptitude(String figNom){
 		ArrayList<Aptitude> rendu = new ArrayList<Aptitude>();
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
+			
 			nom = conec.select("SELECT a.nom_aptitude FROM aptitude a JOIN permettre USING (id_aptitude) JOIN figurine f USING(id_figurine) WHERE f.nom_figurine = ?;",figNom );
-			for (int i = 0; i < nom.size(); i++) {
+			
+			
+			for (int i = 0;i<nom.size(); i++) {
 				rendu.add(new Aptitude(nom.get(i)));
 			}
-		}
-		catch(SQLException e) {
+			
+			
+			
+			
+			
+			
+		}catch(SQLException e) {
 			
 		}
 		
 		return rendu;
 	}
+	
+	//Récupère les Aptitude d'une arme donnée
 	public static ArrayList<AptitudeArme> getAptitudeArme(String armeNom){
 		ArrayList<AptitudeArme> rendu = new ArrayList<AptitudeArme>();
 		ArrayList<String> nom = new ArrayList<String>();
@@ -219,6 +242,8 @@ public class Instanciation {
 		
 		return rendu;
 	}
+	
+	//Insert une Armée crée dans l'application dans la base de donée en la liant à un utilisateur
 	public static void insertListe(ArmeeListe armee,User session) {
 		conec = new BDD();
 		conec.insertListe(armee, session);

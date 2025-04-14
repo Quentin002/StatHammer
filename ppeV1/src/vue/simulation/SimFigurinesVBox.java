@@ -116,7 +116,7 @@ public class SimFigurinesVBox extends VBox
 				else {
 					Label hp_label = new Label("PV:");
 					Spinner<Integer> spinner = new Spinner<>(0, fig.getHPMax(), fig.getHP());
-					spinner.setMaxWidth(45);
+					spinner.setMaxWidth(55);
 					one_fig_box.getChildren().add(hp_label);
 					one_fig_box.getChildren().add(spinner);
 					one_fig_box.setStyle("-fx-padding: 0 3px 0 0;");
