@@ -23,34 +23,31 @@ import vue.simulation.SimHistogramme;
 import vue.simulation.SimUnitsVBox;
 
 public class ControlleurSimu
-{
-	private static Battle battle_data;
-	
+{	
 	// déroulement des unités d'une liste (appui sur lists_drop_down.get(i) dans AfficheSimulation)
-	public static void selectAList(int num_list, ArrayList<ArmeeListe> lists, String choice) {
-		battle_data = AfficheSimulation.getBattleData();
-		
+	public static void selectAList(int num_list, ArrayList<ArmeeListe> lists, String choice)
+	{
 		// choix de la liste
 		for(ArmeeListe one_list : lists)
 		{
 			if(one_list.getName().equals(choice)) {
 				// "copie profonde" d'une liste
 				ArmeeListe list = new ArmeeListe(one_list.getName(), one_list.getDescription(), one_list.getData());
-				battle_data.setSelectedList(num_list, list);
+				Battle.setSelectedList(num_list, list);
 				break; // choix unique
 			}
 		}
 		
 		// obtenir les unités, l'armée, les figurines, armes et aptitudes
-		Instanciation.getUnitsOfAList(battle_data.getSelectedList(num_list));
+		Instanciation.getUnitsOfAList(Battle.getSelectedList(num_list));
 
-		battle_data.setArmy(num_list, battle_data.getSelectedList(num_list).getUnits().get(0).getArmee());
+		Battle.setArmy(num_list, Battle.getSelectedList(num_list).getUnits().get(0).getArmee());
 
 	}
 	
 	// déroulement des figurines d'une unité (appui sur buttons.get(i) dans SimUnitsVBox)
 	public static void PullDownUnits(int num_list, HBox dropdown_menu_box, SimUnitsVBox list_box) {
-		ArmeeListe list = battle_data.getSelectedList(num_list);
+		ArmeeListe list = Battle.getSelectedList(num_list);
 		
 		// noms des unités
 		String[] unit_names = new String[list.getUnits().size()];
@@ -65,9 +62,9 @@ public class ControlleurSimu
 		
 		// logo de faction
 		Image logo_faction = null;
-		if(battle_data.getArmy(num_list) != null) // possibilité d'une liste vide
+		if(Battle.getArmy(num_list) != null) // possibilité d'une liste vide
 		{
-			String file_name = battle_data.getArmy(num_list).getLogo();
+			String file_name = Battle.getArmy(num_list).getLogo();
 			logo_faction = new Image("/images/armees/" + file_name);
 		}
 		ImageView logo_box = new ImageView();
@@ -96,25 +93,25 @@ public class ControlleurSimu
         SimFigurinesVBox new_fig_boxes = lists.getFigBoxes().get(j);
         
         // il y a déjà une unité sélectionnée
-        if(battle_data.getSelectedUnitIndex(col) > -1)
+        if(Battle.getSelectedUnitIndex(col) > -1)
         {
-			buttons.get(battle_data.getSelectedUnitIndex(col)).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
+			buttons.get(Battle.getSelectedUnitIndex(col)).setStyle("-fx-border-width: 0;");// retirer bordure unité sélectionnée
         	AfficheSimulation.getWeaponsAtitudesMenu().getChildren().clear(); // supprimer fenêtre combat si existe
         	
         	// bouton même unité => ferme
-        	if(battle_data.getSelectedUnitIndex(col) == j)
+        	if(Battle.getSelectedUnitIndex(col) == j)
             {
         		new_fig_boxes.getChildren().clear();
-        		battle_data.setSelectedUnit(col, -1);
+        		Battle.setSelectedUnit(col, -1);
             }
         	// bouton autre unité
         	else
         	{
-        		old_fig_boxes = lists.getFigBoxes().get(battle_data.getSelectedUnitIndex(col));
+        		old_fig_boxes = lists.getFigBoxes().get(Battle.getSelectedUnitIndex(col));
 	        	if(old_fig_boxes != null) {
 					old_fig_boxes.getChildren().clear(); // supprimer ancienne zone de figurines
 				}
-	        	battle_data.setSelectedUnit(col, j);
+	        	Battle.setSelectedUnit(col, j);
 	        	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
 	        	new_fig_boxes.setFigurines(); // on ouvre
         	}
@@ -122,7 +119,7 @@ public class ControlleurSimu
         // pas d'unité sélectionnée => on ouvre
         else
         {
-        	battle_data.setSelectedUnit(col, j);
+        	Battle.setSelectedUnit(col, j);
         	buttons.get(j).setStyle("-fx-border-width: 2; -fx-border-color: yellow; -fx-border-radius: 2;"); // bordure unité sélectionnée
         	new_fig_boxes.setFigurines();
         }
@@ -167,7 +164,7 @@ public class ControlleurSimu
 	
 	public static void AliveFigsChoice(int col, int value, String group_name) {
 		// on considère que ceux qui n'attaquent pas sont morts
-		ArrayList<Figurine> fig_group = AfficheSimulation.getBattleData().getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
+		ArrayList<Figurine> fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
 		for(int i = 0; i < value; i++) {
 			fig_group.get(i).setHP(fig_group.get(i).getHPMax());
 		}
@@ -208,13 +205,13 @@ public class ControlleurSimu
 	}
 
 	public static void reverseArmies(ArrayList<ChoiceBox<String>> lists_drop_down) {
-		battle_data.reverseArmies();
+		Battle.reverseArmies();
 		AfficheSimulation.inversion = true;
 		for(int i = 0; i < 2; i++)
         {
 			// déclenche la sélection d'une liste dans le menu déroulant, mais avec du code
-			lists_drop_down.get(i).getSelectionModel().select(battle_data.getSelectedList(i + 1).getName());
-			battle_data.setSelectedUnit(i + 1, -1); // plus d'unité sélectionnée
+			lists_drop_down.get(i).getSelectionModel().select(Battle.getSelectedList(i + 1).getName());
+			Battle.setSelectedUnit(i + 1, -1); // plus d'unité sélectionnée
         }
 		AfficheSimulation.inversion = false;
 	}

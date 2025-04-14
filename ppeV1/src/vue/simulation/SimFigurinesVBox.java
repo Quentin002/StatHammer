@@ -3,6 +3,7 @@ package vue.simulation;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import application.Battle;
 import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -75,7 +76,7 @@ public class SimFigurinesVBox extends VBox
 				fig_group.getChildren().add(fig_name_label);
 				
 				Slider nb_of_defenders = new Slider(0, fig_list.size(),
-					AfficheSimulation.getBattleData().getSelectedUnit(2).getAliveFigsOfAGroup(fig_name));
+					Battle.getSelectedUnit(2).getAliveFigsOfAGroup(fig_name));
 				nb_of_defenders.setMajorTickUnit(1);
 				nb_of_defenders.setMinorTickCount(0);
 				nb_of_defenders.setSnapToTicks(true);

@@ -25,14 +25,9 @@ import modele.User;
 
 public class AfficheSimulation
 {
-	private static Battle battle_data = new Battle(); // mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes
 	private static SimAptAndWeaponsVBox weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
 	public static boolean inversion = false; // pour le bouton inversion
-	
-	public static Battle getBattleData() {
-		return battle_data;
-	}
-	
+		
 	public static void refreshWeaponAndAptitude(SimAptAndWeaponsVBox wap)
 	{
 		weapons_aptitudes_menu.getChildren().clear();
@@ -46,9 +41,6 @@ public class AfficheSimulation
 	}
 	public static void cleanWeaponsAtitudesMenu() {
 		weapons_aptitudes_menu = new SimAptAndWeaponsVBox();
-	}
-	public static void cleanBattle() {
-		battle_data = new Battle();
 	}
 	
 	public static void affiche(Stage primaryStage, User session)
@@ -158,10 +150,10 @@ public class AfficheSimulation
 		
 		/* ACTION !! */
 		btn_simulate.setOnAction(e -> {
-			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null
-				&& battle_data.getSelectedUnitIndex(1) >= 0 && battle_data.getSelectedUnitIndex(2)  >= 0)
+			if(Battle.getSelectedList(1) != null && Battle.getSelectedList(2) != null
+				&& Battle.getSelectedUnitIndex(1) >= 0 && Battle.getSelectedUnitIndex(2)  >= 0)
 			{
-				ControlleurSimu.afficheSimu(big_image_pane, battle_data.getSelectedUnit(1), battle_data.getSelectedUnit(2));
+				ControlleurSimu.afficheSimu(big_image_pane, Battle.getSelectedUnit(1), Battle.getSelectedUnit(2));
 			}
 			else {
 				System.out.println("conditions non remplies pour faire une simulation");
@@ -198,7 +190,7 @@ public class AfficheSimulation
         
         // inversion de l'attaquant et du défenseur
  		btn_reverse_armies.setOnAction(e -> {
- 			if(battle_data.getSelectedList(1) != null && battle_data.getSelectedList(2) != null) {
+ 			if(Battle.getSelectedList(1) != null && Battle.getSelectedList(2) != null) {
  				ControlleurSimu.reverseArmies(lists_drop_down);
  			}
  			else {

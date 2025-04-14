@@ -2,6 +2,7 @@ package vue.simulation;
 
 import java.util.ArrayList;
 
+import application.Battle;
 import controlleur.ControlleurSimu;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -72,7 +73,7 @@ public class SimAptAndWeaponsVBox extends VBox
         }
 		
 		// valeur initiale menu déroulante
-		Arme weapon = AfficheSimulation.getBattleData().getSeletedWeapon(1, group_name);
+		Arme weapon = Battle.getSeletedWeapon(1, group_name);
 		if(weapon != null) {
 			select_weapon.setValue(weapon.getNom());
 		}
@@ -88,8 +89,7 @@ public class SimAptAndWeaponsVBox extends VBox
         });
 		
 		// choix du nombre d'attaquants (= nombre d'armes)
-		Slider nb_of_attackers = new Slider(0, group_size,
-			AfficheSimulation.getBattleData().getSelectedUnit(1).getAliveFigsOfAGroup(group_name));
+		Slider nb_of_attackers = new Slider(0, group_size, Battle.getSelectedUnit(1).getAliveFigsOfAGroup(group_name));
 		nb_of_attackers.setMajorTickUnit(1);
 		nb_of_attackers.setMinorTickCount(0);
 		nb_of_attackers.setSnapToTicks(true);
