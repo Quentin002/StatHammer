@@ -62,13 +62,13 @@ public class ConnexionController extends HttpServlet {
 	            if (!rendu.isEmpty() && login.equals(rendu.get(0))) {
 	                // 4. Création d’un objet session (HTTP)
 	                HttpSession session = request.getSession();
-	                //User user = new User(login, id, role);
+
 	                session.setAttribute("nom", login);
 	                session.setAttribute("mdp", mdp);
 	                session.setAttribute("id", id);
 	                session.setAttribute("role", role);
 
-	                // 5. Redirection vers accueil.jsp
+	                // 5. Redirection vers AccueilView
 	                response.sendRedirect("AccueilView");
 	            } else {
 	                // Mauvaise connexion → redirection vers erreur

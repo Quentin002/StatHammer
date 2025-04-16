@@ -28,21 +28,12 @@ public class AdminView extends HttpServlet {
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 
 		String titre = "StatHammer : Admin";
 		String action = "AdminController";
 		
 		// HEADER
-		String header =
-			"<!DOCTYPE HTML>\r\n"
-		  + "<html>\r\n"
-		  + "<head>\r\n"
-		  + "  <meta charset=\"UTF-8\"/>\r\n"
-		  + "  <title>" + titre + "</title>\r\n"
-		  + "  <style>" + ConnexionView.css + "</style>\r\n"
-		  + "</head>\r\n"
-		  + "<body>\r\n";
+		String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 
 		
 		// FORMULAIRE
@@ -67,11 +58,10 @@ public class AdminView extends HttpServlet {
 		  	+ "  </div>\r\n"
 		  	+ "</div>\r\n";
 		
-		String footer =
-			"</body>\r\n"
-		  + "</html>";
-
-		out.println(header + AccueilView.barDeNav + body + footer);
+		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
+		
+		PrintWriter out = response.getWriter();
+		out.println(html);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

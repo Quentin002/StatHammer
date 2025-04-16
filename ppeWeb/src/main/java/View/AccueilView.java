@@ -31,7 +31,11 @@ public class AccueilView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        HttpSession session = request.getSession();
+		
+		HttpSession session=request.getSession(false);
+        if (session==null) {
+            response.sendRedirect("ConnexionView");
+        } 
 
         String boutonAdmin = "";
 		String titre = "StatHammer : Accueil";
@@ -41,17 +45,9 @@ public class AccueilView extends HttpServlet {
         }
 		
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 
-		String header =
-			"<!DOCTYPE HTML>\r\n"
-		  + "<html>\r\n"
-		  + "<head>\r\n"
-		  + "  <meta charset=\"UTF-8\"/>\r\n"
-		  + "  <title>" + titre + "</title>\r\n"
-		  + "  <style>" + ConnexionView.css + "</style>\r\n"
-		  + "</head>\r\n"
-		  + "<body>\r\n";
+
+		String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 		
 		barDeNav =
 			    "<div class='barDeNav'>\r\n"
@@ -65,12 +61,12 @@ public class AccueilView extends HttpServlet {
 		String body =
 			  "<div class='container'>\r\n"
 		  	+ "  </div>\r\n";
-		
-		String footer =
-			"</body>\r\n"
-		  + "</html>";
 
-		out.println(header + barDeNav + body + footer);
+		
+		String html = header + barDeNav + body + ConnexionView.footer;
+		
+		PrintWriter out = response.getWriter();
+		out.println(html);
 		
 	}
 
@@ -80,11 +76,6 @@ public class AccueilView extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
-	    HttpSession session=request.getSession(false);
-	    if (session==null) {
-	    	response.sendRedirect("ConnexionView");
-	    }
 	    
 	}
 
