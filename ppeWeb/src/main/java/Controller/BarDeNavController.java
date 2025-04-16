@@ -46,6 +46,7 @@ public class BarDeNavController extends HttpServlet {
 					break;
 				case "logout":
 					session.invalidate();
+					session = null;
 					response.sendRedirect("ConnexionView");
 					break;
 				default:

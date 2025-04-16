@@ -20,12 +20,19 @@ public class AdminView extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String titre = "StatHammer : Admin";
-		String action = "AdminController";
 
+
+		HttpSession session=request.getSession(false);
+        if (session==null) {
+            response.sendRedirect("ConnexionView");
+        } 
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
+		String titre = "StatHammer : Admin";
+		String action = "AdminController";
+		
 		// HEADER
 		String header =
 			"<!DOCTYPE HTML>\r\n"
@@ -68,7 +75,7 @@ public class AdminView extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Si tu veux gérer un POST ici plus tard
+		
 		doGet(request, response);
 	}
 }
