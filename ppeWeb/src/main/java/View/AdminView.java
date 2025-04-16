@@ -42,7 +42,6 @@ public class AdminView extends HttpServlet {
 		String body =
 			  "<div class='container'>\r\n"
 			+ "  <div class='left-panel'>\r\n"
-			+ "    <h1>Créer un événement</h1>\r\n"
 			+ "   <form method='POST' action='" + action + "' enctype='multipart/form-data'>\r\n"
 			+ "       <label for='nom'>Nom :</label><br/>\r\n"
 			+ "       <input type='text' name='nom' required/><br/><br/>\r\n"
@@ -56,7 +55,7 @@ public class AdminView extends HttpServlet {
 		  	+ "       <label for='image'>Image :</label><br/>\r\n"
 		  	+ "       <input type='file' name='image' accept='image/*' required/><br/><br/>\r\n"
 
-		  	+ "       <input type='submit' value='Valider'/>\r\n"
+		  	+ "       <input type='submit' value='Créer évènement'/>\r\n"
 		  	+ "   </form>\r\n"
 		  	+ "  </div>\r\n"
 		  	+ "</div>\r\n";

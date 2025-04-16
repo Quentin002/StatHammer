@@ -47,7 +47,6 @@ public class ConnexionController extends HttpServlet {
 	        login = login.trim();
 	        mdp = Integer.toString(mdp.hashCode()); // même hash que dans l’appli JavaFX
 
-	        // Appel de setInfos avant la création de l'objet BDD
 	        BDD.setInfos("400129", "stathammer_greta_admin", "stathammer_v1");
 	        
 	        // 2. Connexion à la BDD
@@ -63,8 +62,11 @@ public class ConnexionController extends HttpServlet {
 	            if (!rendu.isEmpty() && login.equals(rendu.get(0))) {
 	                // 4. Création d’un objet session (HTTP)
 	                HttpSession session = request.getSession();
-	                User user = new User(login, id, role);
-	                session.setAttribute("user", user);
+	                //User user = new User(login, id, role);
+	                session.setAttribute("nom", login);
+	                session.setAttribute("mdp", mdp);
+	                session.setAttribute("id", id);
+	                session.setAttribute("role", role);
 
 	                // 5. Redirection vers accueil.jsp
 	                response.sendRedirect("AccueilView");

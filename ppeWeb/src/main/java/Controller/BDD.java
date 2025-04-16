@@ -48,7 +48,6 @@ public class BDD {
 	        }
 	    } catch (ClassNotFoundException e) {
 	        e.printStackTrace();
-	        System.out.println("ici il y a un pb");
 	    } catch (SQLException e) {
 	        System.err.println("Erreur SQL : " + e.getMessage());
 	        e.printStackTrace();
@@ -86,13 +85,11 @@ public class BDD {
 		try {
 
 			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
-			System.out.println(connec);
-	        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+
 			stat = connec.prepareStatement(requete);
-	        System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+
 			stat.setString(1, nom);
 			stat.setString(2,String.valueOf(mdp));
-			//stat.setString(2,String.valueOf(mdp.hashCode()));
 
 			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();

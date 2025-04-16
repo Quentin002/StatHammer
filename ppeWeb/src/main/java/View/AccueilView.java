@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -29,12 +31,18 @@ public class AccueilView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+        HttpSession session = request.getSession();
+
+        String boutonAdmin = "";
 		String titre = "StatHammer : Accueil";
 
+        if (session.getAttribute("role").equals("Admin")) {
+        	boutonAdmin = "    <li><a href='BarDeNavController?action=admin'>Événements</a></li>\r\n";
+        }
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		// HEADER
 		String header =
 			"<!DOCTYPE HTML>\r\n"
 		  + "<html>\r\n"
@@ -48,9 +56,9 @@ public class AccueilView extends HttpServlet {
 		barDeNav =
 			    "<div class='barDeNav'>\r\n"
 			  + "  <ul>\r\n"
-			  + "    <li><a href='HomeView'>Accueil</a></li>\r\n"
-			  + "    <li><a href='AdminView'>Événements</a></li>\r\n"
-			  + "    <li><a href='Logout'>Déconnexion</a></li>\r\n"
+			  + "    <li><a href='BarDeNavController?action=accueil'>Accueil</a></li>\r\n"
+			  + boutonAdmin
+			  + "    <li><a href='BarDeNavController?action=logout'>Déconnexion</a></li>\r\n"
 			  + "  </ul>\r\n"
 			  + "</div>\r\n";
 
