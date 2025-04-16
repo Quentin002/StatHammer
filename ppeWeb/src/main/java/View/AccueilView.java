@@ -9,74 +9,90 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
-/**
- * Servlet implementation class AccueilView
- */
+
 @WebServlet("/AccueilView")
 public class AccueilView extends HttpServlet {
-	public static String barDeNav;
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AccueilView() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+ public static String barDeNav;
+ private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		HttpSession session=request.getSession(false);
-        if (session==null) {
-            response.sendRedirect("ConnexionView");
-        } 
+ public AccueilView() {
+     super();
+ }
 
-        String boutonAdmin = "";
-		String titre = "StatHammer : Accueil";
+ @Override
+ protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     HttpSession session = request.getSession(false);
+     if (session == null || session.getAttribute("nom") == null) {
+         response.sendRedirect("ConnexionView");
+         return;
+     }
 
-        if (session.getAttribute("role").equals("Admin")) {
-        	boutonAdmin = "    <li><a href='BarDeNavController?action=admin'>Événements</a></li>\r\n";
-        }
-		
-		response.setContentType("text/html; charset=UTF-8");
+     response.setContentType("text/html; charset=UTF-8");
 
+     String titre = "StatHammer : Accueil";
+     String boutonAdmin = "";
 
-		String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
-		
-		barDeNav =
-			    "<div class='barDeNav'>\r\n"
-			  + "  <ul>\r\n"
-			  + "    <li><a href='BarDeNavController?action=accueil'>Accueil</a></li>\r\n"
-			  + boutonAdmin
-			  + "    <li><a href='BarDeNavController?action=logout'>Déconnexion</a></li>\r\n"
-			  + "  </ul>\r\n"
-			  + "</div>\r\n";
+     if ("Admin".equals(session.getAttribute("role"))) {
+         boutonAdmin = "    <li><a href='BarDeNavController?action=admin'>Événements</a></li>\r\n";
+     }
 
-		String body =
-			  "<div class='container'>\r\n"
-		  	+ "  </div>\r\n";
+     @SuppressWarnings("unchecked")
+     ArrayList<String[]> evenements = (ArrayList<String[]>) session.getAttribute("evenements");
 
-		
-		String html = header + barDeNav + body + ConnexionView.footer;
-		
-		PrintWriter out = response.getWriter();
-		out.println(html);
-		
-	}
+     String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	    
-	}
+     barDeNav = "<div class='barDeNav'>\r\n"
+              + "  <ul>\r\n"
+              + "    <li><a href='BarDeNavController?action=accueil'>Accueil</a></li>\r\n"
+              + boutonAdmin
+              + "    <li><a href='BarDeNavController?action=logout'>Déconnexion</a></li>\r\n"
+              + "  </ul>\r\n"
+              + "</div>\r\n";
 
+     StringBuilder body = new StringBuilder();
+     body.append("<div class='event-grid'>\n");
+
+     if (evenements != null && !evenements.isEmpty()) {
+         for (String[] evt : evenements) {
+             String nomEvt = evt[0];
+             String nomImg = evt[1];
+             String descEvt = evt[2];
+             String dateEvt = evt[3];
+
+             body.append("<div class='evenement-container'>\n")
+                 .append("    <div class=\"evenement-content\">\n")
+                 .append("        <img class=\"accueil-image\" src=\"img/").append(nomImg).append("\" alt=\"Image de l'événement\">\n")
+                 .append("        <div class=\"evenement-info\">\n")
+                 .append("            <h3>").append(nomEvt).append("</h3>\n")
+                 .append("            <p>").append(descEvt).append("</p>\n")
+                 .append("            <p class=\"date\">").append(dateEvt).append("</p>\n")
+                 .append("        </div>\n")
+                 .append("    </div>\n")
+                 .append("</div>\n");
+         }
+     } else {
+         body.append("<p class=\"quote\">Aucun événement disponible pour le moment.</p>\n");
+     }
+
+     body.append("</div>\n")
+     
+     .append("<div class=\"popup-overlay\" id=\"popup\">\n")
+     .append("    <span class=\"popup-close\" id=\"popupClose\">&times;</span>\n")
+     .append("    <img src=\"\" alt=\"Image en taille réelle\" class=\"popup-image\" id=\"popupImg\">\n")
+     .append("</div>\n");
+              
+     body.append("<script src=\"js/popup.js\"></script>\n");
+
+     String html = header + barDeNav + body + ConnexionView.footer;
+     PrintWriter out = response.getWriter();
+     out.println(html);
+
+ }
+
+ @Override
+ protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+     doGet(request, response);
+ }
 }

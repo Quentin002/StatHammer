@@ -33,7 +33,7 @@ public class ConnexionView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");
+		
 		String titre = "StatHammer : Connexion";
 		String action = "ConnexionController";
 
@@ -48,7 +48,7 @@ public class ConnexionView extends HttpServlet {
 		headerBottom =
 			  "\r\n"
 			+ "		</title>\r\n"
-			+ "		<link rel=\"stylesheet\" href=\"styles.css\">"
+			+ "		<link rel=\"stylesheet\" href=\"css/main.css\">\r\n"
 			+ "	</head>\r\n"
 			+ "	<body>";
 		
@@ -69,7 +69,8 @@ public class ConnexionView extends HttpServlet {
 			    + "					<td colspan=\"2\"><center><input type=submit value=\"Connexion\"></center></td>"
 				+ "		 		</tr>"
 				+ "		 	</table>"
-			    + "		</form>";
+			    + "		</form>"
+				+ "     <p class=\"quote\">\"Le sot fait confiance à la chance, le sage s'en remet à StatHammer.\"</p>";
 
 		
 		footer =

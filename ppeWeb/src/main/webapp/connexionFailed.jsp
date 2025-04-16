@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>StatHammer : Connexion échouée</title>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-
-    <div class="error">Échec de la connexion. Veuillez vérifier votre identifiant et votre mot de passe.</div>
 
     <form class="login-form" action="ConnexionController" method="post" enctype="application/x-www-form-urlencoded">
         <table>
@@ -27,5 +25,8 @@
             </tr>
         </table>
     </form>
+    
+    <p class="quote"><b class="error">Échec de la connexion. Veuillez vérifier votre identifiant et votre mot de passe.</b></p>
+    
 </body>
 </html>
