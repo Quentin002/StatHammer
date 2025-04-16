@@ -1,0 +1,32 @@
+body
+{
+	margin: 0px;
+}
+nav
+{
+	background-color: #f0f0f0;
+}
+select, button
+{
+	/* curseur de la souris qui pointe du doigt */
+	cursor: pointer;
+}
+.toast {
+    visibility: hidden;
+    margin: auto;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    transition: opacity 0.5s, visibility 0.5s;
+}
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
