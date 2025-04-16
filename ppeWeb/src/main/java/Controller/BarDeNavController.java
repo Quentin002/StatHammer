@@ -33,7 +33,7 @@ public class BarDeNavController extends HttpServlet {
 
 		String action = request.getParameter("action");
 		if (action == null) {
-			action = "accueil"; // valeur par défaut
+			action = "logout"; // valeur par défaut
 		}
 
 		if (session != null) {
@@ -45,7 +45,8 @@ public class BarDeNavController extends HttpServlet {
 					response.sendRedirect("AdminView");
 					break;
 				case "logout":
-					response.sendRedirect("Logout");
+					session.invalidate();
+					response.sendRedirect("ConnexionView");
 					break;
 				default:
 					response.sendRedirect("AccueilView");
