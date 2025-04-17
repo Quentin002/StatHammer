@@ -7,6 +7,7 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,50 +29,66 @@ public class AdminView extends HttpServlet {
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 
 		String titre = "StatHammer : Admin";
 		String action = "AdminController";
 		
-		// HEADER
-		String header =
-			"<!DOCTYPE HTML>\r\n"
-		  + "<html>\r\n"
-		  + "<head>\r\n"
-		  + "  <meta charset=\"UTF-8\"/>\r\n"
-		  + "  <title>" + titre + "</title>\r\n"
-		  + "  <style>" + ConnexionView.css + "</style>\r\n"
-		  + "</head>\r\n"
-		  + "<body>\r\n";
+		String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 
 		
-		// FORMULAIRE
-		String body =
-			  "<div class='container'>\r\n"
-			+ "  <div class='left-panel'>\r\n"
-			+ "   <form method='POST' action='" + action + "' enctype='multipart/form-data'>\r\n"
-			+ "       <label for='nom'>Nom :</label><br/>\r\n"
-			+ "       <input type='text' name='nom' required/><br/><br/>\r\n"
+	     //StringBuilder permet de travailler avec la méthode ".append" pour assembler chaine de caracatère par chaine de caractère 
+	     StringBuilder body = new StringBuilder();
+	     body.append("<div class='container'>\r\n")
+		     .append("  <div class='left-panel'>\r\n")
+		     .append("   <form method='POST' action='" + action + "' enctype='multipart/form-data'>\r\n")
+		     .append("       <label for='nom'>Nom :</label><br/>\r\n")
+		     .append("       <input type='text' name='nom' required/><br/><br/>\r\n")
+		     .append("       <label for='desc'>Description :</label><br/>\r\n")
+		     .append("       <input type='text' name='desc' required/><br/><br/>\r\n")
+		     .append("       <label for='date'>Date :</label><br/>\r\n")
+		     .append("       <input type='date' name='date' required/><br/><br/>\r\n")
+		     .append("       <label for='image'>Image :</label><br/>\r\n")
+		     .append("       <input type='file' name='image' accept='image/*' required/><br/><br/>\r\n")
+		     .append("       <input type='submit' value='Créer évènement'/>\r\n")
+		     .append("   </form>\r\n")
+		     .append("  </div>\r\n");
+	     
+	     body.append("  <div class='right-panel'>\r\n");
+	     
+	     @SuppressWarnings("unchecked")
+	     ArrayList<String[]> evenements = (ArrayList<String[]>) session.getAttribute("evenements");
+	     
+	     for (int i = 0; i < evenements.size(); i++) {
+	    	    String[] evt = evenements.get(i);
+	             String nomEvt = evt[0];
+	             String nomImg = evt[1];
+	             String descEvt = evt[2];
+	             String dateEvt = evt[3];
+	             
+	             body.append("<div style='display: table; width: 100%; margin-bottom: 8px;'>")
+	             .append("<div style='padding-right : 5px;'>"+(i+1)+"</div><p class='quote' style='display: table-cell; margin: 0;'>")
+	             .append(nomEvt).append(" ").append(nomImg).append(" ").append(descEvt).append(" ").append(dateEvt)
+	             .append("</p>")
+	             .append("<a href='AdminController?action=").append(i).append("'>")
+	             .append("<i class='fas fa-trash-alt' style='padding-left : 8px;'></i>")
+	             .append("</a>")
+	             .append("</div>");
 
-		  	+ "       <label for='desc'>Description :</label><br/>\r\n"
-		  	+ "       <input type='text' name='desc' required/><br/><br/>\r\n"
 
-		  	+ "       <label for='date'>Date :</label><br/>\r\n"
-		  	+ "       <input type='date' name='date' required/><br/><br/>\r\n"
 
-		  	+ "       <label for='image'>Image :</label><br/>\r\n"
-		  	+ "       <input type='file' name='image' accept='image/*' required/><br/><br/>\r\n"
-
-		  	+ "       <input type='submit' value='Créer évènement'/>\r\n"
-		  	+ "   </form>\r\n"
-		  	+ "  </div>\r\n"
-		  	+ "</div>\r\n";
+	         
+	     }
+	     
+	     body.append("  </div>\r\n")
+		 	 .append("</div>\r\n");
 		
-		String footer =
-			"</body>\r\n"
-		  + "</html>";
-
-		out.println(header + AccueilView.barDeNav + body + footer);
+	     
+	     
+	     
+		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
+		
+		PrintWriter out = response.getWriter();
+		out.println(html);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -37,6 +37,7 @@ public class BarDeNavController extends HttpServlet {
 		}
 
 		if (session != null) {
+			
 			switch (action) {
 				case "accueil":
 					response.sendRedirect("AccueilView");

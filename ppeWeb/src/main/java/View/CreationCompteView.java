@@ -30,17 +30,10 @@ public class CreationCompteView extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		// HEADER
-				String header =
-					"<!DOCTYPE HTML>\r\n"
-				  + "<html>\r\n"
-				  + "<head>\r\n"
-				  + "  <meta charset=\"UTF-8\"/>\r\n"
-				  + "  <title>Création de Compte</title>\r\n"
-				  + "  <style>" + ConnexionView.css + "</style>\r\n"
-				  + "</head>\r\n"
-				  + "<body>\r\n";
 		
+		String titre = "Création compte";
+	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
+	    
 		String body = "<h1>Création de compte utilisateur</h1>"
 				+"<div class='container''>"
 				
@@ -62,10 +55,8 @@ public class CreationCompteView extends HttpServlet {
 					 +"</table>"
 					+"</div>";
 		
-					String footer ="</body>\r\n"
-				  + "</html>";
-
-				out.println(header  + body + footer);
+					String html = header + body + ConnexionView.footer;
+					out.println(html);
 	}
 
 	/**
