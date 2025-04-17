@@ -15,7 +15,6 @@ import Controller.BDD;
  */
 @WebServlet("/ConnexionView")
 public class ConnexionView extends HttpServlet {
-	public static String css;
 	public static String headerTop;
 	public static String headerBottom;
 	public static String footer;
@@ -49,6 +48,7 @@ public class ConnexionView extends HttpServlet {
 			  "\r\n"
 			+ "		</title>\r\n"
 			+ "		<link rel=\"stylesheet\" href=\"css/main.css\">\r\n"
+			+ "     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n"
 			+ "	</head>\r\n"
 			+ "	<body>";
 		

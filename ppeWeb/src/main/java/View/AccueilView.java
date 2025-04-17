@@ -50,7 +50,8 @@ public class AccueilView extends HttpServlet {
               + "    <li><a href='BarDeNavController?action=logout'>Déconnexion</a></li>\r\n"
               + "  </ul>\r\n"
               + "</div>\r\n";
-
+     
+     //StringBuilder permet de travailler avec la méthode ".append" pour assembler chaine de caracatère par chaine de caractère 
      StringBuilder body = new StringBuilder();
      body.append("<div class='event-grid'>\n");
 
