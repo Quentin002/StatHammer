@@ -13,6 +13,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import Model.Evenement;
+
+
 @WebServlet("/ConnexionController")
 public class ConnexionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -26,6 +29,7 @@ public class ConnexionController extends HttpServlet {
 		response.sendRedirect("connexionFailed.jsp");
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String login = request.getParameter("login");
 		String mdp = request.getParameter("mdp");
@@ -48,24 +52,27 @@ public class ConnexionController extends HttpServlet {
 			String role = conec.UtilisateurRole(login, mdp);
 
 			if (!rendu.isEmpty() && login.equals(rendu.get(0))) {
+				
 				// Authentifié : création de session
 				HttpSession session = request.getSession();
+				
 				session.setAttribute("nom", login);
 				session.setAttribute("mdp", mdp);
 				session.setAttribute("id", id);
 				session.setAttribute("role", role);
 
 				// Chargement des événements
-				ArrayList<String[]> evenements = chargerEvenements(conec);
-				session.setAttribute("evenements", evenements);
-
+				chargerEvenements(conec,session);
+				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
 				// Debug : affichage console
+				
 				System.out.println("Événements stockés en session :");
-				for (String[] evt : evenements) {
-					System.out.println("Nom : " + evt[0]);
-					System.out.println("Image : " + evt[1]);
-					System.out.println("Description : " + evt[2]);
-					System.out.println("Date : " + evt[3]);
+				for (int i = 0; i < evenements.size(); i++) {
+					Evenement evt = evenements.get(i);
+					System.out.println("Nom : " + evt.getNom_evenement());
+					System.out.println("Image : " + evt.getNom_image());
+					System.out.println("Description : " + evt.getDescritption_evenement());
+					System.out.println("Date : " + evt.getData_evenement());
 					System.out.println("-------------------------");
 				}
 
@@ -82,21 +89,40 @@ public class ConnexionController extends HttpServlet {
 		}
 	}
 
-	private ArrayList<String[]> chargerEvenements(BDD conec) throws SQLException {
-		ArrayList<String[]> evenements = new ArrayList<>();
+	public static void chargerEvenements(BDD conec, HttpSession session) throws SQLException {
+		//ArrayList<String[]> evenements = new ArrayList<>();
+		ArrayList<Evenement> evenements = new ArrayList<Evenement>();
 		String sql = "SELECT * FROM evenement";
 		PreparedStatement ps = conec.getPreparedStatement(sql);
 		ResultSet rs = ps.executeQuery();
-
+		
 		while (rs.next()) {
+		    
 			String nom_evt = rs.getString("nom_evenement");
 			String nom_img = rs.getString("nom_image");
 			String desc_evt = rs.getString("description_evenement");
 			String date_evt = rs.getString("date_evenement");
 
-			evenements.add(new String[]{nom_evt, nom_img, desc_evt, date_evt});
+			evenements.add(new Evenement(nom_evt, nom_img, desc_evt, date_evt));	
 		}
-
-		return evenements;
+		
+		session.setAttribute("events", evenements);
+	}
+	
+	public static void updatePseudo(String pseudo,int id) throws SQLException {
+		BDD conec = new BDD();
+		conec.updateUtilisateur(pseudo,id);
+		conec.close();
+	}
+	public static void updateMdp(String mdp,int id) throws SQLException {
+		BDD conec = new BDD();
+		conec.updateMp(mdp,id);
+		conec.close();
+	}
+	public static String selectMdp(int id) throws SQLException {
+		BDD conec = new BDD();
+		String mdp =conec.UtilisateurMdp(id);
+		conec.close();
+		return mdp;
 	}
 }

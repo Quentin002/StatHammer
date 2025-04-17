@@ -14,6 +14,7 @@ public class Evenement{
 		this.date_evenement = date;
 	}
 
+	
 	public String getNom_evenement() {
 		return nom_evenement;
 	}

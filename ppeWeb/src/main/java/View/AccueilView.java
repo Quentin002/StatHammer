@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import Model.Evenement;
+
 
 @WebServlet("/AccueilView")
 public class AccueilView extends HttpServlet {
@@ -55,9 +57,9 @@ public class AccueilView extends HttpServlet {
 			  + "  </ul>\r\n"
 			  + "</div>\r\n";
 		
-     @SuppressWarnings("unchecked")
-     ArrayList<String[]> evenements = (ArrayList<String[]>) session.getAttribute("evenements");
-
+	 @SuppressWarnings("unchecked")
+	 ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
+	 
      String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 
 
@@ -67,11 +69,16 @@ public class AccueilView extends HttpServlet {
      body.append("<div class='event-grid'>\n");
 
      if (evenements != null && !evenements.isEmpty()) {
-         for (String[] evt : evenements) {
-             String nomEvt = evt[0];
-             String nomImg = evt[1];
-             String descEvt = evt[2];
-             String dateEvt = evt[3];
+    	 
+
+	     
+	     for (int i = 0; i < evenements.size(); i++) {
+	    	 Evenement evt = evenements.get(i);
+	    	 
+	         String nomEvt = evt.getNom_evenement();
+	         String nomImg = evt.getNom_image();
+	         String descEvt = evt.getDescritption_evenement();
+	         String dateEvt = evt.getData_evenement();
 
              body.append("<div class='evenement-container'>\n")
                  .append("    <div class=\"evenement-content\">\n")

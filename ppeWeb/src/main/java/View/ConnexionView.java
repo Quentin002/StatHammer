@@ -8,8 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import Controller.BDD;
-
 /**
  * Servlet implementation class ConnexionView
  */
