@@ -6,9 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+
+import Model.ArmeeListe;
 
 /**
  * Servlet implementation class GestionListeView
@@ -38,9 +40,43 @@ public class GestionListeView extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
+		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
+		
+	             
 		String titre = "StatHammer : Gestion compte";
 	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
-		
+	    
+	    
+	    
+	    StringBuilder listage=  new StringBuilder();
+
+	    if (listes != null && !listes.isEmpty()) {
+	        for (ArmeeListe liste : listes) {
+	            int idliste = liste.getId();
+	            String nomliste = liste.getNomListe();
+	            String descrliste = liste.getDescriptionListe();
+	            ArrayList<String> nomUniteliste = liste.getUniteListe();
+	            int idArmeeliste = liste.getIdArmee();
+
+	            listage.append("<div class='liste id='").append(idliste).append("'>\n")
+	                   .append("<h2>").append(nomliste).append("</h2>\n")
+	                   .append("<p>").append(descrliste).append("</p>\n");
+
+	            if (nomUniteliste != null && !nomUniteliste.isEmpty()) {
+	                listage.append("<ul>\n");
+	                for (String nomUnite : nomUniteliste) {
+	                    listage.append("<li>").append(nomUnite).append("</li>\n");
+	                }
+	                listage.append("</ul>\n");
+	            } else {
+	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
+	            }
+
+	            listage.append("</div>\n");
+	        }
+	    }
+	    
+	    		
 	    String body= 
 	    		"<h1>Interface de gestion des listes</h1>"
 	    		+"<section class='GestionListe_structure'>\r\n"
@@ -49,10 +85,23 @@ public class GestionListeView extends HttpServlet {
 	    		+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
 	    		+"<div class='GestionListe_import'>"
+	    		+ listage
 	    		+"</div>"
 	    		+"</section>";
 	    
 	    
+	    /*
+	    ArrayList<String[]> ArmeeListe = (ArrayList<String[]>) session.getAttribute("ArmeeListe");
+	    
+	    if(ArmeeListe!= null && !ArmeeListe.isEmpty()) {
+	    	for (String[] evt : ArmeeListe) {
+	             String nomEvt = evt[0];
+	             String nomImg = evt[1];
+	             String descEvt = evt[2];
+	             String dateEvt = evt[3];
+	    	
+	    }
+	    */
 	    String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
 		out.println(html);
 	}

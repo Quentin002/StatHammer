@@ -6,12 +6,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @WebServlet("/ConnexionController")
 public class ConnexionController extends HttpServlet {
@@ -67,6 +67,10 @@ public class ConnexionController extends HttpServlet {
 					System.out.println("Description : " + evt[2]);
 					System.out.println("Date : " + evt[3]);
 					System.out.println("-------------------------");
+				
+				// Chargement des listes
+				ArrayList<Model.ArmeeListe> listes = chargerListes(conec,session);
+				session.setAttribute("listes", listes);
 				}
 
 				response.sendRedirect("AccueilView");
@@ -87,7 +91,7 @@ public class ConnexionController extends HttpServlet {
 		String sql = "SELECT * FROM evenement";
 		PreparedStatement ps = conec.getPreparedStatement(sql);
 		ResultSet rs = ps.executeQuery();
-
+		
 		while (rs.next()) {
 			String nom_evt = rs.getString("nom_evenement");
 			String nom_img = rs.getString("nom_image");
@@ -98,5 +102,39 @@ public class ConnexionController extends HttpServlet {
 		}
 
 		return evenements;
+	}
+	private ArrayList<Model.ArmeeListe> chargerListes(BDD conec, HttpSession session) throws SQLException{
+		ArrayList<Model.ArmeeListe> listes = new ArrayList<>();
+		String sql = "SELECT l.id_liste, l.nom_liste, l.description_liste, u.nom_unite, u.id_armee\r\n"
+				+ "	        FROM liste l\r\n"
+				+ "	        LEFT JOIN contenir c ON l.id_liste = c.id_liste\r\n"
+				+ "	        LEFT JOIN unite u ON c.id_unite = u.id_unite\r\n"
+				+ "	        WHERE l.id_utilisateur="
+				+ session.getAttribute("id") ; 
+		HashMap<Integer, Model.ArmeeListe> mapListes = new HashMap<>();
+		
+		PreparedStatement ps = conec.getPreparedStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			int id_liste = rs.getInt("id_liste");
+			String nom_liste = rs.getString("nom_liste");
+			String descr_liste = rs.getString("description_liste");
+			String nomUnite_liste = rs.getString("nom_unite");
+			int idArmee_liste = rs.getInt("id_armee");
+			
+			// Vérifier si la liste existe déjà dans la map
+            Model.ArmeeListe liste = mapListes.get(id_liste);
+            if (liste == null) {
+                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste);
+                liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
+                mapListes.put(id_liste, liste);
+            }
+            if (nomUnite_liste != null) {
+                liste.getUniteListe().add(nomUnite_liste);
+            }
+		}
+		listes.addAll(mapListes.values());
+		
+		return listes;
 	}
 }
