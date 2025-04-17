@@ -195,7 +195,7 @@ public class Calcul {
 	}
 			
 	// fonction simulant des battailes entre 2 unités
-	public static Calcul bataille(modele.Unit u1, modele.Unit u2){
+	public static Calcul bataille(Model.Unit u1, Model.Unit u2){
 		
 		// Déclaration des variables
 

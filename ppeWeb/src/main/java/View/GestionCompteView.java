@@ -11,17 +11,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Servlet implementation class AccueilView
+ * Servlet implementation class GestionCompteView
  */
-@WebServlet("/AccueilView")
-public class AccueilView extends HttpServlet {
-	public static String barDeNav;
+@WebServlet("/GestionCompteView")
+public class GestionCompteView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AccueilView() {
+    public GestionCompteView() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,18 +30,17 @@ public class AccueilView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        HttpSession session = request.getSession();
-
-        String boutonAdmin = "";
-		String titre = "StatHammer : Accueil";
-
-        if (session.getAttribute("role").equals("Admin")) {
-        	boutonAdmin = "    <li><a href='BarDeNavController?action=admin'>Événements</a></li>\r\n";
-        }
+		HttpSession session=request.getSession(false);
+        if (session==null) {
+            response.sendRedirect("ConnexionView");
+        } 
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
+		String titre = "StatHammer : Gestion compte";
+		
+		// HEADER
 		String header =
 			"<!DOCTYPE HTML>\r\n"
 		  + "<html>\r\n"
@@ -52,31 +50,40 @@ public class AccueilView extends HttpServlet {
 		  + "  <style>" + ConnexionView.css + "</style>\r\n"
 		  + "</head>\r\n"
 		  + "<body>\r\n";
-		
-		barDeNav =
-			    "<div class='barDeNav'>\r\n"
-			  + "  <ul>\r\n"
-			  + "    <li><a href='BarDeNavController?action=accueil'>Accueil</a></li>\r\n"
-			  + boutonAdmin
-			  +"<li><a class='active' href='BarDeNavController?action=Compte'>Mon compte</a></li>\r\n"
-			  +"<li><a href='BarDeNavController?action=GererListe'>Gérer listes</a></li>\r\n"
-			  +"<li><a href='BarDeNavController?action=creaListe'>Création liste</a></li>\r\n"
-			  +"<li><a href='BarDeNavController?action=simu'>Simulation</a></li>\r\n"
-			  + "    <li><a href='BarDeNavController?action=logout'>Déconnexion</a></li>\r\n"
-			  + "  </ul>\r\n"
-			  + "</div>\r\n";
 
+		
+		// FORMULAIRE
 		String body =
-			  "<div class='container'>\r\n"
-		  	+ "  </div>\r\n";
+				"<h1>Gestion du compte utilisateur</h1>"
+			  +"<div class='container'>\r\n"
+			+"<form enctype='application/x-www-form-urlencoded\' action='ControllerGestionCompte' method=POST>"
+			+"<table class='tCompte'>"
+			
+			+"<tr><td width='230'>Modifier le pseudonyme :</td>"
+			+"<td><input type=text size='100' name=pseudo></td></tr>"
+			//+"</table>"
+			+"<tr><td colspan='2' height='100'><input type=submit class='buttonGcompte' value='Envoyer'></td></tr>"
+			+"</form>"
+			
+			+"<br><br>"
+			+"<form enctype='application/x-www-form-urlencoded\' action='ControllerGestionCompte' method=POST>"
+			//+"<table>"
+			+"<tr><td width=\"230\">Modifier le mot de passe :</td>"
+			+"<td><input type=password size='100'  name=mdp></td></tr>"
+			+"<tr><td>Confirmer avec mot de passe actuel :</td>"
+			+"<td><input type=password size='100' name=confirmMdp></td>"
+			+"<tr><td colspan='2' height='100'><input type=submit class='buttonGcompte' value='Envoyer'></td></tr>"
+				+"</table>"
+		  	+ "   </form>\r\n"
+		  	+ "</div>\r\n";
 		
 		String footer =
 			"</body>\r\n"
 		  + "</html>";
 
-		out.println(header + barDeNav + body + footer);
-		
+		out.println(header + AccueilView.barDeNav + body + footer);
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -84,12 +91,6 @@ public class AccueilView extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		
-	    HttpSession session=request.getSession(false);
-	    if (session==null) {
-	    	response.sendRedirect("ConnexionView");
-	    }
-	    
 	}
 
 }

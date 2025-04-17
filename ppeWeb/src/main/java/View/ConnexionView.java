@@ -189,6 +189,16 @@ public class ConnexionView extends HttpServlet {
 				+ "  background-color: rgba(255, 255, 255, 0.05);\r\n"
 				+ "  color: #42a5f5;\r\n"
 				+ "  border-bottom: 2px solid #42a5f5;\r\n"
+				+ "}\r\n"
+				+ ".tCompte {\r\n"
+				+ "  text-align: center;\r\n"
+				//+ "border-spacing: 2px;"
+				+ "}\r\n"
+				+ "a {\r\n"
+				+ "  color: #f0f0f0;\r\n"
+				+ "}\r\n"
+				+ ".buttonGcompte {\r\n"
+				+ "  width: 300px;\r\n"
 				+ "}\r\n";
 
 	
@@ -216,8 +226,11 @@ public class ConnexionView extends HttpServlet {
 			    + "					<td><input type=password size=20 name=mdp></td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
-			    + "					<td colspan=\"2\"><center><input type=submit value=\"Connexion\"></center></td>"
+			    + "					<td colspan=\"2\"height='100'><center><input type=submit value=\"Connexion\"></center></td>"
 				+ "		 		</tr>"
+				+ "		 		<tr>"
+			    + "					<td colspan=\"2\" height='10'><a href='http://localhost:8080/ppeWeb/CreationCompteView'><center>Vous ne possédez pas de compte ,créez-en un !</center></a></td>"
+				+ "		 		</tr>"			    
 				+ "		 	</table>"
 			    + "		</form>";
 
