@@ -15,7 +15,7 @@ import Model.ArmeeListe;
 /**
  * Servlet implementation class GestionListeView
  */
-@WebServlet("/GestionListeView")
+@WebServlet("/gerer-liste")
 public class GestionListeView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,7 +34,7 @@ public class GestionListeView extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -90,7 +90,7 @@ public class GestionListeView extends HttpServlet {
 	    		"<h1>Interface de gestion des listes</h1>\n"
 	    		+"<section class='GestionListe_structure'>\r\n"
 	    		+"<div class='bouton_placement'>"
-	    		+"<a href='AccueilView' class='bouton_gestionListe'>Retour</a>"
+	    		+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
 	    		+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
 	    		+"<div class='GestionListe_import'>"

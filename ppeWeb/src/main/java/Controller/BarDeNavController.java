@@ -46,10 +46,10 @@ public class BarDeNavController extends HttpServlet {
 					response.sendRedirect("evenements");
 					break;
 				case "Compte":
-					response.sendRedirect("GestionCompteView");
+					response.sendRedirect("compte");
 					break;
 				case "GererListe":
-					response.sendRedirect("GestionListeView");
+					response.sendRedirect("gerer-liste");
 					break;
 				case "logout":
 					session.invalidate();
