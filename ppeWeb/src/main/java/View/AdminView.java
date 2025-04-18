@@ -10,6 +10,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+import Model.Evenement;
+
 
 @WebServlet("/AdminView")
 @MultipartConfig
@@ -40,7 +42,7 @@ public class AdminView extends HttpServlet {
 	     StringBuilder body = new StringBuilder();
 	     body.append("<div class='container'>\r\n")
 		     .append("  <div class='left-panel'>\r\n")
-		     .append("   <form method='POST' action='" + action + "' enctype='multipart/form-data'>\r\n")
+		     .append("   <form method='post' action=\"" + action + "\" enctype=\"multipart/form-data\">\r\n")
 		     .append("       <label for='nom'>Nom :</label><br/>\r\n")
 		     .append("       <input type='text' name='nom' required/><br/><br/>\r\n")
 		     .append("       <label for='desc'>Description :</label><br/>\r\n")
@@ -56,35 +58,33 @@ public class AdminView extends HttpServlet {
 	     body.append("  <div class='right-panel'>\r\n");
 	     
 	     @SuppressWarnings("unchecked")
-	     ArrayList<String[]> evenements = (ArrayList<String[]>) session.getAttribute("evenements");
+	     ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
 	     
 	     for (int i = 0; i < evenements.size(); i++) {
-	    	    String[] evt = evenements.get(i);
-	             String nomEvt = evt[0];
-	             String nomImg = evt[1];
-	             String descEvt = evt[2];
-	             String dateEvt = evt[3];
+	    	 Evenement evt = evenements.get(i);
+	    	 
+	         String nomEvt = evt.getNom_evenement();
+	         String nomImg = evt.getNom_image();
+	         String descEvt = evt.getDescritption_evenement();
+	         String dateEvt = evt.getData_evenement();
+	         
+	         System.out.println(nomEvt+nomImg+descEvt+dateEvt);
+	         
 	             
 	             body.append("<div style='display: table; width: 100%; margin-bottom: 8px;'>")
-	             .append("<div style='padding-right : 5px;'>"+(i+1)+"</div><p class='quote' style='display: table-cell; margin: 0;'>")
+	             .append("<div style='padding-right : 5px;'>"+"</div><p class='quote' style='display: table-cell; margin: 0;'>")
 	             .append(nomEvt).append(" ").append(nomImg).append(" ").append(descEvt).append(" ").append(dateEvt)
 	             .append("</p>")
-	             .append("<a href='AdminController?action=").append(i).append("'>")
+	             .append("<a href='AdminController?supprEvt=").append(i).append("'>")
 	             .append("<i class='fas fa-trash-alt' style='padding-left : 8px;'></i>")
 	             .append("</a>")
 	             .append("</div>");
-
-
-
 	         
 	     }
 	     
 	     body.append("  </div>\r\n")
 		 	 .append("</div>\r\n");
-		
-	     
-	     
-	     
+     
 		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
 		
 		PrintWriter out = response.getWriter();
@@ -93,6 +93,5 @@ public class AdminView extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		doGet(request, response);
 	}
 }
