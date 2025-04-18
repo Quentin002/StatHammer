@@ -1,5 +1,6 @@
 function selectList(nb){
 	const units_list = document.getElementById("units_list" + nb);
+	units_list.innerHTML = '';
 	let select_name;
 	if(nb == 1){
 		select_name = "left_choice_box";
@@ -14,14 +15,26 @@ function selectList(nb){
 	
 
 	// copie de units_box.jsp pour test en attendant d'utiliser le serveur
-	const data = JSON.stringify({ html: `<div class="one_unit_zone" id="col1_unit1">
+	let data;
+	if(nb == 1){
+		data = JSON.stringify({ html: `<div class="one_unit_zone" id="col1_unit1">
 	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit1');">Unité 1</button>
 	<div class="unit_box hidden">
 		<div class="unit_group" id="unit1_group1">
-			<p class="number">1</p><div></div>
+			<p class="number" onclick="openWeaponsAptitudesZone();">1</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
 		</div>
 		<div class="unit_group" id="unit1_group1">
-			<p class="number">2</p><div></div>
+			<p class="number" onclick="openWeaponsAptitudesZone();">2</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
 		</div>
 	</div>
 </div>
@@ -29,48 +42,107 @@ function selectList(nb){
 	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit2');">Unité 2</button>
 	<div class="unit_box hidden">
 		<div class="unit_group" id="unit1_group1">
-			<p class="number">1</p><div></div>
+			<p class="number" onclick="openWeaponsAptitudesZone();">1</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
 		</div>
 		<div class="unit_group" id="unit1_group1">
-			<p class="number">2</p><div></div>
+			<p class="number" onclick="openWeaponsAptitudesZone();">2</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
 		</div>
 	</div>
 </div>`, army_file: 'android-fill.png' });
+	}
+	else if(nb == 2){
+		data = JSON.stringify({ html: `<div class="one_unit_zone" id="col2_unit1">
+	<button class="unit_button" onclick="unfoldUnits(1, 'col2_unit1');">Unité 1</button>
+	<div class="unit_box hidden">
+		<div class="unit_group" id="unit1_group1">
+			<p class="number" onclick="openWeaponsAptitudesZone('unit1_group1');">1</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+		</div>
+		<div class="unit_group" id="unit1_group2">
+			<p class="number" onclick="openWeaponsAptitudesZone('unit1_group2');">2</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+		</div>
+	</div>
+</div>
+<div class="one_unit_zone" id="col2_unit2">
+	<button class="unit_button" onclick="unfoldUnits(1, 'col2_unit2');">Unité 2</button>
+	<div class="unit_box hidden">
+		<div class="unit_group" id="unit2_group1">
+			<p class="number" onclick="openWeaponsAptitudesZone('unit2_group1');">1</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+		</div>
+		<div class="unit_group" id="unit2_group2">
+			<p class="number" onclick="openWeaponsAptitudesZone('unit2_group2');">2</p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+		</div>
+	</div>
+</div>`, army_file: 'android-fill.png' });
+	}
+
 	units_list.innerHTML = '';
+	// sauvegarder le html généré (= data) dans Battle
 	units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
 	const logo_box = document.getElementById("logo_list" + nb);
 	logo_box.querySelector("img").src = "armees/" + JSON.parse(data).army_file;
 	logo_box.classList.remove('hidden');
 	return;
 
-	
-	fetch("http://webhammer/ControllerSimu", {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ list: Battle.getListName(nb) })
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
-			}
-			return response.json();
+	if(Battle.getListName(col) == null){
+		fetch("http://webhammer/ControllerSimu", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ action: "make_units_box", col: nb, list: Battle.getListName(nb) })
 		})
-		// le serveur renvoie une vue et le nom d'une armée
-		.then(data => {
-			// html généré
-			units_list.innerHTML = '';
-			units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
-			
-			// logo
-			const logo_box = document.getElementById("logo_list" + nb);
-			logo_box.querySelector("img").src = "armees/" + JSON.parse(data).army_file;
-			logo_box.classList.remove('hidden');
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('erreur réponse requête AJAX ' + response.statusText);
+				}
+				return response.json();
+			})
+			// le serveur renvoie une vue et le nom d'une armée
+			.then(data => {
+				units_list.innerHTML = '';
+
+				// sauvegarder le html généré (= data) dans Battle
+
+				// l'insérer dans la page
+				units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
+				
+				// logo
+				const logo_box = document.getElementById("logo_list" + nb);
+				logo_box.querySelector("img").src = "armees/" + JSON.parse(data).army_file;
+				logo_box.classList.remove('hidden');
+			})
+			.catch(error => {
+				console.error('erreur capturée requête AJAX', error);
+			});
+	}
+	else{
+		// afficher sauvegarde du HTML
+	}
 }
 
 function unfoldUnits(col, unit_section_id){
@@ -85,8 +157,6 @@ function unfoldUnits(col, unit_section_id){
 		document.getElementById("weapons_aptitudes_box").classList.add("hidden"); // cacher fenêtre combat si existe
     	
     	// bouton même unité => ferme
-    	console.log(Battle.getUnitId(col));
-    	console.log(unit_section_id);
     	if(Battle.getUnitId(col) == unit_section_id)
         {
     		new_unit_box.querySelector(".unit_box").classList.add("hidden");
@@ -110,6 +180,87 @@ function unfoldUnits(col, unit_section_id){
     	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
     	new_unit_box.querySelector(".unit_box").classList.remove("hidden");
     }
+}
+
+function openWeaponsAptitudesZone(group_id){
+	const weapons_aptitudes_box = document.getElementById("weapons_aptitudes_box");
+
+	// code de test
+	const data = JSON.stringify({ html: `<div id="weapons_box_unit_name">
+	<p class="number">1</p><p>Initié</p>
+</div>
+<select id="weapon_select" name="weapon_select" onchange="selectWeapon()">
+	<option value="Arme 1">Arme 1</option>
+	<option value="Arme 2">Arme 2</option>
+	<option value="Arme 3">Arme 3</option>
+	<option value="Arme 4">Arme 4</option>
+</select>
+<table id="weapon_stats" class="hidden">
+	<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+</table>
+<form oninput="nb_weapons_out.value = nb_weapons_in.value">
+	<label>Nombre d'attaquants:</label>
+	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="4" value="4" onchange="selectWeaponNumber();">
+	<output name="nb_weapons_out">4</output>
+</form>
+<div id="aptitudes">
+	<div>
+		<input type="checkbox" id="apt1" name="Aptitude1" onclick="checkAptitude('apt1');">
+		<label for="apt1">Aptitude1</label>
+	</div>
+	<div>
+		<input type="checkbox" id="apt2" name="Aptitude2" onclick="checkAptitude('apt2');">
+		<label for="apt2">Aptitude2</label>
+	</div>
+	<div>
+		<input type="checkbox" id="apt3" name="Aptitude3" onclick="checkAptitude('apt3');">
+		<label for="apt3">Aptitude3</label>
+	</div>
+	<div>
+		<input type="checkbox" id="apt4" name="Aptitude4"
+		 onclick="checkAptitude('apt4');">
+		<label for="apt4">Aptitude4</label>
+	</div>
+	<div>
+		<input type="checkbox" id="apt5" name="Aptitude5" onclick="checkAptitude('apt5');">
+		<label for="apt5">Aptitude5</label>
+	</div>
+</div>` });
+	// html généré
+	weapons_aptitudes_box.classList.remove("hidden");
+	weapons_aptitudes_box.innerHTML = '';
+	weapons_aptitudes_box.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
+	return;
+
+	fetch("http://webhammer/ControllerSimu", {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ action: "make_weapons_aptitudes_zone", list: Battle.getListName(nb) })
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+			}
+			return response.json();
+		})
+		// le serveur renvoie une vue et le nom d'une armée
+		.then(data => {
+			// html généré
+			weapons_aptitudes_box.classList.remove("hidden");
+			weapons_aptitudes_box.innerHTML = '';
+			weapons_aptitudes_box.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
+		})
+		.catch(error => {
+			console.error('erreur capturée requête AJAX', error);
+		});
 }
 
 
@@ -191,5 +342,24 @@ function reverseArmies(){
 		return;
 	}
 
-	// wowowow
+	// dire au serveur d'inverser les deux joueurs
+	//fetch...
+
+	// inverser l'affichage
+	selectList(1);
+	selectList(2);
+
+	// inutile
+	/*const units_list1 = document.getElementById("units_list1");
+	const units_list2 = document.getElementById("units_list2");
+	let units_list1_child = units_list1.querySelector(".one_unit_zone");
+	let units_list2_child = units_list2.querySelector(".one_unit_zone");
+	units_list1.innerHTML = '';
+	units_list2.innerHTML = '';
+	units_list1.appendChild(units_list2_child);
+	units_list2.appendChild(units_list1_child);
+
+	let tmp = units_list1_child;
+	units_list1_child = units_list2_child;
+	units_list2_child = tmp;*/
 }

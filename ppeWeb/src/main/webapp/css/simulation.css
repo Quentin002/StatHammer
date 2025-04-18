@@ -89,6 +89,19 @@ body
 .unit_group p
 {
 	margin: 0;
+	line-height: 30px;
+}
+.unit_group .number
+{
+	cursor: pointer;
+}
+.unit_group img
+{
+	vertical-align: middle;
+}
+.unit_group span
+{
+	vertical-align: middle;
 }
 
 #central_col
