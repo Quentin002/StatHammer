@@ -10,24 +10,32 @@ function selectList(nb){
 	else{
 		return;
 	}
-	BattleData.setList(nb,document.getElementById(select_name).value);
+	Battle.setListName(nb,document.getElementById(select_name).value);
 	
 
 	// copie de units_box.jsp pour test en attendant d'utiliser le serveur
-	const data = JSON.stringify({ html: `<section class="unit_section" id="col1_unit1">
+	const data = JSON.stringify({ html: `<div class="one_unit_zone" id="col1_unit1">
 	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit1');">Unité 1</button>
 	<div class="unit_box hidden">
-		<div id="unit1_group1">groupe 1 unité 1</div>
-		<div id="unit2_group1">groupe 2 unité 1</div>
+		<div class="unit_group" id="unit1_group1">
+			<p class="number">1</p><div></div>
+		</div>
+		<div class="unit_group" id="unit1_group1">
+			<p class="number">2</p><div></div>
+		</div>
 	</div>
-</section>
-<section class="unit_section" id="col1_unit2">
+</div>
+<div class="one_unit_zone" id="col1_unit2">
 	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit2');">Unité 2</button>
 	<div class="unit_box hidden">
-		<div id="unit1_group2">groupe 1 unité 2</div>
-		<div id="unit2_group2">groupe 2 unité 2</div>
+		<div class="unit_group" id="unit1_group1">
+			<p class="number">1</p><div></div>
+		</div>
+		<div class="unit_group" id="unit1_group1">
+			<p class="number">2</p><div></div>
+		</div>
 	</div>
-</section>`, army_file: 'android-fill.png' });
+</div>`, army_file: 'android-fill.png' });
 	units_list.innerHTML = '';
 	units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
 	const logo_box = document.getElementById("logo_list" + nb);
@@ -41,7 +49,7 @@ function selectList(nb){
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({ list: BattleData.getList(nb) })
+		body: JSON.stringify({ list: Battle.getListName(nb) })
 	})
 		.then(response => {
 			if (!response.ok) {
@@ -66,12 +74,42 @@ function selectList(nb){
 }
 
 function unfoldUnits(col, unit_section_id){
-	const unit_box = document.getElementById(unit_section_id);
-	const unit_name = unit_box.querySelector("button").innerHTML;
+	/* déroulement des unités et cadre jaune du bouton, même algo que dans le client lourd */
+	const old_unit_box = document.getElementById(Battle.getUnitId(col)); // peut être null
+	const new_unit_box = document.getElementById(unit_section_id); // peut être le même élément
 
-	// déroullement et cadre jaune des unités sélectionnées
-	unit_box.querySelector(".unit_box").classList.remove("hidden");
-	//BattleData.setUnit(col, );
+	// il y a déjà une unité sélectionnée
+    if(Battle.getUnitId(col) != null)
+    {
+    	old_unit_box.querySelector(".unit_button").classList.remove("unit_selected"); // retirer bordure unité sélectionnée
+		document.getElementById("weapons_aptitudes_box").classList.add("hidden"); // cacher fenêtre combat si existe
+    	
+    	// bouton même unité => ferme
+    	console.log(Battle.getUnitId(col));
+    	console.log(unit_section_id);
+    	if(Battle.getUnitId(col) == unit_section_id)
+        {
+    		new_unit_box.querySelector(".unit_box").classList.add("hidden");
+    		Battle.setUnitId(col, null);
+        }
+    	// bouton autre unité
+    	else
+    	{
+        	if(old_unit_box != null) {
+				old_unit_box.querySelector(".unit_box").classList.add("hidden"); // supprimer ancienne zone de figurines
+			}
+        	Battle.setUnitId(col, unit_section_id);
+        	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
+        	new_unit_box.querySelector(".unit_box").classList.remove("hidden"); // on ouvre
+    	}
+    }
+    // pas d'unité sélectionnée => on ouvre
+    else
+    {
+    	Battle.setUnitId(col, unit_section_id);
+    	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
+    	new_unit_box.querySelector(".unit_box").classList.remove("hidden");
+    }
 }
 
 
@@ -121,8 +159,8 @@ function checkAptitude(aptitude_id){
 /* boutons centraux */
 function calculate(){
 	// contrôle: une unité doit être sélectionnée de chaque côté
-	if(BattleData.selected_list1 == null || BattleData.selected_list2 == null
-		|| BattleData.selected_unit1 == null || BattleData.selected_unit2 == null)
+	if(Battle.getListName(1) == null || Battle.getListName(2) == null
+		|| Battle.getUnitId(1) == null || Battle.getUnitId(2) == null)
 	{
 		toastNotify("conditions non remplies pour lancer une simulation");
 		return;
@@ -147,7 +185,7 @@ function calculate(){
 
 function reverseArmies(){
 	// contrôle: une liste doit être sélectionnée de chaque côté
-	if(BattleData.selected_list1 == null || BattleData.selected_list2 == null)
+	if(Battle.getListName(1) == null || Battle.getListName(2) == null)
 	{
 		toastNotify("sélectionner 2 listes pour pouvoir les inverser");
 		return;

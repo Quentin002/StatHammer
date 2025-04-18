@@ -60,11 +60,11 @@ body
 	gap: 4px;
 	padding: 4px;
 }
-.unit_section
+.one_unit_zone
 {
 	width: 100%;
 }
-.unit_section button
+.unit_button
 {
 	width: 100%;
 }
@@ -73,6 +73,22 @@ body
 	background-color: #f7f7f7; /* 50 nuances de grey */
 	border: grey solid 1px;
 	border-radius: 5px;
+}
+.unit_selected
+{
+	background-color: white;
+	border-color: yellow;
+	border-radius: 5px;
+}
+.unit_group
+{
+	display: flex;
+	flex-wrap: wrap;
+	padding: 4px;
+}
+.unit_group p
+{
+	margin: 0;
 }
 
 #central_col
