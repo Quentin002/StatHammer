@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+C:\Users\Quentin\Desktop\Projet\StatHammer\ppeWeb\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-816900814.index
-1439961377.index
-1440898176.index
-571705216.index
-1108498945.index
-1477146380.index

@@ -1,3 +1,0 @@
-INDEX VERSION 1.134
-C:\Users\Quentin\Desktop\Projet\StatHammer\ppeWeb\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1817400897.index
-\ppeWeb\src\main\java
