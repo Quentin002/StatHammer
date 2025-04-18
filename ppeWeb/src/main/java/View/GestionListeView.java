@@ -77,14 +77,14 @@ public class GestionListeView extends HttpServlet {
 	            		.append("</button>\n")
 	            		.append("<button type='button' class='GestionListe_bouton'>Paramétrer\n")
 	            		.append("</button>\n")
-	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' data-army-id='")
+	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' id='")
 	            		.append(idliste)
 	            		.append("'>Supprimer</button>\n")
 	            	   .append("</div>\n")
 	            	   .append("</div>\n");
 	        }
 	    }
-	    
+	     
 	    		
 	    String body= 
 	    		"<h1>Interface de gestion des listes</h1>\n"
