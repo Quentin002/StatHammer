@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 /**
@@ -35,8 +37,12 @@ public class AiguillageServlet extends HttpServlet {
 		String destination = "creerListe.jsp";
 		
 		if(plus!=null) {
+			
 			if(!StockageCreerListe.getArmeeListe().getUnits().contains(StockageCreerListe.getUnit(plus))) {
+				
+				StockageCreerListe.getUnit(plus).setFigurine(Instanciation.getFigurine2(plus)) ;
 				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(plus));
+				
 			}
 			
 			
@@ -53,9 +59,11 @@ public class AiguillageServlet extends HttpServlet {
 			StockageCreerListe.initArmeeListe();
 			StockageCreerListe.initUnit(armee);
 		}
-		if(request.getParameter("creer")!=null) {
+		if(request.getParameter("creer")!=null && !request.getParameter("nomListe").equals("") && StockageCreerListe.getArmeeListe().getUnits().size()!=0) {
 			//Instanciation.insertListe(StockageCreerListe.getArmeeListe(), null);
-			destination = "index.html";
+			HttpSession session = request.getSession();
+			session.setAttribute("nomListe", request.getParameter("nomListe"));
+			destination = "SauvegardeServlet";
 		}
 		response.sendRedirect(destination);
 	}
