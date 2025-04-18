@@ -1,7 +1,6 @@
 package vue;
 
 import controlleur.ControllerTopMenu;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,7 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import modele.Evenement;
@@ -97,18 +95,22 @@ public class AfficheTopMenu extends HBox
 	    btn_simu.setOnAction(e -> {
 	    	ControllerTopMenu.go_simulation(primaryStage,session);
 		}); 
+	    
 	    // options réservées à l'admin
 	    btn_admin.setOnAction(e -> {
 	    	ControllerTopMenu.go_admin(primaryStage, session);
 		});
+	    
 	    //vers creer liste
 	    btn_creer_liste.setOnAction(e->{
 	    	ControllerTopMenu.go_creer_liste(primaryStage,session);
 	    });
+
 	}
-	
+
 	public void setLogin(String login)
 	{
 		pseudo.setText(login);
 	}
+
 }

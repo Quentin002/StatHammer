@@ -19,6 +19,7 @@ import modele.Unit;
 import modele.User;
 
 public class Instanciation {
+
 	
 	//classe qui fait des appel à la BDD pour instancier les classes modele
 	
@@ -59,7 +60,7 @@ public class Instanciation {
 		ArrayList<String> nom = new ArrayList<String>();
 		try {
 			conec = new BDD();
-			
+
 			nom = conec.select("SELECT a.nom_armee,a.logo_armee FROM armee a JOIN faction f USING (id_faction) WHERE f.nom_faction = ?;",faction.getNom() );
 			
 			

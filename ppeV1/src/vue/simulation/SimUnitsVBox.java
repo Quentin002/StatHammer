@@ -2,6 +2,7 @@ package vue.simulation;
 
 import java.util.ArrayList;
 
+import application.Battle;
 import controlleur.ControlleurSimu;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -29,7 +30,7 @@ public class SimUnitsVBox extends VBox
 	// afficher les unités de la liste déroulée 
 	public void setList(int num_list)
 	{
-		ArrayList<Unit> units = AfficheSimulation.getBattleData().getSelectedList(num_list).getUnits();
+		ArrayList<Unit> units = Battle.getSelectedList(num_list).getUnits();
 		for(int i = 0; i < units.size(); i++)
 		{
 			VBox one_unit = new VBox();

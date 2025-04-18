@@ -30,8 +30,10 @@ public class AfficheAccueil {
 	
 		AfficheTopMenu menu = new AfficheTopMenu(primaryStage,session);
 		//AfficheTopMenu.setHgrow(root, Priority.ALWAYS);
+
 		
 		vEvt = AfficheEvenement.NewAfficheEvenement(primaryStage, session);
+
 		root.getChildren().add(menu);
 		
 

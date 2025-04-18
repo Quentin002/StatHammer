@@ -48,6 +48,9 @@ public static void affiche(Stage primaryStage,User session) {
 	vbox1.getChildren().add(bouton1);
 	
 	VBox vbox2 = new VBox();
+
+	VBox vboxL = new VBox();
+
 	vbox2.getChildren().add(etiquette2);
 	vbox2.getChildren().add(texte2);
 	vbox2.getChildren().add(etiquette3);
@@ -56,6 +59,7 @@ public static void affiche(Stage primaryStage,User session) {
 	vboxb.getChildren().add(bouton2);
 	vbox2.getChildren().add(vboxb);
 	
+
 	
 	Scene scene = new Scene(vbox, 800, 600);
 	vbox.getChildren().add(menu);

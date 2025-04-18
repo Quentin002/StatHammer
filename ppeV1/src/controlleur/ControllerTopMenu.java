@@ -1,5 +1,6 @@
 package controlleur;
 
+import application.Battle;
 import javafx.stage.Stage;
 import modele.Evenement;
 import modele.User;
@@ -31,14 +32,15 @@ public class ControllerTopMenu {
 	}
 	public static void go_deco(Stage primaryStage, User session) { 
 		AfficheSimulation.cleanWeaponsAtitudesMenu();
-		AfficheSimulation.cleanBattle();
+		Battle.clean(); // VRAIMENT ?!
 		session = null;
 		AfficheConnexion.affiche(primaryStage);
 	}
 	public static void go_simulation(Stage primaryStage, User session){
+
 		
 		Instanciation.getArmyLists(session);
-		
+
 		AfficheSimulation.affiche(primaryStage, session);
 	}
 	public static void go_admin(Stage primaryStage,User session) { 

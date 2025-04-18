@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -39,29 +40,47 @@ public class ControllerAdmin {
         // Ouvrir le file chooser et obtenir le fichier sélectionné
         file = fileChooser.showOpenDialog(primaryStage);
         
+       boolean nomFich = true;
+        
         if (file != null) {
-        	
-        	System.out.println("Fichier sélectionné : " + file.getName());
-        	System.out.println("Chemin du fichier : " + file.getAbsolutePath());
-            
-            // Créer une nouvelle image à partir du chemin absolu du fichier
-            Image image = new Image("file:" + file.getAbsolutePath());
-            
-            // Définir l'image dans l'ImageView
-            imageView.setImage(image);
 
-            // Destination pour sauvegarder l'image
-            destinationDir = "src\\images"; 
-            File destinationFolder = new File(destinationDir);
-            
-            // Créez le répertoire s'il n'existe pas
-            if (!destinationFolder.exists()) {
-                destinationFolder.mkdirs();
-            }
-            
-            File nouveauNom = new File(file.getName());
-            destinationFile = new File(destinationFolder, nouveauNom.getName());
-            	
+        	for (int i = 0 ; i < Connexion.eventC.getNbrEvt();i++) {
+        		
+        		if (file.getName().equals(Connexion.eventC.getNom_image().get(i))) {
+        			
+        	        Alert alert = new Alert(Alert.AlertType.ERROR);
+        	        alert.setTitle("StatHammer : Nom d'image déjà existant");
+        	        alert.setHeaderText(null);
+        	        alert.setContentText("Le nom de l'image est déjà prise.");
+        	        alert.showAndWait();
+        	        nomFich = false;
+        	        
+        		}
+        	}
+        	if (nomFich) {
+            	System.out.println("Fichier sélectionné : " + file.getName());
+            	System.out.println("Chemin du fichier : " + file.getAbsolutePath());
+                
+                // Créer une nouvelle image à partir du chemin absolu du fichier
+                Image image = new Image("file:" + file.getAbsolutePath());
+                
+                // Définir l'image dans l'ImageView
+                imageView.setImage(image);
+
+                // Destination pour sauvegarder l'image
+                destinationDir = "src\\images"; 
+                File destinationFolder = new File(destinationDir);
+                
+                // Créez le répertoire s'il n'existe pas
+                if (!destinationFolder.exists()) {
+                    destinationFolder.mkdirs();
+                }
+                
+                File nouveauNom = new File(file.getName());
+                destinationFile = new File(destinationFolder, nouveauNom.getName());
+                		
+        	}
+
         }
 	}
 	
