@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="css/main.css">
 <title>CreerListe</title>
 </head>
+<%@ include file="barreNav.jsp" %>
 <body>
 	<form action="AiguillageServlet" method="get">
 		
