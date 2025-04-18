@@ -44,6 +44,7 @@ public class ConnexionController extends HttpServlet {
 
 		BDD.setInfos("400129", "stathammer_greta_admin", "stathammer_v1");
 		BDD conec = new BDD();
+		System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 
 		try {
 			// Authentification
@@ -75,17 +76,20 @@ public class ConnexionController extends HttpServlet {
 					System.out.println("Date : " + evt.getData_evenement());
 					System.out.println("-------------------------");
 				}
-
+				conec.close();
+				System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 				response.sendRedirect("AccueilView");
 			} else {
 				// Authentification échouée
+				conec.close();
+				System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 				response.sendRedirect("connexionFailed.jsp");
 			}
 		} catch (Exception e) {
+			conec.close();
+			System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 			e.printStackTrace();
 			response.sendRedirect("connexionFailed.jsp");
-		} finally {
-			conec.close();
 		}
 	}
 
@@ -111,18 +115,24 @@ public class ConnexionController extends HttpServlet {
 	
 	public static void updatePseudo(String pseudo,int id) throws SQLException {
 		BDD conec = new BDD();
+		System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 		conec.updateUtilisateur(pseudo,id);
 		conec.close();
+		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 	}
 	public static void updateMdp(String mdp,int id) throws SQLException {
 		BDD conec = new BDD();
+		System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 		conec.updateMp(mdp,id);
 		conec.close();
+		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 	}
 	public static String selectMdp(int id) throws SQLException {
 		BDD conec = new BDD();
+		System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 		String mdp =conec.UtilisateurMdp(id);
 		conec.close();
+		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 		return mdp;
 	}
 }

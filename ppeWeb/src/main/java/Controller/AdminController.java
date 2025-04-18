@@ -106,6 +106,7 @@ public class AdminController extends HttpServlet {
 		// Créer une instance de BDD
 		
 		BDD bdd = new BDD();
+		System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 		try {
 		    // Requête SQL
 		    String sql = "DELETE FROM evenement WHERE nom_evenement = ?";  // Requête DELETE
@@ -134,6 +135,7 @@ public class AdminController extends HttpServlet {
 		} finally {
 		    // Être sûr de fermer la connexion à la base de données
 		    bdd.close();
+			System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 		}
 		
 	}
@@ -158,6 +160,7 @@ public class AdminController extends HttpServlet {
 	    public static void insererEvenement(Evenement evt, HttpSession session) {
 	        // Créer une instance de BDD
 	        BDD bdd = new BDD();
+			System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 	        try {
 	            // Requête SQL
 	            String sql = "INSERT INTO evenement (nom_evenement, nom_image, description_evenement, date_evenement, id_utilisateur) VALUES (?, ?, ?, ?, 3)";  // Requête
@@ -180,6 +183,7 @@ public class AdminController extends HttpServlet {
 	        } finally {
 	            // Être sûr de fermer la connexion à la base de données
 	            bdd.close();
+	    		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 	        }
 	    }
 
