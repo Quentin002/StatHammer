@@ -35,6 +35,13 @@ public class ArmeeListe {
         this.idArmee = idArmee;
         this.idUtilisateur = idUtilisateur;
     }
+    
+    public ArmeeListe(int id, int idArmee, String nom, String description) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.idArmee = idArmee;
+    }
 
 
 	public int getIdListe() { return id; }
