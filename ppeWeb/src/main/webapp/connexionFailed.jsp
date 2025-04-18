@@ -31,6 +31,6 @@
 			</table>
 		</form>
 	    <p class="quote"><b class="error">Échec de la connexion. Veuillez vérifier votre identifiant et votre mot de passe.</b></p>
-	    <script src="../js/togglePassword.js"></script>
+	    <script src="js/togglePassword.js"></script>
 	</body>
 </html>

@@ -15,7 +15,7 @@ h1 {
     text-shadow: 0 0 4px rgba(66, 165, 245, 0.3);
 }
 
-input[type="password"], input[type="text"] {
+input[type="password"], input[type="text"], input[type="date"] {
     background-color: #121225;
     border: 1px solid #3d3d5c;
     color: #e0e0e0;
@@ -25,7 +25,7 @@ input[type="password"], input[type="text"] {
     transition: border-color 0.2s ease, background-color 0.2s ease;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
+input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus {
     border-color: #5c8edc;
     background-color: #181835;
     outline: none;
