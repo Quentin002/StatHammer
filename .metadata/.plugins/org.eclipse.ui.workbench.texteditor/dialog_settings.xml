@@ -5,4 +5,9 @@
 	<list key="searchhistory">
 		<item value="liste vide ma gueule"/>
 	</list>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+		</list>
+	</section>
 </section>
