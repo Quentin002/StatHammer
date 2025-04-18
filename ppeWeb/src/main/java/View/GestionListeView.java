@@ -71,14 +71,23 @@ public class GestionListeView extends HttpServlet {
 	            } else {
 	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
 	            }
-
-	            listage.append("</div>\n");
+	            	
+	            listage.append("<div>\n")
+	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
+	            		.append("</button>\n")
+	            		.append("<button type='button' class='GestionListe_bouton'>Paramétrer\n")
+	            		.append("</button>\n")
+	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' data-army-id='")
+	            		.append(idliste)
+	            		.append("'>Supprimer</button>\n")
+	            	   .append("</div>\n")
+	            	   .append("</div>\n");
 	        }
 	    }
 	    
 	    		
 	    String body= 
-	    		"<h1>Interface de gestion des listes</h1>"
+	    		"<h1>Interface de gestion des listes</h1>\n"
 	    		+"<section class='GestionListe_structure'>\r\n"
 	    		+"<div class='bouton_placement'>"
 	    		+"<a href='AccueilView' class='bouton_gestionListe'>Retour</a>"
@@ -87,22 +96,22 @@ public class GestionListeView extends HttpServlet {
 	    		+"<div class='GestionListe_import'>"
 	    		+ listage
 	    		+"</div>"
-	    		+"</section>";
+	    		+"</section>"
+	    		+"<div class='modal_overlay modal_hidden'>"
+	    		+   "<div class='modal'>"
+	    		+     "<p id='modal_message'>Voulez-vous vraiment supprimer cette armée ?</p>"
+	    		+     "<div class='modal_actions'>"
+	    		+       "<form method='POST' action='SupprimerListe'>"
+	    		+         "<button type='submit' class='modal_btn modal_supprButton'>Supprimer</button>"
+	    		+         "<button type='button' class='modal_btn modal_retourButton'>Annuler</button>"
+	    		+       "</form>"
+	    		+     "</div>"
+	    		+   "</div>"
+	    		+ "</div>";
 	    
-	    
-	    /*
-	    ArrayList<String[]> ArmeeListe = (ArrayList<String[]>) session.getAttribute("ArmeeListe");
-	    
-	    if(ArmeeListe!= null && !ArmeeListe.isEmpty()) {
-	    	for (String[] evt : ArmeeListe) {
-	             String nomEvt = evt[0];
-	             String nomImg = evt[1];
-	             String descEvt = evt[2];
-	             String dateEvt = evt[3];
-	    	
-	    }
-	    */
-	    String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
+	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>\\n";
+	   
+	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);
 	}
 
