@@ -53,7 +53,7 @@ public class AccueilView extends HttpServlet {
 			  + "    <li><a href='BarDeNavController?action=GererListe'>Gérer listes</a></li>\r\n"
 			  + "    <li><a href='BarDeNavController?action=creaListe'>Création liste</a></li>\r\n"
 			  + "    <li><a href='BarDeNavController?action=simu'>Simulation</a></li>\r\n"
-			  + "<li style='margin-left: auto;'><a href='BarDeNavController?action=logout' class='logout-btn'><i class='fas fa-sign-out-alt'></i></a></li>\r\n"
+			  + "    <li style='margin-left: auto;'><a href='BarDeNavController?action=logout' class='logout-btn'><i class='fas fa-sign-out-alt'></i></a></li>\r\n"
 			  + "  </ul>\r\n"
 			  + "</div>\r\n";
 		
