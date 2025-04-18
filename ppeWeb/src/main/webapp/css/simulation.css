@@ -57,16 +57,22 @@ body
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 4px;
 	padding: 4px;
 }
-.units_box
+.unit_section
 {
 	width: 100%;
-	background-color: lightgreen;
 }
-.units_box button
+.unit_section button
 {
 	width: 100%;
+}
+.unit_box
+{
+	background-color: #f7f7f7; /* 50 nuances de grey */
+	border: grey solid 1px;
+	border-radius: 5px;
 }
 
 #central_col
@@ -123,15 +129,15 @@ aside p
 	color: white;
 	background-color: black;
 	border-radius: 3px;
+	text-align: center;
 	line-height: 30px;
 	width: 30px;
 	height: 30px;
 	margin-right: 4px;
 }
-#weapon_box_unit_name p
-{
-	text-align: center;
-}
+
+/*#weapon_box_unit_name p{}*/
+
 aside table
 {
 	border-collapse: collapse;
@@ -147,5 +153,15 @@ aside form *
 }
 aside form input
 {
-	width: 60%;
+	width: 40%;
+}
+#aptitudes
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+#aptitudes > div
+{
+	display: flex;
 }

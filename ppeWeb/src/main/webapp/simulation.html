@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="css/simulation.css"/>
         <script type="text/javascript" src="js/main.js"></script>
+        <script type="text/javascript" src="js/BattleData.js"></script>
         <script type="text/javascript" src="js/simulation.js"></script>
     </head>
     <body>
@@ -32,33 +33,14 @@
 					</div>
 				</div>
 
-				<!-- unités de la liste -->
+				<!-- zone des unités -->
 				<section class="units_list" id="units_list1">
-					<!-- boite à unités générées par le serveur -->
+					<!-- boite à unités récupérée par selectList -->
 				</section>
 				
 				<!-- zone des armes et aptitudes-->
-				<aside>
-					<div id="weapon_box_unit_name">
-						<p class="number">1</p><p>Initié</p>
-					</div>
-					<select id="" name="" onchange="">
-						<option value="Arme 1">Arme 1</option>
-						<option value="Arme 2">Arme 2</option>
-						<option value="Arme 3">Arme 3</option>
-						<option value="Arme 4">Arme 4</option>
-					</select>
-					<table>
-						<td>A: 2</td>
-						<td>F: 4</td>
-						<td>PA: 0</td>
-						<td>D: 1</td>
-						<td>portée: 24''</td>
-					</table>
-					<form oninput="nb_weapons_out.value = nb_weapons_in.value">
-						<input type="range" name="nb_weapons_in"out min="0" max="4" value="4">
-						<output name="nb_weapons_out">4</output>
-					</form>
+				<aside id="weapons_aptitudes_box" class="hidden">
+					<!-- boite récupérée par fetch -->
 				</aside>
 			</div>
 
@@ -68,13 +50,15 @@
     			<section id="histogramme" class="hidden">
     				Affichage de l'histogramme
     			</section>
-    			<button><img src="assets/inversion_icons.png" alt="inversion"></button>
+    			<button id="reverse_armies" onclick="reverseArmies();"><img src="assets/inversion_icons.png" alt="inversion"></button>
     		</div>
 
     		<div id="right_col">
     			<div>
 	    			<select id="right_choice_box" name="right_choice_box" onchange="selectList(2);">
 	    				<option value="" disabled selected>liste défenseuse</option>
+
+	    				<!-- options générées par le serveur à l'ouverture de la page -->
 						<option value="Liste1">Liste1</option>
 						<option value="Liste2">Liste2</option>
 						<option value="Liste3">Liste3</option>
@@ -86,7 +70,7 @@
 				
 				<!-- unités de la liste -->
 				<section class="units_list" id="units_list2">
-					<!-- boite à unités générées par le serveur -->
+					<!-- boite à unités récupérée par selectList -->
 				</section>
     		</div>
     	</div>
