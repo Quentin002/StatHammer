@@ -7,6 +7,7 @@ public class Calcul {
 	private int[] tabmort1;
 	
 
+	
 	public Calcul(int[] tabdegat1, float degat_moyen1, float mort_moyen1,int[] tabmort1) {
 		super();
 		this.tabdegat1 = tabdegat1;
@@ -14,8 +15,6 @@ public class Calcul {
 		this.mort_moyen1 = mort_moyen1;
 		this.tabmort1 = tabmort1;
 	}
-	
-	// getter set setter
 	public int[] getTabdegat1() {
 		return tabdegat1;
 	}
@@ -40,46 +39,37 @@ public class Calcul {
 	public void setTabmort1(int[] tabmort1) {
 		this.tabmort1 = tabmort1;
 	}
-	
-	// 1er jet de dé : jet pour toucher une figurine , résultat en fonction de CC ou CT
-	public static boolean jet_de_touche(boolean jet,int C){
-		// simulation lancer de dé
+	public static boolean jet_de_touche(boolean jet,int CT){
 		int d1 = (int) ((Math.random() * (7 - 1)) + 1);
-		switch(d1){
-			// si 1 echec critique
-			case 1 :
-				jet=false;
-				break;
-			// si 6 reussite critique
-			case 6 :
-				jet=true;
-				break;
-			// comparaison du dé avec CC ou CT
-			default :
-				if( d1  >= C){
-					jet=true;
+		//System.out.println(d1);
+				switch(d1){
+					case 1 :
+						jet=false;
+						break;
+					case 6 :
+						jet=true;
+						break;
+					default :
+						if( d1  >= CT){
+							jet=true;
+						}
 				}
-		}
-		// return booléen pour continuer ou non attaque
-		return jet;
-	}
-	
-	// 2eme jet de dé : jet pour blesser une figurine , résultat en fonction de force de fig attaquante et de endurance de figurine attaquée
+				//System.out.println("d1 : "+d1);
+				return jet;
+			}
 	public static boolean jet_de_blessure (boolean jet,int fo,int end){
-		// simulation lancer de dé
 		int d2 = (int) ((Math.random() * (7 - 1)) + 1);
-		
+		//System.out.println(d2);
 		switch(d2){
-			// si 1 echec critique
 			case 1 :
 				jet=false;
 				break;
-			// si 6 reussite critique	
-			case 6 :	
+			case 6 :
+				
 				jet=true;
 				break;
 			default :
-			//Comparaison entre force et endurance pour savoir si attaque blesse
+				//System.out.println(" test1 ");
 				if(fo >2*end) {
 					if(d2>=2) {
 						jet = true;
@@ -107,11 +97,10 @@ public class Calcul {
 				}
 
 			}
-		// return booléen pour continuer ou non attaque
+		//System.out.println("d2 : "+jet+" "+d2);
+		//jet = true;
 		return jet;
 		}
-	
-	// fonction pour determiner le nbr d'attaque d'une arme
 	public static int chgt_a (String a){
 		int attaque =0;
 		int d1 = (int) ((Math.random() * (7 - 1)) + 1);
@@ -142,7 +131,6 @@ public class Calcul {
 		return attaque;
 	}
 	
-	// fonction pour determiner le nbr de dégats d'une arme
 	public static int chgt_d (String d){
 		int degat =0;
 		int d1 = (int) ((Math.random() * (7 - 1)) + 1);
@@ -151,6 +139,7 @@ public class Calcul {
 		switch(d) {
 				case "D8":
 					degat = d3;
+					//System.out.println("test");
 					break;
 				case "D6":
 					degat = d1;
@@ -176,84 +165,71 @@ public class Calcul {
 		return degat;
 	}
 	
-	// 2eme jet de dé : jet de sauvegarde , pour savoir si l'armure d'une figurine la protège d'une blessure
 	public static boolean jet_de_sauvegarde (boolean block,int pa,int sv){
-		// simulation du jet de dé
 		int d3 = (int) ((Math.random() * (7 - 1)) + 1);
 		switch(d3) {
-				//echec critique la figurine adverse n'a pas réussie à se protéger
 				case 1:
 					block = false;
 				default :
-					//comparaison entre pénétration d'armure et sauvegarde
 					if ( d3 + pa < sv ){
 						block = false;
 					}
 		}
-		//// return booléen pour finaliser ou non attaque
+		//System.out.println("d3 : "+d3);
+		//block=false;
 		return block;
 	}
 			
-	// fonction simulant des battailes entre 2 unités
-	public static Calcul bataille(Model.Unit u1, Model.Unit u2){
-		
-		// Déclaration des variables
 
+	public static Calcul bataille(Unit u1, Unit u2){
+		int touche = 0;
+		int blessure = 0;
+		int degat_block = 0;
 		int complet_degat = 0;
 		float degat_moyen;
 		float mort_moyen = 0;
 		boolean dflag = false;
 		int[] tabdegat = new int[50];
-		int[] tabmort = new int[50];
 		
-		// boucle simulant 10 000 batailles
-		for (int k=0;k<10000;k++){ 
-			
+		int[] tabmort = new int[50];
+		for (int k=0;k<10000;k++){ //simulation 100000
 			int sum_degat = 0;
 			int adv = 0;
 			int pvE=u2.getFigurines().get(adv).getHP();
 			int mort = 0;
-			
-			// boucle parcourant les figurines d'une unité
-			for (int j=0; j<u1.getFigurines().size();j++){ 
-				// si figurine non morte 
+			for (int j=0; j<u1.getFigurines().size();j++){ // pour chaque figurine
 				if(u1.getFigurines().get(j).getHP()>0) {
 					int attaque = chgt_a(u1.getFigurines().get(j).getSelectedWeapon().getA());
-					
-					// Condition permettant d'attaquer une nouvelle figurine
 					while(pvE  <=0 && adv+1<u2.getFigurines().size()) {	 
 			            adv=adv+1;
 			            pvE=u2.getFigurines().get(adv).getHP();
 			     
 					}
-					
-					// boucle correspondant au nbr d'attaques par armes
-					for(int i=0 ;i<attaque;i++ ){
+					for(int i=0 ;i<attaque;i++ ){ //nbr attq par arme
 						dflag = false;
 						boolean jet1=false;
 						boolean jet2=false;
 						boolean block=true;
-
-						// fonction pour jet de touche
+						//System.out.println("F : "+u1.getList_unit().get(j).ees().get(1).getF()*u2.getList_unit().get(adv).getE());
+						//System.out.println("E : "+u2.getList_unit().get(adv).getE());
+	
 						jet1=jet_de_touche(jet1,(u1.getFigurines().get(j).getSelectedWeapon().getC()));
-							
-							// si attaque touche
+	
+						//apptitude relancer
 							if(jet1==true){
-								// fonction pour jet de blessure
+								touche = touche + 1;
 								jet2=jet_de_blessure(jet2,u1.getFigurines().get(j).getSelectedWeapon().getF(),u2.getFigurines().get(adv).getE());
+								//apptitude relancer
 							}
-							
-							// si blessure 
 							if(jet2==true){
+								blessure = blessure + 1;
 								block=jet_de_sauvegarde(block,u1.getFigurines().get(j).getSelectedWeapon().getPA(),u2.getFigurines().get(adv).getSV());
-								
-								// si jet de sauvegarde echec et fig adverse à des HP
+								//apptitude relancer
+								//apptitude insensible_douleur
 								if(block==false && pvE >0){
-									
 									int degat= chgt_d((u1.getFigurines().get(j).getSelectedWeapon().getD()));
-									pvE=pvE - degat  ;
 									
-									// Calcul des dégats effectués par une attaque
+									pvE=pvE - degat  ;
 									if(pvE<0) {
 										sum_degat = sum_degat + degat + pvE;
 										complet_degat = complet_degat +degat +pvE;
@@ -263,11 +239,12 @@ public class Calcul {
 										complet_degat = degat+complet_degat;
 									}
 									
-									// booléen pour indiquer une mort possible
+	
 									dflag = true;
 								}
-								
-								// compteur du nbr de mort
+								if(block == true) {
+									degat_block = degat_block + 1;
+								}
 								if(pvE  <=0 && dflag == true ) {
 									mort = mort+1;
 									mort_moyen = mort_moyen+1;
@@ -275,7 +252,6 @@ public class Calcul {
 							}
 						}
 					}
-					// si fig mort changement de prochaine cible
 					if(pvE  <=0 ) {
 					if (adv+1<u2.getFigurines().size()){	 
 			            adv=adv+1;
@@ -284,16 +260,22 @@ public class Calcul {
 					}
 				}
 			}
-			// compteurs des sommes des dégats et du nbr de mort par bataille
 			tabdegat[sum_degat] ++;
 			tabmort[mort] ++;
 		}
 		
-		//calcul des degat et mort moyen
 		degat_moyen =(float)complet_degat/10000;
 		mort_moyen = (float)mort_moyen/10000;
-
-		// Instanciation de Calucl (données pour histogramme ) 
+		System.out.println("nbr touche :"+touche);
+		System.out.println("nbr blessure :"+blessure);
+		System.out.println("degat bloquer :"+degat_block);
+		System.out.println("degat moyen : "+ degat_moyen);
+		System.out.println("mort moyen : "+mort_moyen);
+		for(int i=0;i<50;i++) {
+			if(tabdegat[i]!=0) {
+				System.out.println(tabdegat[i]);
+			}
+		}
 		Calcul c1 = new Calcul(tabdegat,degat_moyen,mort_moyen,tabmort);
 		return c1;	       
 	}

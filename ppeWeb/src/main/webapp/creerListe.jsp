@@ -1,4 +1,4 @@
-<%@page import="controlleur.StockageCreerListe"%>
+<%@page import="Controller.StockageCreerListe"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,7 +15,6 @@
             <tr>
                 <td>
                     <input type="submit" name="creer" value="Créer une liste" />
-                    <br>
                     <input type="text" name="nomListe"/>
                     
                     <%
@@ -60,7 +59,8 @@
 					for(String name:StockageCreerListe.getArmeeListe().getUnitNames()){
 						
 					%>
-					<input type="submit"name="moins" value="<%=name %>" >-</input><%=name %><br>
+					<input type="submit"name="moins" value="<%=name %>" />
+                    <br>
 					<%
 					}
 					%>
