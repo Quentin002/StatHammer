@@ -43,14 +43,16 @@ public class AdminView extends HttpServlet {
 	     body.append("<div class='container'>\r\n")
 		     .append("  <div class='left-panel'>\r\n")
 		     .append("   <form method='post' action=\"" + action + "\" enctype=\"multipart/form-data\">\r\n")
-		     .append("       <label for='nom'>Nom :</label><br/>\r\n")
-		     .append("       <input type='text' name='nom' required/><br/><br/>\r\n")
-		     .append("       <label for='desc'>Description :</label><br/>\r\n")
-		     .append("       <input type='text' name='desc' required/><br/><br/>\r\n")
-		     .append("       <label for='date'>Date :</label><br/>\r\n")
-		     .append("       <input type='date' name='date' required/><br/><br/>\r\n")
-		     .append("       <label for='image'>Image :</label><br/>\r\n")
-		     .append("       <input type='file' name='image' accept='image/*' required/><br/><br/>\r\n")
+		     .append("       <label for='nom'>Nom :</label>\r\n")
+		     .append("       <input type='text' name='nom' required/>\r\n")
+		     .append("       <label for='desc'>Description :</label>\r\n")
+		     .append("       <input type='text' name='desc' required/>\r\n")
+		     .append("       <label for='date'>Date :</label>\r\n")
+		     .append("       <input type='date' name='date' required/>\r\n")
+		     .append("       <div class='custom-file'>\r\n")
+		     .append("           <input type='file' id='imageUpload' name='image' accept='image/*' required />\r\n")
+		     .append("           <label for='imageUpload'>Choisir une image</label>\r\n")
+		     .append("       </div><br/>\r\n")
 		     .append("       <input type='submit' value='Créer évènement'/>\r\n")
 		     .append("   </form>\r\n")
 		     .append("  </div>\r\n");
@@ -78,12 +80,17 @@ public class AdminView extends HttpServlet {
 	             .append("<a href='AdminController?supprEvt=").append(i).append("'>")
 	             .append("<i class='fas fa-trash-alt' style='padding-left : 8px;'></i>")
 	             .append("</a>")
+	             .append("<span class='image-preview'>")
+	             .append("<i class='fas fa-eye' style='padding-left: 10px; cursor: pointer;'></i>")
+	             .append("<img src='img/").append(nomImg).append("' class='thumbnail' />")
+	             .append("</span>")
 	             .append("</div>");
 	         
 	     }
 	     
 	     body.append("  </div>\r\n")
-		 	 .append("</div>\r\n");
+		 	 .append("</div>\r\n")
+		 	 .append("<script src='js/evtMontrerNom.js'></script>\n");;
      
 		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
 		

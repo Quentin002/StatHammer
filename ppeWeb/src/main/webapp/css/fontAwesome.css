@@ -18,3 +18,29 @@
 .evt-item .delete-link:hover {
     color: #a71d2a;
 }
+
+/*  ************ pour les images miniatures au srvol de l'oeil ****************** */
+.image-preview {
+    position: relative;
+    display: inline-block;
+}
+
+.image-preview .thumbnail {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: -100px;
+    width: 150px;
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 5px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.image-preview:hover .thumbnail {
+    display: block;
+    opacity: 1;
+}
