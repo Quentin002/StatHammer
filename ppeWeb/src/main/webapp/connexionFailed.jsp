@@ -5,6 +5,7 @@
 	    <meta charset="UTF-8">
 	    <title>StatHammer : Connexion échouée</title>
 		<link rel="stylesheet" href="css/main.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 	</head>
 	<body>
 	    <form class="login-form" enctype="application/x-www-form-urlencoded" action="ConnexionController" method=POST>
@@ -19,6 +20,7 @@
 						<div class="password-wrapper">
 					    	<input type="password" size="20" name="mdp" id="password">
 					    	<i class="fa-solid fa-eye" id="togglePassword"></i>
+					    	
 						</div>
 					</td>
 				</tr>
