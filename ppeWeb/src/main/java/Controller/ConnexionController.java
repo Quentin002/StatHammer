@@ -78,7 +78,7 @@ public class ConnexionController extends HttpServlet {
 				}
 				conec.close();
 				System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
-				response.sendRedirect("AccueilView");
+				response.sendRedirect("accueil");
 			} else {
 				// Authentification échouée
 				conec.close();

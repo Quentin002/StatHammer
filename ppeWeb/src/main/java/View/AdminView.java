@@ -13,7 +13,7 @@ import java.util.List;
 import Model.Evenement;
 
 
-@WebServlet("/AdminView")
+@WebServlet("/evenements")
 @MultipartConfig
 public class AdminView extends HttpServlet {
 	private static final long serialVersionUID = 1L;

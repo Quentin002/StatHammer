@@ -63,7 +63,7 @@ public class AdminController extends HttpServlet {
 	         
 	    }
         
-         response.sendRedirect("AdminView");
+         response.sendRedirect("evenements");
 		
 	}
 
@@ -98,7 +98,7 @@ public class AdminController extends HttpServlet {
 		        Evenement newEvt = new Evenement(nom_evt, fileName, desc_evt, date_evt);
 		        insererEvenement(newEvt, session);
 		    }	
-		    response.sendRedirect("AdminView");
+		    response.sendRedirect("evenements");
 
 	}
 	

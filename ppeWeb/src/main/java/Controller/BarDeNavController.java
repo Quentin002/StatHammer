@@ -40,10 +40,10 @@ public class BarDeNavController extends HttpServlet {
 			
 			switch (action) {
 				case "accueil":
-					response.sendRedirect("AccueilView");
+					response.sendRedirect("accueil");
 					break;
 				case "admin":
-					response.sendRedirect("AdminView");
+					response.sendRedirect("evenements");
 					break;
 				case "Compte":
 					response.sendRedirect("GestionCompteView");
@@ -51,15 +51,15 @@ public class BarDeNavController extends HttpServlet {
 				case "logout":
 					session.invalidate();
 					session = null;
-					response.sendRedirect("ConnexionView");
+					response.sendRedirect("connexion");
 					break;
 				default:
-					response.sendRedirect("AccueilView");
+					response.sendRedirect("accueil");
 					break;
 			}
 		} else {
 			// Rediriger vers une page de connexion ou erreur
-			response.sendRedirect("ConnexionView");
+			response.sendRedirect("connexion");
 		}
 	}
 

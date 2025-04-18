@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import Model.Evenement;
 
 
-@WebServlet("/AccueilView")
+@WebServlet("/accueil")
 public class AccueilView extends HttpServlet {
  public static String barDeNav;
  private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class AccueilView extends HttpServlet {
  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      HttpSession session = request.getSession(false);
      if (session == null || session.getAttribute("nom") == null) {
-         response.sendRedirect("ConnexionView");
+         response.sendRedirect("connexion");
          return;
      }
 
