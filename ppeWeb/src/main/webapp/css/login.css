@@ -1,19 +1,74 @@
 .login-form {
     background-color: #1a1a2e;
-    border: 1px solid #3c3c5c;
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.25);
+    border: 1px solid #2d2d44;
     padding: 25px;
     border-radius: 8px;
     max-width: 400px;
     margin: 40px auto;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Champs de saisie */
 .login-form input[type="text"],
-.login-form input[type="password"],
+.login-form input[type="password"] {
+    background-color: #121225;
+    border: 1px solid #3d3d5c;
+    color: #e0e0e0;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 16px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    border-color: #5c8edc;
+    background-color: #181835;
+    outline: none;
+}
+
+/* Bouton */
 .login-form input[type="submit"] {
+    background-color: #5c8edc;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #466cb3;
+}
+
+/* Wrapper input + œil */
+.password-wrapper {
+    position: relative;
+    display: block;
     width: 100%;
-    padding: 10px;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-wrapper i {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s ease;
+}
+
+.password-wrapper i:hover {
+    color: #ccc;
 }

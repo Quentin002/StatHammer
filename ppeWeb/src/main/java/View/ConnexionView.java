@@ -59,18 +59,24 @@ public class ConnexionView extends HttpServlet {
 			    + "					<td><input type=text size=20 name=login></td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
-			    + "					<td>Mot de passe </td>"
-			    + "					<td><input type=password size=20 name=mdp></td>"
+				+ "					<td>Mot de passe </td>"
+				+ "					<td>"
+				+ "                      <div class=\"password-wrapper\">"
+				+ "                          <input type=\"password\" size=\"20\" name=\"mdp\" id=\"password\">"
+				+ "                          <i class=\"fa-solid fa-eye\" id=\"togglePassword\"></i>"
+				+ "                      </div>"
+				+ "                  </td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
 			    + "					<td colspan=\"2\"height='100'><center><input type=submit value=\"Connexion\"></center></td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
-			    + "					<td colspan=\"2\" height='10'><a href='http://localhost:8080/ppeWeb/CreationCompteView'><center>Vous ne possédez pas de compte ,créez-en un !</center></a></td>"
+			    + "					<td colspan=\"2\" height='10'><a href='CreationCompteView'><center>Vous ne possédez pas de compte ,créez-en un !</center></a></td>"
 				+ "		 		</tr>"			    
 				+ "		 	</table>"
 			    + "		</form>"
-				+ "     <p class=\"quote\">\"Le sot fait confiance à la chance, le sage s'en remet à StatHammer.\"</p>";
+				+ "     <p class=\"quote\">\"Le sot fait confiance à la chance, le sage s'en remet à StatHammer.\"</p>"
+			    + "     <script src=\"js/togglePassword.js\"></script>\n";
 
 		
 		footer =
