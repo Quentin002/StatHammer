@@ -16,6 +16,12 @@
     display: flex;
     justify-content: center;
     background-color: transparent;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.barDeNav ul li:last-child {
+    margin-left: auto;
 }
 
 .barDeNav ul li {
@@ -38,4 +44,18 @@
     background-color: rgba(255, 255, 255, 0.05);
     color: #42a5f5;
     border-bottom: 2px solid #42a5f5;
+}
+
+/* **************** Pour le bouton Déconnexion ************** */
+.logout-item {
+    margin-left: auto;
+}
+
+.logout-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #e0e0e0 !important;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
 }
