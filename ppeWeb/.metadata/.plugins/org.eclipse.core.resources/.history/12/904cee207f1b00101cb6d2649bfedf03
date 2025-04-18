@@ -1,0 +1,33 @@
+<%@page import="controlleur.StockageCreerListe"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CreerListe</title>
+</head>
+
+	<iframe
+	  id="Menu"
+	  title="Menu"
+	  width="100%"
+	  height="50"
+	  src="creerListeDroite.jsp">
+	</iframe>
+    <iframe
+	  id="creerListeGauche"
+	  title="CreerListe"
+	  width="50%"
+	  height="500"
+	  src="creerListeGauche.jsp">
+	</iframe>
+	 <iframe
+	  id="creerListeDroite"
+	  title="CreerListe"
+	  width="49%"
+	  height="500"
+	  src="creerListeDroite.jsp">
+	</iframe>
+
+</html>

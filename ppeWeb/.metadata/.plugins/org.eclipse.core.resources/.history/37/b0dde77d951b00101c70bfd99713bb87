@@ -1,0 +1,72 @@
+<%@page import="controlleur.StockageCreerListe"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="WEB-IN/lib/voldecss.css">
+<title>CreerListe</title>
+</head>
+<body>
+	<form action="AiguillageServlet" method="get">
+		
+ 		<table>
+            <tr>
+                <td>
+                    <input type="submit" name="creer" value="Créer une liste" />
+                    <input type="text" name="nomListe"/>
+                    
+                    <%
+                    for(String nom:StockageCreerListe.getNomFac()){
+                    	%>
+                     <button type="submit" name="faction" value="<%=nom %>"><%=nom %></button>
+                    <%
+                    }
+                    %>
+
+                    
+                </td>
+                <td rowspan=4>
+                <%
+              for(String nom:StockageCreerListe.getNomUnit()){
+              	%>
+               <button type="submit" name="plus" value="<%=nom %>" >+</button><%= nom %><br>
+              <%
+              }
+              %>
+                </td>
+               
+            </tr>
+            <tr>
+                <td>
+                    
+                        <%
+                    for(String nom:StockageCreerListe.getNomArmee()){
+                    	%>
+                     <button type="submit" name="armee" value="<%=nom %>"><%=nom %></button>
+                    <%
+                    }
+                    %>
+                    
+                </td>
+                
+            </tr>
+             <tr>
+                <td>
+					<%
+					for(String name:StockageCreerListe.getArmeeListe().getUnitNames()){
+						
+					%>
+					<button type="submit"name="moins" value="<%=name %>" >-</button><%=name %><br>
+					<%
+					}
+					%>
+                </td>
+              
+            </tr>
+		</table>
+
+	</form>
+</body>
+</html>
