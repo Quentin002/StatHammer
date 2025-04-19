@@ -32,8 +32,7 @@ public class ConnexionView extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String titre = "StatHammer : Connexion";
-		String action = "ConnexionController";
-		
+	
 		headerTop = 
 			  "<!DOCTYPE HTML>\r\n"
 			+ "<html>\r\n"
@@ -51,14 +50,14 @@ public class ConnexionView extends HttpServlet {
 		String header = headerTop + titre + headerBottom;
 		
 		String form = 
-				  "		<form class=\"login-form\" enctype=\"application/x-www-form-urlencoded\" action=\"" + action + "\" method=POST>"
+				  "		<form class=\"login-form\" enctype=\"application/x-www-form-urlencoded\" action=\"ConnexionController\" method=POST>"
 				+ "		 	<table>"
 				+ "		 		<tr>"
 			    + "					<td>Login </td>"
 			    + "					<td><input type=text size=20 name=login></td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
-				+ "					<td>Mot de passe </td>"
+				+ "					<td>Mot de passe</td>"
 				+ "					<td>"
 				+ "                      <div class=\"password-wrapper\">"
 				+ "                          <input type=\"password\" size=\"20\" name=\"mdp\" id=\"password\">"
@@ -70,7 +69,7 @@ public class ConnexionView extends HttpServlet {
 			    + "					<td colspan=\"2\"height='100'><center><input type=submit value=\"Connexion\"></center></td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
-			    + "					<td colspan=\"2\" height='10'><a href='CreationCompteView'><center>Vous ne possédez pas de compte ,créez-en un !</center></a></td>"
+			    + "					<td colspan=\"2\" height='10'><a href='creer-compte'><center>Vous ne possédez pas de compte ,créez-en un !</center></a></td>"
 				+ "		 		</tr>"			    
 				+ "		 	</table>"
 			    + "		</form>"
@@ -79,7 +78,7 @@ public class ConnexionView extends HttpServlet {
 
 		
 		footer =
-				"	</body>\r\n"
+				  "	</body>\r\n"
 				+ "</html>";
 		
 		

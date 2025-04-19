@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 /**
  * Servlet implementation class CreationCompteView
  */
-@WebServlet("/CreationCompteView")
+@WebServlet("/creer-compte")
 public class CreationCompteView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -49,7 +49,7 @@ public class CreationCompteView extends HttpServlet {
 					+"<td><input type=password size='100' name=mdp></td>"
 					 +"</form>"
 					 +"<tr><td colspan='2' height='100'><input type=submit class='buttonGcompte' value='Envoyer'></td></tr>"
-					 +"<form enctype='application/x-www-form-urlencoded\' action='ConnexionView' method=POST>"
+					 +"<form enctype='application/x-www-form-urlencoded\' action='connexion' method=POST>"
 					 +"<tr><td colspan='2'><input type=submit class='buttonGcompte' value='Retour'></td></tr>"
 					 +"</form>"
 					 +"</table>"

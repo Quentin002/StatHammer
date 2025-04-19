@@ -10,11 +10,11 @@
 	    <form class="login-form" enctype="application/x-www-form-urlencoded" action="ConnexionController" method=POST>
 			<table>
 				<tr>
-				    <td>Login </td>
+				    <td>Login</td>
 				    <td><input type=text size=20 name=login></td>
 				</tr>
 				<tr>
-					<td>Mot de passe </td>
+					<td>Mot de passe</td>
 					<td>
 						<div class="password-wrapper">
 					    	<input type="password" size="20" name="mdp" id="password">
