@@ -72,11 +72,10 @@ public class GestionListeView extends HttpServlet {
 	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
 	            }
 	            	
-	            listage.append("<div>\n")
+	            listage.append("<div class='GestionListe'>\n")
 	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
 	            		.append("</button>\n")
-	            		.append("<button type='button' class='GestionListe_bouton'>Paramétrer\n")
-	            		.append("</button>\n")
+	            		.append("<a href='ModificationListe?id=").append(idliste).append("' class='GestionListe_bouton'>Paramétrer</a>\n")
 	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' id='")
 	            		.append(idliste)
 	            		.append("'>Supprimer</button>\n")
@@ -109,7 +108,7 @@ public class GestionListeView extends HttpServlet {
 	    		+   "</div>"
 	    		+ "</div>";
 	    
-	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>\\n";
+	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>";
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);
