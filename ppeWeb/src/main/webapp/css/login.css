@@ -13,6 +13,7 @@
 
 /* Bouton */
 .login-form input[type="submit"] {
+	all: unset;
     background-color: #5c8edc;
     border: none;
     color: white;
@@ -23,6 +24,19 @@
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
+
+#btnDisabled {
+    all: unset;
+    background-color: grey;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: not-allowed;
+}
+
 
 .login-form input[type="submit"]:hover {
     background-color: #466cb3;

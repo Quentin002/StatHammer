@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import Model.Evenement;
 
 
-@WebServlet("/AccueilView")
+@WebServlet("/accueil")
 public class AccueilView extends HttpServlet {
  public static String barDeNav;
  private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class AccueilView extends HttpServlet {
  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      HttpSession session = request.getSession(false);
      if (session == null || session.getAttribute("nom") == null) {
-         response.sendRedirect("ConnexionView");
+         response.sendRedirect("connexion");
          return;
      }
 
@@ -53,7 +53,7 @@ public class AccueilView extends HttpServlet {
 			  + "    <li><a href='BarDeNavController?action=GererListe'>Gérer listes</a></li>\r\n"
 			  + "    <li><a href='BarDeNavController?action=creaListe'>Création liste</a></li>\r\n"
 			  + "    <li><a href='BarDeNavController?action=simu'>Simulation</a></li>\r\n"
-			  + "<li style='margin-left: auto;'><a href='BarDeNavController?action=logout' class='logout-btn'><i class='fas fa-sign-out-alt'></i></a></li>\r\n"
+			  + "    <li style='margin-left: auto;'><a href='BarDeNavController?action=logout' class='logout-btn'><i class='fas fa-sign-out-alt'></i></a></li>\r\n"
 			  + "  </ul>\r\n"
 			  + "</div>\r\n";
 		

@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 /**
  * Servlet implementation class GestionCompteView
  */
-@WebServlet("/GestionCompteView")
+@WebServlet("/compte")
 public class GestionCompteView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,7 +32,7 @@ public class GestionCompteView extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");

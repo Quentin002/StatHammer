@@ -47,17 +47,18 @@ public class ControllerCreationCompte extends HttpServlet {
 		if(pseudo != null && pseudo.isEmpty()==false && pseudo.contains(" ")==false &&
 		mdp != null && mdp.isEmpty()==false && mdp.contains(" ")==false	&&
 		email != null && email.isEmpty()==false && email.contains(" ")==false) {
-		
+			
+			BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");		
 			BDD conec = new BDD();
-			BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");
+
 			mdp = Integer.toString(mdp.hashCode());
 			conec.creerUtilisateur(email, pseudo, mdp);
 			conec.close();
-			response.sendRedirect("http://localhost:8080/ppeWeb/ConnexionView");
+			response.sendRedirect("connexion");
 
 		}
 		else {
-			response.sendRedirect("http://localhost:8080/ppeWeb/CreationCompteView");
+			response.sendRedirect("creer-compte");
 		}		
 	}
 }
