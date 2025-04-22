@@ -38,7 +38,7 @@ public class ArmeeListe
         this.data = data;
         this.idUtilisateur = idUtilisateur;
     }
-	
+
 	public int getIdListe() { return id; }
     public String getNomListe() { return nom; }
     public String getDescriptionListe() { return description; }
