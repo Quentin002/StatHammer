@@ -99,6 +99,7 @@ public class AfficheCreerListe {
 			gaucheUnit.getChildren().clear();
 			//verification que l'unité ne fait pas déjà parti de l'armée en cours de création
 			if(!StockageCreerListe.getArmeeListe().getUnits().contains(StockageCreerListe.getUnit(unit))) {
+				StockageCreerListe.getUnit(unit).setFigurine(Instanciation.getFigurine2(unit)) ;
 				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
 			}
 			
@@ -130,6 +131,7 @@ public class AfficheCreerListe {
 				gaucheUnit.getChildren().clear();
 				
 				if(!StockageCreerListe.getArmeeListe().getUnits().contains(StockageCreerListe.getUnit(unit))) {
+					StockageCreerListe.getUnit(unit).setFigurine(Instanciation.getFigurine2(unit)) ;
 					StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(unit));
 				}
 				for(String unit2:StockageCreerListe.getArmeeListe().getUnitNames()) {

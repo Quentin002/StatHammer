@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 import application.Battle;
 import modele.Aptitude;
 import modele.AptitudeArme;
@@ -98,6 +99,30 @@ public class Instanciation {
 		conec.close();
 		return rendu;
 	}
+	
+	public static ArrayList<Unit> getUniteOfArmyLimited(Armee armee){
+		ArrayList<Unit> rendu = new ArrayList<Unit>();
+		ArrayList<String> nom = new ArrayList<String>();
+		try {
+			conec = new BDD();
+			nom = conec.select("SELECT u.id_unite, u.nom_unite,  u.points_unite,u.logo_unite FROM unite u JOIN armee a USING (id_armee) WHERE a.nom_armee = ? LIMIT 20;",armee.getName() );
+			
+			
+			for (int i = 0;i<nom.size();i = i+4) {
+				rendu.add(new Unit(null,Integer.parseInt(nom.get(i)),nom.get(i+1), Integer.parseInt(nom.get(i+2)),nom.get(i+3),armee));
+			}
+			
+			
+			
+			
+		}catch(SQLException e) {
+			
+		}
+		conec.close();
+		return rendu;
+	}
+	
+	
 	public static void getArmyLists(User session)
 	{
 		conec = new BDD();
@@ -163,6 +188,32 @@ public class Instanciation {
 			
 		}
 		
+		return rendu;
+	}
+	
+	public static ArrayList<Figurine> getFigurine2(String unitName){
+		ArrayList<Figurine> rendu = new ArrayList<Figurine>();
+		ArrayList<String> temp = new ArrayList<String>();
+		try {
+			conec = new BDD();
+			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine FROM figurine f "
+					+ "JOIN remplir r USING (id_figurine) JOIN unite u USING(id_unite) WHERE u.nom_unite = ?;",unitName );
+			
+			
+			for (int i = 0;i<temp.size();i = i+8) {
+				for (int j =0;j< Integer.parseInt(temp.get(7));j++) {
+					rendu.add(new Figurine(Instanciation.getArme(temp.get(i)),Instanciation.getAptitude(temp.get(i)),temp.get(i),"",temp.get(i+1),Integer.parseInt(temp.get(i+2)),Integer.parseInt(temp.get(i+3)),Integer.parseInt(temp.get(i+4)),Integer.parseInt(temp.get(i+5)),Integer.parseInt(temp.get(i+6))));
+			
+				}
+			}
+			
+			
+			
+			
+		}catch(SQLException e) {
+			
+		}
+		conec.close();
 		return rendu;
 	}
 	
