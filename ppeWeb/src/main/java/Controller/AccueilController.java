@@ -32,7 +32,7 @@ public class AccueilController extends HttpServlet {
 		// TODO Auto-generated method stub
 	    HttpSession session=request.getSession(false);
 	    if (session!=null) {
-	    	response.sendRedirect("AccueilView");
+	    	response.sendRedirect("accueil");
 	    }
 	    else {
 	    	response.sendRedirect("ConnexionView");
