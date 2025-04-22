@@ -40,7 +40,7 @@ public class GestionListeView extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
+		ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
 		
 	             
 		String titre = "StatHammer : Gestion compte";
@@ -109,7 +109,7 @@ public class GestionListeView extends HttpServlet {
 	    		+   "</div>"
 	    		+ "</div>";
 	    
-	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>\\n";
+	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>\n";
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);
