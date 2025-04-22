@@ -69,7 +69,7 @@ public class ConnexionView extends HttpServlet {
 			    + "					<td colspan=\"2\" height='100'><center><input type=submit value=\"Connexion\"></center></td>"
 				+ "		 		</tr>"
 				+ "		 		<tr>"
-			    + "					<td colspan=\"2\" height='10'><a class='lien' href='creer-compte'><center>Vous ne possédez pas de compte, créez-en un !</center></a></td>"
+			    + "					<td colspan=\"2\" height='10'><a class='lien' href='creer-compte'><center>Vous ne possédez pas de compte ? Créez-en un !</center></a></td>"
 				+ "		 		</tr>"			    
 				+ "		 	</table>"
 			    + "		</form>"
