@@ -65,8 +65,8 @@ public class ConnexionController extends HttpServlet {
 				// Chargement des événements
 				chargerEvenements(conec,session);
 				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
-				// Debug : affichage console
 				
+				// Debug : affichage console				
 				System.out.println("Événements stockés en session :");
 				for (int i = 0; i < evenements.size(); i++) {
 					Evenement evt = evenements.get(i);
