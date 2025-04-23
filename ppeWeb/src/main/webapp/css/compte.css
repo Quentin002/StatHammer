@@ -2,7 +2,9 @@
 	text-align: center;
 	border-spacing: 2px;
 	}
-
+a {
+	color: #f0f0f0;
+}
 .buttonGcompte {
 	width: 300px;
 }
