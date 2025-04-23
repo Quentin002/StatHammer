@@ -139,6 +139,11 @@ public class ConnexionController extends HttpServlet {
 		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 		return mdp;
 	}
+	public static void suppressionListe(String idListe) throws SQLException{
+		BDD conec = new BDD();
+		conec.SuppressionListe(idListe);
+		conec.close();
+	}
 	private ArrayList<Model.ArmeeListe> chargerListes(BDD conec, HttpSession session) throws SQLException{
 		ArrayList<Model.ArmeeListe> listes = new ArrayList<>();
 		String sql = "SELECT l.id_liste, l.nom_liste, l.description_liste, u.nom_unite, u.id_armee\r\n"

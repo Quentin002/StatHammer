@@ -330,4 +330,15 @@ public class BDD {
 		}
 
 	}
+	public void SuppressionListe(String idListe){
+		
+		try{
+			PreparedStatement ps = connec.prepareStatement("DELETE FROM liste WHERE id_liste=?");
+	        ps.setString(1, idListe);
+	        ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+}
 }
