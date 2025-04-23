@@ -3,6 +3,8 @@ package modele;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
 public class Unit {
 	
 	private ArrayList<Figurine> figurines;
@@ -70,6 +72,10 @@ public class Unit {
 	}
 	public Armee getArmee() {
 		return armee;
+	}
+	
+	public void setFigurine(ArrayList<Figurine> liste) {
+		figurines = liste;
 	}
 	
 	private void makeIdenticalFigsGroups() {

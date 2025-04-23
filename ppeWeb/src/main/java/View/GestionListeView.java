@@ -34,7 +34,7 @@ public class GestionListeView extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("connexion");
+            response.sendRedirect("ConnexionView");
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -72,11 +72,10 @@ public class GestionListeView extends HttpServlet {
 	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
 	            }
 	            	
-	            listage.append("<div>\n")
+	            listage.append("<div class='GestionListe'>\n")
 	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
 	            		.append("</button>\n")
-	            		.append("<button type='button' class='GestionListe_bouton'>Paramétrer\n")
-	            		.append("</button>\n")
+	            		.append("<a href='ModificationListe?id=").append(idliste).append("' class='GestionListe_bouton'>Paramétrer</a>\n")
 	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' id='")
 	            		.append(idliste)
 	            		.append("'>Supprimer</button>\n")
@@ -90,7 +89,7 @@ public class GestionListeView extends HttpServlet {
 	    		"<h1>Interface de gestion des listes</h1>\n"
 	    		+"<section class='GestionListe_structure'>\r\n"
 	    		+"<div class='bouton_placement'>"
-	    		+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
+	    		+"<a href='AccueilView' class='bouton_gestionListe'>Retour</a>"
 	    		+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
 	    		+"<div class='GestionListe_import'>"
@@ -109,7 +108,7 @@ public class GestionListeView extends HttpServlet {
 	    		+   "</div>"
 	    		+ "</div>";
 	    
-	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>\\n";
+	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>";
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);

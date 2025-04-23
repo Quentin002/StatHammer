@@ -2,4 +2,6 @@
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="controlleur.StockageCreerListe"/>
+    <fullyQualifiedTypeName name="Controller.Instanciation"/>
+    <fullyQualifiedTypeName name="Controller.StockageCreerListe"/>
 </qualifiedTypeNameHistroy>

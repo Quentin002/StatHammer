@@ -13,9 +13,9 @@ import java.util.List;
 
 import Model.Arme;
 import Model.ArmeeListe;
-import Model.Evenement;
 import Model.Unit;
 import Model.User;
+
 
 public class BDD {
 
@@ -28,33 +28,38 @@ public class BDD {
 	private static String dbname;
 		
 	public BDD() {
-		
-		try {
-			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			String host = "mysql-stathammer.alwaysdata.net";
-			//String host = "ordipolo.fr";
-			
-			this.connec = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/"+ dbname, user, password);
-			this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
-		} catch (ClassNotFoundException e) {
-			// TODO: handle exception
-			
-			e.printStackTrace();
-		} catch (SQLException e) {
-			System.out.println("ERREUR SQL");
-			System.err.println(e.getMessage());
-			
-		}
+	    try {
+	        // Vérification des paramètres avant d'essayer de se connecter
+	        if (user == null || password == null || dbname == null) {
+	            System.err.println("Erreur : Informations de connexion à la base de données manquantes.");
+	            return;
+	        }
+
+	        Class.forName("com.mysql.cj.jdbc.Driver");
+
+	        String host = "mysql-stathammer.alwaysdata.net";
+
+	        this.connec = DriverManager.getConnection("jdbc:mysql://" + host + ":3306/" + dbname, user, password);
+	        
+	        if (this.connec == null) {
+	            System.err.println("Erreur : Impossible de se connecter à la base de données.");
+	        } else {
+	            this.rs = connec.prepareStatement("SELECT * FROM faction;").executeQuery();
+	        }
+	    } catch (ClassNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (SQLException e) {
+	        System.err.println("Erreur SQL : " + e.getMessage());
+	        e.printStackTrace();
+	    }
 	}
+
 	
 	public static void setInfos(String login, String pwd, String base)
 	{
 		user = login;
 		password = pwd;
 		dbname = base;
-		
 	}
 	
 	public Statement getStatement() throws SQLException
@@ -76,13 +81,15 @@ public class BDD {
 	
 	public ArrayList<Object> selectUtilisateur(String nom, String mdp) {
 		ArrayList<Object> rendu = new ArrayList<Object>();
+
 		try {
 
 			String requete = "SELECT id_utilisateur, nom_utilisateur, role_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;";
+
 			stat = connec.prepareStatement(requete);
+
 			stat.setString(1, nom);
 			stat.setString(2,String.valueOf(mdp));
-			//stat.setString(2,String.valueOf(mdp.hashCode()));
 
 			ResultSet rs = stat.executeQuery();
 			ResultSetMetaData md = rs.getMetaData();
