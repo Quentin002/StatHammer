@@ -71,43 +71,45 @@ function selectList(nb){
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
 				<label>Initié</label>
 				<div>
-					<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber();">
+					<input id="unit1_group1_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber('unit1_group1');">
 					<output name="nb_alive_figs_out">4</output>
 				</div>
 			</form>
 			<div class="fig_group">
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				<div id="unit1_group1_fig1">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig1');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				<div id="unit1_group1_fig2">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig2');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				<div id="unit1_group1_fig3">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig3');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				<div id="unit1_group1_fig4">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig4');">
 				</div>
 			</div>
 		</div>
 		<div class="unit_group" id="unit1_group2">
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
 				<label>Néophyte</label>
-				<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber();">
-				<output name="nb_alive_figs_out">2</output>
+				<div>
+					<input id="unit1_group2_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber('unit1_group2');">
+					<output name="nb_alive_figs_out">2</output>
+				</div>
 			</form>
 			<div class="fig_group">
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				<div id="unit1_group2_fig1">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group2_fig1');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				<div id="unit1_group2_fig2">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group2_fig2');">
 				</div>
 			</div>
 		</div>
@@ -120,43 +122,45 @@ function selectList(nb){
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
 				<label>Initié</label>
 				<div>
-					<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber();">
+					<input id="unit3_group1_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber('unit3_group1');">
 					<output name="nb_alive_figs_out">4</output>
 				</div>
 			</form>
 			<div class="fig_group">
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				<div id="unit3_group1_fig1">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig1');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				<div id="unit3_group1_fig2">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig2');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				<div id="unit3_group1_fig3">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig3');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				<div id="unit3_group1_fig4">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig4');">
 				</div>
 			</div>
 		</div>
 		<div class="unit_group" id="unit3_group2">
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
 				<label>Néophyte</label>
-				<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber();">
-				<output name="nb_alive_figs_out">2</output>
+				<div>
+					<input id="unit3_group2_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber('unit3_group2');">
+					<output name="nb_alive_figs_out">2</output>
+				</div>
 			</form>
 			<div class="fig_group">
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				<div id="unit3_group2_fig1">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group2_fig1');">
 				</div>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				<div id="unit3_group2_fig2">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group2_fig2');">
 				</div>
 			</div>
 		</div>
@@ -190,7 +194,7 @@ function selectList(nb){
 			.then(data => {
 				units_list.innerHTML = '';
 
-				// sauvegarder le html généré (= data) dans Battle
+				// sauvegarder le html généré (= data) dans Battle?
 
 				// l'insérer dans la page
 				units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
@@ -270,8 +274,8 @@ function openWeaponsAptitudesZone(group_id){
 </table>
 <form oninput="nb_weapons_out.value = nb_weapons_in.value">
 	<label>Nombre d'attaquants:</label>
-	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="4" value="4" onchange="selectWeaponNumber();">
-	<output name="nb_weapons_out">4</output>
+	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="3" value="3" onchange="selectNumberOfWeapons('unit1_group1');">
+	<output name="nb_weapons_out">3</output>
 </form>
 <div id="aptitudes">
 	<div>
@@ -332,24 +336,132 @@ function openWeaponsAptitudesZone(group_id){
 
 
 /* commande colonne de droite */
-function selectAliveFigsNumber(){}
-function setFigurineHP(){}
+function selectAliveFigsNumber(group_id){
+	const input = document.getElementById(group_id + "_input");
+
+	// code de test
+	const hp_inputs = document.getElementById(group_id).querySelectorAll(".hp_selector");
+	const fig_icons = document.getElementById(group_id).querySelectorAll(".fig_icon");
+	for(let i = 0; i < input.value; i++)
+	{
+		hp_inputs[i].value = hp_inputs[i].max;;
+		fig_icons[i].src = 'assets/android-fill.png';
+	}
+	for(let i = input.value; i < hp_inputs.length; i++)
+	{
+		hp_inputs[i].value = 0; // remplacer 2 par la bonne valeur (figurine.getHpMax() en java)
+		fig_icons[i].src = 'assets/android-line.png';
+	}
+	return
+
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ action: "set_figs_group_hp", col: 2, unit_group: group_id, hp: input.value })
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+			}
+			return response.json();
+		})
+		// le serveur renvoie une vue et le nom d'une armée
+		.then(data => {
+			const hp_inputs = document.getElementById(group_id).querySelectorAll(".hp_selector");
+			const fig_icons = document.getElementById(group_id).querySelectorAll(".fig_icon");
+			for(let i = 0; i < input.value; i++)
+			{
+				hp_inputs[i].value = hp_inputs[i].max;;
+				fig_icons[i].src = 'assets/android-fill.png';
+			}
+			for(let i = input.value; i < hp_inputs.length; i++)
+			{
+				hp_inputs[i].value = 0; // remplacer 2 par la bonne valeur (figurine.getHpMax() en java)
+				fig_icons[i].src = 'assets/android-line.png';
+			}
+		})
+		.catch(error => {
+			console.error('erreur capturée requête AJAX', error);
+		});
+}
+function setFigurineHP(fig_id){
+	const fig_div = document.getElementById(fig_id);
+
+	// code de test
+	if(fig_div.querySelector("input").value > 0){
+		fig_div.querySelector("img").src = 'assets/android-fill.png';
+	}
+	else{
+		fig_div.querySelector("img").src = 'assets/android-line.png';
+	}
+	// MAJ input range
+	const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
+	const group_div = document.getElementById(group_id);
+	const hp_inputs = group_div.querySelectorAll(".hp_selector");
+	let alive_figs_number = 0;
+	for(let i = 0; i < hp_inputs.length; i++){
+		if(hp_inputs[i].value > 0){
+			alive_figs_number++;
+		}
+	}
+    document.getElementById(group_id + "_input").value = alive_figs_number;
+    group_div.querySelector("output").innerHTML = alive_figs_number;
+	return;
+
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ action: "set_one_fig_hp", fig: fig_id_id, hp: fig_div.querySelector("input").value })
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+			}
+			return response.json();
+		})
+		// le serveur renvoie une vue et le nom d'une armée
+		.then(data => {
+			if(fig_div.querySelector("input").value > 0){
+				fig_div.querySelector("img").src = 'assets/android-fill.png';
+			}
+			else{
+				fig_div.querySelector("img").src = 'assets/android-line.png';
+			}
+			// MAJ input range
+			const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
+			const group_div = document.getElementById(group_id);
+			const hp_inputs = group_div.querySelectorAll(".hp_selector");
+			let alive_figs_number = 0;
+			for(let i = 0; i < hp_inputs.length; i++){
+				if(hp_inputs[i].value > 0){
+					alive_figs_number++;
+				}
+			}
+		    document.getElementById(group_id + "_input").value = alive_figs_number;
+		    group_div.querySelector("output").innerHTML = alive_figs_number;
+		})
+		.catch(error => {
+			console.error('erreur capturée requête AJAX', error);
+		});
+}
 
 
 /* zone armes et aptitudes */
 function selectWeapon(){
-	console.log("selectWeapon appelée");
-
 	const selected_weapon = document.getElementById("weapon_select").value;
-	const table = document.getElementById("weapon_stats");
-	table.classList.remove('hidden');
-	const td_markups = table.querySelectorAll('td');
 
-	// données, attention à la portée en pouces avec double quote
-	const data = {A: "2", F: "4", PA: "0", D: "1", portée: "24\""};
-	const weapon_stats = new Map(Object.entries(data));
+	// code de test
+	const table = document.getElementById("weapon_stats");
+	const td_markups = table.querySelectorAll('td');
+	table.classList.remove('hidden');
+	const stats = {A: "2", F: "4", PA: "0", D: "1", portée: "24\""}; // attention portée en pouces
+	const weapon_stats = new Map(Object.entries(stats));
 	
-	if(td_markups.length == weapon_stats.size)
+	if(td_markups.length == weapon_stats.size) // = 5
 	{
 		// affichage des clés et valeurs
 		const interator = weapon_stats.keys();
@@ -361,11 +473,94 @@ function selectWeapon(){
 	else{
 		console.log("erreur avec les statistiques de l'arme");
 	}
+	return;
+
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ action: "set_weapon", weapon: selected_weapon }) // idem selectAliveFigsNumber, nb d'armes = nb figurines vivantes
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+			}
+			return response.json();
+		})
+		// le serveur renvoie une vue et le nom d'une armée
+		.then(data => {
+			const table = document.getElementById("weapon_stats");
+			const td_markups = table.querySelectorAll('td');
+			table.classList.remove('hidden');
+			const stats = {A: data.a, F: data.f, PA: data.pa, D: data.d, portée: data.portee + "\""}; // attention portée en pouces
+			const weapon_stats = new Map(Object.entries(stats));
+			
+			if(td_markups.length == weapon_stats.size) // = 5
+			{
+				// affichage des clés et valeurs
+				const interator = weapon_stats.keys();
+				for(let i = 0; i < td_markups.length; i++) {
+					const key = interator.next().value;
+					td_markups[i].innerHTML = key + ": " + weapon_stats.get(key);
+				}
+			}
+			else{
+				console.log("erreur avec les statistiques de l'arme");
+			}
+		})
+		.catch(error => {
+			console.error('erreur capturée requête AJAX', error);
+		});
 }
 
-function selectWeaponNumber(){
-	const nb_weapon = document.getElementById("weapon_number_range").value;
-	console.log(nb_weapon);
+function selectNumberOfWeapons(group_id){
+	const weapons_nb = document.getElementById("weapon_number_range").value;
+	
+	// code de test
+	const fig_group_img = document.getElementById(group_id).querySelectorAll("img");
+	const fig_group_span = document.getElementById(group_id).querySelectorAll("span");
+	
+	for(let i = 0; i < weapons_nb; i++){
+		fig_group_img[i].src = 'assets/android-fill.png';
+		//fig_group_span[i].innerHTML = "1PV"; // garder les PV dans Battle?
+	}
+	for(let i = weapons_nb; i < fig_group_img.length; i++){
+		fig_group_img[i].src = 'assets/android-line.png';
+		//fig_group_span[i].innerHTML = "0PV";
+	}
+	return;
+
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ action: "set_figs_group_hp", col: 1, unit_group: group_id, hp: weapons_nb.value }) // idem selectAliveFigsNumber, nb d'armes = nb figurines vivantes
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+			}
+			return response.json();
+		})
+		// le serveur renvoie une vue et le nom d'une armée
+		.then(data => {
+			const fig_group_img = document.getElementById(group_id).querySelectorAll("img");
+			const fig_group_span = document.getElementById(group_id).querySelectorAll("span");
+			
+			for(let i = 0; i < weapons_nb; i++){
+				fig_group_img[i].src = 'assets/android-fill.png';
+				//fig_group_span[i].innerHTML = "1PV"; // garder les PV dans Battle?
+			}
+			for(let i = weapons_nb; i < fig_group_img.length; i++){
+				fig_group_img[i].src = 'assets/android-line.png';
+				//fig_group_span[i].innerHTML = "0PV";
+			}
+		})
+		.catch(error => {
+			console.error('erreur capturée requête AJAX', error);
+		});
 }
 
 function checkAptitude(aptitude_id){

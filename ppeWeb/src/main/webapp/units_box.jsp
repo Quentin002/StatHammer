@@ -14,16 +14,16 @@ String fig_icon = one_fig.getHp() > 0 ? "android-fill.png" : "android-line.png";
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
 				<label><%= one_fig.getName() %></label>
 				<div>
-					<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="<%= fig_group.length %>" value="<%= fig_group.length %>" onchange="selectAliveFigsNumber();">
+					<input id="unit1_group1_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="<%= fig_group.length %>" value="<%= fig_group.length %>" onchange="selectAliveFigsNumber('unit1_group1_input');">
 					<output name="nb_alive_figs_out"><%= fig_group.length %></output>
 				</div>
 			</form>
 			<div class="fig_group">
 <% for(Figurine one_fig : fig_group) {
 String fig_icon = one_fig.getHp() > 0 ? "android-fill.png" : "android-line.png"; %>
-				<div>
-					<label for="nb_alive_figs"><img src="assets/<%= fig_icon %>" alt="logo figurine">PV: </label>
-					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="<%= one_fig.getHpMax() %>" value="<%= one_fig.getHp() %>" onchange="setFigurineHP();">
+				<div id="unit1_group1_fig1">
+					<label for="nb_alive_figs"><img class="fig_icon" src="assets/<%= fig_icon %>" alt="logo figurine">PV: </label>
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="<%= one_fig.getHpMax() %>" value="<%= one_fig.getHp() %>" onchange="setFigurineHP('unit1_group1_fig1');">
 				</div>
 <% } // fin foreach sur figurines défenseuses  %>
 			</div>

@@ -17,7 +17,7 @@
 </table>
 <form oninput="nb_weapons_out.value = nb_weapons_in.value">
 	<label>Nombre d'attaquants:</label>
-	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="<%= fig_group.length %>" value="4" onchange="selectWeaponNumber();">
+	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="<%= fig_group.length %>" value="4" onchange="selectNumberOfWeapons('unit1_group1');">
 	<output name="nb_weapons_out">4</output>
 </form>
 <div id="aptitudes">
