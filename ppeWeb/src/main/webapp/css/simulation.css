@@ -133,6 +133,25 @@ select
 	font-size: initial;
 }
 
+
+/* colonne de droite */
+.alive_figs_range
+{
+	vertical-align: middle;
+	width: 80%; /* téléphones */
+}
+.unit_group form
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+.fig_group
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+
 aside
 {
 	/* margin-top: auto; pour placement à la fin */

@@ -1,46 +1,30 @@
 <div id="weapons_box_unit_name">
-	<p class="number">1</p><p>Initié</p>
+	<p class="number">1</p><p><%= one_fig.getName() %></p>
 </div>
 <select id="weapon_select" name="weapon_select" onchange="selectWeapon()">
-	<option value="Arme 1">Arme 1</option>
-	<option value="Arme 2">Arme 2</option>
-	<option value="Arme 3">Arme 3</option>
-	<option value="Arme 4">Arme 4</option>
+<% for(Weapon one_weapon : weapons) { %>
+	<option value="<%= one_weapon.getName() %>"><%= one_weapon.getName() %></option>
+<% } %>
 </select>
 <table id="weapon_stats" class="hidden">
 	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td><%= stats.get(0) %></td>
+		<td><%= stats.get(1) %></td>
+		<td><%= stats.get(2) %></td>
+		<td><%= stats.get(3) %></td>
+		<td><%= stats.get(4) %></td>
 	</tr>
 </table>
 <form oninput="nb_weapons_out.value = nb_weapons_in.value">
 	<label>Nombre d'attaquants:</label>
-	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="4" value="4" onchange="selectWeaponNumber();">
+	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="<%= fig_group.length %>" value="4" onchange="selectWeaponNumber();">
 	<output name="nb_weapons_out">4</output>
 </form>
 <div id="aptitudes">
+<% for(Aptitude aptitude : aptitudes_list) { %>
 	<div>
-		<input type="checkbox" id="apt1" name="Aptitude1" onclick="checkAptitude('apt1');">
-		<label for="apt1">Aptitude1</label>
+		<input type="checkbox" id="apt1" name="<%= aptitude.getName() %>" onclick="checkAptitude('apt1');">
+		<label for="apt1"><%= aptitude.getName() %></label>
 	</div>
-	<div>
-		<input type="checkbox" id="apt2" name="Aptitude2" onclick="checkAptitude('apt2');">
-		<label for="apt2">Aptitude2</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt3" name="Aptitude3" onclick="checkAptitude('apt3');">
-		<label for="apt3">Aptitude3</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt4" name="Aptitude4"
-		 onclick="checkAptitude('apt4');">
-		<label for="apt4">Aptitude4</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt5" name="Aptitude5" onclick="checkAptitude('apt5');">
-		<label for="apt5">Aptitude5</label>
-	</div>
+<% } %>
 </div>

@@ -1,6 +1,9 @@
+// note: blocage possible par le mode "https only" de firefox
+const url = "http://webhammer/ControllerSimu";
+
 function selectList(nb){
 	const units_list = document.getElementById("units_list" + nb);
-	units_list.innerHTML = '';
+	units_list.innerHTML = ''; // nettoyage!
 	let select_name;
 	if(nb == 1){
 		select_name = "left_choice_box";
@@ -62,39 +65,100 @@ function selectList(nb){
 	}
 	else if(nb == 2){
 		data = JSON.stringify({ html: `<div class="one_unit_zone" id="col2_unit1">
-	<button class="unit_button" onclick="unfoldUnits(1, 'col2_unit1');">Unité 1</button>
+	<button class="unit_button" onclick="unfoldUnits(2, 'col2_unit1');">Unité 1</button>
 	<div class="unit_box hidden">
 		<div class="unit_group" id="unit1_group1">
-			<p class="number" onclick="openWeaponsAptitudesZone('unit1_group1');">1</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
+				<label>Initié</label>
+				<div>
+					<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber();">
+					<output name="nb_alive_figs_out">4</output>
+				</div>
+			</form>
+			<div class="fig_group">
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				</div>
+			</div>
 		</div>
 		<div class="unit_group" id="unit1_group2">
-			<p class="number" onclick="openWeaponsAptitudesZone('unit1_group2');">2</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
+				<label>Néophyte</label>
+				<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber();">
+				<output name="nb_alive_figs_out">2</output>
+			</form>
+			<div class="fig_group">
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2">
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-<div class="one_unit_zone" id="col2_unit2">
-	<button class="unit_button" onclick="unfoldUnits(1, 'col2_unit2');">Unité 2</button>
+<div class="one_unit_zone" id="col2_unit3">
+	<button class="unit_button" onclick="unfoldUnits(2, 'col2_unit3');">Unité 3</button>
 	<div class="unit_box hidden">
-		<div class="unit_group" id="unit2_group1">
-			<p class="number" onclick="openWeaponsAptitudesZone('unit2_group1');">1</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
+		<div class="unit_group" id="unit3_group1">
+			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
+				<label>Initié</label>
+				<div>
+					<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber();">
+					<output name="nb_alive_figs_out">4</output>
+				</div>
+			</form>
+			<div class="fig_group">
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				</div>
+			</div>
 		</div>
-		<div class="unit_group" id="unit2_group2">
-			<p class="number" onclick="openWeaponsAptitudesZone('unit2_group2');">2</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
+		<div class="unit_group" id="unit3_group2">
+			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
+				<label>Néophyte</label>
+				<input class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber();">
+				<output name="nb_alive_figs_out">2</output>
+			</form>
+			<div class="fig_group">
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				</div>
+				<div>
+					<label for="nb_alive_figs"><img src="assets/android-fill.png" alt="logo figurine">PV: </label>
+					<input type="number" id="nb_alive_figs_unit1_group1" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP();">
+				</div>
+			</div>
 		</div>
 	</div>
 </div>`, army_file: 'android-fill.png' });
@@ -109,7 +173,7 @@ function selectList(nb){
 	return;
 
 	if(Battle.getListName(col) == null){
-		fetch("http://webhammer/ControllerSimu", {
+		fetch(url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -238,7 +302,7 @@ function openWeaponsAptitudesZone(group_id){
 	weapons_aptitudes_box.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
 	return;
 
-	fetch("http://webhammer/ControllerSimu", {
+	fetch(url, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -257,6 +321,9 @@ function openWeaponsAptitudesZone(group_id){
 			weapons_aptitudes_box.classList.remove("hidden");
 			weapons_aptitudes_box.innerHTML = '';
 			weapons_aptitudes_box.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
+
+			// première arme sélectionnée par défaut
+			selectWeapon();
 		})
 		.catch(error => {
 			console.error('erreur capturée requête AJAX', error);
@@ -264,17 +331,18 @@ function openWeaponsAptitudesZone(group_id){
 }
 
 
+/* commande colonne de droite */
+function selectAliveFigsNumber(){}
+function setFigurineHP(){}
+
+
 /* zone armes et aptitudes */
 function selectWeapon(){
-	// faire que la première arme soit sélectionnée par défaut
-	// avant même que cette fonction soit appelée
+	console.log("selectWeapon appelée");
 
 	const selected_weapon = document.getElementById("weapon_select").value;
-	
 	const table = document.getElementById("weapon_stats");
 	table.classList.remove('hidden');
-	
-	// balises td
 	const td_markups = table.querySelectorAll('td');
 
 	// données, attention à la portée en pouces avec double quote
@@ -343,11 +411,27 @@ function reverseArmies(){
 	}
 
 	// dire au serveur d'inverser les deux joueurs
-	//fetch...
-
-	// inverser l'affichage
-	selectList(1);
-	selectList(2);
+	fetch(url, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ action: "reverse_armies" })
+	})
+		.then(response => {
+			if (!response.ok) {
+				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+			}
+			return response.json();
+		})
+		.then(data => {
+			// obtenir les deux nouvelles vues
+			selectList(1);
+			selectList(2);
+		})
+		.catch(error => {
+			console.error('erreur capturée requête AJAX', error);
+		});
 
 	// inutile
 	/*const units_list1 = document.getElementById("units_list1");
