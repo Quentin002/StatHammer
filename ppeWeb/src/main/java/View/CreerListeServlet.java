@@ -36,8 +36,11 @@ public class CreerListeServlet extends HttpServlet {
 		BDD.setInfos("400129","stathammer_greta_admin","stathammer_v1");
 		
 		StockageCreerListe.initFaction();
-		StockageCreerListe.initArmee(StockageCreerListe.getNomFac().getFirst());
-		StockageCreerListe.initUnit(StockageCreerListe.getNomArmee().getFirst());
+		//StockageCreerListe.initArmee(StockageCreerListe.getNomFac().getFirst());
+		//StockageCreerListe.initUnit(StockageCreerListe.getNomArmee().getFirst());
+		
+		StockageCreerListe.initArmee(StockageCreerListe.getNomFac().get(0));
+		StockageCreerListe.initUnit(StockageCreerListe.getNomArmee().get(0));
 		
 		StockageCreerListe.initArmeeListe();
 		

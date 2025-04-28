@@ -29,8 +29,12 @@ var chart = new CanvasJS.Chart("chartContainer1", {
 		text: "Graphe nombre de figurines mortes"
 	},
 	axisY: {
-		title: "Pourcentages"
+		title: "Pourcentages",
+		minimum : 0
 	},
+	axisX: {
+		interval : 1
+		},
 	data: [{        
 		type: "column",  
 		showInLegend: true, 
@@ -49,7 +53,8 @@ var chart2 = new CanvasJS.Chart("chartContainer2", {
 		text: "Graphe nombre de dégats"
 	},
 	axisY: {
-		title: "Pourcentages"
+		title: "Pourcentages",
+		minimum : 0
 	},
 	data: [{        
 		type: "column",  
