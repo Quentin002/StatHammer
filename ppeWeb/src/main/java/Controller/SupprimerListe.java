@@ -46,7 +46,7 @@ public class SupprimerListe extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
         int id = (int)session.getAttribute("id") ;
         
@@ -64,13 +64,13 @@ public class SupprimerListe extends HttpServlet {
 	                    listes.removeIf(liste -> Integer.toString(liste.getId()).equals(idListe));
 	                    session.setAttribute("listes", listes); 
 	                }
-	                response.sendRedirect("http://localhost:8080/ppeWeb/GestionListeView");
+	                response.sendRedirect("gerer-liste");
 
 	            } catch (SQLException e1) {
 	                e1.printStackTrace();
 	            }
 	        } else {
-	            response.sendRedirect("http://localhost:8080/ppeWeb/AccueilView");
+	            response.sendRedirect("accueil");
 	            System.out.println("bah non");
 	        }
 	}

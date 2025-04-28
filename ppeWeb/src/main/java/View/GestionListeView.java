@@ -70,6 +70,14 @@ public class GestionListeView extends HttpServlet {
 	                listage.append("</ul>\n");
 	            } else {
 	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
+	            }	
+	            listage.append("<div class='GestionListe'>\n")
+	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
+	            		.append("</button>\n")
+	            		.append("<form action='ModificationListeView' method='post' style='display:inline;'>\n")
+	            		.append("<input type='hidden' name='idArmee' value='").append(idliste).append("' />\n")
+	            		.append("<button type='submit' class='GestionListe_bouton'>Paramétrer</button>\n")
+	            		.append("</form>\n")
 	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' id='")
 	            		.append(idliste) 
 	            		.append("'>Supprimer</button>\n")
@@ -83,7 +91,7 @@ public class GestionListeView extends HttpServlet {
 	    		"<h1>Interface de gestion des listes</h1>\n"
 	    		+"<section class='GestionListe_structure'>\r\n"
 	    		+"<div class='bouton_placement'>"
-	    		+"<a href='AccueilView' class='bouton_gestionListe'>Retour</a>"
+	    		+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
 	    		+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
 	    		+"<div class='GestionListe_import'>"
@@ -101,6 +109,7 @@ public class GestionListeView extends HttpServlet {
 	    		+     "</div>"
 	    		+   "</div>"
 	    		+ "</div>";
+	     
 	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>";
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
