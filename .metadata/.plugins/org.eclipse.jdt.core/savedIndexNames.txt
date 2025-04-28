@@ -1,5 +1,0 @@
-INDEX VERSION 1.134+C:\Users\Quentin\Desktop\Projet\StatHammer\.metadata\.plugins\org.eclipse.jdt.core
-1865797976.index
-1488494024.index
-763981743.index
-1118782391.index
