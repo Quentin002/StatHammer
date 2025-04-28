@@ -103,7 +103,7 @@ public class GestionListeView extends HttpServlet {
 	    		+     "<p id='modal_message'>Voulez-vous vraiment supprimer cette armée ?</p>"
 	    		+     "<div class='modal_actions'>"
 	    		+       "<form method='POST' action='SupprimerListe'>"
-	    		+         "<button type='submit' name='idliste' class='modal_btn modal_supprButton'>Supprimer</button>"
+	    		+         "<button type='submit' name='idliste'  class='modal_btn modal_supprButton'>Supprimer</button>"
 	    		+         "<button type='button' class='modal_btn modal_retourButton' >Annuler</button>"
 	    		+       "</form>"
 	    		+     "</div>"

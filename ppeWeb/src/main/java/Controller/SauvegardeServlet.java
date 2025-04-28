@@ -35,7 +35,10 @@ public class SauvegardeServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+		HttpSession session=request.getSession(false);
+        if (session==null) {
+            response.sendRedirect("connexion");
+        } 
 		ArrayList<ArmeeListe> userList = (ArrayList<ArmeeListe>) session.getAttribute("listes");
 		if(userList==null) {
 			userList = new ArrayList<ArmeeListe>();

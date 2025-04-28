@@ -295,4 +295,13 @@ public class Instanciation {
 		conec.close();
 	}
 	
+	public static ArmeeListe importListe(String nomA,String desc,String[] listeUnit, User session) {
+		ArmeeListe armee = new ArmeeListe(nomA, desc, "");
+		getUnitsOfAList(armee);
+		insertListe(armee, session);
+		
+		
+		return armee;
+	}
+	
 }

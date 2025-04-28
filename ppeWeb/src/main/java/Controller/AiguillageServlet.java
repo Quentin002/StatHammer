@@ -29,6 +29,11 @@ public class AiguillageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session=request.getSession(false);
+        if (session==null) {
+            response.sendRedirect("connexion");
+        } 
+		
 		String plus = request.getParameter("plus");
 		String moins = request.getParameter("moins");
 		String faction = request.getParameter("faction");
@@ -62,7 +67,7 @@ public class AiguillageServlet extends HttpServlet {
 		}
 		if(request.getParameter("creer")!=null && !request.getParameter("nomListe").equals("") && StockageCreerListe.getArmeeListe().getUnits().size()!=0) {
 			//Instanciation.insertListe(StockageCreerListe.getArmeeListe(), null);
-			HttpSession session = request.getSession();
+			
 			session.setAttribute("nomListe", request.getParameter("nomListe"));
 			destination = "SauvegardeServlet";
 		}
