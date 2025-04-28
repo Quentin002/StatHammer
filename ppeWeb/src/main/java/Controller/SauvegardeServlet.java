@@ -40,6 +40,7 @@ public class SauvegardeServlet extends HttpServlet {
 		if(userList==null) {
 			userList = new ArrayList<ArmeeListe>();
 		}
+		
 		StockageCreerListe.getArmeeListe().setNom((String) session.getAttribute("nomListe"));
 		String nom = (String) session.getAttribute("nom");
 		int id = (int) session.getAttribute("id");
