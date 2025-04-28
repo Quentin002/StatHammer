@@ -45,7 +45,7 @@ public class ModificationListeView extends HttpServlet {
         } else {
             out.println("<h1>Aucun ID d’armée fourni.</h1>");
         }
-        out.println("<a href='GestionListeView'>Retour à la liste</a>");
+        out.println("<a href='gerer-liste'>Retour à la liste</a>");
         out.println("</body></html>");
 	}
 
