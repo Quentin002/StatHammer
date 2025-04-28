@@ -34,9 +34,9 @@ public class GestionListeView extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
-		
+        else {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
@@ -114,6 +114,7 @@ public class GestionListeView extends HttpServlet {
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);
+        }
 	}
 
 	/**
