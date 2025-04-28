@@ -94,7 +94,7 @@ public class AdminView extends HttpServlet {
 	     body.append("  </table>")
 	         .append("  </div>\r\n")
 		 	 .append("</div>\r\n")
-		 	 .append("<script src='js/evtMontrerNom.js'></script>\n");;
+		 	 .append("<script src='js/evtMontrerNom.js'></script>\n");
      
 		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
 		
