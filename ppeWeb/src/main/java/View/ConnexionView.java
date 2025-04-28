@@ -48,6 +48,8 @@ public class ConnexionView extends HttpServlet {
 			+ "		</title>\r\n"
 			+ "		<link rel=\"stylesheet\" href=\"css/main.css\">\r\n"
 			+ "     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css\">\r\n"
+			+ "     <script src=\"js/graphique.js\"></script>\r\n"
+			//+"<script src=\"https://cdn.canvasjs.com/canvasjs.min.js\"></script>"
 			+ "	</head>\r\n"
 			+ "	<body>";
 		

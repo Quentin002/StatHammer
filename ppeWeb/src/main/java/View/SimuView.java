@@ -7,18 +7,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
-/**
- * Servlet implementation class CreationCompteView
- */
-@WebServlet("/CreationCompteView")
-public class CreationCompteView extends HttpServlet {
+import Model.Arme;
+import Model.ArmeMelee;
+import Model.Calcul;
+import Model.Figurine;
+import Model.Unit;
+
+
+@WebServlet("/SimuView")
+public class SimuView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreationCompteView() {
+    public SimuView() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,33 +36,26 @@ public class CreationCompteView extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		String titre = "Création compte";
+		String titre = "Simulation";
 	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
+	
+		
 	    
-		String body = "<h1>Création de compte utilisateur</h1>"
-				+"<div class='container''>"
+		String body = "<h1>Simulation</h1>"
+				+"<div class='container'>"
 				
-					+"<form enctype='application/x-www-form-urlencoded\' action='ControllerCreationCompte' method=POST>"
-					+"<table class=tCompte>"
-					+"<tr><td width='230'>Email :</td>"
-					+"<td><input type=text size='100' name=email></td></tr>"
-
-					
-					+"<tr><td width=\"230\">Pseudonyme :</td>"
-					+"<td><input type=text size='100'  name=pseudo></td></tr>"
-					+"<tr><td>Mot de passe :</td>"
-					+"<td><input type=password size='100' name=mdp></td>"
-					 
-					 +"<tr><td colspan='2' height='100'><input type=submit class='buttonGcompte' value='Envoyer'></td></tr>"
-					 +"</form>"
-					 +"<form enctype='application/x-www-form-urlencoded\' action='ConnexionView' method=POST>"
-					 +"<tr><td colspan='2'><input type=submit class='buttonGcompte' value='Retour'></td></tr>"
-					 +"</form>"
-					 +"</table>"
+					+"<input type=submit class='buttonGcompte' onclick='GraphiqueSimu();' value='Envoyer'>"
+					+"<script src='js/simu.js'></script>"
+					+"<script src=\"https://cdn.canvasjs.com/canvasjs.min.js\"></script>"
+					 +"<div id='graphique'>"
+					+"</div>"
 					+"</div>";
 		
-					String html = header + body + ConnexionView.footer;
+
+		
+					String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
 					out.println(html);
+					//request.getRequestDispatcher("Hist.jsp").forward(request, response);
 	}
 
 	/**
