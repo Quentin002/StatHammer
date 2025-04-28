@@ -1,4 +1,4 @@
-<%@page import="java.util.ArrayList"%>
+<!--  <%@page import="java.util.ArrayList"%> -->
 <%@page import="java.util.Arrays"%>
 <%@page import="Model.Calcul"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
