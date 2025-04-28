@@ -13,7 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Model.ArmeeListe;
 import Model.Evenement;
+import Model.Unit;
 
 
 @WebServlet("/ConnexionController")
@@ -78,6 +80,11 @@ public class ConnexionController extends HttpServlet {
 				
 				// Chargement des listes
 				ArrayList<Model.ArmeeListe> listes = chargerListes(conec,session);
+				for(ArmeeListe armeeListes : listes) {
+					for(Unit unit : armeeListes.getUnits()) {
+						unit.setFigurine(Instanciation.getFigurine2(unit.getName()));
+					}
+				}
 				session.setAttribute("listes", listes);
 				}
 				conec.close();
