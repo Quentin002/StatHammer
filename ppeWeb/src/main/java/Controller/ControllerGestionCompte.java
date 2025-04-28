@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import View.ConnexionView;
+
 /**
  * Servlet implementation class ControlleurGestionCompte
  */
@@ -49,8 +51,8 @@ public class ControllerGestionCompte extends HttpServlet {
 		if(pseudo != null && pseudo.isEmpty()==false && pseudo.trim().contains(" ")==false) {
 			
 			try {
-				Connexion.updatePseudo(pseudo.trim(),id); // bdd
-				response.sendRedirect("http://localhost:8080/ppeWeb/AccueilView");
+				ConnexionController.updatePseudo(pseudo.trim(),id); // bdd
+				response.sendRedirect("accueil");
 
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -60,14 +62,14 @@ public class ControllerGestionCompte extends HttpServlet {
 		else if(newMdp != null && newMdp.isEmpty() ==false && newMdp.contains(" ")==false) {
 			//response.sendRedirect("http://localhost:8080/ppe/Accueil");
 			try {
-				String mdp =Connexion.selectMdp(id);
+				String mdp =ConnexionController.selectMdp(id);
 				if(Integer.toString(confirmMdp.hashCode()).equals(mdp)) {
-						Connexion.updateMdp(newMdp,id);
-						response.sendRedirect("http://localhost:8080/ppeWeb/AccueilView");
+						ConnexionController.updateMdp(newMdp,id);
+						response.sendRedirect("accueil");
 				}
 				else {
 
-					response.sendRedirect("http://localhost:8080/ppeWeb/GestionCompteView");
+					response.sendRedirect("compte");
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -78,7 +80,7 @@ public class ControllerGestionCompte extends HttpServlet {
 		}
 		else {
 			//response.getWriter().append("erreur");
-			response.sendRedirect("http://localhost:8080/ppeWeb/GestionCompteView");
+			response.sendRedirect("compte");
 		}
 		
 	}

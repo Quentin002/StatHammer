@@ -71,6 +71,9 @@ public class Unit {
 	public Armee getArmee() {
 		return armee;
 	}
+	public void setFigurine(ArrayList<Figurine> liste) {
+		figurines = liste;
+	}
 	
 	private void makeIdenticalFigsGroups() {
 		for(Figurine fig : figurines)

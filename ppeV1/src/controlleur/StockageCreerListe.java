@@ -51,7 +51,7 @@ public class StockageCreerListe {
 	}
 	public static void initUnit(String nomArmee) {
 		unit.clear();
-		for(Unit uni:Instanciation.getUniteOfArmy(armee.get(nomArmee))) {
+		for(Unit uni:Instanciation.getUniteOfArmyLimited(armee.get(nomArmee))) {
 			unit.put(uni.getName(), uni);
 		}
 	}

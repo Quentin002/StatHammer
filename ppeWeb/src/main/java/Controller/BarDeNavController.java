@@ -40,13 +40,16 @@ public class BarDeNavController extends HttpServlet {
 			
 			switch (action) {
 				case "accueil":
-					response.sendRedirect("AccueilView");
+					response.sendRedirect("accueil");
 					break;
 				case "admin":
-					response.sendRedirect("AdminView");
+					response.sendRedirect("evenements");
 					break;
 				case "Compte":
-					response.sendRedirect("GestionCompteView");
+					response.sendRedirect("compte");
+					break;
+				case "GererListe":
+					response.sendRedirect("gerer-liste");
 					break;
 				case "simu":
 					response.sendRedirect("SimuView");
@@ -54,15 +57,18 @@ public class BarDeNavController extends HttpServlet {
 				case "logout":
 					session.invalidate();
 					session = null;
-					response.sendRedirect("ConnexionView");
+					response.sendRedirect("connexion");
+					break;
+				case "creaListe":
+					response.sendRedirect("CreerListeServlet");
 					break;
 				default:
-					response.sendRedirect("AccueilView");
+					response.sendRedirect("accueil");
 					break;
 			}
 		} else {
 			// Rediriger vers une page de connexion ou erreur
-			response.sendRedirect("ConnexionView");
+			response.sendRedirect("connexion");
 		}
 	}
 
