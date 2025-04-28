@@ -1,0 +1,61 @@
+.barDeNav {
+    background: linear-gradient(145deg, #2f2f3f, #1a1a2e);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #444;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.barDeNav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.barDeNav ul li:last-child {
+    margin-left: auto;
+}
+
+.barDeNav ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.barDeNav ul li a {
+    display: block;
+    color: #e0e0e0;
+    padding: 16px 24px;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.barDeNav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #42a5f5;
+    border-bottom: 2px solid #42a5f5;
+}
+
+/* **************** Pour le bouton Déconnexion ************** */
+.logout-item {
+    margin-left: auto;
+}
+
+.logout-btn {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #e0e0e0 !important;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
