@@ -53,7 +53,8 @@ public class AiguillageServlet extends HttpServlet {
 		if(faction!=null) {
 			StockageCreerListe.initArmeeListe();
 			StockageCreerListe.initArmee(faction);
-			StockageCreerListe.initUnit(StockageCreerListe.getNomArmee().getFirst());
+			//StockageCreerListe.initUnit(StockageCreerListe.getNomArmee().getFirst());
+			StockageCreerListe.initUnit(StockageCreerListe.getNomArmee().get(0));
 		}
 		if(armee!=null) {
 			StockageCreerListe.initArmeeListe();

@@ -220,7 +220,8 @@ public class BDD {
 			
 			rendu = this.select(requete,armee.getName());
 			
-			id = Integer.parseInt(rendu.getFirst());
+			//id = Integer.parseInt(rendu.getFirst());
+			id = Integer.parseInt(rendu.get(0));
 			requete = "INSERT INTO contenir VALUES(?,?);";
 			
 			for(Unit unit : armee.getUnits()) {
