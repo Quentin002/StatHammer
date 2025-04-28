@@ -13,7 +13,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Model.ArmeeListe;
 import Model.Evenement;
+import Model.Unit;
 
 
 @WebServlet("/ConnexionController")
@@ -65,8 +67,8 @@ public class ConnexionController extends HttpServlet {
 				// Chargement des événements
 				chargerEvenements(conec,session);
 				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
-				// Debug : affichage console
 				
+				// Debug : affichage console				
 				System.out.println("Événements stockés en session :");
 				for (int i = 0; i < evenements.size(); i++) {
 					Evenement evt = evenements.get(i);
@@ -78,6 +80,11 @@ public class ConnexionController extends HttpServlet {
 				
 				// Chargement des listes
 				ArrayList<Model.ArmeeListe> listes = chargerListes(conec,session);
+				for(ArmeeListe armeeListes : listes) {
+					for(Unit unit : armeeListes.getUnits()) {
+						unit.setFigurine(Instanciation.getFigurine2(unit.getName()));
+					}
+				}
 				session.setAttribute("listes", listes);
 				}
 				conec.close();
@@ -138,6 +145,11 @@ public class ConnexionController extends HttpServlet {
 		conec.close();
 		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 		return mdp;
+	}
+	public static void suppressionListe(String idListe) throws SQLException{
+		BDD conec = new BDD();
+		conec.SuppressionListe(idListe);
+		conec.close();
 	}
 	private ArrayList<Model.ArmeeListe> chargerListes(BDD conec, HttpSession session) throws SQLException{
 		ArrayList<Model.ArmeeListe> listes = new ArrayList<>();

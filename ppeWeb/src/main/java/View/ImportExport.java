@@ -1,6 +1,7 @@
-package Controller;
+package View;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,24 +9,23 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import Model.ArmeeListe;
-import Model.Unit;
-import Model.User;
+import Model.Evenement;
 
 /**
- * Servlet implementation class SauvegardeServlet
+ * Servlet implementation class ImportExport
  */
-@WebServlet("/SauvegardeServlet")
-public class SauvegardeServlet extends HttpServlet {
+@WebServlet("/ImportExport")
+@MultipartConfig
+public class ImportExport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SauvegardeServlet() {
+    public ImportExport() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,29 +34,28 @@ public class SauvegardeServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
+
 		HttpSession session=request.getSession(false);
         if (session==null) {
             response.sendRedirect("connexion");
         } 
-		ArrayList<ArmeeListe> userList = (ArrayList<ArmeeListe>) session.getAttribute("listes");
-		if(userList==null) {
-			userList = new ArrayList<ArmeeListe>();
-		}
 		
-		StockageCreerListe.getArmeeListe().setNom((String) session.getAttribute("nomListe"));
-		String nom = (String) session.getAttribute("nom");
-		int id = (int) session.getAttribute("id");
-		String role = (String) session.getAttribute("role");
-		Instanciation.insertListe(StockageCreerListe.getArmeeListe(), new User(nom,id,role));
-		ArrayList<String> nomListe = new ArrayList<String>();
-		for(Unit unit:StockageCreerListe.getArmeeListe().getUnits()) {
-			nomListe.add(unit.getName());
-		}
-		StockageCreerListe.getArmeeListe().setUniteListe(nomListe);
-		userList.add(StockageCreerListe.getArmeeListe());
-		session.setAttribute("listes", userList);
-		response.sendRedirect("accueil");
+		response.setContentType("text/html; charset=UTF-8");
+
+		String titre = "StatHammer : Page de test";
+		
+		String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
+
+		
+	     //StringBuilder permet de travailler avec la méthode ".append" pour assembler chaine de caracatère par chaine de caractère 
+	     StringBuilder body = new StringBuilder();
+	     body.append("<form action='ImportExportController' method='get'><input type=text name=export><input type=submit value='Exporter'></form><form action='ImportExportController' method='post' enctype=\"multipart/form-data\"><input type='file' id='listUpload' name='liste' accept='.txt'><input type=submit value='Importer'></form>");
+     
+		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
+		
+		PrintWriter out = response.getWriter();
+		out.println(html);
 	}
 
 	/**

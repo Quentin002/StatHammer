@@ -28,8 +28,8 @@
 				    <td colspan="2"height='100'><center><input type=submit value="Connexion"></center></td>
 				</tr>
 				<tr>
-					<td colspan="2" height='10'><a class='lien' href='CreationCompteView'><center>Vous ne possédez pas de compte, créez-en un !</center></a></td>
-				</tr>			    
+					<td colspan="2" height='10'><a class='lien' href='creer-compte'><center>Vous ne possédez pas de compte, créez-en un !</center></a></td>
+		    	</tr>
 			</table>
 		</form>
 	    <p class="quote"><b class="error">Échec de la connexion. Veuillez vérifier votre identifiant et votre mot de passe.</b></p>

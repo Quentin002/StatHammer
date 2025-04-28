@@ -30,10 +30,26 @@ public class CreationCompteView extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
-		String titre = "Création compte";
-	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
+		String css = "<link rel=\"stylesheet\" href=\"css/main.css\">";
+		String titre = "<title>Création compte</title>";
+		String headerTop = 
+				  "<!DOCTYPE HTML>\r\n"
+				+ "<html>\r\n"
+				+ "	<head>\r\n"
+				+ "		<meta charset =\"UTF-8\"/>\r\n";
+			
+		String headerBottom =
+				  "\r\n"
+				+ "		<link rel=\"stylesheet\" href=\"css/main.css\">\r\n"
+				+ "	</head>\r\n"
+				+ "	<body>";
+			
+		String header = headerTop + titre + css +headerBottom;
 	    
+		String footer =
+				  "	</body>\r\n"
+				+ "</html>";
+		
 	    String body = 
 	    	      " <form class=\"login-form\" enctype=\"application/x-www-form-urlencoded\" action=\"ControllerCreationCompte\" method=POST>"
 	    	    + "  <table style='table-layout: fixed;'>"
@@ -73,11 +89,13 @@ public class CreationCompteView extends HttpServlet {
 	    	    + "    </tr>"
 	    	    + "  </table>"
 	    	    + "</div>"
+	    	    
+	    	    //Javascript
 	    	    + "<script src='js/togglePasswordCreaCom.js'></script>\n"
 	    	    + "<script src='js/mdpConf.js'></script>\n";
 
 		
-					String html = header + body + ConnexionView.footer;
+					String html = header + body + footer;
 					out.println(html);
 	}
 
