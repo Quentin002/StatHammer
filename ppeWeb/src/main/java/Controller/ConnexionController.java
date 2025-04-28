@@ -139,6 +139,11 @@ public class ConnexionController extends HttpServlet {
 		System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 		return mdp;
 	}
+	public static void suppressionListe(String idListe) throws SQLException{
+		BDD conec = new BDD();
+		conec.SuppressionListe(idListe);
+		conec.close();
+	}
 	private ArrayList<Model.ArmeeListe> chargerListes(BDD conec, HttpSession session) throws SQLException{
 		ArrayList<Model.ArmeeListe> listes = new ArrayList<>();
 		String sql = "SELECT l.id_liste, l.nom_liste, l.description_liste, u.nom_unite, u.id_armee\r\n"
@@ -161,7 +166,7 @@ public class ConnexionController extends HttpServlet {
 			// Vérifier si la liste existe déjà dans la map
             Model.ArmeeListe liste = mapListes.get(id_liste);
             if (liste == null) {
-                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste);
+                liste = new Model.ArmeeListe(id_liste,  nom_liste, descr_liste,"",(int)session.getAttribute("id"));
                 liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
                 mapListes.put(id_liste, liste);
             }

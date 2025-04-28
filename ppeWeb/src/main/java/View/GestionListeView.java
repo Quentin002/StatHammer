@@ -34,7 +34,7 @@ public class GestionListeView extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("connexion");
+            response.sendRedirect("ConnexionView");
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -43,7 +43,7 @@ public class GestionListeView extends HttpServlet {
 		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
 		
 	             
-		String titre = "StatHammer : Gestion compte";
+		String titre = "StatHammer : Gestion liste";
 	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 	    
 	    
@@ -56,7 +56,7 @@ public class GestionListeView extends HttpServlet {
 	            String nomliste = liste.getNomListe();
 	            String descrliste = liste.getDescriptionListe();
 	            ArrayList<String> nomUniteliste = liste.getUniteListe();
-	            int idArmeeliste = liste.getIdArmee();
+	            
 
 	            listage.append("<div class='liste id='").append(idliste).append("'>\n")
 	                   .append("<h2>").append(nomliste).append("</h2>\n")
@@ -70,22 +70,23 @@ public class GestionListeView extends HttpServlet {
 	                listage.append("</ul>\n");
 	            } else {
 	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
-	            }
-	            	
-	            listage.append("<div>\n")
+	            }	
+	            listage.append("<div class='GestionListe'>\n")
 	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
 	            		.append("</button>\n")
-	            		.append("<button type='button' class='GestionListe_bouton'>Paramétrer\n")
-	            		.append("</button>\n")
+	            		.append("<form action='ModificationListeView' method='post' style='display:inline;'>\n")
+	            		.append("<input type='hidden' name='idArmee' value='").append(idliste).append("' />\n")
+	            		.append("<button type='submit' class='GestionListe_bouton'>Paramétrer</button>\n")
+	            		.append("</form>\n")
 	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' id='")
-	            		.append(idliste)
+	            		.append(idliste) 
 	            		.append("'>Supprimer</button>\n")
-	            	   .append("</div>\n")
-	            	   .append("</div>\n");
+	            		.append("</div>\n")
+	            		.append("</div>\n");
+	            
 	        }
 	    }
-	     
-	    		
+	     	
 	    String body= 
 	    		"<h1>Interface de gestion des listes</h1>\n"
 	    		+"<section class='GestionListe_structure'>\r\n"
@@ -102,14 +103,14 @@ public class GestionListeView extends HttpServlet {
 	    		+     "<p id='modal_message'>Voulez-vous vraiment supprimer cette armée ?</p>"
 	    		+     "<div class='modal_actions'>"
 	    		+       "<form method='POST' action='SupprimerListe'>"
-	    		+         "<button type='submit' class='modal_btn modal_supprButton'>Supprimer</button>"
-	    		+         "<button type='button' class='modal_btn modal_retourButton'>Annuler</button>"
+	    		+         "<button type='submit' name='idliste' class='modal_btn modal_supprButton'>Supprimer</button>"
+	    		+         "<button type='button' class='modal_btn modal_retourButton' >Annuler</button>"
 	    		+       "</form>"
 	    		+     "</div>"
 	    		+   "</div>"
 	    		+ "</div>";
-	    
-	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>\\n";
+	     
+	    String scriptJs = "<script src=\"js/modalGestionListe.js\"></script>";
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);

@@ -46,6 +46,9 @@ public class Figurine {
 		this.SV = SV;
 		this.HP = HP;
 		this.armes = l1;
+		if(armes.size() > 0) {
+			selected_weapon = armes.get(0); // arme par défaut
+		}
 	}
 	
 	//renvoi un dico avec en clé les noms des stats des armes et en valeurs une liste de valeur de toute les armes 

@@ -1,0 +1,215 @@
+html, body
+{
+	/* permettra à un élément d'occuper toute la fenêtre */
+    height: 100%;
+}
+body
+{
+	/* Supprime la barre de défilement */
+	/*overflow: hidden;*/
+
+	flex-direction: column;
+	display: flex;
+}
+
+.sim_grid
+{
+	/* mieux que height: 100%e, contexte de flexbox */
+	flex: 1;
+
+	display: grid;
+	grid-template-columns: 30% 40% 30%;
+}
+.hidden
+{
+	display: none;
+}
+
+#left_col, #right_col
+{
+	display: flex;
+	flex-direction: column;
+}
+#left_col > div, #right_col > div
+{
+	display: flex;
+
+}
+#left_choice_box, #right_choice_box
+{
+	text-align: center;
+	width: 100%;
+}
+#logo_list1, #logo_list2
+{
+	line-height: 0;
+}
+.logo_armee_div
+{
+	margin: 2px;
+}
+.logo_armee
+{
+	width: 28px;
+}
+.units_list
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 4px;
+	padding: 4px;
+}
+.one_unit_zone
+{
+	width: 100%;
+}
+.unit_button
+{
+	width: 100%;
+}
+.unit_box
+{
+	background-color: #f7f7f7; /* 50 nuances de grey */
+	border: grey solid 1px;
+	border-radius: 5px;
+}
+.unit_selected
+{
+	background-color: white;
+	border-color: yellow;
+	border-radius: 5px;
+}
+.unit_group
+{
+	display: flex;
+	flex-wrap: wrap;
+	padding: 4px;
+}
+.unit_group p
+{
+	margin: 0;
+	line-height: 30px;
+}
+.unit_group .number
+{
+	cursor: pointer;
+}
+.unit_group img
+{
+	vertical-align: middle;
+}
+.unit_group span
+{
+	vertical-align: middle;
+}
+
+#central_col
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#central_col button
+{
+	margin: 4px;
+}
+img
+{
+	max-width: 100%;
+}
+#action_button
+{
+	font-size: initial;
+}
+
+select
+{
+	font-size: initial;
+}
+
+.unit_button
+{
+	font-size: initial;
+}
+
+
+/* colonne de droite */
+.alive_figs_range
+{
+	vertical-align: middle;
+	width: 80%; /* téléphones */
+}
+.unit_group form
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+.fig_group
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+
+aside
+{
+	/* margin-top: auto; pour placement à la fin */
+	margin: auto 5px 5px 5px;
+	padding: 4px;
+	background-color: #f0f0f0;
+	border: 2px black solid;
+	border-radius: 5px;
+
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 4px;
+}
+aside p
+{
+	margin: 0;
+	/*margin: 0 0 4px 0;*/
+	vertical-align: middle;
+	display: inline-block;
+}
+.number
+{
+	color: white;
+	background-color: black;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 30px;
+	width: 30px;
+	height: 30px;
+	margin-right: 4px;
+}
+
+/*#weapon_box_unit_name p{}*/
+
+aside table
+{
+	border-collapse: collapse;
+}
+aside table td
+{
+	border: 1px black solid;
+	text-align: center;
+}
+aside form *
+{
+	vertical-align: middle;
+}
+aside form input
+{
+	width: 40%;
+}
+#aptitudes
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+#aptitudes > div
+{
+	display: flex;
+}

@@ -220,7 +220,8 @@ public class BDD {
 			
 			rendu = this.select(requete,armee.getName());
 			
-			id = Integer.parseInt(rendu.getFirst());
+			//id = Integer.parseInt(rendu.getFirst());
+			id = Integer.parseInt(rendu.get(0));
 			requete = "INSERT INTO contenir VALUES(?,?);";
 			
 			for(Unit unit : armee.getUnits()) {
@@ -330,4 +331,15 @@ public class BDD {
 		}
 
 	}
+	public void SuppressionListe(String idListe){
+		
+		try{
+			PreparedStatement ps = connec.prepareStatement("DELETE FROM liste WHERE id_liste=?");
+	        ps.setString(1, idListe);
+	        ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
+}
 }

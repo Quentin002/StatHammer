@@ -51,10 +51,16 @@ public class BarDeNavController extends HttpServlet {
 				case "GererListe":
 					response.sendRedirect("gerer-liste");
 					break;
+				case "simu":
+					response.sendRedirect("SimuView");
+					break;
 				case "logout":
 					session.invalidate();
 					session = null;
 					response.sendRedirect("connexion");
+					break;
+				case "creaListe":
+					response.sendRedirect("CreerListeServlet");
 					break;
 				default:
 					response.sendRedirect("accueil");
