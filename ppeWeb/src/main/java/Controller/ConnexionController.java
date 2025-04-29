@@ -207,7 +207,6 @@ public class ConnexionController extends HttpServlet {
 		try (Connection conec = reopenConnection();
 	             PreparedStatement ps = conec.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
-			System.out.println(sql);
 			while (rs.next()) {
 			String nom_figurine = rs.getString("nom_figurine");
 			String M = rs.getString("M");
@@ -228,29 +227,30 @@ public class ConnexionController extends HttpServlet {
 		return listesFigurine;
 	}
 	
-	public static ArrayList<ArmeeListe> chargerUnitModifListes(int idliste) {
+	public static ArrayList<ArmeeListe> chargerUnitModifListes(int idliste, int idArmee) {
 		ArrayList<Model.ArmeeListe> listesUnitModif = new ArrayList<>();
 		
-		String sql = "SELECT u.nom_unite\\r\\n\"\r\n"
-				+ "        		+ \"FROM unite u\\r\\n\"\r\n"
-				+ "        		+ \"WHERE u.id_armee = ?\\r\\n\"\r\n"
-				+ "        		+ \"AND u.nom_unite NOT IN (\\r\\n\"\r\n"
-				+ "        		+ \"    SELECT un.nom_unite\\r\\n\"\r\n"
-				+ "        		+ \"    FROM unite un\\r\\n\"\r\n"
-				+ "        		+ \"    JOIN contenir c ON un.id_unite = c.id_unite\\r\\n\"\r\n"
-				+ "        		+ \"    WHERE c.id_liste = ?\\r\\n\"\r\n"
-				+ "        		+ \");"
+		String sql = "SELECT u.nom_unite\r\n"
+				+ " FROM unite u\r\n"
+				+ " WHERE u.id_armee ="
+				+idArmee
+				+ " AND u.nom_unite NOT IN (\r\n"
+				+ " SELECT un.nom_unite\r\n"
+				+ " FROM unite un\r\n"
+				+ " JOIN contenir c ON un.id_unite = c.id_unite\r\n"
+				+ " WHERE c.id_liste ="
+				+idliste
+				+ ");"
 									; 
 		try (Connection conec = reopenConnection();
 	             PreparedStatement ps = conec.prepareStatement(sql)) {
 			ResultSet rs = ps.executeQuery();
-			System.out.println(sql);
 			while (rs.next()) {
-			int id_liste = rs.getInt("id_liste");
 			String nomUnite_liste = rs.getString("nom_unite");
-			int idArmee_liste = rs.getInt("id_armee");
+			System.out.println(sql);
 			
-			Model.ArmeeListe unitModif = new Model.ArmeeListe(idArmee_liste, idArmee_liste, nomUnite_liste, nomUnite_liste, nomUnite_liste, id_liste);
+			Model.ArmeeListe unitModif = new Model.ArmeeListe(nomUnite_liste);
+			unitModif.getUniteListe().add(nomUnite_liste);
 			listesUnitModif.add(unitModif);
 		}
 		

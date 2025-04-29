@@ -45,8 +45,10 @@ public class ArmeeListe {
         this.idArmee = idArmee;
     }
     
+   public ArmeeListe(String nom) {
+	   this.nom = nom;
+   }
    
-
 	public int getIdListe() { return id; }
     public int getIdArmee() { return idArmee;}
     public String getNomListe() { return nom; }

@@ -65,7 +65,6 @@ public class ModificationListeView extends HttpServlet {
                 String nomliste = liste.getNomListe();
                 String descrliste = liste.getDescriptionListe();
                 ArrayList<String> nomUniteliste = liste.getUniteListe();
-                ArrayList<String> nomFigurineliste = liste.getFigurineListe();
                 int idArmeeliste = liste.getIdArmee();
 
                 if (idliste == idArmeeParam) {
@@ -93,9 +92,22 @@ public class ModificationListeView extends HttpServlet {
             }
         }
         
+        int idArmee= listes.get(0).getIdArmee();
+        StringBuilder importModif = new StringBuilder();
+        
+        ArrayList<Model.ArmeeListe> unitModif = ConnexionController.chargerUnitModifListes(idArmeeParam, idArmee);
+        
+        for (ArmeeListe unit : unitModif) {
+            importModif.append("<ul>");
+            for (String uniteName : unit.getUniteListe()) {
+                importModif.append("<li>").append(uniteName).append("</li>");
+            }
+            importModif.append("</ul>\n");
+        }
         String body =
         		"<h1>Modificateur de liste</h1>\n"
         		+"<section class='ModificationListe_structure'>"
+        		+importModif
         		+importListe
         		+importListe
         		+"</section>";
