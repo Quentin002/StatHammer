@@ -56,7 +56,6 @@ public class ModificationListeView extends HttpServlet {
         
         ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
 
-        ArrayList<Figurine> figurines = (ArrayList<Figurine>) session.getAttribute("figurines");
         
         StringBuilder importListe=  new StringBuilder();
 
@@ -78,10 +77,11 @@ public class ModificationListeView extends HttpServlet {
                     	importListe.append("<ul>\n");
                         for (String nomUnite : nomUniteliste) {
                         	importListe.append("<li>").append(nomUnite);
-	                        	for (Model.Figurine figurine : figurines) {
-	                            	importListe.append("<ul>").append(figurine.getNom())
-	                            	.append("</ul>\n");
-	                            }
+                        	ArrayList<Model.Figurine> figurines = ConnexionController.chargerFigurineListes(nomUnite, idliste);
+                        	for (Model.Figurine figurine : figurines) {
+                            	importListe.append("<ul>").append(figurine.getNom())
+                            	.append("</ul>\n");
+                            }
                         	importListe.append("</li>\n");
                         }
                         importListe.append("</ul>\n");

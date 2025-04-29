@@ -85,37 +85,6 @@ public class ConnexionController extends HttpServlet {
 				ArrayList<Model.ArmeeListe> listes = chargerListes(conec,session);
 				session.setAttribute("listes", listes);
 				
-				ArrayList<Model.ArmeeListe> liste = (ArrayList<ArmeeListe>) session.getAttribute("listes");
-				//System.out.println(liste.get(0).getId());
-				int idliste= liste.get(0).getIdListe();
-				//ArrayList<String> nomUnite= liste.get(0).getUniteListe();
-				
-				if (listes != null && !listes.isEmpty()) {
-		            for (ArmeeListe liste1 : listes) {
-		            	int IDliste= liste1.getIdListe();
-		                ArrayList<String> nomUniteliste = liste1.getUniteListe();
-		                
-		                
-		                    if (nomUniteliste != null && !nomUniteliste.isEmpty()) {
-		                        for (String nomUnite : nomUniteliste) {
-		                        	ArrayList<Model.Figurine> figurines = chargerFigurineListes(conec, session, nomUnite,idliste);
-		                        	session.setAttribute("figurines", figurines);
-		                        }
-		                    }}}
-				//ArrayList<Model.Figurine> figurines = chargerFigurineListes(conec,session, nomUnite, idliste);
-				
-				//ArrayList<Integer> listId = null ;
-				/*ArrayList <Integer >listId = new ArrayList<Integer>();
-				for(ArmeeListe list : liste) {
-						listId.add(list.getId());	
-						System.out.print(list.getId());
-				}*/
-				
-				ArrayList<Model.Figurine> figurine = (ArrayList<Figurine>) session.getAttribute("figurines");
-				System.out.println(figurine);
-				
-				
-				
 				conec.close();
 				System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 				response.sendRedirect("AccueilView");
@@ -218,8 +187,11 @@ public class ConnexionController extends HttpServlet {
 		return listes;
 	}
 	
-	public static ArrayList<Figurine> chargerFigurineListes(BDD conec, HttpSession session, String nomUnite, int idliste2) throws SQLException {
+	
+	
+	public static ArrayList<Figurine> chargerFigurineListes(String nomUnite, int idliste) {
 		ArrayList<Model.Figurine> listesFigurine = new ArrayList<>();
+		
 		String sql = "SELECT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO\r\n"
 				+ "            FROM liste l\r\n"
 				+ "            JOIN contenir c ON l.id_liste = c.id_liste\r\n"
@@ -227,93 +199,15 @@ public class ConnexionController extends HttpServlet {
 				+ "            JOIN remplir r ON u.id_unite = r.id_unite\r\n"
 				+ "            JOIN figurine f ON r.id_figurine = f.id_figurine\r\n"
 				+ "            WHERE l.id_liste ="
-				+idliste2
+				+idliste
 				+ " AND u.nom_unite =\""
 				+nomUnite
-				+ "\" ;" 
-									; 
-	        PreparedStatement ps = conec.getPreparedStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-			String nom_figurine = rs.getString("nom_figurine");
-			String M = rs.getString("M");
-			int E = rs.getInt("E");
-            int SV = rs.getInt("SV");
-            int PV = rs.getInt("PV");
-            int CD = rs.getInt("CD");
-            int CO = rs.getInt("CO");
-			
-			//Model.Figurine figurines = new Model.Figurine(new ArrayList<>(), new ArrayList<>(), nom_figurine, "", M, E, SV, PV, CD, CO);
-			//listesFigurine.add(figurines);
-            Model.Figurine figliste = figliste.get("nom_figurine");
-            if (figliste == null) {
-                figliste = new Model.Figurine(new ArrayList<>(), new ArrayList<>(), nom_figurine, "", M, E, SV, PV, CD, CO);
-                //ArrayList<Unit> unit_list,, String nom, String description
-                figliste.getNom();
-                figliste.put(nom_figurine, figliste);
-            }
-			
-		}
-		listesFigurine.addAll(figliste.values());
-		
-		
-		return listesFigurine;
-	}
-	
-	//requête sans la mapliste mais avec des requêtes corrects
-	/*public static ArrayList<Figurine> chargerFigurineListes(BDD conec, HttpSession session, String nomUnite, int idliste2) throws SQLException {
-		ArrayList<Model.Figurine> listesFigurine = new ArrayList<>();
-		String sql = "SELECT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO\r\n"
-				+ "            FROM liste l\r\n"
-				+ "            JOIN contenir c ON l.id_liste = c.id_liste\r\n"
-				+ "            JOIN unite u ON c.id_unite = u.id_unite\r\n"
-				+ "            JOIN remplir r ON u.id_unite = r.id_unite\r\n"
-				+ "            JOIN figurine f ON r.id_figurine = f.id_figurine\r\n"
-				+ "            WHERE l.id_liste ="
-				+idliste2
-				+ " AND u.nom_unite =\""
-				+nomUnite
-				+ "\" ;" 
-									; 
-	        PreparedStatement ps = conec.getPreparedStatement(sql);
-			ResultSet rs = ps.executeQuery();
-			while (rs.next()) {
-			String nom_figurine = rs.getString("nom_figurine");
-			String M = rs.getString("M");
-			int E = rs.getInt("E");
-            int SV = rs.getInt("SV");
-            int PV = rs.getInt("PV");
-            int CD = rs.getInt("CD");
-            int CO = rs.getInt("CO");
-			
-			Model.Figurine figurines = new Model.Figurine(new ArrayList<>(), new ArrayList<>(), nom_figurine, "", M, E, SV, PV, CD, CO);
-			listesFigurine.add(figurines);
-			
-		}
-		
-		
-		
-		return listesFigurine;
-	}*/
-	
-	/*public static ArrayList<Figurine> chargerFigurineListes(BDD conec, HttpSession session, ArrayList<String> nomUnite) {
-		ArrayList<Model.Figurine> listesFigurine = new ArrayList<>();
-		
-		String sql = "SELECT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO\r\n"
-				+ "            FROM liste l\r\n"
-				+ "            JOIN contenir c ON l.id_liste = c.id_liste\r\n"
-				+ "            JOIN unite u ON c.id_unite = u.id_unite\r\n"
-				+ "            JOIN remplir r ON u.id_unite = r.id_unite\r\n"
-				+ "            JOIN figurine f ON r.id_figurine = f.id_figurine\r\n"
-				+ "            WHERE l.id_liste =?"
-				
-				+ " AND u.nom_unite =? ;"
+				+"\";"
 									; 
 		try (Connection conec = reopenConnection();
 	             PreparedStatement ps = conec.prepareStatement(sql)) {
-			ps.setInt(1, idliste);
-            ps.setString(2, nomUnite);
 			ResultSet rs = ps.executeQuery();
+			System.out.println(sql);
 			while (rs.next()) {
 			String nom_figurine = rs.getString("nom_figurine");
 			String M = rs.getString("M");
@@ -332,15 +226,48 @@ public class ConnexionController extends HttpServlet {
             e.printStackTrace();
         }
 		return listesFigurine;
-	}*/
+	}
+	
+	public static ArrayList<ArmeeListe> chargerUnitModifListes(int idliste) {
+		ArrayList<Model.ArmeeListe> listesUnitModif = new ArrayList<>();
+		
+		String sql = "SELECT u.nom_unite\\r\\n\"\r\n"
+				+ "        		+ \"FROM unite u\\r\\n\"\r\n"
+				+ "        		+ \"WHERE u.id_armee = ?\\r\\n\"\r\n"
+				+ "        		+ \"AND u.nom_unite NOT IN (\\r\\n\"\r\n"
+				+ "        		+ \"    SELECT un.nom_unite\\r\\n\"\r\n"
+				+ "        		+ \"    FROM unite un\\r\\n\"\r\n"
+				+ "        		+ \"    JOIN contenir c ON un.id_unite = c.id_unite\\r\\n\"\r\n"
+				+ "        		+ \"    WHERE c.id_liste = ?\\r\\n\"\r\n"
+				+ "        		+ \");"
+									; 
+		try (Connection conec = reopenConnection();
+	             PreparedStatement ps = conec.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			System.out.println(sql);
+			while (rs.next()) {
+			int id_liste = rs.getInt("id_liste");
+			String nomUnite_liste = rs.getString("nom_unite");
+			int idArmee_liste = rs.getInt("id_armee");
+			
+			Model.ArmeeListe unitModif = new Model.ArmeeListe(idArmee_liste, idArmee_liste, nomUnite_liste, nomUnite_liste, nomUnite_liste, id_liste);
+			listesUnitModif.add(unitModif);
+		}
+		
+		
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return listesUnitModif;
+	}
 
-	/*private static BDD conec; // Instance de la classe BDD qui gère la connexion à la bdd
+	private static BDD conec; // Instance de la classe BDD qui gère la connexion à la bdd
 
     private static Connection reopenConnection() throws SQLException {
         
             conec = new BDD();
         
         return conec.getConnection();
-    }*/
+    }
 	
 }
