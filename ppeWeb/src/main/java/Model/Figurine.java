@@ -10,6 +10,7 @@ public class Figurine {
 	ArrayList<Aptitude> aptitudes;
 	HashMap<String, Aptitude> selectedAptitudes = new HashMap<String, Aptitude>();
 	
+	String unite;
 	String nom;
 	String logoChemin;
 	String M;
@@ -39,6 +40,24 @@ public class Figurine {
 		CD = cD;
 		CO = cO;
 	}
+	public Figurine(ArrayList<Arme> armes, ArrayList<Aptitude> aptitudes, String nom, String logoChemin, String m, int e, int sV, int hP, int cD, int cO, String unite) {
+        this.armes = armes;
+        if(armes.size() > 0) {
+            selected_weapon = armes.get(0); // arme par défaut
+        }
+        this.aptitudes = aptitudes;
+        
+        this.nom = nom;
+        this.logoChemin = logoChemin;
+        M = m;
+        E = e;
+        SV = sV;
+        HP = hP;
+        HP_max = hP;
+        CD = cD;
+        CO = cO;
+        this.unite = unite; // Initialisation du nom de l'unité
+    }
 	
 	public Figurine(String nom_figurine, int E, int SV, int HP,ArrayList<Arme> l1) {
 		this.nom = nom_figurine;
@@ -110,10 +129,15 @@ public class Figurine {
 //	public void setSelectedAptitudes(HashMap<String, Aptitude> aptitudes) {
 //		selectedAptitudes = aptitudes;
 //	}
+	
+	public String getUnite() {
+        return unite;
+    }
 
-	public String getNom() {
-		return nom;
-	}
+    // Getter pour le nom de la figurine
+    public String getNom() {
+        return nom;
+    }
 
 	public String getLogoChemin() {
 		return logoChemin;

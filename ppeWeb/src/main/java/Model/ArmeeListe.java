@@ -10,6 +10,8 @@ public class ArmeeListe {
     private String data;
 	private ArrayList<Unit> unites = new ArrayList<Unit>();
     private ArrayList<String> unit_names = new ArrayList<String>();
+    private ArrayList<String> figurine_names = new ArrayList<String>();
+    
 
 	private int idUtilisateur;
 	
@@ -25,6 +27,14 @@ public class ArmeeListe {
 		this.nom = nom;
 		this.description = description;
 		this.data = data;
+	}
+	//nouveau pour le test d'import 28042025
+	public ArmeeListe(ArrayList<Unit> unit_list, int id, int idArmee, String nom, String description) {
+		this.unites = unit_list;
+		this.id = id;
+		this.idArmee = idArmee;
+		this.nom = nom;
+		this.description = description;
 	}
 	
     public ArmeeListe(int id, int idArmee, String nom, String description, String data, int idUtilisateur) {
@@ -42,7 +52,10 @@ public class ArmeeListe {
         this.description = description;
         this.idArmee = idArmee;
     }
-
+    
+    public ArmeeListe(ArrayList<String> figurine) {
+    	this.figurine_names = figurine;
+    }
 
 	public int getIdListe() { return id; }
     public int getIdArmee() { return idArmee;}
@@ -50,10 +63,14 @@ public class ArmeeListe {
     public String getDescriptionListe() { return description; }
     public String getDataListe() { return data; }
     public ArrayList<String> getUniteListe() { return unit_names; }
-
+    public ArrayList<String> getFigurineListe() { return figurine_names; }
     public void setUniteListe(ArrayList<String> unite) {
         this.unit_names = unite;
     }
+    public void setFigurineListe(ArrayList<String> figurine) {
+        this.figurine_names = figurine;
+    }
+
 
 	// getters
 	public int getId() {

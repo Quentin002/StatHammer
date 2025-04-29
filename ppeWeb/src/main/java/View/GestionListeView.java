@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import Controller.ConnexionController;
 import Model.ArmeeListe;
+import Model.Figurine;
 
 /**
  * Servlet implementation class GestionListeView
@@ -41,7 +43,7 @@ public class GestionListeView extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
-		
+		 ArrayList<Figurine> figurines = (ArrayList<Figurine>) session.getAttribute("figurines");
 	             
 		String titre = "StatHammer : Gestion liste";
 	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
@@ -65,7 +67,15 @@ public class GestionListeView extends HttpServlet {
 	            if (nomUniteliste != null && !nomUniteliste.isEmpty()) {
 	                listage.append("<ul>\n");
 	                for (String nomUnite : nomUniteliste) {
-	                    listage.append("<li>").append(nomUnite).append("</li>\n");
+	                    listage.append("<li>").append(nomUnite);
+	                    
+                    	for (Model.Figurine figurine : figurines) {
+                        	listage.append("<ul>").append(figurine.getUnite())
+                        	.append("</ul>\n");
+                        	listage.append("<ul>").append(figurine.getNom())
+                        	.append("</ul>\n");
+                        }
+	                    listage.append("</li>\n");
 	                }
 	                listage.append("</ul>\n");
 	            } else {
@@ -74,7 +84,7 @@ public class GestionListeView extends HttpServlet {
 	            listage.append("<div class='GestionListe'>\n")
 	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
 	            		.append("</button>\n")
-	            		.append("<form action='ModificationListeView' method='post' style='display:inline;'>\n")
+	            		.append("<form action='ModificationListeView' method='post' class='GestionListe_form'>\n")
 	            		.append("<input type='hidden' name='idArmee' value='").append(idliste).append("' />\n")
 	            		.append("<button type='submit' class='GestionListe_bouton'>Paramétrer</button>\n")
 	            		.append("</form>\n")
@@ -83,6 +93,8 @@ public class GestionListeView extends HttpServlet {
 	            		.append("'>Supprimer</button>\n")
 	            		.append("</div>\n")
 	            		.append("</div>\n");
+	            
+	           
 	            
 	        }
 	    }
