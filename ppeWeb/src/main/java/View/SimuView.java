@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 @WebServlet("/SimuView")
 public class SimuView extends HttpServlet {
@@ -52,6 +53,9 @@ public class SimuView extends HttpServlet {
 							+ "	<body>";
 	    String header = ConnexionView.headerTop + titre + header_bottom;
 	    out.println(header + AccueilView.barDeNav);
+	    
+	    ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
+	    request.setAttribute("listes", listes); // => simulation.jsp
 	    
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("simulation.jsp");
         dispatcher.include(request, response);
