@@ -1,11 +1,4 @@
-    	<%@page import="java.util.ArrayList"%>
-    	<%@page import="Model.ArmeeListe"%>
-    	<%
-    	ArrayList<Model.ArmeeListe> listes = new ArrayList<Model.ArmeeListe>();
-          listes = (ArrayList<Model.ArmeeListe>)request.getAttribute("listes");
-
-    %>
-    	
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     	<div class="sim_grid">
     		<div id="left_col">
     			<!-- choicebox liste d'armée -->
@@ -14,10 +7,10 @@
 	    				<option value="" disabled selected>liste attaquante</option>
 
 	    				<!-- options générées par le serveur à l'ouverture de la page -->
-	    				<% for(int i = 0; i < listes.size(); i+=1) { 
-   %>
-   <option value=<%= listes.get(0).getName() %>>listes.get(0).getName()</option>
-    <% } %>
+						<option value="Liste1">Liste1</option>
+						<option value="Liste2">Liste2</option>
+						<option value="Liste3">Liste3</option>
+						<option value="Liste4">Liste4</option>
 					</select>
 					<div id="logo_list1" class="logo_armee_div hidden">
 						<img class="logo_armee" src="" alt="logo_armee">
@@ -36,14 +29,8 @@
 			</div>
 
     		<div id="central_col">
-    			<button id="action_button" onclick="GraphiqueSimu ();">Action !!</button>
+    			<button id="action_button" onclick="calculate();">Action !!</button>
     			<div id="warhammer_picture"><img src="assets/black_templar.webp" alt="illustration"></div>
-    			<div class='container'>
-					<script src='js/simu.js'></script>
-					<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-					 <div id='graphique'>
-					</div>
-					</div>
     			<section id="histogramme" class="hidden">
     				Affichage de l'histogramme
     			</section>

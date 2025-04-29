@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div id="weapons_box_unit_name">
 	<p class="number">1</p><p><%= one_fig.getName() %></p>
 </div>
