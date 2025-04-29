@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <% for(Unit one_unit : units_list) { %>
 <div class="one_unit_zone" id="col1_unit1">
 	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit1');"><%= on_unit.getName() %></button>
