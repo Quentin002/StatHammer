@@ -57,6 +57,9 @@ public class SimuView extends HttpServlet {
 	    String header = ConnexionView.headerTop + titre + header_bottom;
 	    out.println(header + AccueilView.barDeNav);
 	    
+	    ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
+	    request.setAttribute("listes", listes); // => simulation.jsp
+	    
 	    RequestDispatcher dispatcher = request.getRequestDispatcher("simulation.jsp");
         dispatcher.include(request, response);
 

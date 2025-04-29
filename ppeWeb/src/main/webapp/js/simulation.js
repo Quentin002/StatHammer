@@ -1,5 +1,5 @@
 // note: blocage possible par le mode "https only" de firefox
-const url = "http://webhammer/ControllerSimu";
+const url = "ControllerSimu";
 
 function selectList(nb){
 	const units_list = document.getElementById("units_list" + nb);
@@ -14,175 +14,15 @@ function selectList(nb){
 	else{
 		return;
 	}
-	Battle.setListName(nb,document.getElementById(select_name).value);
-	
+	Battle.setListId(nb, document.getElementById(select_name).value);
 
-	// copie de units_box.jsp pour test en attendant d'utiliser le serveur
-	let data;
-	if(nb == 1){
-		data = JSON.stringify({ html: `<div class="one_unit_zone" id="col1_unit1">
-	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit1');">Unité 1</button>
-	<div class="unit_box hidden">
-		<div class="unit_group" id="unit1_group1">
-			<p class="number" onclick="openWeaponsAptitudesZone();">1</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-		</div>
-		<div class="unit_group" id="unit1_group1">
-			<p class="number" onclick="openWeaponsAptitudesZone();">2</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-		</div>
-	</div>
-</div>
-<div class="one_unit_zone" id="col1_unit2">
-	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit2');">Unité 2</button>
-	<div class="unit_box hidden">
-		<div class="unit_group" id="unit1_group1">
-			<p class="number" onclick="openWeaponsAptitudesZone();">1</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>5PV </span></p>
-		</div>
-		<div class="unit_group" id="unit1_group1">
-			<p class="number" onclick="openWeaponsAptitudesZone();">2</p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-			<p><img src="assets/android-fill.png" alt="logo figurine"><span>2PV </span></p>
-		</div>
-	</div>
-</div>`, army_file: 'android-fill.png' });
-	}
-	else if(nb == 2){
-		data = JSON.stringify({ html: `<div class="one_unit_zone" id="col2_unit1">
-	<button class="unit_button" onclick="unfoldUnits(2, 'col2_unit1');">Unité 1</button>
-	<div class="unit_box hidden">
-		<div class="unit_group" id="unit1_group1">
-			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
-				<label>Initié</label>
-				<div>
-					<input id="unit1_group1_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber('unit1_group1');">
-					<output name="nb_alive_figs_out">4</output>
-				</div>
-			</form>
-			<div class="fig_group">
-				<div id="unit1_group1_fig1">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig1');">
-				</div>
-				<div id="unit1_group1_fig2">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig2');">
-				</div>
-				<div id="unit1_group1_fig3">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig3');">
-				</div>
-				<div id="unit1_group1_fig4">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group1_fig4');">
-				</div>
-			</div>
-		</div>
-		<div class="unit_group" id="unit1_group2">
-			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
-				<label>Néophyte</label>
-				<div>
-					<input id="unit1_group2_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber('unit1_group2');">
-					<output name="nb_alive_figs_out">2</output>
-				</div>
-			</form>
-			<div class="fig_group">
-				<div id="unit1_group2_fig1">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group2_fig1');">
-				</div>
-				<div id="unit1_group2_fig2">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit1_group2_fig2');">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="one_unit_zone" id="col2_unit3">
-	<button class="unit_button" onclick="unfoldUnits(2, 'col2_unit3');">Unité 3</button>
-	<div class="unit_box hidden">
-		<div class="unit_group" id="unit3_group1">
-			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
-				<label>Initié</label>
-				<div>
-					<input id="unit3_group1_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="4" value="4" onchange="selectAliveFigsNumber('unit3_group1');">
-					<output name="nb_alive_figs_out">4</output>
-				</div>
-			</form>
-			<div class="fig_group">
-				<div id="unit3_group1_fig1">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig1');">
-				</div>
-				<div id="unit3_group1_fig2">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig2');">
-				</div>
-				<div id="unit3_group1_fig3">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig3');">
-				</div>
-				<div id="unit3_group1_fig4">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group1_fig4');">
-				</div>
-			</div>
-		</div>
-		<div class="unit_group" id="unit3_group2">
-			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
-				<label>Néophyte</label>
-				<div>
-					<input id="unit3_group2_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="2" value="2" onchange="selectAliveFigsNumber('unit3_group2');">
-					<output name="nb_alive_figs_out">2</output>
-				</div>
-			</form>
-			<div class="fig_group">
-				<div id="unit3_group2_fig1">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group2_fig1');">
-				</div>
-				<div id="unit3_group2_fig2">
-					<label for="nb_alive_figs"><img class="fig_icon" src="assets/android-fill.png" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="2" value="2" onchange="setFigurineHP('unit3_group2_fig2');">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>`, army_file: 'android-fill.png' });
-	}
-
-	units_list.innerHTML = '';
-	// sauvegarder le html généré (= data) dans Battle
-	units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
-	const logo_box = document.getElementById("logo_list" + nb);
-	logo_box.querySelector("img").src = "armees/" + JSON.parse(data).army_file;
-	logo_box.classList.remove('hidden');
-	return;
-
-	if(Battle.getListName(col) == null){
+	if(Battle.getListId(nb) != null){
 		fetch(url, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ action: "make_units_box", col: nb, list: Battle.getListName(nb) })
+			body: JSON.stringify({ action: "make_units_box", col: nb, list: Battle.getListId(nb) })
 		})
 			.then(response => {
 				if (!response.ok) {
@@ -193,8 +33,6 @@ function selectList(nb){
 			// le serveur renvoie une vue et le nom d'une armée
 			.then(data => {
 				units_list.innerHTML = '';
-
-				// sauvegarder le html généré (= data) dans Battle?
 
 				// l'insérer dans la page
 				units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
