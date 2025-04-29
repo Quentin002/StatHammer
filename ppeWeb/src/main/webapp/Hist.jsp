@@ -24,8 +24,8 @@
 			<p id= <%= idD %> hidden ><%= tabDegat[i] %>   </p>  
    <% } %>
 	
-	<div id="chartContainer1" style="height: 300px; width:500px"></div>
-	<div id="chartContainer2" style="height: 300px; width:500px"></div>
+	<div id="chartContainer1" style="height: 300px; width:400px"></div>
+	<div id="chartContainer2" style="height: 300px; width:400px"></div>
 	
 		
 	
