@@ -291,6 +291,28 @@ public class BDD {
 		return role;
 	}
 	
+	public String UtilisateurEmail(String nom, String mdp) {
+		String email = "null";
+		try {
+			
+			stat = this.getPreparedStatement("SELECT email_utilisateur FROM utilisateur WHERE nom_utilisateur=? AND mdp_utilisateur = ?;",
+				nom, mdp);
+			
+			ResultSet rs = stat.executeQuery();
+			rs.next();
+			email = rs.getString("email_utilisateur");
+			
+			return email;
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+			
+			
+		}
+		return email;
+	}
+	
 	public String UtilisateurMdp(int id) {
 		String mdp = "test null";
 		try {

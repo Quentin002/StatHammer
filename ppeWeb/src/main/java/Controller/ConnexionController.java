@@ -53,6 +53,7 @@ public class ConnexionController extends HttpServlet {
 			ArrayList<Object> rendu = conec.selectUtilisateur(login, mdp);
 			int id = conec.UtilisateurID(login, mdp);
 			String role = conec.UtilisateurRole(login, mdp);
+			String email = conec.UtilisateurEmail(login, mdp);
 
 			if (!rendu.isEmpty() && login.equals(rendu.get(0))) {
 				
@@ -63,6 +64,7 @@ public class ConnexionController extends HttpServlet {
 				session.setAttribute("mdp", mdp);
 				session.setAttribute("id", id);
 				session.setAttribute("role", role);
+				session.setAttribute("email", email);
 
 				// Chargement des événements
 				chargerEvenements(conec,session);
