@@ -1,64 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Simulation</title>
-        <link rel="icon" type="image/png" href="" alt="logo stathammer">
-        <meta name="description" content="<?= $description ?>">
-        <meta name="viewport" content="width=device-width">
-        <style>
-        	body
-			{
-				margin: 0px;
-			}
-			nav
-			{
-				background-color: #f0f0f0;
-			}
-			select, button
-			{
-				cursor: pointer; /* curseur de la souris qui pointe du doigt */
-			}
-			.toast {
-			    visibility: hidden;
-			    margin: auto;
-			    background-color: #333;
-			    color: #fff;
-			    text-align: center;
-			    border-radius: 5px;
-			    padding: 16px;
-			    position: fixed;
-			    z-index: 1;
-			    left: 50%;
-			    bottom: 30px;
-			    transform: translateX(-50%);
-			    transition: opacity 0.5s, visibility 0.5s;
-			}
-			.toast.show {
-			    visibility: visible;
-			    opacity: 1;
-			}
-        </style>
-        <link rel="stylesheet" href="css/simulation.css"/>
-        <script type="text/javascript">
-        	function toastNotify(message) {
-			    var toast = document.getElementById('toast');
-			    toast.textContent = message;
-			    toast.className = 'toast show';
-			    setTimeout(function(){ toast.className = toast.className.replace('show', ''); }, 3000);
-			}
-        </script>
-        <script type="text/javascript" src="js/Battle.js"></script>
-        <script type="text/javascript" src="js/simulation.js"></script>
-        
-    </head>
-    <body>
-    	<nav>menu principal</nav>
-
     	<div class="sim_grid">
     		<div id="left_col">
     			<!-- choicebox liste d'armée -->
-    			<div>
+    			<div class="select_box">
 	    			<select id="left_choice_box" name="left_choice_box" onchange="selectList(1);">
 	    				<option value="" disabled selected>liste attaquante</option>
 
@@ -94,7 +37,7 @@
     		</div>
 
     		<div id="right_col">
-    			<div>
+    			<div class="select_box">
 	    			<select id="right_choice_box" name="right_choice_box" onchange="selectList(2);">
 	    				<option value="" disabled selected>liste défenseuse</option>
 
@@ -114,9 +57,3 @@
 				</section>
     		</div>
     	</div>
-
-    	<footer>
-    		<div id="toast"></div>
-    	</footer>
-    </body>
-</html>

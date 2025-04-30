@@ -1,0 +1,34 @@
+@charset "UTF-8";
+/* annnule des règles ajoutées par le thème */
+body
+{
+	padding-top: initial;
+	padding-bottom: initial;
+	color: initial;
+}
+.sim_grid
+{
+	margin-top: 10px;
+}
+.select_box
+{
+	background-color: #f7f7f7;
+	border-radius: 5px;
+}
+form
+{
+	display: initial;
+	padding: initial;
+	background-color: initial;
+	border: initial;
+	box-shadow: initial;
+	gap: initial;
+	margin: initial;
+	flex-direction: row;
+}
+label
+{
+	color: initial;
+	margin-top: initial;
+	font-weight: initial;
+}
