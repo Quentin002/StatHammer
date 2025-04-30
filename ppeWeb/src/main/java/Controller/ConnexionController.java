@@ -170,7 +170,7 @@ public class ConnexionController extends HttpServlet {
 			String nom_liste = rs.getString("nom_liste");
 			String descr_liste = rs.getString("description_liste");
 			String nomUnite_liste = rs.getString("nom_unite");
-			int idArmee_liste = rs.getInt("id_armee");
+			//int idArmee_liste = rs.getInt("id_armee");
 			
 			// Vérifier si la liste existe déjà dans la map
             Model.ArmeeListe liste = mapListes.get(id_liste);

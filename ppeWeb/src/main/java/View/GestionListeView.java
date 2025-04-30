@@ -40,6 +40,7 @@ public class GestionListeView extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
+		@SuppressWarnings("unchecked")
 		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
 		
 	             
