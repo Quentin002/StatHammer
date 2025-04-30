@@ -76,6 +76,7 @@ public class ControllerSimu extends HttpServlet {
 						Battle.setSelectedList(col, one_list);
 						ArrayList<Unit> units_list = Battle.getSelectedList(col).getUnits();
 						Battle.setArmy(col, units_list.get(0).getArmee());
+						Battle.setSelectedUnit(col, id_list);
 						break;
 					}
 				}

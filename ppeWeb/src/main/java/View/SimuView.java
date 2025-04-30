@@ -33,8 +33,6 @@ public class SimuView extends HttpServlet {
 	         return;
 	     }
 	     
-	     ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>)request.getAttribute("listes");
-	     request.setAttribute("listes", listes);
 	     
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
