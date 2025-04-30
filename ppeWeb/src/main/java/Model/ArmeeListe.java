@@ -94,6 +94,9 @@ public class ArmeeListe
 	public void removeUnit(Unit unit) {
 		unites.remove(unit);
 	}
+	public void removeAllUnit() {
+		unites = new ArrayList<Unit>();
+	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
