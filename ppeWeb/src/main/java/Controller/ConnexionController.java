@@ -187,8 +187,6 @@ public class ConnexionController extends HttpServlet {
 		return listes;
 	}
 	
-	
-	
 	public static ArrayList<Figurine> chargerFigurineListes(String nomUnite, int idliste) {
 		ArrayList<Model.Figurine> listesFigurine = new ArrayList<>();
 		
@@ -227,6 +225,42 @@ public class ConnexionController extends HttpServlet {
 		return listesFigurine;
 	}
 	
+	public static ArrayList<Figurine> chargerFigurineModifListes(String nomUnite, int idArmee) {
+		ArrayList<Model.Figurine> listesFigurineModif = new ArrayList<>();
+		
+		String sql = "SELECT DISTINCT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO\r\n"
+				+ "            FROM unite u\r\n"
+				+ "            JOIN remplir r ON u.id_unite = r.id_unite\r\n"
+				+ "            JOIN figurine f ON r.id_figurine = f.id_figurine\r\n"
+				+ "            WHERE u.id_armee ="
+				+idArmee
+				+ " AND u.nom_unite =\""
+				+nomUnite 
+				+"\";"
+									; 
+		try (Connection conec = reopenConnection();
+	             PreparedStatement ps = conec.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+			String nom_figurine = rs.getString("nom_figurine");
+			String M = rs.getString("M");
+			int E = rs.getInt("E");
+            int SV = rs.getInt("SV");
+            int PV = rs.getInt("PV");
+            int CD = rs.getInt("CD");
+            int CO = rs.getInt("CO");
+			
+			Model.Figurine figurines = new Model.Figurine(new ArrayList<>(), new ArrayList<>(), nom_figurine, "", M, E, SV, PV, CD, CO);
+			listesFigurineModif.add(figurines);
+		}
+		
+		
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return listesFigurineModif;
+	}
+	
 	public static ArrayList<ArmeeListe> chargerUnitModifListes(int idliste, int idArmee) {
 		ArrayList<Model.ArmeeListe> listesUnitModif = new ArrayList<>();
 		
@@ -247,7 +281,6 @@ public class ConnexionController extends HttpServlet {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 			String nomUnite_liste = rs.getString("nom_unite");
-			System.out.println(sql);
 			
 			Model.ArmeeListe unitModif = new Model.ArmeeListe(nomUnite_liste);
 			unitModif.getUniteListe().add(nomUnite_liste);

@@ -55,7 +55,7 @@ public class ModificationListeView extends HttpServlet {
         PrintWriter out = response.getWriter();
         
         ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
-
+        System.out.println(listes);
         
         StringBuilder importListe=  new StringBuilder();
 
@@ -82,6 +82,7 @@ public class ModificationListeView extends HttpServlet {
                             	.append("</ul>\n");
                             }
                         	importListe.append("</li>\n");
+                        	importListe.append("<button onclick=").append("wawa").append(">Supprimer</button>");
                         }
                         importListe.append("</ul>\n");
                     } else {
@@ -96,20 +97,49 @@ public class ModificationListeView extends HttpServlet {
         StringBuilder importModif = new StringBuilder();
         
         ArrayList<Model.ArmeeListe> unitModif = ConnexionController.chargerUnitModifListes(idArmeeParam, idArmee);
-        
+        session.setAttribute("Modiflistes", unitModif);
+        importModif.append("<div>");
         for (ArmeeListe unit : unitModif) {
-            importModif.append("<ul>");
+        	importModif.append("<ul>");
             for (String uniteName : unit.getUniteListe()) {
-                importModif.append("<li>").append(uniteName).append("</li>");
+                importModif.append("<li>").append(uniteName);
+                ArrayList<Model.Figurine> figurines = ConnexionController.chargerFigurineModifListes(uniteName, idArmee);
+            	for (Model.Figurine figurine : figurines) {
+                	importModif.append("<ul>").append(figurine.getNom())
+                	.append("</ul>\n");
+                }
+            	importModif.append("</li>");
             }
+            importModif.append("<button>Ajouter</button>");
             importModif.append("</ul>\n");
+            		   
         }
+        importModif.append("</div>");
+        
+        ArrayList<Model.ArmeeListe> modifListe = (ArrayList<Model.ArmeeListe>) session.getAttribute("Modiflistes");
+        System.out.println(modifListe);
+        
+        StringBuilder testImportSession=  new StringBuilder();
+        testImportSession.append("<div>");
+        for (ArmeeListe unite : modifListe) {
+        	testImportSession.append("<ul>");
+            for (String uniteName : unite.getUniteListe()) {
+            	testImportSession.append("<li>").append(uniteName);
+               
+            	testImportSession.append("</li>");
+            }
+            testImportSession.append("</ul>\n");
+            		   
+        }
+        testImportSession.append("</div>");
+        
+        
         String body =
         		"<h1>Modificateur de liste</h1>\n"
         		+"<section class='ModificationListe_structure'>"
         		+importModif
         		+importListe
-        		+importListe
+        		+testImportSession
         		+"</section>";
         
         String html = header + AccueilView.barDeNav+ body + ConnexionView.footer;
