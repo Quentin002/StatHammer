@@ -72,6 +72,7 @@ public class ControllerSimu extends HttpServlet {
 				
 				for(ArmeeListe one_list : listes) {
 					if(one_list.getId() == id_list) {
+						// on optimisera l'instanciation!!
 						Instanciation.getUnitsOfAList(one_list);
 						Battle.setSelectedList(col, one_list);
 						ArrayList<Unit> units_list = Battle.getSelectedList(col).getUnits();
@@ -80,16 +81,36 @@ public class ControllerSimu extends HttpServlet {
 					}
 				}
 				request.setAttribute("col", col);
-				request.setAttribute("units_list", Battle.getSelectedList(col).getUnits());
-				
-				// variables de la vue
-				
 			    request.setAttribute("listes", listes); // => units_box.jsp
+			    request.setAttribute("units_list", Battle.getSelectedList(col).getUnits());
+			    
 			    request.getRequestDispatcher("units_box.jsp").forward(request, response);
-				
 				break;
 			case "get_army_file":
 				out.println(Battle.getSelectedList(col).getUnits().get(0).getArmee() + ".png");
+				break;
+			case "set_selected_unit":
+				int unit_index = Integer.valueOf(data.get("fig"));
+				Battle.setSelectedUnit(col, unit_index);
+				out.println("success");
+				break;
+			case "set_figs_group_hp":
+//				String group_id[] = data.get("group_id").split("_"); // unitX_nomfigurine
+//				int unit = Integer.valueOf(group_id[0].substring(4, group_id[0].length())); // on "unit" au début
+//				String fig_name = group_id[1];
+//				int hp = Integer.valueOf(data.get("hp"));
+//				
+//				ArrayList<Figurine> fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
+//				for(int i = 0; i < value; i++) {
+//					fig_group.get(i).setHP(fig_group.get(i).getHPMax());
+//				}
+//				for(int i = value; i < fig_group.size(); i++) {
+//					fig_group.get(i).setHP(0);
+//				}
+				
+				break;
+			case "set_one_fig_hp":
+				
 				break;
 		}
 	}

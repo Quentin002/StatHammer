@@ -13,7 +13,7 @@ public class Battle
 	static private ArmeeListe selected_list2 = null;
 	static private Armee army1;
 	static private Armee army2;
-	static private int index_selected_unit1 = -1;
+	static private int index_selected_unit1 = -1; // commencent à 0
 	static private int index_selected_unit2 = -1;
 	
 	// getters/setters

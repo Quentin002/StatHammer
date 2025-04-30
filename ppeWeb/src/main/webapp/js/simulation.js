@@ -51,40 +51,61 @@ function selectList(nb){
 }
 
 function unfoldUnits(col, unit_section_id){
-	/* déroulement des unités et cadre jaune du bouton, même algo que dans le client lourd */
+	/* déroulage des unités et cadre jaune du bouton, même algo que dans le client lourd */
 	const old_unit_box = document.getElementById(Battle.getUnitId(col)); // peut être null
 	const new_unit_box = document.getElementById(unit_section_id); // peut être le même élément
-
-	// il y a déjà une unité sélectionnée
-    if(Battle.getUnitId(col) != null)
-    {
-    	old_unit_box.querySelector(".unit_button").classList.remove("unit_selected"); // retirer bordure unité sélectionnée
-		document.getElementById("weapons_aptitudes_box").classList.add("hidden"); // cacher fenêtre combat si existe
-    	
-    	// bouton même unité => ferme
-    	if(Battle.getUnitId(col) == unit_section_id)
-        {
-    		new_unit_box.querySelector(".unit_box").classList.add("hidden");
-    		Battle.setUnitId(col, null);
-        }
-    	// bouton autre unité
-    	else
-    	{
-        	if(old_unit_box != null) {
-				old_unit_box.querySelector(".unit_box").classList.add("hidden"); // supprimer ancienne zone de figurines
+	const tmp = unit_section_id.split("_"); // sépare colX_unitY
+	const unit_number = tmp[1].substring(4, tmp[1].length);
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4 && xhr.status === 200) {
+			if(xhr.responseText.trim() == "success"){
+				// il y a déjà une unité sélectionnée
+			    if(Battle.getUnitId(col) != null)
+			    {
+			    	old_unit_box.querySelector(".unit_button").classList.remove("unit_selected"); // retirer bordure unité sélectionnée
+					document.getElementById("weapons_aptitudes_box").classList.add("hidden"); // cacher fenêtre combat si existe
+			    	
+			    	// bouton même unité => ferme
+			    	if(Battle.getUnitId(col) == unit_section_id)
+			        {
+			    		new_unit_box.querySelector(".unit_box").classList.add("hidden");
+			    		Battle.setUnitId(col, null);
+			        }
+			    	// bouton autre unité
+			    	else
+			    	{
+			        	if(old_unit_box != null) {
+							old_unit_box.querySelector(".unit_box").classList.add("hidden"); // supprimer ancienne zone de figurines
+						}
+			        	Battle.setUnitId(col, unit_section_id);
+			        	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
+			        	new_unit_box.querySelector(".unit_box").classList.remove("hidden"); // on ouvre
+			    	}
+			    }
+			    // pas d'unité sélectionnée => on ouvre
+			    else
+			    {
+			    	Battle.setUnitId(col, unit_section_id);
+			    	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
+			    	new_unit_box.querySelector(".unit_box").classList.remove("hidden");
+			    }
 			}
-        	Battle.setUnitId(col, unit_section_id);
-        	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
-        	new_unit_box.querySelector(".unit_box").classList.remove("hidden"); // on ouvre
-    	}
-    }
-    // pas d'unité sélectionnée => on ouvre
-    else
-    {
-    	Battle.setUnitId(col, unit_section_id);
-    	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
-    	new_unit_box.querySelector(".unit_box").classList.remove("hidden");
-    }
+			else{
+				console.log("erreur MAJ unité sélectionnée sur le serveur");
+			}
+		}
+	};
+	
+	// envoi avec les même conditions
+	if(Battle.getUnitId(col) != null && Battle.getUnitId(col) == unit_section_id){
+		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, fig: -1 }));
+	}
+	else{
+		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, fig: unit_number }));
+	}
 }
 
 function openWeaponsAptitudesZone(group_id){
@@ -174,41 +195,16 @@ function openWeaponsAptitudesZone(group_id){
 
 /* commande colonne de droite */
 function selectAliveFigsNumber(group_id){
-	console.log(group_id);
 	const input = document.getElementById(group_id + "_input");
-
-	// code de test
-	const hp_inputs = document.getElementById(group_id + _figs).querySelectorAll(".hp_selector");
-	const fig_icons = document.getElementById(group_id + _figs).querySelectorAll(".fig_icon");
-	for(let i = 0; i < input.value; i++)
-	{
-		hp_inputs[i].value = hp_inputs[i].max;;
-		fig_icons[i].src = 'assets/android-fill.png';
-	}
-	for(let i = input.value; i < hp_inputs.length; i++)
-	{
-		hp_inputs[i].value = 0; // remplacer 2 par la bonne valeur (figurine.getHpMax() en java)
-		fig_icons[i].src = 'assets/android-line.png';
-	}
-	return
-
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ action: "set_figs_group_hp", col: 2, unit_group: group_id, hp: input.value })
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
-			}
-			return response.json();
-		})
-		// le serveur renvoie une vue et le nom d'une armée
-		.then(data => {
-			const hp_inputs = document.getElementById(group_id).querySelectorAll(".hp_selector");
-			const fig_icons = document.getElementById(group_id).querySelectorAll(".fig_icon");
+	//const group_id_array = group_id.split("_"); // ["unitX", "nomfigurine"]
+	//const fig_name = group_id_array[1];
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4 && xhr.status === 200) {
+			const hp_inputs = document.getElementById(group_id + "_figs").querySelectorAll(".hp_selector");
+			const fig_icons = document.getElementById(group_id + "_figs").querySelectorAll(".fig_icon");
 			for(let i = 0; i < input.value; i++)
 			{
 				hp_inputs[i].value = hp_inputs[i].max;;
@@ -219,72 +215,40 @@ function selectAliveFigsNumber(group_id){
 				hp_inputs[i].value = 0; // remplacer 2 par la bonne valeur (figurine.getHpMax() en java)
 				fig_icons[i].src = 'assets/android-line.png';
 			}
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
+		}
+	};
+	xhr.send(JSON.stringify({ action: "set_figs_group_hp", col: 2, group_id: group_id, hp: input.value}));
 }
+
 function setFigurineHP(fig_id){
 	const fig_div = document.getElementById(fig_id);
-
-	// code de test
-	if(fig_div.querySelector("input").value > 0){
-		fig_div.querySelector("img").src = 'assets/android-fill.png';
-	}
-	else{
-		fig_div.querySelector("img").src = 'assets/android-line.png';
-	}
-	// MAJ input range
-	const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
-	const group_div = document.getElementById(group_id);
-	const hp_inputs = group_div.querySelectorAll(".hp_selector");
-	let alive_figs_number = 0;
-	for(let i = 0; i < hp_inputs.length; i++){
-		if(hp_inputs[i].value > 0){
-			alive_figs_number++;
-		}
-	}
-    document.getElementById(group_id + "_input").value = alive_figs_number;
-    group_div.querySelector("output").innerHTML = alive_figs_number;
-	return;
-
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ action: "set_one_fig_hp", fig: fig_id_id, hp: fig_div.querySelector("input").value })
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
-			}
-			return response.json();
-		})
-		// le serveur renvoie une vue et le nom d'une armée
-		.then(data => {
-			if(fig_div.querySelector("input").value > 0){
-				fig_div.querySelector("img").src = 'assets/android-fill.png';
-			}
-			else{
-				fig_div.querySelector("img").src = 'assets/android-line.png';
-			}
-			// MAJ input range
-			const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
-			const group_div = document.getElementById(group_id);
-			const hp_inputs = group_div.querySelectorAll(".hp_selector");
-			let alive_figs_number = 0;
-			for(let i = 0; i < hp_inputs.length; i++){
-				if(hp_inputs[i].value > 0){
-					alive_figs_number++;
+	
+	var xhr = new XMLHttpRequest();
+		xhr.open('POST', url, true);
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState === 4 && xhr.status === 200) {
+				// icône
+				if(fig_div.querySelector("input").value > 0){
+					fig_div.querySelector("img").src = 'assets/android-fill.png';
 				}
+				else{
+					fig_div.querySelector("img").src = 'assets/android-line.png';
+				}
+				// MAJ input range
+				const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
+				const group_div = document.getElementById(group_id + "_figs");
+				const hp_inputs = group_div.querySelectorAll(".hp_selector");
+				let alive_figs_number = 0;
+				for(let i = 0; i < hp_inputs.length; i++){
+					if(hp_inputs[i].value > 0){
+						alive_figs_number++;
+					}
+				}
+			    document.getElementById(group_id + "_input").value = alive_figs_number;
+			    group_div.querySelector("output").innerHTML = alive_figs_number;
 			}
-		    document.getElementById(group_id + "_input").value = alive_figs_number;
-		    group_div.querySelector("output").innerHTML = alive_figs_number;
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
+		};
+		xhr.send(JSON.stringify({ action: "set_one_fig_hp", fig: fig_id, hp: fig_div.querySelector("input").value }));
 }
 
 
@@ -411,7 +375,7 @@ function checkAptitude(aptitude_id){
 /* boutons centraux */
 function calculate(){
 	// contrôle: une unité doit être sélectionnée de chaque côté
-	if(Battle.getListName(1) == null || Battle.getListName(2) == null
+	if(Battle.getListId(1) == null || Battle.getListId(2) == null
 		|| Battle.getUnitId(1) == null || Battle.getUnitId(2) == null)
 	{
 		toastNotify("conditions non remplies pour lancer une simulation");
