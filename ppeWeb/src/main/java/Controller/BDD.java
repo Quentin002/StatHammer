@@ -196,7 +196,7 @@ public class BDD {
 	
 	public void updateUtilisateur(String pseudo,int id) {
 		try {
-			stat = this.getPreparedStatement("UPDATE `utilisateur` SET nom_utilisateur=? WHERE id_utilisateur=?;",pseudo,id);
+			stat = this.getPreparedStatement("UPDATE `utilisateur` SET nom_utilisateur=? WHERE id_utilisateur=;",pseudo,id);
 			stat.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -216,7 +216,7 @@ public class BDD {
 			stat.setInt(4, session.getId());
 			stat.executeUpdate();
 			
-			requete = "SELECT id_liste FROM liste WHERE nom_liste = ?;";
+			requete = "SELECT id_liste FROM liste WHERE nom_liste = ? AND id_utilisateur="+session.getId()+";";
 			
 			rendu = this.select(requete,armee.getName());
 			

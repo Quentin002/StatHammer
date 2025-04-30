@@ -154,8 +154,12 @@ public class ImportExportController extends HttpServlet {
     		System.out.println(newRslt);
         }
         */
-        Instanciation.importListe(rslts.get(0), rslts.get(1), rslts.subList(2, rslts.size()), user);
+        ArrayList<String> listeUnites = new ArrayList<String>(rslts.subList(2, rslts.size()));
+        ArmeeListe armee = Instanciation.importListe(rslts.get(0), rslts.get(1), listeUnites, user);
 
+        ArrayList<ArmeeListe> userList = (ArrayList<ArmeeListe>) session.getAttribute("listes");
+        userList.add(armee);
+        session.setAttribute("listes", userList);
         
         response.sendRedirect("gerer-liste");
         

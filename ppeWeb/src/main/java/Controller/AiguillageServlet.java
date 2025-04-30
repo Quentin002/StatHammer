@@ -45,7 +45,7 @@ public class AiguillageServlet extends HttpServlet {
 			
 			if(!StockageCreerListe.getArmeeListe().getUnits().contains(StockageCreerListe.getUnit(plus))) {
 				
-				StockageCreerListe.getUnit(plus).setFigurine(Instanciation.getFigurine2(plus)) ;
+				StockageCreerListe.getUnit(plus).setFigurine(Instanciation.getFigurine2(plus));
 				StockageCreerListe.getArmeeListe().addUnit(StockageCreerListe.getUnit(plus));
 				
 			}

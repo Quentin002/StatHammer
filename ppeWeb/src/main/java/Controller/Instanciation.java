@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-
 import Model.Aptitude;
 import Model.AptitudeArme;
 import Model.Arme;
@@ -211,6 +209,36 @@ public class Instanciation {
 		return rendu;
 	}
 	
+	public static Unit getUnitSimple(String unitName){
+		ArrayList<Figurine> rendu = new ArrayList<Figurine>();
+		ArrayList<String> temp = new ArrayList<String>();
+		ArrayList<Unit> fin = new ArrayList<Unit>();
+		try {
+			conec = new BDD();
+			temp = conec.select("SELECT f.nom_figurine,f.M,f.E,f.SV,f.PV,f.CD,f.CO,r.nb_figurine,u.points_unite,u.id_unite,u.logo_unite FROM figurine f "
+					+ "JOIN remplir r USING (id_figurine) JOIN unite u USING(id_unite) WHERE u.nom_unite = ?;",unitName );
+			
+			int id = Integer.parseInt(temp.get(9));
+			int points = Integer.parseInt(temp.get(8));
+			String logo = temp.get(10);
+			for (int i = 0;i<temp.size();i = i+11) {
+				for (int j =0;j< Integer.parseInt(temp.get(7));j++) {
+					rendu.add(new Figurine(Instanciation.getArme(temp.get(i)),Instanciation.getAptitude(temp.get(i)),temp.get(i),"",temp.get(i+1),Integer.parseInt(temp.get(i+2)),Integer.parseInt(temp.get(i+3)),Integer.parseInt(temp.get(i+4)),Integer.parseInt(temp.get(i+5)),Integer.parseInt(temp.get(i+6))));
+			
+				}
+			}
+			
+			fin.add(new Unit(rendu,id,unitName,points,logo,null));
+			
+			
+		}catch(SQLException e) {
+			
+		}
+		conec.close();
+		
+		return fin.get(0);
+	}
+	
 	//Récupère les armes d'une figurine donnée
 	public static ArrayList<Arme> getArme(String figNom){
 		ArrayList<Arme> rendu = new ArrayList<Arme>();
@@ -296,9 +324,12 @@ public class Instanciation {
 	}
 	
 	public static ArmeeListe importListe(String nomA,String desc,ArrayList<String> listeUnit, User session) {
-		ArmeeListe armee = new ArmeeListe(nomA, desc, "");
+		ArmeeListe armee = new ArmeeListe(new ArrayList<Unit>(),nomA, desc, "");
 		armee.setUniteListe(listeUnit);
-		getUnitsOfAList(armee);
+		for(String nomUnit : listeUnit) {
+			armee.addUnit(getUnitSimple(nomUnit));
+		}
+		
 		insertListe(armee, session);
 		
 		
