@@ -16,6 +16,7 @@ import java.util.HashMap;
 import Model.ArmeeListe;
 import Model.Evenement;
 import Model.Unit;
+import Model.User;
 
 
 @WebServlet("/ConnexionController")
@@ -65,7 +66,11 @@ public class ConnexionController extends HttpServlet {
 				session.setAttribute("id", id);
 				session.setAttribute("role", role);
 				session.setAttribute("email", email);
-
+				
+				ArrayList<ArmeeListe> liste = chargerListes(conec, session);
+				User user = new User(liste,login,mdp,email,id,role);
+				session.setAttribute("user", user);
+				
 				// Chargement des événements
 				chargerEvenements(conec,session);
 				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
