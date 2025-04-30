@@ -1,10 +1,14 @@
 package Controller;
-
+import Model.Armee;
+import Model.ArmeeListe;
+import Model.Unit;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,6 +43,11 @@ public class ControllerSimu extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session=request.getSession(false);
+		if(session==null) {
+            response.sendRedirect("connexion");
+        }
+		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
@@ -50,18 +59,37 @@ public class ControllerSimu extends HttpServlet {
 	        jsonBuffer.append(line);
 	    }
 	    String json = jsonBuffer.toString();
+	    
 	    HashMap<String, String> data = basicParseJson(json);
+	    int col = Integer.valueOf(data.get("col")); // 1 ou 2
 	    
 		switch(data.get("action")) {
 			case "make_units_box":
-				int col = Integer.valueOf(data.get("col"));
-				int id_list = Integer.valueOf(data.get("list"));
+				int id_list = Integer.valueOf(data.get("list")); // id BDD
 				
 				// récupération des unités en BDD
+				ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
+				
+				for(ArmeeListe one_list : listes) {
+					if(one_list.getId() == id_list) {
+						Instanciation.getUnitsOfAList(one_list);
+						Battle.setSelectedList(col, one_list);
+						ArrayList<Unit> units_list = Battle.getSelectedList(col).getUnits();
+						Battle.setArmy(col, units_list.get(0).getArmee());
+						break;
+					}
+				}
+				request.setAttribute("col", col);
+				request.setAttribute("units_list", Battle.getSelectedList(col).getUnits());
 				
 				// variables de la vue
 				
-				request.getRequestDispatcher("units_box.jsp").forward(request, response);
+			    request.setAttribute("listes", listes); // => units_box.jsp
+			    request.getRequestDispatcher("units_box.jsp").forward(request, response);
+				
+				break;
+			case "get_army_file":
+				out.println(Battle.getSelectedList(col).getUnits().get(0).getArmee() + ".png");
 				break;
 		}
 	}
