@@ -38,6 +38,7 @@ public class ConnexionView extends HttpServlet {
 			+ "<html>\r\n"
 			+ "	<head>\r\n"
 			+ "		<meta charset =\"UTF-8\"/>\r\n"
+			+ " 	<link rel=\"icon\" type=\"image/png\" href=\"assets/icone_black_templars.png\">"
 			+ "		<title>";
 		
 		headerBottom =
