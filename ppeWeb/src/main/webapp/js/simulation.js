@@ -17,34 +17,33 @@ function selectList(nb){
 	Battle.setListId(nb, document.getElementById(select_name).value);
 
 	if(Battle.getListId(nb) != null){
-		fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ action: "make_units_box", col: nb, list: Battle.getListId(nb) })
-		})
-			.then(response => {
-				if (!response.ok) {
-					throw new Error('erreur réponse requête AJAX ' + response.statusText);
-				}
-				return response.json();
-			})
-			// le serveur renvoie une vue et le nom d'une armée
-			.then(data => {
-				units_list.innerHTML = '';
-
-				// l'insérer dans la page
-				units_list.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
+		// logo de l'armée
+		var xhr2 = new XMLHttpRequest();
+		xhr2.open('POST', url, true);
+		xhr2.onreadystatechange = function() {
+		  if (xhr2.readyState === 4 && xhr2.status === 200) {
+			const logo_box = document.getElementById("logo_list" + nb);
+			logo_box.querySelector("img").src = "armees/" + xhr2.responseText;
+			logo_box.classList.remove('hidden');
+		  }
+		};
+		
 				
-				// logo
-				const logo_box = document.getElementById("logo_list" + nb);
-				logo_box.querySelector("img").src = "armees/" + JSON.parse(data).army_file;
-				logo_box.classList.remove('hidden');
-			})
-			.catch(error => {
-				console.error('erreur capturée requête AJAX', error);
-			});
+		// vue
+		var xhr1 = new XMLHttpRequest();
+		xhr1.open('POST', url, true);
+		xhr1.onreadystatechange = function() {
+		  if (xhr1.readyState === 4 && xhr1.status === 200) {
+			units_list.innerHTML = '';
+			units_list.insertAdjacentHTML('afterbegin', xhr1.responseText);
+			
+			// envoi lorsque la première est terminée
+			xhr2.send(JSON.stringify({ action: "get_army_file", col: nb }));
+		  }
+		};
+		xhr1.send(JSON.stringify({ action: "make_units_box", col: nb, list: Battle.getListId(nb)}));
+		
+		
 	}
 	else{
 		// afficher sauvegarde du HTML
@@ -175,11 +174,12 @@ function openWeaponsAptitudesZone(group_id){
 
 /* commande colonne de droite */
 function selectAliveFigsNumber(group_id){
+	console.log(group_id);
 	const input = document.getElementById(group_id + "_input");
 
 	// code de test
-	const hp_inputs = document.getElementById(group_id).querySelectorAll(".hp_selector");
-	const fig_icons = document.getElementById(group_id).querySelectorAll(".fig_icon");
+	const hp_inputs = document.getElementById(group_id + _figs).querySelectorAll(".hp_selector");
+	const fig_icons = document.getElementById(group_id + _figs).querySelectorAll(".fig_icon");
 	for(let i = 0; i < input.value; i++)
 	{
 		hp_inputs[i].value = hp_inputs[i].max;;

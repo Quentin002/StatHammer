@@ -9,18 +9,18 @@ import Model.Unit;
 /* mémoire des actions de l'utilisateurs, liste, unités, PV, armes, aptitudes */
 public class Battle
 {
-	private ArmeeListe selected_list1 = null;
-	private ArmeeListe selected_list2 = null;
-	private Armee army1;
-	private Armee army2;
-	private int index_selected_unit1 = -1;
-	private int index_selected_unit2 = -1;
+	static private ArmeeListe selected_list1 = null;
+	static private ArmeeListe selected_list2 = null;
+	static private Armee army1;
+	static private Armee army2;
+	static private int index_selected_unit1 = -1;
+	static private int index_selected_unit2 = -1;
 	
 	// getters/setters
-	public ArmeeListe getSelectedList(int nb) {
+	static public ArmeeListe getSelectedList(int nb) {
 		return (nb == 1 ? selected_list1 : selected_list2);
 	}
-	public void setSelectedList(int nb, ArmeeListe list) {
+	static public void setSelectedList(int nb, ArmeeListe list) {
 		if(nb == 1) {
 			selected_list1 = list;
 		}
@@ -31,10 +31,10 @@ public class Battle
 			System.out.println("le paramètre nb doit valoir 1 ou 2");
 		}
 	}
-	public Armee getArmy(int nb) {
+	static public Armee getArmy(int nb) {
 		return (nb == 1 ? army1 : army2);
 	}
-	public void setArmy(int nb, Armee a) {
+	static public void setArmy(int nb, Armee a) {
 		if(nb == 1) {
 			army1 = a;
 		}
@@ -45,13 +45,13 @@ public class Battle
 			System.out.println("le paramètre nb doit valoir 1 ou 2");
 		}
 	}
-	public Unit getSelectedUnit(int nb) {
+	static public Unit getSelectedUnit(int nb) {
 		return (nb == 1 ? selected_list1.getUnits().get(index_selected_unit1) : selected_list2.getUnits().get(index_selected_unit2));
 	}
-	public int getSelectedUnitIndex(int nb) {
+	static public int getSelectedUnitIndex(int nb) {
 		return (nb == 1 ? index_selected_unit1 : index_selected_unit2);
 	}
-	public void setSelectedUnit(int nb, int unit_list_index) {
+	static public void setSelectedUnit(int nb, int unit_list_index) {
 		if(nb == 1) {
 			index_selected_unit1 = unit_list_index;
 		}
@@ -62,10 +62,10 @@ public class Battle
 			System.out.println("le paramètre nb doit valoir 1 ou 2");
 		}
 	}
-	public Arme getSeletedWeapon(int nb, String group_name) {
+	static public Arme getSeletedWeapon(int nb, String group_name) {
 		return getSelectedUnit(nb).getIdenticalFigsGroups().get(group_name).get(0).getSelectedWeapon();
 	}
-	public void reverseArmies()
+	static public void reverseArmies()
 	{
 		Field[] fields = selected_list1.getClass().getDeclaredFields();
         try {
@@ -78,5 +78,13 @@ public class Battle
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+	}
+	static public void clean() {
+		selected_list1 = null;
+		selected_list2 = null;
+		army1 = null;
+		army2 = null;
+		index_selected_unit1 = -1;
+		index_selected_unit2 = -1;
 	}
 }
