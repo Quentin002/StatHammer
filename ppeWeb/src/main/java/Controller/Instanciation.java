@@ -295,8 +295,9 @@ public class Instanciation {
 		conec.close();
 	}
 	
-	public static ArmeeListe importListe(String nomA,String desc,String[] listeUnit, User session) {
+	public static ArmeeListe importListe(String nomA,String desc,ArrayList<String> listeUnit, User session) {
 		ArmeeListe armee = new ArmeeListe(nomA, desc, "");
+		armee.setUniteListe(listeUnit);
 		getUnitsOfAList(armee);
 		insertListe(armee, session);
 		
