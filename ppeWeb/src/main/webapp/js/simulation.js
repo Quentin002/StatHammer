@@ -253,7 +253,7 @@ function setFigurineHP(fig_id){
 
 
 /* zone armes et aptitudes */
-function selectWeapon(){
+ /*function selectWeapon(){
 	const selected_weapon = document.getElementById("weapon_select").value;
 
 	// code de test
@@ -276,7 +276,7 @@ function selectWeapon(){
 		console.log("erreur avec les statistiques de l'arme");
 	}
 	return;
-
+	
 	fetch(url, {
 		method: 'POST',
 		headers: {
@@ -314,7 +314,67 @@ function selectWeapon(){
 		.catch(error => {
 			console.error('erreur capturée requête AJAX', error);
 		});
+} */
+
+function selectWeapon() {
+    const selected_weapon = document.getElementById("weapon_select").value;
+
+    // URL de l'API (à définir selon votre configuration)
+    const url = 'https://votre-api.com/endpoint';
+
+    // Fonction pour mettre à jour les statistiques de l'arme dans le tableau
+    function updateWeaponStats(stats) {
+        const table = document.getElementById("weapon_stats");
+        const td_markups = table.querySelectorAll('td');
+        table.classList.remove('hidden');
+
+        const weapon_stats = new Map(Object.entries(stats));
+
+        if (td_markups.length === weapon_stats.size) {
+            const iterator = weapon_stats.keys();
+            for (let i = 0; i < td_markups.length; i++) {
+                const key = iterator.next().value;
+                td_markups[i].innerHTML = `${key}: ${weapon_stats.get(key)}`;
+            }
+        } else {
+            console.log("Erreur avec les statistiques de l'arme");
+        }
+    }
+
+    // Code de test avec des statistiques fictives 
+    const testStats = { A: "2", F: "4", PA: "0", D: "1", portée: "24\"" }; // attention portée en pouces
+    updateWeaponStats(testStats);
+
+    // Requête XHR pour obtenir les statistiques réelles de l'arme
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) { // Requête terminée
+            if (xhr.status >= 200 && xhr.status < 300) { // Succès
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    // Mise à jour des statistiques avec les données réelles
+                    const realStats = { A: data.a, F: data.f, PA: data.pa, D: data.d, portée: data.portee + "\"" };
+                    updateWeaponStats(realStats);
+                } catch (error) {
+                    console.error('Erreur lors du parsing de la réponse JSON', error);
+                }
+            } else {
+                console.error('Erreur réponse requête XHR', xhr.statusText);
+            }
+        }
+    };
+
+    xhr.onerror = function () {
+        console.error('Erreur réseau requête XHR');
+    };
+
+    // Envoi de la requête avec les données
+    xhr.send(JSON.stringify({ action: "set_weapon", weapon: selected_weapon }));
 }
+
 
 function selectNumberOfWeapons(group_id){
 	const weapons_nb = document.getElementById("weapon_number_range").value;
