@@ -16,7 +16,7 @@ import Model.ArmeeListe;
 /**
  * Servlet implementation class GestionListeView
  */
-@WebServlet("/GestionListeView")
+@WebServlet("/gerer-liste")
 public class GestionListeView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,12 +35,13 @@ public class GestionListeView extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
-		
+        else {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
+		@SuppressWarnings("unchecked")
 		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
 		
 	             
@@ -57,7 +58,7 @@ public class GestionListeView extends HttpServlet {
 	            String nomliste = liste.getNomListe();
 	            String descrliste = liste.getDescriptionListe();
 	            ArrayList<String> nomUniteliste = liste.getUniteListe();
-	            int idArmeeliste = liste.getIdArmee();
+	            
 
 	            listage.append("<div class='liste id='").append(idliste).append("'>\n")
 	                   .append("<h2>").append(nomliste).append("</h2>\n")
@@ -96,7 +97,7 @@ public class GestionListeView extends HttpServlet {
 	    		"<h1>Interface de gestion des listes</h1>\n"
 	    		+"<section class='GestionListe_structure'>\r\n"
 	    		+"<div class='bouton_placement'>"
-	    		+"<a href='AccueilView' class='bouton_gestionListe'>Retour</a>"
+	    		+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
 	    		+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
 	    		+"<div class='GestionListe_import'>"
@@ -108,7 +109,7 @@ public class GestionListeView extends HttpServlet {
 	    		+     "<p id='modal_message'>Voulez-vous vraiment supprimer cette armée ?</p>"
 	    		+     "<div class='modal_actions'>"
 	    		+       "<form method='POST' action='SupprimerListe'>"
-	    		+         "<button type='submit' name='idliste' class='modal_btn modal_supprButton'>Supprimer</button>"
+	    		+         "<button type='submit' name='idliste'  class='modal_btn modal_supprButton'>Supprimer</button>"
 	    		+         "<button type='button' class='modal_btn modal_retourButton' >Annuler</button>"
 	    		+       "</form>"
 	    		+     "</div>"
@@ -119,6 +120,7 @@ public class GestionListeView extends HttpServlet {
 	   
 	    String html = header + AccueilView.barDeNav + body + scriptJs + ConnexionView.footer;
 		out.println(html);
+        }
 	}
 
 	/**

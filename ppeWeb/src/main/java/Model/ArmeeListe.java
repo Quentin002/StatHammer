@@ -2,22 +2,26 @@ package Model;
 
 import java.util.ArrayList;
 
-public class ArmeeListe {
-    private int id;
-    private int idArmee;
-    private String nom;
-    private String description;
-    private String data;
+public class ArmeeListe
+{
+	private int id;
+	private int idArmee;
 	private ArrayList<Unit> unites = new ArrayList<Unit>();
     private ArrayList<String> unit_names = new ArrayList<String>();
     private ArrayList<String> figurine_names = new ArrayList<String>();
-    
-
+	private String nom;
+	private String description;
+	private String data;
 	private int idUtilisateur;
+
 	
-	
-	
-	 public ArmeeListe(String nom, String description, String data) {
+	public ArmeeListe(String nom, String description, String data) {
+		this.nom = nom;
+		this.description = description;
+		this.data = data;
+	}
+	 public ArmeeListe(int id, String nom, String description, String data) {
+        this.id = id;
         this.nom = nom;
         this.description = description;
         this.data = data;
@@ -29,14 +33,14 @@ public class ArmeeListe {
 		this.data = data;
 	}
 	
-    public ArmeeListe(int id, int idArmee, String nom, String description, String data, int idUtilisateur) {
+	public ArmeeListe(int id, String nom, String description, String data, int idUtilisateur) {
         this.id = id;
         this.nom = nom;
         this.description = description;
-        this.data= data;
-        this.idArmee = idArmee;
+        this.data = data;
         this.idUtilisateur = idUtilisateur;
     }
+
     
     public ArmeeListe(int id, int idArmee, String nom, String description) {
         this.id = id;
@@ -50,7 +54,7 @@ public class ArmeeListe {
    }
    
 	public int getIdListe() { return id; }
-    public int getIdArmee() { return idArmee;}
+	public int getIdArmee() { return idArmee;}
     public String getNomListe() { return nom; }
     public String getDescriptionListe() { return description; }
     public String getDataListe() { return data; }
@@ -118,3 +122,4 @@ public class ArmeeListe {
                ", Data: " + data + ", unite: " + unit_names;
     }
 }
+    

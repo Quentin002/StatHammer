@@ -30,3 +30,7 @@ input[type="text"]:focus, input[type="password"]:focus, input[type="date"]:focus
     background-color: #181835;
     outline: none;
 }
+select, button
+{
+	cursor: pointer; /* curseur de la souris qui pointe du doigt */
+}

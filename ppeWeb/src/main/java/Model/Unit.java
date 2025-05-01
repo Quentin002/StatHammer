@@ -65,11 +65,12 @@ public class Unit {
 	public int getPoints() {
 		return points;
 	}
-	public String getLogo() {
-		return nom;
-	}
+	
 	public Armee getArmee() {
 		return armee;
+	}
+	public void setFigurine(ArrayList<Figurine> liste) {
+		figurines = liste;
 	}
 	
 	private void makeIdenticalFigsGroups() {
@@ -81,6 +82,9 @@ public class Unit {
 			}
 			identical_figs.get(fig.getNom()).add(fig); // récupérer la liste correspondante à la clé et ajouter la figurine
 		}
+	}
+	public String getLogo() {
+		return logo;
 	}
 	
 	@Override

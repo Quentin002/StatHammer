@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintStream;
 
 /**
  * Servlet implementation class AccueilController
@@ -32,7 +31,7 @@ public class AccueilController extends HttpServlet {
 		// TODO Auto-generated method stub
 	    HttpSession session=request.getSession(false);
 	    if (session!=null) {
-	    	response.sendRedirect("AccueilView");
+	    	response.sendRedirect("accueil");
 	    }
 	    else {
 	    	response.sendRedirect("ConnexionView");

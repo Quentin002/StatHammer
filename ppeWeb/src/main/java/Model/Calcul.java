@@ -1,11 +1,15 @@
 package Model;
 
-public class Calcul {
+public  class Calcul {
 	private int[] tabdegat1; 
 	private float degat_moyen1; 
 	private float mort_moyen1;
 	private int[] tabmort1;
 	
+
+	public Calcul() {
+		super();
+	}
 
 	public Calcul(int[] tabdegat1, float degat_moyen1, float mort_moyen1,int[] tabmort1) {
 		super();

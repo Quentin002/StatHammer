@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 /**
  * Servlet implementation class CreationCompteView
  */
-@WebServlet("/CreationCompteView")
+@WebServlet("/creer-compte")
 public class CreationCompteView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,32 +30,72 @@ public class CreationCompteView extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
-		String titre = "Création compte";
-	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
+		String css = "<link rel=\"stylesheet\" href=\"css/main.css\">";
+		String titre = "<title>Création compte</title>";
+		String headerTop = 
+				  "<!DOCTYPE HTML>\r\n"
+				+ "<html>\r\n"
+				+ "	<head>\r\n"
+				+ "		<meta charset =\"UTF-8\"/>\r\n";
+			
+		String headerBottom =
+				  "\r\n"
+				+ "		<link rel=\"stylesheet\" href=\"css/main.css\">\r\n"
+				+ "	</head>\r\n"
+				+ "	<body>";
+			
+		String header = headerTop + titre + css +headerBottom;
 	    
-		String body = "<h1>Création de compte utilisateur</h1>"
-				+"<div class='container''>"
-				
-					+"<form enctype='application/x-www-form-urlencoded\' action='ControllerCreationCompte' method=POST>"
-					+"<table class=tCompte>"
-					+"<tr><td width='230'>Email :</td>"
-					+"<td><input type=text size='100' name=email></td></tr>"
-
-					
-					+"<tr><td width=\"230\">Pseudonyme :</td>"
-					+"<td><input type=text size='100'  name=pseudo></td></tr>"
-					+"<tr><td>Mot de passe :</td>"
-					+"<td><input type=password size='100' name=mdp></td>"
-					 +"</form>"
-					 +"<tr><td colspan='2' height='100'><input type=submit class='buttonGcompte' value='Envoyer'></td></tr>"
-					 +"<form enctype='application/x-www-form-urlencoded\' action='ConnexionView' method=POST>"
-					 +"<tr><td colspan='2'><input type=submit class='buttonGcompte' value='Retour'></td></tr>"
-					 +"</form>"
-					 +"</table>"
-					+"</div>";
+		String footer =
+				  "	</body>\r\n"
+				+ "</html>";
 		
-					String html = header + body + ConnexionView.footer;
+	    String body = 
+	    	      " <form class=\"login-form\" enctype=\"application/x-www-form-urlencoded\" action=\"ControllerCreationCompte\" method=POST>"
+	    	    + "  <table style='table-layout: fixed;'>"
+	    	    + "    <tr><td>Email</td><td><input type=text size=20 name=email></td></tr>"
+	    	    + "    <tr><td>Pseudonyme</td><td><input type=text size=20 name=pseudo></td></tr>"
+	    	    + "    <tr style='height:1em'><td></td><td></td></tr>"
+	    	    + "    <tr>"
+	    	    + "      <td>Mot de passe</td>"
+	    	    + "      <td><div class=\"password-wrapper\">"
+	    	    + "        <input type=\"password\" size=\"20\" name=\"mdp\" id=\"pswCreaCom\" required>"
+	    	    + "        <i class=\"fa-solid fa-eye\" id=\"togglePswCreaCom\"></i>"
+	    	    + "      </div></td>"
+	    	    + "    </tr>"
+	    	    + "    <tr>"
+	    	    + "      <td>Confirmer</td>"
+	    	    + "      <td><div class=\"password-wrapper\">"
+	    	    + "        <input type=\"password\" size=\"20\" name=\"mdpConf\" id=\"pswConfirm\" required>"
+	    	    + "      </div></td>"
+	    	    + "    </tr>"
+	    	    + "    <tr id='btnCreerCompte'>"
+	    	    + "      <td colspan='2' height='100'>"
+	    	    + "        <center><input type='submit' id='btnDisabled' value='Créer un compte' disabled></center>"
+	    	    + "      </td>"
+	    	    + "    </tr>"
+	    	    + "    <tr><td colspan='2' height='10'><center><a class='lien' href='connexion'>Retour</a></center></td></tr>"
+	    	    + "  </table>"
+	    	    + "</form>"
+	    	    + "<div class='quote' id='message'>"
+	    	    + "  <table style='width:100%;padding-left:2em'>"
+	    	    + "    <tr>"
+	    	    + "      <td id='letter' class='invalid'>Un caractère en <b>minuscule</b></td>"
+	    	    + "      <td id='capital' class='invalid'>Un caractère en <b>majuscule</b></td>"
+	    	    + "    </tr>"
+	    	    + "    <tr>"
+	    	    + "      <td id='number' class='invalid'>Un <b>chiffre</b></td>"
+	    	    + "      <td id='length' class='invalid'><b>8 caractères</b> au minimum</td>"
+	    	    + "    </tr>"
+	    	    + "  </table>"
+	    	    + "</div>"
+	    	    
+	    	    //Javascript
+	    	    + "<script src='js/togglePasswordCreaCom.js'></script>\n"
+	    	    + "<script src='js/mdpConf.js'></script>\n";
+
+		
+					String html = header + body + footer;
 					out.println(html);
 	}
 

@@ -17,6 +17,8 @@ import java.util.HashMap;
 import Model.ArmeeListe;
 import Model.Evenement;
 import Model.Figurine;
+import Model.Unit;
+
 
 
 @WebServlet("/ConnexionController")
@@ -54,6 +56,7 @@ public class ConnexionController extends HttpServlet {
 			ArrayList<Object> rendu = conec.selectUtilisateur(login, mdp);
 			int id = conec.UtilisateurID(login, mdp);
 			String role = conec.UtilisateurRole(login, mdp);
+			String email = conec.UtilisateurEmail(login, mdp);
 
 			if (!rendu.isEmpty() && login.equals(rendu.get(0))) {
 				
@@ -64,12 +67,13 @@ public class ConnexionController extends HttpServlet {
 				session.setAttribute("mdp", mdp);
 				session.setAttribute("id", id);
 				session.setAttribute("role", role);
+				session.setAttribute("email", email);
 
 				// Chargement des événements
 				chargerEvenements(conec,session);
 				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
-				// Debug : affichage console
 				
+				// Debug : affichage console				
 				System.out.println("Événements stockés en session :");
 				for (int i = 0; i < evenements.size(); i++) {
 					Evenement evt = evenements.get(i);
@@ -83,11 +87,16 @@ public class ConnexionController extends HttpServlet {
 				}
 				// Chargement des listes
 				ArrayList<Model.ArmeeListe> listes = chargerListes(conec,session);
+				for(ArmeeListe armeeListes : listes) {
+					for(Unit unit : armeeListes.getUnits()) {
+						unit.setFigurine(Instanciation.getFigurine2(unit.getName()));
+					}
+				}
 				session.setAttribute("listes", listes);
 				
 				conec.close();
 				System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
-				response.sendRedirect("AccueilView");
+				response.sendRedirect("accueil");
 			} else {
 				// Authentification échouée
 				conec.close();
@@ -172,8 +181,10 @@ public class ConnexionController extends HttpServlet {
 			// Vérifier si la liste existe déjà dans la map
             Model.ArmeeListe liste = mapListes.get(id_liste);
             if (liste == null) {
+
                 liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste);
                 //ArrayList<Unit> unit_list,, String nom, String description
+
                 liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
                 mapListes.put(id_liste, liste);
             }

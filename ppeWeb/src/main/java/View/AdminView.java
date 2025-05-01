@@ -8,12 +8,11 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import Model.Evenement;
 
 
-@WebServlet("/AdminView")
+@WebServlet("/evenements")
 @MultipartConfig
 public class AdminView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,13 +26,12 @@ public class AdminView extends HttpServlet {
 
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
 		
 		response.setContentType("text/html; charset=UTF-8");
 
 		String titre = "StatHammer : Admin";
-		String action = "AdminController";
 		
 		String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
 
@@ -42,20 +40,23 @@ public class AdminView extends HttpServlet {
 	     StringBuilder body = new StringBuilder();
 	     body.append("<div class='container'>\r\n")
 		     .append("  <div class='left-panel'>\r\n")
-		     .append("   <form method='post' action=\"" + action + "\" enctype=\"multipart/form-data\">\r\n")
-		     .append("       <label for='nom'>Nom :</label><br/>\r\n")
-		     .append("       <input type='text' name='nom' required/><br/><br/>\r\n")
-		     .append("       <label for='desc'>Description :</label><br/>\r\n")
-		     .append("       <input type='text' name='desc' required/><br/><br/>\r\n")
-		     .append("       <label for='date'>Date :</label><br/>\r\n")
-		     .append("       <input type='date' name='date' required/><br/><br/>\r\n")
-		     .append("       <label for='image'>Image :</label><br/>\r\n")
-		     .append("       <input type='file' name='image' accept='image/*' required/><br/><br/>\r\n")
+		     .append("   <form method='post' action=\"AdminController\" enctype=\"multipart/form-data\">\r\n")
+		     .append("       <label for='nom'>Nom :</label>\r\n")
+		     .append("       <input type='text' name='nom' required/>\r\n")
+		     .append("       <label for='desc'>Description :</label>\r\n")
+		     .append("       <input type='text' name='desc' required/>\r\n")
+		     .append("       <label for='date'>Date :</label>\r\n")
+		     .append("       <input type='date' name='date' required/>\r\n")
+		     .append("       <div class='custom-file'>\r\n")
+		     .append("           <input type='file' id='imageUpload' name='image' accept='image/*' required />\r\n")
+		     .append("           <label for='imageUpload'>Choisir une image</label>\r\n")
+		     .append("       </div><br/>\r\n")
 		     .append("       <input type='submit' value='Créer évènement'/>\r\n")
 		     .append("   </form>\r\n")
 		     .append("  </div>\r\n");
 	     
-	     body.append("  <div class='right-panel'>\r\n");
+	     body.append("  <div class='right-panel'>\r\n")
+	         .append("  <table>");
 	     
 	     @SuppressWarnings("unchecked")
 	     ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
@@ -71,19 +72,28 @@ public class AdminView extends HttpServlet {
 	         System.out.println(nomEvt+nomImg+descEvt+dateEvt);
 	         
 	             
-	             body.append("<div style='display: table; width: 100%; margin-bottom: 8px;'>")
-	             .append("<div style='padding-right : 5px;'>"+"</div><p class='quote' style='display: table-cell; margin: 0;'>")
-	             .append(nomEvt).append(" ").append(nomImg).append(" ").append(descEvt).append(" ").append(dateEvt)
-	             .append("</p>")
-	             .append("<a href='AdminController?supprEvt=").append(i).append("'>")
-	             .append("<i class='fas fa-trash-alt' style='padding-left : 8px;'></i>")
-	             .append("</a>")
-	             .append("</div>");
+	     body.append("     <tr>")
+	         .append("     <div style='display: table; width: 100%; margin-bottom: 8px;'>")
+	         .append("        <td><div style='padding-right : 5px;'>"+"</div></td>")
+	         .append("        <td><p class='quote' style='margin: 0;'>")
+	         .append("            <b style='color:#42a5f5;'>"+nomEvt+"</b>").append(" ").append(nomImg).append(" ").append(descEvt).append(" ").append(dateEvt)
+	         .append("        </p></td>")
+	         .append("        <td><a class='' href='AdminController?supprEvt=").append(i).append("'>")
+	         .append("           <i class='fas fa-trash-alt' style='padding-left : 8px;'></i>")
+	         .append("        </a></td>")
+	         .append("        <td><span class='image-preview'>")
+	         .append("           <i class='fas fa-eye' style='padding-left: 10px;'></i>")
+	         .append("           <img src='img/").append(nomImg).append("' class='thumbnail' />")
+	         .append("        </span></td>")
+	         .append("     </div>")
+	         .append("     </tr>");
 	         
 	     }
 	     
-	     body.append("  </div>\r\n")
-		 	 .append("</div>\r\n");
+	     body.append("  </table>")
+	         .append("  </div>\r\n")
+		 	 .append("</div>\r\n")
+		 	 .append("<script src='js/evtMontrerNom.js'></script>\n");
      
 		String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
 		

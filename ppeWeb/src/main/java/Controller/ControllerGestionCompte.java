@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import View.ConnexionView;
 
 /**
  * Servlet implementation class ControlleurGestionCompte
@@ -52,7 +51,7 @@ public class ControllerGestionCompte extends HttpServlet {
 			
 			try {
 				ConnexionController.updatePseudo(pseudo.trim(),id); // bdd
-				response.sendRedirect("http://localhost:8080/ppeWeb/AccueilView");
+				response.sendRedirect("accueil");
 
 			} catch (SQLException e1) {
 				e1.printStackTrace();
@@ -65,11 +64,11 @@ public class ControllerGestionCompte extends HttpServlet {
 				String mdp =ConnexionController.selectMdp(id);
 				if(Integer.toString(confirmMdp.hashCode()).equals(mdp)) {
 						ConnexionController.updateMdp(newMdp,id);
-						response.sendRedirect("http://localhost:8080/ppeWeb/AccueilView");
+						response.sendRedirect("accueil");
 				}
 				else {
 
-					response.sendRedirect("http://localhost:8080/ppeWeb/GestionCompteView");
+					response.sendRedirect("compte");
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -80,7 +79,7 @@ public class ControllerGestionCompte extends HttpServlet {
 		}
 		else {
 			//response.getWriter().append("erreur");
-			response.sendRedirect("http://localhost:8080/ppeWeb/GestionCompteView");
+			response.sendRedirect("compte");
 		}
 		
 	}

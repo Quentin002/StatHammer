@@ -92,6 +92,7 @@ public class ModificationListeView extends HttpServlet {
                 }
             }
         }
+
         
         int idArmee= listes.get(0).getIdArmee();
         StringBuilder importModif = new StringBuilder();

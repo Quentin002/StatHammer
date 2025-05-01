@@ -8,15 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Model.ArmeeListe;
-import View.AccueilView;
-import View.ConnexionView;
 
 /**
  * Servlet implementation class SupprimerListe
@@ -46,9 +41,9 @@ public class SupprimerListe extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession(false);
         if (session==null) {
-            response.sendRedirect("ConnexionView");
+            response.sendRedirect("connexion");
         } 
-        int id = (int)session.getAttribute("id") ;
+        //int id = (int)session.getAttribute("id") ;
         
 		String idListe = request.getParameter("idliste");
 		System.out.println(idListe);
@@ -59,18 +54,19 @@ public class SupprimerListe extends HttpServlet {
 	                ConnexionController.suppressionListe(idListe);
 	                System.out.println("c'est suppr");
 
-	                ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
+	                @SuppressWarnings("unchecked")
+					ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
 	                if (listes != null) {
 	                    listes.removeIf(liste -> Integer.toString(liste.getId()).equals(idListe));
 	                    session.setAttribute("listes", listes); 
 	                }
-	                response.sendRedirect("http://localhost:8080/ppeWeb/GestionListeView");
+	                response.sendRedirect("gerer-liste");
 
 	            } catch (SQLException e1) {
 	                e1.printStackTrace();
 	            }
 	        } else {
-	            response.sendRedirect("http://localhost:8080/ppeWeb/AccueilView");
+	            response.sendRedirect("accueil");
 	            System.out.println("bah non");
 	        }
 	}
