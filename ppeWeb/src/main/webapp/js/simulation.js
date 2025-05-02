@@ -50,12 +50,10 @@ function selectList(nb){
 	}
 }
 
-function unfoldUnits(col, unit_section_id){
+function unfoldUnits(col, unit){
 	/* déroulage des unités et cadre jaune du bouton, même algo que dans le client lourd */
 	const old_unit_box = document.getElementById(Battle.getUnitId(col)); // peut être null
-	const new_unit_box = document.getElementById(unit_section_id); // peut être le même élément
-	const tmp = unit_section_id.split("_"); // sépare colX_unitY
-	const unit_number = tmp[1].substring(4, tmp[1].length);
+	const new_unit_box = document.getElementById("col" + col + "_unit" + unit); // peut être le même élément
 	
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url, true);
@@ -69,7 +67,7 @@ function unfoldUnits(col, unit_section_id){
 					document.getElementById("weapons_aptitudes_box").classList.add("hidden"); // cacher fenêtre combat si existe
 			    	
 			    	// bouton même unité => ferme
-			    	if(Battle.getUnitId(col) == unit_section_id)
+			    	if(Battle.getUnitId(col) == unit)
 			        {
 			    		new_unit_box.querySelector(".unit_box").classList.add("hidden");
 			    		Battle.setUnitId(col, null);
@@ -80,7 +78,7 @@ function unfoldUnits(col, unit_section_id){
 			        	if(old_unit_box != null) {
 							old_unit_box.querySelector(".unit_box").classList.add("hidden"); // supprimer ancienne zone de figurines
 						}
-			        	Battle.setUnitId(col, unit_section_id);
+			        	Battle.setUnitId(col, unit);
 			        	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
 			        	new_unit_box.querySelector(".unit_box").classList.remove("hidden"); // on ouvre
 			    	}
@@ -88,7 +86,7 @@ function unfoldUnits(col, unit_section_id){
 			    // pas d'unité sélectionnée => on ouvre
 			    else
 			    {
-			    	Battle.setUnitId(col, unit_section_id);
+			    	Battle.setUnitId(col, unit);
 			    	new_unit_box.querySelector(".unit_button").classList.add("unit_selected"); // bordure unité sélectionnée
 			    	new_unit_box.querySelector(".unit_box").classList.remove("hidden");
 			    }
@@ -100,11 +98,11 @@ function unfoldUnits(col, unit_section_id){
 	};
 	
 	// envoi avec les même conditions
-	if(Battle.getUnitId(col) != null && Battle.getUnitId(col) == unit_section_id){
+	if(Battle.getUnitId(col) != null && Battle.getUnitId(col) == unit){
 		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, unit: -1 }));
 	}
 	else{
-		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, unit: unit_number }));
+		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, unit: unit }));
 	}
 }
 
@@ -203,21 +201,26 @@ function selectAliveFigsNumber(group_id){
 	xhr.open('POST', url, true);
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState === 4 && xhr.status === 200) {
-			const hp_inputs = document.getElementById(group_id + "_figs").querySelectorAll(".hp_selector");
-			const fig_icons = document.getElementById(group_id + "_figs").querySelectorAll(".fig_icon");
-			for(let i = 0; i < input.value; i++)
-			{
-				hp_inputs[i].value = hp_inputs[i].max;;
-				fig_icons[i].src = 'assets/android-fill.png';
+			if(xhr.responseText.trim() == "success"){
+				const hp_inputs = document.getElementById(group_id + "_figs").querySelectorAll(".hp_selector");
+				const fig_icons = document.getElementById(group_id + "_figs").querySelectorAll(".fig_icon");
+				for(let i = 0; i < input.value; i++)
+				{
+					hp_inputs[i].value = hp_inputs[i].max;;
+					fig_icons[i].src = 'assets/android-fill.png';
+				}
+				for(let i = input.value; i < hp_inputs.length; i++)
+				{
+					hp_inputs[i].value = 0; // remplacer 2 par la bonne valeur (figurine.getHpMax() en java)
+					fig_icons[i].src = 'assets/android-line.png';
+				}
 			}
-			for(let i = input.value; i < hp_inputs.length; i++)
-			{
-				hp_inputs[i].value = 0; // remplacer 2 par la bonne valeur (figurine.getHpMax() en java)
-				fig_icons[i].src = 'assets/android-line.png';
+			else{
+				console.log("erreur MAJ points de vie du groupe sur le serveur ");
 			}
 		}
 	};
-	xhr.send(JSON.stringify({ action: "set_figs_group_hp", col: 2, group_id: group_id, hp: input.value}));
+	xhr.send(JSON.stringify({ action: "set_figs_group_hp", col: 2, group_id: group_id, alive_figs: input.value}));
 }
 
 function setFigurineHP(fig_id){
@@ -227,30 +230,35 @@ function setFigurineHP(fig_id){
 		xhr.open('POST', url, true);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState === 4 && xhr.status === 200) {
-				// icône
-				if(fig_div.querySelector("input").value > 0){
-					fig_div.querySelector("img").src = 'assets/android-fill.png';
+				if(xhr.responseText.trim() == "success"){
+					// icône
+					if(fig_div.querySelector("input").value > 0){
+						fig_div.querySelector("img").src = 'assets/android-fill.png';
+					}
+					else{
+						fig_div.querySelector("img").src = 'assets/android-line.png';
+					}
+					// MAJ input range
+					const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
+					const group_div = document.getElementById(group_id); // parent du groupe d'unités
+					const hp_inputs = group_div.querySelector(".fig_group")
+						.querySelectorAll(".hp_selector");
+					let alive_figs_number = 0;
+					for(let i = 0; i < hp_inputs.length; i++){
+						if(hp_inputs[i].value > 0){
+							alive_figs_number++;
+						}
+					}
+				    //document.getElementById(group_id + "_input").value = alive_figs_number;
+					group_div.querySelector("input").value = alive_figs_number;
+				    group_div.querySelector("output").innerHTML = alive_figs_number;
 				}
 				else{
-					fig_div.querySelector("img").src = 'assets/android-line.png';
+					console.log("erreur MAJ points de vie de la figurine sur le serveur ");
 				}
-				// MAJ input range
-				const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
-				const group_div = document.getElementById(group_id); // parent du groupe d'unités
-				const hp_inputs = group_div.querySelector(".fig_group")
-					.querySelectorAll(".hp_selector");
-				let alive_figs_number = 0;
-				for(let i = 0; i < hp_inputs.length; i++){
-					if(hp_inputs[i].value > 0){
-						alive_figs_number++;
-					}
-				}
-			    //document.getElementById(group_id + "_input").value = alive_figs_number;
-				group_div.querySelector("input").value = alive_figs_number;
-			    group_div.querySelector("output").innerHTML = alive_figs_number;
 			}
 		};
-		xhr.send(JSON.stringify({ action: "set_one_fig_hp", col: 2, fig: fig_id, hp: fig_div.querySelector("input").value }));
+		xhr.send(JSON.stringify({ action: "set_one_fig_hp", col: 2, fig_div_id: fig_id, hp: fig_div.querySelector("input").value }));
 }
 
 

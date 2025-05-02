@@ -7,6 +7,7 @@ public class Unit {
 	
 	private ArrayList<Figurine> figurines;
 	private HashMap<String, ArrayList<Figurine>> identical_figs = new HashMap<String, ArrayList<Figurine>>();
+	private ArrayList<String> group_keys; // pour donner des index aux clés de l'hashmap
 	private int id;
 	private String nom;
 	private int points;
@@ -42,6 +43,9 @@ public class Unit {
 	}
 	public HashMap<String, ArrayList<Figurine>> getIdenticalFigsGroups(){
 		return identical_figs;
+	}
+	public ArrayList<String> getIdenticalFigsGroupsKeys(){
+		return group_keys;
 	}
 	
 	// est exécuté dès qu'on touche au slider
@@ -84,6 +88,7 @@ public class Unit {
 			}
 			identical_figs.get(fig.getNom()).add(fig); // récupérer la liste correspondante à la clé et ajouter la figurine
 		}
+		group_keys = new ArrayList<>(identical_figs.keySet());
 	}
 	
 	@Override

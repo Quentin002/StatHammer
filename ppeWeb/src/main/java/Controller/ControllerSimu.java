@@ -1,5 +1,6 @@
 package Controller;
 import Model.ArmeeListe;
+import Model.Figurine;
 import Model.Unit;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -93,21 +94,34 @@ public class ControllerSimu extends HttpServlet {
 				break;
 			case "set_figs_group_hp":
 				String group_id[] = data.get("group_id").split("_"); // ["unitX", "groupY"]
-				int unit = Integer.valueOf(group_id[0].substring(4, group_id[0].length())); // on "unit" au début
-				String fig_name = group_id[1].substring(5, group_id[1].length());
-				int hp = Integer.valueOf(data.get("hp"));
-//				
-//				ArrayList<Figurine> fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
-//				for(int i = 0; i < value; i++) {
-//					fig_group.get(i).setHP(fig_group.get(i).getHPMax());
-//				}
-//				for(int i = value; i < fig_group.size(); i++) {
-//					fig_group.get(i).setHP(0);
-//				}
+				int group = Integer.valueOf(group_id[1].substring(5, group_id[1].length()));
+				int alive_figs = Integer.valueOf(data.get("alive_figs"));
 				
+				// groupe de figurines identiques
+				ArrayList<Figurine> fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups()
+					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group));
+				
+				for(int i = 0; i < alive_figs; i++) {
+					fig_group.get(i).setHP(fig_group.get(i).getHPMax());
+				}
+				for(int i = alive_figs; i < fig_group.size(); i++) {
+					fig_group.get(i).setHP(0);
+				}
+				
+				out.println("success");
 				break;
 			case "set_one_fig_hp":
+				String[] markup_id = data.get("fig_div_id").split("_"); // ["unitX", "groupY", "figZ"]
+				group = Integer.valueOf(markup_id[1].substring(5, markup_id[1].length()));
+				int fig = Integer.valueOf(markup_id[2].substring(3, markup_id[2].length()));
+				int hp = Integer.valueOf(data.get("hp"));
 				
+				Figurine figurine = Battle.getSelectedUnit(col).getIdenticalFigsGroups()
+					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group))
+					.get(fig);
+				figurine.setHP(hp);
+				
+				out.println("success");
 				break;
 		}
 	}

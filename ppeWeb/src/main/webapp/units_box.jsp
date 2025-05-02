@@ -9,12 +9,11 @@ Object col = request.getAttribute("col");
 for(int i = 0; i < units_list.size(); i++) {
 	Unit one_unit = units_list.get(i); %>
 <div class="one_unit_zone" id="col<%= col %>_unit<%= i %>">
-	<button class="unit_button" onclick="unfoldUnits(1, 'col<%= col %>_unit<%= i %>');"><%= one_unit.getName() %></button>
+	<button class="unit_button" onclick="unfoldUnits(<%= col %>, <%= i %>);"><%= one_unit.getName() %></button>
 	<div class="unit_box hidden">
 <% HashMap<String, ArrayList<Figurine>> figs_group = one_unit.getIdenticalFigsGroups();
-ArrayList<String> group_keys = new ArrayList<>(figs_group.keySet());
-for(int j = 0; j < group_keys.size(); j++){
-//for(HashMap.Entry<String, ArrayList<Figurine>> fig_group : one_unit.getIdenticalFigsGroups().entrySet()) { %>
+ArrayList<String> group_keys = one_unit.getIdenticalFigsGroupsKeys();
+for(int j = 0; j < group_keys.size(); j++){ %>
 		<div class="unit_group" id="unit<%= i %>_group<%= j %>">
 <% if((int)request.getAttribute("col") == 1) { // attaquants %>
 			<p class="number" onclick="openWeaponsAptitudesZone('fig_<%= j %>');"><%= j + 1 %></p>
