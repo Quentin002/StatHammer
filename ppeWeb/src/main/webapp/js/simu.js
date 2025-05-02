@@ -13,6 +13,7 @@ function GraphiqueSimu (){
 	        //console.log(xhr.responseText);
 			var response = xhr.responseText;
 			//console.log(response);
+			document.getElementById("warhammer_picture").innerHTML="";
 			document.getElementById("graphique").innerHTML=response;
 			//document.getElementById("graphique").insertAdjacentHTML('afterbegin',response);
 	  

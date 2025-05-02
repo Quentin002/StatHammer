@@ -1,24 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+import="java.util.ArrayList"
+import="java.util.HashMap"
+import="Model.ArmeeListe"
+import="Model.Unit"
+import="Model.Arme" 
+import="Model.Figurine"%>
+<% ArrayList<Figurine> fig_group = (ArrayList<Figurine>)request.getAttribute("fig_group");
+Figurine one_fig = fig_group.get(0); 
+Arme selected_weapon = fig_group.get(0).getSelectedWeapon();
+ ArrayList<Arme> weapon_list = fig_group.get(0).getArmes();%>
+
 <div id="weapons_box_unit_name">
-	<p class="number">1</p><p><%= one_fig.getName() %></p>
+	<p class="number">1</p><p><%= one_fig.getNom() %></p>
 </div>
 <select id="weapon_select" name="weapon_select" onchange="selectWeapon()">
-<% for(Weapon one_weapon : weapons) { %>
-	<option value="<%= one_weapon.getName() %>"><%= one_weapon.getName() %></option>
+ <%for( Arme one_weapon :  weapon_list ) { %>
+	<option value="<%= one_weapon.getNom() %>"><%= one_weapon.getNom() %></option>
 <% } %>
 </select>
-<table id="weapon_stats" class="hidden">
+<table id="weapon_stats" class="hidden" > 
 	<tr>
-		<td><%= stats.get(0) %></td>
-		<td><%= stats.get(1) %></td>
-		<td><%= stats.get(2) %></td>
-		<td><%= stats.get(3) %></td>
-		<td><%= stats.get(4) %></td>
+		<td><%= selected_weapon.getA() %></td>
+		<td><%= selected_weapon.getF() %></td>
+		<td><%= selected_weapon.getPA() %></td>
+		<td><%= selected_weapon.getD() %></td>
+		<td><%= selected_weapon.getPortee() %></td>
 	</tr>
 </table>
 <form oninput="nb_weapons_out.value = nb_weapons_in.value">
 	<label>Nombre d'attaquants:</label>
-	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="<%= fig_group.length %>" value="4" onchange="selectNumberOfWeapons('unit1_group1');">
+	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="<%= fig_group.size() %>" value="4" onchange="selectNumberOfWeapons('unit1_group1');">
 	<output name="nb_weapons_out">4</output>
 </form>
 <div id="aptitudes">

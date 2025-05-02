@@ -33,6 +33,7 @@ public class SimuView extends HttpServlet {
 	         return;
 	     }
 	     
+	     
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
