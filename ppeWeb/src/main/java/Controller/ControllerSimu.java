@@ -1,15 +1,12 @@
 package Controller;
-import Model.Armee;
 import Model.ArmeeListe;
 import Model.Unit;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -90,15 +87,15 @@ public class ControllerSimu extends HttpServlet {
 				out.println(Battle.getSelectedList(col).getUnits().get(0).getArmee() + ".png");
 				break;
 			case "set_selected_unit":
-				int unit_index = Integer.valueOf(data.get("fig"));
+				int unit_index = Integer.valueOf(data.get("unit"));
 				Battle.setSelectedUnit(col, unit_index);
 				out.println("success");
 				break;
 			case "set_figs_group_hp":
-//				String group_id[] = data.get("group_id").split("_"); // unitX_nomfigurine
-//				int unit = Integer.valueOf(group_id[0].substring(4, group_id[0].length())); // on "unit" au début
-//				String fig_name = group_id[1];
-//				int hp = Integer.valueOf(data.get("hp"));
+				String group_id[] = data.get("group_id").split("_"); // ["unitX", "groupY"]
+				int unit = Integer.valueOf(group_id[0].substring(4, group_id[0].length())); // on "unit" au début
+				String fig_name = group_id[1].substring(5, group_id[1].length());
+				int hp = Integer.valueOf(data.get("hp"));
 //				
 //				ArrayList<Figurine> fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups().get(group_name);
 //				for(int i = 0; i < value; i++) {

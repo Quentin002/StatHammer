@@ -101,10 +101,10 @@ function unfoldUnits(col, unit_section_id){
 	
 	// envoi avec les même conditions
 	if(Battle.getUnitId(col) != null && Battle.getUnitId(col) == unit_section_id){
-		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, fig: -1 }));
+		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, unit: -1 }));
 	}
 	else{
-		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, fig: unit_number }));
+		xhr.send(JSON.stringify({ action: "set_selected_unit", col: col, unit: unit_number }));
 	}
 }
 
@@ -196,7 +196,7 @@ function openWeaponsAptitudesZone(group_id){
 /* commande colonne de droite */
 function selectAliveFigsNumber(group_id){
 	const input = document.getElementById(group_id + "_input");
-	//const group_id_array = group_id.split("_"); // ["unitX", "nomfigurine"]
+	//const group_id_array = group_id.split("_"); // ["unitX", "groupY"]
 	//const fig_name = group_id_array[1];
 	
 	var xhr = new XMLHttpRequest();
@@ -236,19 +236,21 @@ function setFigurineHP(fig_id){
 				}
 				// MAJ input range
 				const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
-				const group_div = document.getElementById(group_id + "_figs");
-				const hp_inputs = group_div.querySelectorAll(".hp_selector");
+				const group_div = document.getElementById(group_id); // parent du groupe d'unités
+				const hp_inputs = group_div.querySelector(".fig_group")
+					.querySelectorAll(".hp_selector");
 				let alive_figs_number = 0;
 				for(let i = 0; i < hp_inputs.length; i++){
 					if(hp_inputs[i].value > 0){
 						alive_figs_number++;
 					}
 				}
-			    document.getElementById(group_id + "_input").value = alive_figs_number;
+			    //document.getElementById(group_id + "_input").value = alive_figs_number;
+				group_div.querySelector("input").value = alive_figs_number;
 			    group_div.querySelector("output").innerHTML = alive_figs_number;
 			}
 		};
-		xhr.send(JSON.stringify({ action: "set_one_fig_hp", fig: fig_id, hp: fig_div.querySelector("input").value }));
+		xhr.send(JSON.stringify({ action: "set_one_fig_hp", col: 2, fig: fig_id, hp: fig_div.querySelector("input").value }));
 }
 
 
