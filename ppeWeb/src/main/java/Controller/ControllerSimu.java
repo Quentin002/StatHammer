@@ -1,4 +1,6 @@
 package Controller;
+import Model.Aptitude;
+import Model.Arme;
 import Model.ArmeeListe;
 import Model.Figurine;
 import Model.Unit;
@@ -60,6 +62,9 @@ public class ControllerSimu extends HttpServlet {
 	    
 	    HashMap<String, String> data = basicParseJson(json);
 	    int col = Integer.valueOf(data.get("col")); // 1 ou 2
+	    int group;
+	    ArrayList<Figurine> fig_group;
+	    int alive_figs;
 	    
 		switch(data.get("action")) {
 			case "make_units_box":
@@ -78,10 +83,10 @@ public class ControllerSimu extends HttpServlet {
 						break;
 					}
 				}
+				
 				request.setAttribute("col", col);
 			    request.setAttribute("listes", listes); // => units_box.jsp
 			    request.setAttribute("units_list", Battle.getSelectedList(col).getUnits());
-			    
 			    request.getRequestDispatcher("units_box.jsp").forward(request, response);
 				break;
 			case "get_army_file":
@@ -92,13 +97,52 @@ public class ControllerSimu extends HttpServlet {
 				Battle.setSelectedUnit(col, unit_index);
 				out.println("success");
 				break;
+			case "make_weapons_aptitudes_zone":
+				group = Integer.valueOf(data.get("group").substring(5, data.get("group").length())); // int <- groupX
+				fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups()
+					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group)); // ArrayList<Figurine>
+				alive_figs = 0;
+				for(Figurine fig : fig_group) {
+					if(fig.getHP() > 0) {
+						alive_figs++;
+					}
+				}
+				
+				request.setAttribute("fig_group", fig_group);
+				request.setAttribute("group", group);
+				request.setAttribute("alive_figs", alive_figs);
+				request.getRequestDispatcher("weapons_and_aptitudes.jsp").forward(request, response);
+				break;
+			case "set_weapon":
+				group = Integer.valueOf(data.get("group").substring(5, data.get("group").length())); // int <- groupX
+				fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups() // ArrayList<Figurine>
+					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group));
+				Arme weapon = fig_group.get(0).getArmes().get(Integer.valueOf(data.get("weapon")));
+				
+				String stats = "{\"A\": \""	+ weapon.getA() + "\","
+					+ " \"F\": \""	+ weapon.getF() + "\","
+					+ "\"PA\": \""	+ weapon.getPA() + "\","
+					+ "\"D\": \""	+ weapon.getD() + "\","
+					+ "\"portée\": \""	+ weapon.getPortee().replace("\"", "\\\"") + "\"}";
+				out.println(stats);
+				break;
+			case "setAptitude":
+				group = Integer.valueOf(data.get("group").substring(5, data.get("group").length())); // int <- groupX
+				fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups() // ArrayList<Figurine>
+					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group));
+				ArrayList<Aptitude> aptitudes = fig_group.get(0).getAptitudes();
+				
+				// cocher/décocher la case => ajouter ou retirer une aptitude de la liste
+				//
+				
+				out.println("success");
+				break;
 			case "set_figs_group_hp":
-				String group_id[] = data.get("group_id").split("_"); // ["unitX", "groupY"]
-				int group = Integer.valueOf(group_id[1].substring(5, group_id[1].length()));
-				int alive_figs = Integer.valueOf(data.get("alive_figs"));
+				group = Integer.valueOf(data.get("group").substring(5, data.get("group").length()));
+				alive_figs = Integer.valueOf(data.get("alive_figs"));
 				
 				// groupe de figurines identiques
-				ArrayList<Figurine> fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups()
+				fig_group = Battle.getSelectedUnit(col).getIdenticalFigsGroups()
 					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group));
 				
 				for(int i = 0; i < alive_figs; i++) {
@@ -108,12 +152,12 @@ public class ControllerSimu extends HttpServlet {
 					fig_group.get(i).setHP(0);
 				}
 				
-				out.println("success");
+				out.println(fig_group.get(0).getHPMax()); // utile pour selectNumberOfWeapons()
 				break;
 			case "set_one_fig_hp":
-				String[] markup_id = data.get("fig_div_id").split("_"); // ["unitX", "groupY", "figZ"]
-				group = Integer.valueOf(markup_id[1].substring(5, markup_id[1].length()));
-				int fig = Integer.valueOf(markup_id[2].substring(3, markup_id[2].length()));
+				String[] markup_id = data.get("fig_div_id").split("_"); // ["groupY", "figZ"]
+				group = Integer.valueOf(markup_id[0].substring(5, markup_id[0].length()));
+				int fig = Integer.valueOf(markup_id[1].substring(3, markup_id[1].length()));
 				int hp = Integer.valueOf(data.get("hp"));
 				
 				Figurine figurine = Battle.getSelectedUnit(col).getIdenticalFigsGroups()

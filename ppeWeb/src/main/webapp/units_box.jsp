@@ -5,7 +5,7 @@ import="Model.ArmeeListe"
 import="Model.Unit"
 import="Model.Figurine" %>
 <% ArrayList<Unit> units_list = (ArrayList<Unit>)request.getAttribute("units_list");
-Object col = request.getAttribute("col");
+int col = (int)request.getAttribute("col");
 for(int i = 0; i < units_list.size(); i++) {
 	Unit one_unit = units_list.get(i); %>
 <div class="one_unit_zone" id="col<%= col %>_unit<%= i %>">
@@ -14,9 +14,9 @@ for(int i = 0; i < units_list.size(); i++) {
 <% HashMap<String, ArrayList<Figurine>> figs_group = one_unit.getIdenticalFigsGroups();
 ArrayList<String> group_keys = one_unit.getIdenticalFigsGroupsKeys();
 for(int j = 0; j < group_keys.size(); j++){ %>
-		<div class="unit_group" id="unit<%= i %>_group<%= j %>">
+		<div class="unit_group" id="col<%= col %>_unit<%= i %>_group<%= j %>">
 <% if((int)request.getAttribute("col") == 1) { // attaquants %>
-			<p class="number" onclick="openWeaponsAptitudesZone('fig_<%= j %>');"><%= j + 1 %></p>
+			<p class="number" onclick="openWeaponsAptitudesZone('group<%= j %>');"><%= j + 1 %></p>
 <% for(Figurine one_fig : figs_group.get(group_keys.get(j))) {
 String fig_icon = one_fig.getHP() > 0 ? "android-fill.png" : "android-line.png"; %>
 			<p><img src="assets/<%= fig_icon %>" alt="logo figurine"><span><%= one_fig.getHPMax() %>PV </span></p>
@@ -25,7 +25,7 @@ String fig_icon = one_fig.getHP() > 0 ? "android-fill.png" : "android-line.png";
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
 				<label><%= figs_group.get(group_keys.get(j)).get(0).getNom() %></label>
 				<div>
-					<input id="unit<%= i %>_group<%= j %>_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="<%= figs_group.get(group_keys.get(j)).size() %>" value="<%= figs_group.get(group_keys.get(j)).size() %>" onchange="selectAliveFigsNumber('unit<%= i %>_group<%= j %>');">
+					<input id="unit<%= i %>_group<%= j %>_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="<%= figs_group.get(group_keys.get(j)).size() %>" value="<%= figs_group.get(group_keys.get(j)).size() %>" onchange="selectAliveFigsNumber('group<%= j %>');">
 					<output name="nb_alive_figs_out"><%= figs_group.get(group_keys.get(j)).size() %></output>
 				</div>
 			</form>
@@ -35,7 +35,7 @@ for(int k = 0; k < one_fig_group.size(); k++){
 String fig_icon = one_fig_group.get(k).getHP() > 0 ? "android-fill.png" : "android-line.png"; %>
 				<div id="unit<%= i %>_group<%= j %>_fig<%= k %>">
 					<label for="nb_alive_figs"><img class="fig_icon" src="assets/<%= fig_icon %>" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="<%= one_fig_group.get(k).getHPMax() %>" value="<%= one_fig_group.get(k).getHP() %>" onchange="setFigurineHP('unit<%= i %>_group<%= j %>_fig<%= k %>');">
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="<%= one_fig_group.get(k).getHPMax() %>" value="<%= one_fig_group.get(k).getHP() %>" onchange="setFigurineHP('group<%= j %>', 'fig<%= k %>');">
 				</div>
 <% } // fin for sur figurines défenseuses  %>
 			</div>

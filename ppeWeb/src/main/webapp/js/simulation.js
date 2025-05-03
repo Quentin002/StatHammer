@@ -52,7 +52,7 @@ function selectList(nb){
 
 function unfoldUnits(col, unit){
 	/* déroulage des unités et cadre jaune du bouton, même algo que dans le client lourd */
-	const old_unit_box = document.getElementById(Battle.getUnitId(col)); // peut être null
+	const old_unit_box = document.getElementById("col" + col + "_unit" + Battle.getUnitId(col)); // peut être null
 	const new_unit_box = document.getElementById("col" + col + "_unit" + unit); // peut être le même élément
 	
 	var xhr = new XMLHttpRequest();
@@ -108,92 +108,31 @@ function unfoldUnits(col, unit){
 
 function openWeaponsAptitudesZone(group_id){
 	const weapons_aptitudes_box = document.getElementById("weapons_aptitudes_box");
+	
+	var xhr = new XMLHttpRequest();
+		xhr.open('POST', url, true);
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState === 4 && xhr.status === 200) {
+				// html généré
+				weapons_aptitudes_box.classList.remove("hidden");
+				weapons_aptitudes_box.innerHTML = '';
+				weapons_aptitudes_box.insertAdjacentHTML('afterbegin', xhr.responseText);
 
-	// code de test
-	const data = JSON.stringify({ html: `<div id="weapons_box_unit_name">
-	<p class="number">1</p><p>Initié</p>
-</div>
-<select id="weapon_select" name="weapon_select" onchange="selectWeapon()">
-	<option value="Arme 1">Arme 1</option>
-	<option value="Arme 2">Arme 2</option>
-	<option value="Arme 3">Arme 3</option>
-	<option value="Arme 4">Arme 4</option>
-</select>
-<table id="weapon_stats" class="hidden">
-	<tr>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
-	</tr>
-</table>
-<form oninput="nb_weapons_out.value = nb_weapons_in.value">
-	<label>Nombre d'attaquants:</label>
-	<input id="weapon_number_range" type="range" name="nb_weapons_in" min="0" max="3" value="3" onchange="selectNumberOfWeapons('unit1_group1');">
-	<output name="nb_weapons_out">3</output>
-</form>
-<div id="aptitudes">
-	<div>
-		<input type="checkbox" id="apt1" name="Aptitude1" onclick="checkAptitude('apt1');">
-		<label for="apt1">Aptitude1</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt2" name="Aptitude2" onclick="checkAptitude('apt2');">
-		<label for="apt2">Aptitude2</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt3" name="Aptitude3" onclick="checkAptitude('apt3');">
-		<label for="apt3">Aptitude3</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt4" name="Aptitude4"
-		 onclick="checkAptitude('apt4');">
-		<label for="apt4">Aptitude4</label>
-	</div>
-	<div>
-		<input type="checkbox" id="apt5" name="Aptitude5" onclick="checkAptitude('apt5');">
-		<label for="apt5">Aptitude5</label>
-	</div>
-</div>` });
-	// html généré
-	weapons_aptitudes_box.classList.remove("hidden");
-	weapons_aptitudes_box.innerHTML = '';
-	weapons_aptitudes_box.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
-	return;
-
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ action: "make_weapons_aptitudes_zone", list: Battle.getListName(nb) })
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+				// première arme sélectionnée par défaut
+				document.getElementById("weapon_select").options[0].selected = true;
+				
+				// envoi d'une deuxième requête
+				selectWeapon(group_id);
 			}
-			return response.json();
-		})
-		// le serveur renvoie une vue et le nom d'une armée
-		.then(data => {
-			// html généré
-			weapons_aptitudes_box.classList.remove("hidden");
-			weapons_aptitudes_box.innerHTML = '';
-			weapons_aptitudes_box.insertAdjacentHTML('afterbegin', JSON.parse(data).html);
-
-			// première arme sélectionnée par défaut
-			selectWeapon();
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
+		};
+		xhr.send(JSON.stringify({ action: "make_weapons_aptitudes_zone", col: 1, group: group_id}));
 }
 
 
 /* commande colonne de droite */
 function selectAliveFigsNumber(group_id){
-	const input = document.getElementById(group_id + "_input");
+	const parent_div_id = "unit" + Battle.getUnitId(2) + "_" + group_id;
+	const input = document.getElementById(parent_div_id + "_input");
 	//const group_id_array = group_id.split("_"); // ["unitX", "groupY"]
 	//const fig_name = group_id_array[1];
 	
@@ -201,12 +140,13 @@ function selectAliveFigsNumber(group_id){
 	xhr.open('POST', url, true);
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState === 4 && xhr.status === 200) {
-			if(xhr.responseText.trim() == "success"){
-				const hp_inputs = document.getElementById(group_id + "_figs").querySelectorAll(".hp_selector");
-				const fig_icons = document.getElementById(group_id + "_figs").querySelectorAll(".fig_icon");
+			console.log(xhr.responseText);
+			if(xhr.responseText != null){
+				const hp_inputs = document.getElementById(parent_div_id + "_figs").querySelectorAll(".hp_selector");
+				const fig_icons = document.getElementById(parent_div_id + "_figs").querySelectorAll(".fig_icon");
 				for(let i = 0; i < input.value; i++)
 				{
-					hp_inputs[i].value = hp_inputs[i].max;;
+					hp_inputs[i].value = hp_inputs[i].max;
 					fig_icons[i].src = 'assets/android-fill.png';
 				}
 				for(let i = input.value; i < hp_inputs.length; i++)
@@ -216,15 +156,15 @@ function selectAliveFigsNumber(group_id){
 				}
 			}
 			else{
-				console.log("erreur MAJ points de vie du groupe sur le serveur ");
+				console.log("erreur MAJ points de vie du groupe sur le serveur");
 			}
 		}
 	};
-	xhr.send(JSON.stringify({ action: "set_figs_group_hp", col: 2, group_id: group_id, alive_figs: input.value}));
+	xhr.send(JSON.stringify({ action: "set_figs_group_hp", col: 2, group: group_id, alive_figs: input.value}));
 }
 
-function setFigurineHP(fig_id){
-	const fig_div = document.getElementById(fig_id);
+function setFigurineHP(group_id, fig_id){
+	const fig_div = document.getElementById("unit" + Battle.getUnitId(2) + "_" + group_id + "_" +  fig_id);
 	
 	var xhr = new XMLHttpRequest();
 		xhr.open('POST', url, true);
@@ -239,8 +179,8 @@ function setFigurineHP(fig_id){
 						fig_div.querySelector("img").src = 'assets/android-line.png';
 					}
 					// MAJ input range
-					const group_id = fig_id.split('_').slice(0, 2).join('_'); // retirer _figX
-					const group_div = document.getElementById(group_id); // parent du groupe d'unités
+					//const group_id = fig_id.split('_')[0]; // garder groupY et retirer _figZ
+					const group_div = document.getElementById("col2_unit" + Battle.getUnitId(2) + "_" + group_id); // parent du groupe d'unités
 					const hp_inputs = group_div.querySelector(".fig_group")
 						.querySelectorAll(".hp_selector");
 					let alive_figs_number = 0;
@@ -258,181 +198,61 @@ function setFigurineHP(fig_id){
 				}
 			}
 		};
-		xhr.send(JSON.stringify({ action: "set_one_fig_hp", col: 2, fig_div_id: fig_id, hp: fig_div.querySelector("input").value }));
+		xhr.send(JSON.stringify({ action: "set_one_fig_hp", col: 2, fig_div_id: group_id + "_" + fig_id, hp: fig_div.querySelector("input").value }));
 }
 
 
 /* zone armes et aptitudes */
- /*function selectWeapon(){
+function selectWeapon(group_id){
 	const selected_weapon = document.getElementById("weapon_select").value;
-
-	// code de test
 	const table = document.getElementById("weapon_stats");
 	const td_markups = table.querySelectorAll('td');
-	table.classList.remove('hidden');
-	const stats = {A: "2", F: "4", PA: "0", D: "1", portée: "24\""}; // attention portée en pouces
-	const weapon_stats = new Map(Object.entries(stats));
 	
-	if(td_markups.length == weapon_stats.size) // = 5
-	{
-		// affichage des clés et valeurs
-		const interator = weapon_stats.keys();
-		for(let i = 0; i < td_markups.length; i++) {
-			const key = interator.next().value;
-			td_markups[i].innerHTML = key + ": " + weapon_stats.get(key);
-		}
-	}
-	else{
-		console.log("erreur avec les statistiques de l'arme");
-	}
-	return;
-	
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ action: "set_weapon", weapon: selected_weapon }) // idem selectAliveFigsNumber, nb d'armes = nb figurines vivantes
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
-			}
-			return response.json();
-		})
-		// le serveur renvoie une vue et le nom d'une armée
-		.then(data => {
-			const table = document.getElementById("weapon_stats");
-			const td_markups = table.querySelectorAll('td');
-			table.classList.remove('hidden');
-			const stats = {A: data.a, F: data.f, PA: data.pa, D: data.d, portée: data.portee + "\""}; // attention portée en pouces
-			const weapon_stats = new Map(Object.entries(stats));
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4 && xhr.status === 200) {
+			const stats = JSON.parse(xhr.responseText);
+			//stats["portée"] = stats["portée"] + "\""; // portée en pouces
 			
-			if(td_markups.length == weapon_stats.size) // = 5
+			if(td_markups.length === Object.keys(stats).length) // = 5
 			{
 				// affichage des clés et valeurs
-				const interator = weapon_stats.keys();
+				const keys = Object.keys(stats);
 				for(let i = 0; i < td_markups.length; i++) {
-					const key = interator.next().value;
-					td_markups[i].innerHTML = key + ": " + weapon_stats.get(key);
+					td_markups[i].innerHTML = keys[i] + ": " + stats[keys[i]];
 				}
 			}
 			else{
 				console.log("erreur avec les statistiques de l'arme");
 			}
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
-} */
-
-function selectWeapon() {
-    const selected_weapon = document.getElementById("weapon_select").value;
-
-    // URL de l'API (à définir selon votre configuration)
-    const url = 'https://votre-api.com/endpoint';
-
-    // Fonction pour mettre à jour les statistiques de l'arme dans le tableau
-    function updateWeaponStats(stats) {
-        const table = document.getElementById("weapon_stats");
-        const td_markups = table.querySelectorAll('td');
-        table.classList.remove('hidden');
-
-        const weapon_stats = new Map(Object.entries(stats));
-
-        if (td_markups.length === weapon_stats.size) {
-            const iterator = weapon_stats.keys();
-            for (let i = 0; i < td_markups.length; i++) {
-                const key = iterator.next().value;
-                td_markups[i].innerHTML = `${key}: ${weapon_stats.get(key)}`;
-            }
-        } else {
-            console.log("Erreur avec les statistiques de l'arme");
-        }
-    }
-
-    // Code de test avec des statistiques fictives 
-    const testStats = { A: "2", F: "4", PA: "0", D: "1", portée: "24\"" }; // attention portée en pouces
-    updateWeaponStats(testStats);
-
-    // Requête XHR pour obtenir les statistiques réelles de l'arme
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) { // Requête terminée
-            if (xhr.status >= 200 && xhr.status < 300) { // Succès
-                try {
-                    const data = JSON.parse(xhr.responseText);
-                    // Mise à jour des statistiques avec les données réelles
-                    const realStats = { A: data.a, F: data.f, PA: data.pa, D: data.d, portée: data.portee + "\"" };
-                    updateWeaponStats(realStats);
-                } catch (error) {
-                    console.error('Erreur lors du parsing de la réponse JSON', error);
-                }
-            } else {
-                console.error('Erreur réponse requête XHR', xhr.statusText);
-            }
-        }
-    };
-
-    xhr.onerror = function () {
-        console.error('Erreur réseau requête XHR');
-    };
-
-    // Envoi de la requête avec les données
-    xhr.send(JSON.stringify({ action: "set_weapon", weapon: selected_weapon }));
+		}
+	};
+	xhr.send(JSON.stringify({ action: "set_weapon", col: 1, group: group_id, weapon: selected_weapon }));
 }
-
 
 function selectNumberOfWeapons(group_id){
 	const weapons_nb = document.getElementById("weapon_number_range").value;
 	
-	// code de test
-	const fig_group_img = document.getElementById(group_id).querySelectorAll("img");
-	const fig_group_span = document.getElementById(group_id).querySelectorAll("span");
-	
-	for(let i = 0; i < weapons_nb; i++){
-		fig_group_img[i].src = 'assets/android-fill.png';
-		//fig_group_span[i].innerHTML = "1PV"; // garder les PV dans Battle?
-	}
-	for(let i = weapons_nb; i < fig_group_img.length; i++){
-		fig_group_img[i].src = 'assets/android-line.png';
-		//fig_group_span[i].innerHTML = "0PV";
-	}
-	return;
-
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ action: "set_figs_group_hp", col: 1, unit_group: group_id, hp: weapons_nb.value }) // idem selectAliveFigsNumber, nb d'armes = nb figurines vivantes
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
-			}
-			return response.json();
-		})
-		// le serveur renvoie une vue et le nom d'une armée
-		.then(data => {
-			const fig_group_img = document.getElementById(group_id).querySelectorAll("img");
-			const fig_group_span = document.getElementById(group_id).querySelectorAll("span");
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState === 4 && xhr.status === 200) {
+			const fig_group_img = document.getElementById("col1_unit" + Battle.getUnitId(1) + "_" + group_id).querySelectorAll("img");
+			const fig_group_span = document.getElementById("col1_unit" + Battle.getUnitId(1) + "_" + group_id).querySelectorAll("span");
 			
 			for(let i = 0; i < weapons_nb; i++){
 				fig_group_img[i].src = 'assets/android-fill.png';
-				//fig_group_span[i].innerHTML = "1PV"; // garder les PV dans Battle?
+				fig_group_span[i].innerHTML = xhr.responseText + "PV";
 			}
 			for(let i = weapons_nb; i < fig_group_img.length; i++){
 				fig_group_img[i].src = 'assets/android-line.png';
-				//fig_group_span[i].innerHTML = "0PV";
+				fig_group_span[i].innerHTML = "0PV";
 			}
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
+		}
+	};
+	// on envoie "set_figs_group_hp" comme dans selectAliveFigsNumber()
+	xhr.send(JSON.stringify({ action: "set_figs_group_hp", col: 1, group: group_id, alive_figs: weapons_nb }));
 }
 
 function checkAptitude(aptitude_id){
@@ -471,7 +291,7 @@ function calculate(){
 
 function reverseArmies(){
 	// contrôle: une liste doit être sélectionnée de chaque côté
-	if(Battle.getListName(1) == null || Battle.getListName(2) == null)
+	if(Battle.getListId(1) == null || Battle.getListId(2) == null)
 	{
 		toastNotify("sélectionner 2 listes pour pouvoir les inverser");
 		return;
