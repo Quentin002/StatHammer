@@ -78,7 +78,7 @@ public class GestionListeView extends HttpServlet {
 	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
 	            		.append("</button>\n")
 	            		.append("<form action='ChargerModifListe' method='post' class='GestionListe_form'>\n")
-	            		.append("<input type='hidden' name='idArmee' value='").append(idliste).append("' />\n")
+	            		.append("<input type='hidden' name='idListe' value='").append(idliste).append("' />\n")
 	            		.append("<button type='submit' class='GestionListe_bouton'>Paramétrer</button>\n")
 	            		.append("</form>\n")
 	            		.append("<button type='button' class='GestionListe_bouton modal_ouverture' id='")

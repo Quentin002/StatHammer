@@ -24,7 +24,7 @@ public class ChargerModifListe extends HttpServlet {
             return;
         }
 
-        int idListeParam = Integer.parseInt(request.getParameter("idArmee"));
+        int idListeParam = Integer.parseInt(request.getParameter("idListe"));
         session.setAttribute("idListeParam", idListeParam);
         ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
 
@@ -41,7 +41,6 @@ public class ChargerModifListe extends HttpServlet {
                 }
             }
             session.setAttribute("Figurinelistes", figurineParUnite);
-            System.out.println(figurineParUnite);
             int idArmee = listes.get(0).getIdArmee();
             ArrayList<ArmeeListe> unitModif = ConnexionController.chargerUnitModifListes(idListeParam, idArmee);
             session.setAttribute("Modiflistes", unitModif);

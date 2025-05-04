@@ -304,6 +304,32 @@ public class ConnexionController extends HttpServlet {
         }
 		return listesUnitModif;
 	}
+	public static void modifierListe(int idListe, ArrayList<String> ajouts, ArrayList<String> suppressions) throws SQLException{
+		BDD conec = new BDD();
+	    Connection conn = conec.getConnection();
+
+	    //Suppressions
+	    String supprSQL = "DELETE FROM contenir WHERE id_liste = ? AND id_unite = (SELECT id_unite FROM unite WHERE nom_unite = ? LIMIT 1)";
+	    try (PreparedStatement deleteStmt = conn.prepareStatement(supprSQL)) {
+	        for (String nomUnite : suppressions) {
+	            deleteStmt.setInt(1, idListe);
+	            deleteStmt.setString(2, nomUnite);
+	            deleteStmt.executeUpdate();
+	        }
+	    }
+
+	    // Ajouts
+	    String ajoutSQL = "INSERT INTO contenir (id_liste, id_unite) VALUES (?, (SELECT id_unite FROM unite WHERE nom_unite = ? LIMIT 1))";
+	    try (PreparedStatement insertStmt = conn.prepareStatement(ajoutSQL)) {
+	        for (String nomUnite : ajouts) {
+	            insertStmt.setInt(1, idListe);
+	            insertStmt.setString(2, nomUnite);
+	            insertStmt.executeUpdate();
+	        }
+	    }
+
+	    conec.close();
+	}
 
 	private static BDD conec; // Instance de la classe BDD qui gère la connexion à la bdd
 

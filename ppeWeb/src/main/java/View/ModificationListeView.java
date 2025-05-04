@@ -105,7 +105,15 @@ public class ModificationListeView extends HttpServlet {
         }
 
         String body = "<h1>Modificateur de liste</h1><section class='ModificationListe_structure'>"
-            + importModif + importListe + "</section>";
+            +importModif 
+            +importListe
+            +"<form method='post' action='ValiderModifListe' class='Validationliste_form'>\r\n"
+            + "    <input type=\"hidden\" name=\"idListe\" value='"
+            +idListeParam 
+            +"'>\r\n"
+            + "    <button type='submit' class='Validationliste_bouton'>Valider les modifications</button>\r\n"
+            + "</form>"
+            +"</section>";
 
         String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
         out.println(html);

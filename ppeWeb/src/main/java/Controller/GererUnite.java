@@ -18,6 +18,7 @@ import java.util.Map;
 public class GererUnite extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+   
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         if (session == null) {
@@ -29,19 +30,32 @@ public class GererUnite extends HttpServlet {
         String uniteName = request.getParameter("uniteName");
         int idListe = Integer.parseInt(request.getParameter("idListe"));
 
+        // Chargement des listes existantes
         ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
         ArrayList<ArmeeListe> modifListes = (ArrayList<ArmeeListe>) session.getAttribute("Modiflistes");
-
         Map<String, ArrayList<Figurine>> figurineMap = (Map<String, ArrayList<Figurine>>) session.getAttribute("Figurinelistes");
         Map<String, ArrayList<Figurine>> modifFigurineMap = (Map<String, ArrayList<Figurine>>) session.getAttribute("ModifFigurinelistes");
 
+        // Nouvelles listes de suivi des changements
+        ArrayList<String> ajouts = (ArrayList<String>) session.getAttribute("ajouts");
+        ArrayList<String> suppressions = (ArrayList<String>) session.getAttribute("suppressions");
+        if (ajouts == null) ajouts = new ArrayList<>();
+        if (suppressions == null) suppressions = new ArrayList<>();
+
         if ("ajouter".equals(action)) {
-            // retirer l’unité des modifListes
-            for (ArmeeListe modif : modifListes) {
-                if (modif.getUniteListe().remove(uniteName)) break;
+            // Si l’unité était précédemment marquée pour suppression, on l'annule
+            suppressions.remove(uniteName);
+
+            // Si ce n'était pas déjà un ajout, on l'ajoute à la liste d’ajouts
+            if (!ajouts.contains(uniteName)) {
+                ajouts.add(uniteName);
             }
 
-            // ajouter l’unité à la liste sélectionnée
+            // Logique UI
+            for (ArmeeListe modif : modifListes) {
+                modif.getUniteListe().remove(uniteName);
+            }
+
             for (ArmeeListe liste : listes) {
                 if (liste.getId() == idListe && !liste.getUniteListe().contains(uniteName)) {
                     liste.getUniteListe().add(uniteName);
@@ -49,7 +63,6 @@ public class GererUnite extends HttpServlet {
                 }
             }
 
-            // déplacer les figurines de ModifFigurinelistes vers Figurinelistes
             if (modifFigurineMap != null && figurineMap != null) {
                 ArrayList<Figurine> figurines = modifFigurineMap.remove(uniteName);
                 if (figurines == null) {
@@ -59,14 +72,17 @@ public class GererUnite extends HttpServlet {
             }
 
         } else if ("supprimer".equals(action)) {
-            // Pour retirer l’unité de la liste sélectionnée
+            ajouts.remove(uniteName); // Si ajout déjà prévu, on l'annule
+            if (!suppressions.contains(uniteName)) {
+                suppressions.add(uniteName);
+            }
+
             for (ArmeeListe liste : listes) {
                 if (liste.getId() == idListe) {
-                    if (liste.getUniteListe().remove(uniteName)) break;
+                    liste.getUniteListe().remove(uniteName);
                 }
             }
 
-            // Pour ajouter à modifListes
             for (ArmeeListe modif : modifListes) {
                 if (!modif.getUniteListe().contains(uniteName)) {
                     modif.getUniteListe().add(uniteName);
@@ -74,7 +90,6 @@ public class GererUnite extends HttpServlet {
                 }
             }
 
-            // déplace les figurines vers ModifFigurinelistes
             if (figurineMap != null && modifFigurineMap != null) {
                 ArrayList<Figurine> figurines = figurineMap.remove(uniteName);
                 if (figurines == null) {
@@ -84,12 +99,13 @@ public class GererUnite extends HttpServlet {
             }
         }
 
-        // réenregistrer les listes et les maps
+        // Mise à jour des attributs de session
+        session.setAttribute("ajouts", ajouts);
+        session.setAttribute("suppressions", suppressions);
         session.setAttribute("listes", listes);
         session.setAttribute("Modiflistes", modifListes);
         session.setAttribute("Figurinelistes", figurineMap);
         session.setAttribute("ModifFigurinelistes", modifFigurineMap);
-
         response.sendRedirect("ModificationListeView");
     }
 }
