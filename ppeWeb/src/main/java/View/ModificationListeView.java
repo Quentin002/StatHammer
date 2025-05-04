@@ -9,55 +9,39 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 import Controller.ConnexionController;
 import Model.ArmeeListe;
 import Model.Figurine;
 
-/**
- * Servlet implementation class ModificationListeView
- */
 @WebServlet("/ModificationListeView")
 public class ModificationListeView extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ModificationListeView() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session=request.getSession(false);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session=request.getSession(false);
         if (session==null) {
             response.sendRedirect("ConnexionView");
+            return;
         }
-        
+
         String titre = "StatHammer : Gestion liste";
-	    String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
-		
-		String idArmeeParamStr = request.getParameter("idArmee");
-		int idArmeeParam = Integer.parseInt(idArmeeParamStr);
+        String header = ConnexionView.headerTop + titre + ConnexionView.headerBottom;
+        
+        // récupération de l'id de la liste en session
+        int idListeParam = (Integer) session.getAttribute("idListeParam");
 
         response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
-        System.out.println(listes);
-        
-        StringBuilder importListe=  new StringBuilder();
+        // récupération de la liste et des figurines en session
+        ArrayList<ArmeeListe> listes = (ArrayList<ArmeeListe>) session.getAttribute("listes");
+        Map<String, ArrayList<Figurine>> figMap = (Map<String, ArrayList<Figurine>>) session.getAttribute("Figurinelistes");
+        if (figMap == null) figMap = new HashMap<>();
+
+        StringBuilder importListe = new StringBuilder();
 
         if (listes != null && !listes.isEmpty()) {
             for (ArmeeListe liste : listes) {
@@ -67,84 +51,67 @@ public class ModificationListeView extends HttpServlet {
                 ArrayList<String> nomUniteliste = liste.getUniteListe();
                 int idArmeeliste = liste.getIdArmee();
 
-                if (idliste == idArmeeParam) {
-                	importListe.append("<div>\n")
-                           .append("<h2>").append(nomliste).append("</h2>\n")
-                           .append("<p>").append(descrliste).append("</p>\n");
+                if (idliste == idListeParam) {
+                    importListe.append("<div><h2>").append(nomliste).append("</h2>")
+                        .append("<p>").append(descrliste).append("</p><ul>");
 
-                    if (nomUniteliste != null && !nomUniteliste.isEmpty()) {
-                    	importListe.append("<ul>\n");
-                        for (String nomUnite : nomUniteliste) {
-                        	importListe.append("<li>").append(nomUnite);
-                        	ArrayList<Model.Figurine> figurines = ConnexionController.chargerFigurineListes(nomUnite, idliste);
-                        	for (Model.Figurine figurine : figurines) {
-                            	importListe.append("<ul>").append(figurine.getNom())
-                            	.append("</ul>\n");
+                    for (String nomUnite : nomUniteliste) {
+                        importListe.append("<li>").append(nomUnite);
+                        ArrayList<Figurine> figurines = figMap.get(nomUnite);
+                        if (figurines != null) {
+                            for (Figurine fig : figurines) {
+                                importListe.append("<ul>").append(fig.getNom()).append("</ul>");
                             }
-                        	importListe.append("</li>\n");
-                        	importListe.append("<button onclick=").append("wawa").append(">Supprimer</button>");
                         }
-                        importListe.append("</ul>\n");
-                    } else {
-                    	importListe.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
+                        importListe.append("<form method='post' action='GererUnite' class='ModificationListe_form'>")
+                            .append("<input type='hidden' name='action' value='supprimer'>")
+                            .append("<input type='hidden' name='uniteName' value=\"").append(nomUnite).append("\">")
+                            .append("<input type='hidden' name='idListe' value='").append(idliste).append("'>")
+                            .append("<button type='submit' class='ModificationListe_bouton'>Supprimer</button>")
+                            .append("</form></li>");
                     }
-                    importListe.append("</div>");
+                    importListe.append("</ul></div>");
                 }
             }
         }
 
-        
-        int idArmee= listes.get(0).getIdArmee();
+        Map<String, ArrayList<Figurine>> modifFigMap = (Map<String, ArrayList<Figurine>>) session.getAttribute("ModifFigurinelistes");
+        if (modifFigMap == null) modifFigMap = new HashMap<>();
+
         StringBuilder importModif = new StringBuilder();
-        
-        ArrayList<Model.ArmeeListe> unitModif = ConnexionController.chargerUnitModifListes(idArmeeParam, idArmee);
-        session.setAttribute("Modiflistes", unitModif);
-        importModif.append("<div>");
-        for (ArmeeListe unit : unitModif) {
-        	importModif.append("<ul>");
-            for (String uniteName : unit.getUniteListe()) {
-                importModif.append("<li>").append(uniteName);
-                ArrayList<Model.Figurine> figurines = ConnexionController.chargerFigurineModifListes(uniteName, idArmee);
-            	for (Model.Figurine figurine : figurines) {
-                	importModif.append("<ul>").append(figurine.getNom())
-                	.append("</ul>\n");
-                }
-            	importModif.append("</li>");
-            }
-            importModif.append("<button>Ajouter</button>");
-            importModif.append("</ul>\n");
-            		   
-        }
-        importModif.append("</div>");
-        
-        ArrayList<Model.ArmeeListe> modifListe = (ArrayList<Model.ArmeeListe>) session.getAttribute("Modiflistes");
-        System.out.println(modifListe);
-        
-        StringBuilder testImportSession=  new StringBuilder();
-        testImportSession.append("<div>");
-        for (ArmeeListe unite : modifListe) {
-        	testImportSession.append("<ul>");
-            for (String uniteName : unite.getUniteListe()) {
-            	testImportSession.append("<li>").append(uniteName);
-               
-            	testImportSession.append("</li>");
-            }
-            testImportSession.append("</ul>\n");
-            		   
-        }
-        testImportSession.append("</div>");
-        
-        
-        String body =
-        		"<h1>Modificateur de liste</h1>\n"
-        		+"<section class='ModificationListe_structure'>"
-        		+importModif
-        		+importListe
-        		+testImportSession
-        		+"</section>";
-        
-        String html = header + AccueilView.barDeNav+ body + ConnexionView.footer;
-		out.println(html);
-	}
+        ArrayList<ArmeeListe> unitModif = (ArrayList<ArmeeListe>) session.getAttribute("Modiflistes");
+        if (unitModif != null) {
+            importModif.append("<div><h3>Unités disponibles</h3><ul>");
+            for (ArmeeListe unit : unitModif) {
+                for (String uniteName : unit.getUniteListe()) {
+                    importModif.append("<li>").append(uniteName);
 
+                    ArrayList<Figurine> figs = modifFigMap.get(uniteName);
+                    if (figs != null) {
+                        for (Figurine fig : figs) {
+                            importModif.append("<ul>").append(fig.getNom()).append("</ul>");
+                        }
+                    }
+
+                    importModif.append("<form method='post' action='GererUnite' class='ModificationListe_form'>")
+                        .append("<input type='hidden' name='action' value='ajouter'>")
+                        .append("<input type='hidden' name='uniteName' value=\"").append(uniteName).append("\">")
+                        .append("<input type='hidden' name='idListe' value='").append(idListeParam).append("'>")
+                        .append("<button type='submit' class='ModificationListe_bouton'>Ajouter</button>")
+                        .append("</form></li>");
+                }
+            }
+            importModif.append("</ul></div>");
+        }
+
+        String body = "<h1>Modificateur de liste</h1><section class='ModificationListe_structure'>"
+            + importModif + importListe + "</section>";
+
+        String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
+        out.println(html);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request, response);
+    }
 }

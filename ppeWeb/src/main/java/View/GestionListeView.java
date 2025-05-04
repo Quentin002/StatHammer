@@ -41,7 +41,7 @@ public class GestionListeView extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		@SuppressWarnings("unchecked")
+		// récupère la liste dans la session
 		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
 		
 	             
@@ -51,7 +51,7 @@ public class GestionListeView extends HttpServlet {
 	    
 	    
 	    StringBuilder listage=  new StringBuilder();
-
+	    // parcourt les listes si elles sont présentent
 	    if (listes != null && !listes.isEmpty()) {
 	        for (ArmeeListe liste : listes) {
 	            int idliste = liste.getId();
@@ -59,7 +59,6 @@ public class GestionListeView extends HttpServlet {
 	            String descrliste = liste.getDescriptionListe();
 	            ArrayList<String> nomUniteliste = liste.getUniteListe();
 	            
-
 	            listage.append("<div class='liste id='").append(idliste).append("'>\n")
 	                   .append("<h2>").append(nomliste).append("</h2>\n")
 	                   .append("<p>").append(descrliste).append("</p>\n");
@@ -78,7 +77,7 @@ public class GestionListeView extends HttpServlet {
 	            listage.append("<div class='GestionListe'>\n")
 	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
 	            		.append("</button>\n")
-	            		.append("<form action='ModificationListeView' method='post' class='GestionListe_form'>\n")
+	            		.append("<form action='ChargerModifListe' method='post' class='GestionListe_form'>\n")
 	            		.append("<input type='hidden' name='idArmee' value='").append(idliste).append("' />\n")
 	            		.append("<button type='submit' class='GestionListe_bouton'>Paramétrer</button>\n")
 	            		.append("</form>\n")
