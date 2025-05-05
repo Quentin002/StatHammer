@@ -138,7 +138,7 @@ public class Instanciation {
 		conec = new BDD();
 		String sql = "SELECT nom_unite, points_unite, logo_unite, nom_armee, logo_armee"
 			+ " FROM unite JOIN contenir USING (id_unite) JOIN liste USING (id_liste) JOIN armee USING (id_armee)"
-			+ " WHERE liste.nom_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste;";
+			+ " WHERE liste.nom_liste = ? AND unite.id_unite = contenir.id_unite AND contenir.id_liste = liste.id_liste AND liste.id_utilisateur ="+list.getIdUtilisateur()+" ;";
 		
 		try {
 			PreparedStatement stat = conec.getPreparedStatement(sql, list.getName());

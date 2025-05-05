@@ -187,7 +187,7 @@ public class ConnexionController extends HttpServlet {
             Model.ArmeeListe liste = mapListes.get(id_liste);
             if (liste == null) {
 
-                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste);
+                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste,(int)session.getAttribute("id"));
                 //ArrayList<Unit> unit_list,, String nom, String description
 
                 liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
