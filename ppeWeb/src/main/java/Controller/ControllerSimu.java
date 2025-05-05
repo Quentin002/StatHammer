@@ -76,8 +76,10 @@ public class ControllerSimu extends HttpServlet {
 				
 				for(ArmeeListe one_list : listes) {
 					if(one_list.getId() == id_list) {
-						out.println(one_list.getUnits().size());
-						Instanciation.getUnitsOfAList(one_list);
+						// optimisation
+						if(one_list.getUnits().size() == 0) {
+							Instanciation.getUnitsOfAList(one_list);
+						}
 						Battle.setSelectedList(col, one_list);
 						ArrayList<Unit> units_list = Battle.getSelectedList(col).getUnits();
 						Battle.setArmy(col, units_list.get(0).getArmee());

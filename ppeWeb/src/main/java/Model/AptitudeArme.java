@@ -16,5 +16,11 @@ public class AptitudeArme {
 	public void ArmeAptitude() {
 
 	}
+	public String getNomArme() {
+		return nomArme;
+	}
+	public int getVal() {
+		return val;
+	}
 
 }

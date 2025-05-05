@@ -5,8 +5,10 @@ import java.util.ArrayList;
 public class ArmeeListe
 {
 	private int id;
+	private int idArmee;
 	private ArrayList<Unit> unites = new ArrayList<Unit>();
     private ArrayList<String> unit_names = new ArrayList<String>();
+    private ArrayList<String> figurine_names = new ArrayList<String>();
 	private String nom;
 	private String description;
 	private String data;
@@ -39,15 +41,33 @@ public class ArmeeListe
         this.idUtilisateur = idUtilisateur;
     }
 
+    
+    public ArmeeListe(int id, int idArmee, String nom, String description,int idUtilisateur) {
+        this.id = id;
+        this.nom = nom;
+        this.description = description;
+        this.idArmee = idArmee;
+        this.idUtilisateur = idUtilisateur;
+    }
+    
+   public ArmeeListe(String nom) {
+	   this.nom = nom;
+   }
+   
 	public int getIdListe() { return id; }
+	public int getIdArmee() { return idArmee;}
     public String getNomListe() { return nom; }
     public String getDescriptionListe() { return description; }
     public String getDataListe() { return data; }
     public ArrayList<String> getUniteListe() { return unit_names; }
-
+    public ArrayList<String> getFigurineListe() { return figurine_names; }
     public void setUniteListe(ArrayList<String> unite) {
         this.unit_names = unite;
     }
+    public void setFigurineListe(ArrayList<String> figurine) {
+        this.figurine_names = figurine;
+    }
+
 
 	// getters
 	public int getId() {
@@ -105,5 +125,8 @@ public class ArmeeListe
         return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 
                ", Data: " + data + ", unite: " + unit_names;
     }
+    public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+	}
 }
     

@@ -92,6 +92,7 @@ public class CreationCompteView extends HttpServlet {
 	    	    
 	    	    //Javascript
 	    	    + "<script src='js/togglePasswordCreaCom.js'></script>\n"
+	    	    + "<script src='js/validatePassword.js'></script>\n"
 	    	    + "<script src='js/mdpConf.js'></script>\n";
 
 		

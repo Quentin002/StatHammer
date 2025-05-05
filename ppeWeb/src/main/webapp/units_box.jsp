@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-import="java.util.ArrayList"
-import="java.util.HashMap"
-import="Model.ArmeeListe"
-import="Model.Unit"
-import="Model.Figurine" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="Model.ArmeeListe"%>
+<%@page import="Model.Unit"%>
+<%@page import="Model.Figurine"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <% ArrayList<Unit> units_list = (ArrayList<Unit>)request.getAttribute("units_list");
 int col = (int)request.getAttribute("col");
 for(int i = 0; i < units_list.size(); i++) {

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,10 @@ import java.util.HashMap;
 
 import Model.ArmeeListe;
 import Model.Evenement;
+import Model.Figurine;
 import Model.Unit;
+import Model.User;
+
 
 
 @WebServlet("/ConnexionController")
@@ -53,6 +57,7 @@ public class ConnexionController extends HttpServlet {
 			ArrayList<Object> rendu = conec.selectUtilisateur(login, mdp);
 			int id = conec.UtilisateurID(login, mdp);
 			String role = conec.UtilisateurRole(login, mdp);
+			String email = conec.UtilisateurEmail(login, mdp);
 
 			if (!rendu.isEmpty() && login.equals(rendu.get(0))) {
 				
@@ -63,7 +68,12 @@ public class ConnexionController extends HttpServlet {
 				session.setAttribute("mdp", mdp);
 				session.setAttribute("id", id);
 				session.setAttribute("role", role);
-
+				session.setAttribute("email", email);
+				
+				ArrayList<ArmeeListe> liste = chargerListes(conec, session);
+				User user = new User(liste,login,mdp,email,id,role);
+				session.setAttribute("user", user);
+				
 				// Chargement des événements
 				chargerEvenements(conec,session);
 				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
@@ -78,6 +88,8 @@ public class ConnexionController extends HttpServlet {
 					System.out.println("Date : " + evt.getData_evenement());
 					System.out.println("-------------------------");
 				
+				
+				}
 				// Chargement des listes
 				ArrayList<Model.ArmeeListe> listes = chargerListes(conec,session);
 				for(ArmeeListe armeeListes : listes) {
@@ -86,7 +98,7 @@ public class ConnexionController extends HttpServlet {
 					}
 				}
 				session.setAttribute("listes", listes);
-				}
+				
 				conec.close();
 				System.out.println(" - - - - - - - Connexion à la base de données : <-- fermée --> ");
 				response.sendRedirect("accueil");
@@ -153,11 +165,12 @@ public class ConnexionController extends HttpServlet {
 	}
 	private ArrayList<Model.ArmeeListe> chargerListes(BDD conec, HttpSession session) throws SQLException{
 		ArrayList<Model.ArmeeListe> listes = new ArrayList<>();
-		String sql = "SELECT l.id_liste, l.nom_liste, l.description_liste, u.nom_unite, u.id_armee\r\n"
-				+ "	        FROM liste l\r\n"
-				+ "	        LEFT JOIN contenir c ON l.id_liste = c.id_liste\r\n"
-				+ "	        LEFT JOIN unite u ON c.id_unite = u.id_unite\r\n"
-				+ "	        WHERE l.id_utilisateur="
+		
+		String sql = "SELECT l.id_liste, l.nom_liste, l.description_liste, u.nom_unite, u.id_armee \r\n"
+				+ "FROM liste l\r\n"
+				+ "LEFT JOIN contenir c ON l.id_liste = c.id_liste\r\n"
+				+ "LEFT JOIN unite u ON c.id_unite = u.id_unite\r\n"
+				+ "WHERE l.id_utilisateur="
 				+ session.getAttribute("id") ; 
 		HashMap<Integer, Model.ArmeeListe> mapListes = new HashMap<>();
 		
@@ -173,16 +186,163 @@ public class ConnexionController extends HttpServlet {
 			// Vérifier si la liste existe déjà dans la map
             Model.ArmeeListe liste = mapListes.get(id_liste);
             if (liste == null) {
-                liste = new Model.ArmeeListe(id_liste,  nom_liste, descr_liste,"",(int)session.getAttribute("id"));
+
+                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste,(int)session.getAttribute("id"));
+                //ArrayList<Unit> unit_list,, String nom, String description
+
                 liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités
                 mapListes.put(id_liste, liste);
             }
             if (nomUnite_liste != null) {
                 liste.getUniteListe().add(nomUnite_liste);
             }
+            
 		}
 		listes.addAll(mapListes.values());
 		
 		return listes;
 	}
+	
+	public static ArrayList<Figurine> chargerFigurineListes(String nomUnite, int idliste) {
+		ArrayList<Model.Figurine> listesFigurine = new ArrayList<>();
+		
+		String sql = "SELECT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO\r\n"
+				+ "            FROM liste l\r\n"
+				+ "            JOIN contenir c ON l.id_liste = c.id_liste\r\n"
+				+ "            JOIN unite u ON c.id_unite = u.id_unite\r\n"
+				+ "            JOIN remplir r ON u.id_unite = r.id_unite\r\n"
+				+ "            JOIN figurine f ON r.id_figurine = f.id_figurine\r\n"
+				+ "            WHERE l.id_liste ="
+				+idliste
+				+ " AND u.nom_unite =\""
+				+nomUnite
+				+"\";"
+									; 
+		try (Connection conec = reopenConnection();
+	             PreparedStatement ps = conec.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+			String nom_figurine = rs.getString("nom_figurine");
+			String M = rs.getString("M");
+			int E = rs.getInt("E");
+            int SV = rs.getInt("SV");
+            int PV = rs.getInt("PV");
+            int CD = rs.getInt("CD");
+            int CO = rs.getInt("CO");
+			
+			Model.Figurine figurines = new Model.Figurine(new ArrayList<>(), new ArrayList<>(), nom_figurine, "", M, E, SV, PV, CD, CO);
+			listesFigurine.add(figurines);
+		}
+		
+		
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return listesFigurine;
+	}
+	
+	public static ArrayList<Figurine> chargerFigurineModifListes(String nomUnite, int idArmee) {
+		ArrayList<Model.Figurine> listesFigurineModif = new ArrayList<>();
+		
+		String sql = "SELECT DISTINCT f.nom_figurine, f.M, f.E, f.SV, f.PV, f.CD, f.CO\r\n"
+				+ "            FROM unite u\r\n"
+				+ "            JOIN remplir r ON u.id_unite = r.id_unite\r\n"
+				+ "            JOIN figurine f ON r.id_figurine = f.id_figurine\r\n"
+				+ "            WHERE u.id_armee ="
+				+idArmee
+				+ " AND u.nom_unite =\""
+				+nomUnite 
+				+"\";"
+									; 
+		try (Connection conec = reopenConnection();
+	             PreparedStatement ps = conec.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+			String nom_figurine = rs.getString("nom_figurine");
+			String M = rs.getString("M");
+			int E = rs.getInt("E");
+            int SV = rs.getInt("SV");
+            int PV = rs.getInt("PV");
+            int CD = rs.getInt("CD");
+            int CO = rs.getInt("CO");
+			
+			Model.Figurine figurines = new Model.Figurine(new ArrayList<>(), new ArrayList<>(), nom_figurine, "", M, E, SV, PV, CD, CO);
+			listesFigurineModif.add(figurines);
+		}
+		
+		
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return listesFigurineModif;
+	}
+	
+	public static ArrayList<ArmeeListe> chargerUnitModifListes(int idliste, int idArmee) {
+		ArrayList<Model.ArmeeListe> listesUnitModif = new ArrayList<>();
+		
+		String sql = "SELECT u.nom_unite\r\n"
+				+ " FROM unite u\r\n"
+				+ " WHERE u.id_armee ="
+				+idArmee
+				+ " AND u.nom_unite NOT IN (\r\n"
+				+ " SELECT un.nom_unite\r\n"
+				+ " FROM unite un\r\n"
+				+ " JOIN contenir c ON un.id_unite = c.id_unite\r\n"
+				+ " WHERE c.id_liste ="
+				+idliste
+				+ ");"
+									; 
+		try (Connection conec = reopenConnection();
+	             PreparedStatement ps = conec.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+			String nomUnite_liste = rs.getString("nom_unite");
+			
+			Model.ArmeeListe unitModif = new Model.ArmeeListe(nomUnite_liste);
+			unitModif.getUniteListe().add(nomUnite_liste);
+			listesUnitModif.add(unitModif);
+		}
+		
+		
+		}catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return listesUnitModif;
+	}
+	public static void modifierListe(int idListe, ArrayList<String> ajouts, ArrayList<String> suppressions) throws SQLException{
+		BDD conec = new BDD();
+	    Connection conn = conec.getConnection();
+
+	    //Suppressions
+	    String supprSQL = "DELETE FROM contenir WHERE id_liste = ? AND id_unite = (SELECT id_unite FROM unite WHERE nom_unite = ? LIMIT 1)";
+	    try (PreparedStatement deleteStmt = conn.prepareStatement(supprSQL)) {
+	        for (String nomUnite : suppressions) {
+	            deleteStmt.setInt(1, idListe);
+	            deleteStmt.setString(2, nomUnite);
+	            deleteStmt.executeUpdate();
+	        }
+	    }
+
+	    // Ajouts
+	    String ajoutSQL = "INSERT INTO contenir (id_liste, id_unite) VALUES (?, (SELECT id_unite FROM unite WHERE nom_unite = ? LIMIT 1))";
+	    try (PreparedStatement insertStmt = conn.prepareStatement(ajoutSQL)) {
+	        for (String nomUnite : ajouts) {
+	            insertStmt.setInt(1, idListe);
+	            insertStmt.setString(2, nomUnite);
+	            insertStmt.executeUpdate();
+	        }
+	    }
+
+	    conec.close();
+	}
+
+	private static BDD conec; // Instance de la classe BDD qui gère la connexion à la bdd
+
+    private static Connection reopenConnection() throws SQLException {
+        
+            conec = new BDD();
+        
+        return conec.getConnection();
+    }
+	
 }
