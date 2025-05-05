@@ -18,6 +18,7 @@ import Model.ArmeeListe;
 import Model.Evenement;
 import Model.Figurine;
 import Model.Unit;
+import Model.User;
 
 
 
@@ -68,7 +69,11 @@ public class ConnexionController extends HttpServlet {
 				session.setAttribute("id", id);
 				session.setAttribute("role", role);
 				session.setAttribute("email", email);
-
+				
+				ArrayList<ArmeeListe> liste = chargerListes(conec, session);
+				User user = new User(liste,login,mdp,email,id,role);
+				session.setAttribute("user", user);
+				
 				// Chargement des événements
 				chargerEvenements(conec,session);
 				ArrayList<Evenement> evenements = (ArrayList<Evenement>) session.getAttribute("events");
@@ -182,7 +187,7 @@ public class ConnexionController extends HttpServlet {
             Model.ArmeeListe liste = mapListes.get(id_liste);
             if (liste == null) {
 
-                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste);
+                liste = new Model.ArmeeListe(id_liste, idArmee_liste, nom_liste, descr_liste,(int)session.getAttribute("id"));
                 //ArrayList<Unit> unit_list,, String nom, String description
 
                 liste.setUniteListe(new ArrayList<>()); // Initialiser la liste des unités

@@ -149,7 +149,6 @@ select
 {
 	display: flex;
 	flex-wrap: wrap;
-	align-
 }
 .fig_group div
 {
@@ -196,7 +195,6 @@ aside table
 }
 aside table td
 {
-	border: 1px black solid;
 	text-align: center;
 }
 aside form *

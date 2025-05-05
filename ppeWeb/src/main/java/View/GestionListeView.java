@@ -53,18 +53,21 @@ public class GestionListeView extends HttpServlet {
 	    StringBuilder listage=  new StringBuilder();
 	    // parcourt les listes si elles sont présentent
 	    if (listes != null && !listes.isEmpty()) {
+	    	int i = 0;
 	        for (ArmeeListe liste : listes) {
 	            int idliste = liste.getId();
 	            String nomliste = liste.getNomListe();
 	            String descrliste = liste.getDescriptionListe();
 	            ArrayList<String> nomUniteliste = liste.getUniteListe();
 	            
-	            listage.append("<div class='liste id='").append(idliste).append("'>\n")
-	                   .append("<h2>").append(nomliste).append("</h2>\n")
+	            //listage.append("<div class='liste id='").append(idliste).append("'>\n")
+	            listage.append("<div class='quote' id='").append(idliste).append("'>\n")
+	                   .append("<h2 class='titreListe'>").append(nomliste).append("</h2>\n")
 	                   .append("<p>").append(descrliste).append("</p>\n");
 
 	            if (nomUniteliste != null && !nomUniteliste.isEmpty()) {
 	                listage.append("<ul>\n");
+	                
 	                for (String nomUnite : nomUniteliste) {
 	                    listage.append("<li>").append(nomUnite);
 	
@@ -75,8 +78,9 @@ public class GestionListeView extends HttpServlet {
 	                listage.append("<p><em>Aucune unité dans cette liste.</em></p>\n");
 	            }	
 	            listage.append("<div class='GestionListe'>\n")
-	            		.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
-	            		.append("</button>\n")
+	            		//.append("<button type='button' class='GestionListe_bouton'>Exporter\n")
+	            		//.append("</button>\n")
+	            		.append("<form class='gestion_formInitial' action='ImportExportController' method='get'><input type=hidden name=export value=").append(i).append("><input type=submit value='Exporter'></form>")
 	            		.append("<form action='ChargerModifListe' method='post' class='GestionListe_form'>\n")
 	            		.append("<input type='hidden' name='idListe' value='").append(idliste).append("' />\n")
 	            		.append("<button type='submit' class='GestionListe_bouton'>Paramétrer</button>\n")
@@ -86,20 +90,22 @@ public class GestionListeView extends HttpServlet {
 	            		.append("'>Supprimer</button>\n")
 	            		.append("</div>\n")
 	            		.append("</div>\n");
-	            
+	           i++; 
 	           
 	            
 	        }
 	    }
 	     	
 	    String body= 
-	    		"<h1>Interface de gestion des listes</h1>\n"
-	    		+"<section class='GestionListe_structure'>\r\n"
+	    		//"<h1>Interface de gestion des listes</h1>\n"
+	    		"<section class='GestionListe_structure'>\r\n"
 	    		+"<div class='bouton_placement'>"
 	    		+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
-	    		+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
+	    		+"<form  class='gestion_formInitial' action='ImportExportController' method='post' enctype=\"multipart/form-data\"><input type='file' id='listUpload' name='liste' accept='.txt'><input type=submit value='Importer'></form>"
+	    		//+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
-	    		+"<div class='GestionListe_import'>"
+	    		//+"<div class='GestionListe_import'>"
+	    		+"<div>"
 	    		+ listage
 	    		+"</div>"
 	    		+"</section>"

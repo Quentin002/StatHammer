@@ -1,35 +1,48 @@
-<% for(Unit one_unit : units_list) { %>
-<div class="one_unit_zone" id="col1_unit1">
-	<button class="unit_button" onclick="unfoldUnits(1, 'col1_unit1');"><%= on_unit.getName() %></button>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="Model.ArmeeListe"%>
+<%@page import="Model.Unit"%>
+<%@page import="Model.Figurine"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<% ArrayList<Unit> units_list = (ArrayList<Unit>)request.getAttribute("units_list");
+int col = (int)request.getAttribute("col");
+for(int i = 0; i < units_list.size(); i++) {
+	Unit one_unit = units_list.get(i); %>
+<div class="one_unit_zone" id="col<%= col %>_unit<%= i %>">
+	<button class="unit_button" onclick="unfoldUnits(<%= col %>, <%= i %>);"><%= one_unit.getName() %></button>
 	<div class="unit_box hidden">
-<% for(ArrayList<Figurine> fig_group : one_unit.getChildren()) { %>
-		<div class="unit_group" id="unit1_group1">
-<% if(col == 1) { // attaquants %>
-			<p class="number" onclick="openWeaponsAptitudesZone('unit1_group1');">1</p>
-<% for(Figurine one_fig : fig_group) {
-String fig_icon = one_fig.getHp() > 0 ? "android-fill.png" : "android-line.png"; %>
-			<p><img src="assets/<%= fig_icon %>" alt="logo figurine"><span><%= one_fig.getHpMax() %>PV </span></p>
+<% HashMap<String, ArrayList<Figurine>> figs_group = one_unit.getIdenticalFigsGroups();
+ArrayList<String> group_keys = one_unit.getIdenticalFigsGroupsKeys();
+for(int j = 0; j < group_keys.size(); j++){ %>
+		<div class="unit_group" id="col<%= col %>_unit<%= i %>_group<%= j %>">
+<% if((int)request.getAttribute("col") == 1) { // attaquants %>
+			<p class="number" onclick="openWeaponsAptitudesZone('group<%= j %>');"><%= j + 1 %></p>
+<% for(Figurine one_fig : figs_group.get(group_keys.get(j))) {
+String fig_icon = one_fig.getHP() > 0 ? "android-fill.png" : "android-line.png"; %>
+			<p><img src="assets/<%= fig_icon %>" alt="logo figurine"><span><%= one_fig.getHPMax() %>PV </span></p>
 <% } // fin foreach sur figurines attaquantes
-} else if(col = 2) { // défenseurs %>
+} else if((int)request.getAttribute("col") == 2) { // défenseurs %>
 			<form oninput="nb_alive_figs_out.value = nb_alive_figs_in.value">
-				<label><%= one_fig.getName() %></label>
+				<label><%= figs_group.get(group_keys.get(j)).get(0).getNom() %></label>
 				<div>
-					<input id="unit1_group1_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="<%= fig_group.length %>" value="<%= fig_group.length %>" onchange="selectAliveFigsNumber('unit1_group1_input');">
-					<output name="nb_alive_figs_out"><%= fig_group.length %></output>
+					<input id="unit<%= i %>_group<%= j %>_input" class="alive_figs_range" type="range" name="nb_alive_figs_in" min="0" max="<%= figs_group.get(group_keys.get(j)).size() %>" value="<%= figs_group.get(group_keys.get(j)).size() %>" onchange="selectAliveFigsNumber('group<%= j %>');">
+					<output name="nb_alive_figs_out"><%= figs_group.get(group_keys.get(j)).size() %></output>
 				</div>
 			</form>
-			<div class="fig_group">
-<% for(Figurine one_fig : fig_group) {
-String fig_icon = one_fig.getHp() > 0 ? "android-fill.png" : "android-line.png"; %>
-				<div id="unit1_group1_fig1">
+			<div id="unit<%= i %>_group<%= j %>_figs" class="fig_group">
+<% ArrayList<Figurine> one_fig_group = figs_group.get(group_keys.get(j));
+for(int k = 0; k < one_fig_group.size(); k++){
+String fig_icon = one_fig_group.get(k).getHP() > 0 ? "android-fill.png" : "android-line.png"; %>
+				<div id="unit<%= i %>_group<%= j %>_fig<%= k %>">
 					<label for="nb_alive_figs"><img class="fig_icon" src="assets/<%= fig_icon %>" alt="logo figurine">PV: </label>
-					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="<%= one_fig.getHpMax() %>" value="<%= one_fig.getHp() %>" onchange="setFigurineHP('unit1_group1_fig1');">
+					<input class="hp_selector" type="number" name="nb_alive_figs" min="0" max="<%= one_fig_group.get(k).getHPMax() %>" value="<%= one_fig_group.get(k).getHP() %>" onchange="setFigurineHP('group<%= j %>', 'fig<%= k %>');">
 				</div>
-<% } // fin foreach sur figurines défenseuses  %>
+<% } // fin for sur figurines défenseuses  %>
 			</div>
 <% } // fin else if %>
 		</div>
-<% } // fin foreach sur groupes de figurines %>
+<% } // fin for sur groupes de figurines %>
 	</div>
 </div>
 <% } // fin foreach sur liste d'unités %>

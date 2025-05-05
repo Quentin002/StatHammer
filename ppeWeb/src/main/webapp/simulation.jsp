@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.ArrayList" %>
     	<div class="sim_grid">
     		<div id="left_col">
     			<!-- choicebox liste d'armée -->
@@ -6,10 +7,9 @@
 	    				<option value="" disabled selected>liste attaquante</option>
 
 	    				<!-- options générées par le serveur à l'ouverture de la page -->
-						<option value="Liste1">Liste1</option>
-						<option value="Liste2">Liste2</option>
-						<option value="Liste3">Liste3</option>
-						<option value="Liste4">Liste4</option>
+	    				<% for(Model.ArmeeListe list : (ArrayList<Model.ArmeeListe>)request.getAttribute("listes")){ %>
+	    					<option value="<%= list.getId() %>"><%= list.getName() %></option>
+	    				<% } %>
 					</select>
 					<div id="logo_list1" class="logo_armee_div hidden">
 						<img class="logo_armee" src="" alt="logo_armee">
@@ -28,7 +28,7 @@
 			</div>
 
     		<div id="central_col">
-    			<button id="action_button" onclick="calculate();">Action !!</button>
+    			<button id="action_button" onclick="graphiqueSimu();">Action !!</button>
     			<div id="warhammer_picture"><img src="assets/black_templar.webp" alt="illustration"></div>
     			<section id="histogramme" class="hidden">
     				Affichage de l'histogramme
@@ -42,9 +42,9 @@
 	    				<option value="" disabled selected>liste défenseuse</option>
 
 	    				<!-- options générées par le serveur à l'ouverture de la page -->
-						<option value="Liste1">Liste1</option>
-						<option value="Liste2">Liste2</option>
-						<option value="Liste3">Liste3</option>
+						<% for(Model.ArmeeListe list : (ArrayList<Model.ArmeeListe>)request.getAttribute("listes")){ %>
+	    					<option value="<%= list.getId() %>"><%= list.getName() %></option>
+	    				<% } %>
 					</select>
 					<div id="logo_list2" class="logo_armee_div hidden">
 						<img class="logo_armee" src="armees/android-fill.png" alt="logo_armee">

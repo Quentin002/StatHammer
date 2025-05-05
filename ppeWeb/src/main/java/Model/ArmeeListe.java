@@ -42,11 +42,12 @@ public class ArmeeListe
     }
 
     
-    public ArmeeListe(int id, int idArmee, String nom, String description) {
+    public ArmeeListe(int id, int idArmee, String nom, String description,int idUtilisateur) {
         this.id = id;
         this.nom = nom;
         this.description = description;
         this.idArmee = idArmee;
+        this.idUtilisateur = idUtilisateur;
     }
     
    public ArmeeListe(String nom) {
@@ -113,6 +114,9 @@ public class ArmeeListe
 	public void removeUnit(Unit unit) {
 		unites.remove(unit);
 	}
+	public void removeAllUnit() {
+		unites = new ArrayList<Unit>();
+	}
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
@@ -121,5 +125,8 @@ public class ArmeeListe
         return "Liste ID: " + id + ", Nom: " + nom + ", Description: " + description + 
                ", Data: " + data + ", unite: " + unit_names;
     }
+    public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+	}
 }
     

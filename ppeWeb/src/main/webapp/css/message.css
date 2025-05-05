@@ -18,3 +18,12 @@
     text-align: center;
     margin-bottom: 20px;
 }
+
+/* Pour la vue création de compte */
+.valid {
+  color: #42a5f5;
+}
+
+.invalid {
+  color: grey;
+}
