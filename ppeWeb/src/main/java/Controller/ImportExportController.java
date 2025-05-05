@@ -9,11 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,9 +23,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import Model.ArmeeListe;
-import Model.Evenement;
-import Model.Figurine;
-import Model.Unit;
+import Model.User;
 
 /**
  * Servlet implementation class ImportExportController
@@ -57,7 +53,8 @@ public class ImportExportController extends HttpServlet {
             return;
         }
 
-        ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
+        @SuppressWarnings("unchecked")
+		ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
         String strNumber = request.getParameter("export");
 
         if (strNumber == null || listes == null) {
@@ -100,7 +97,14 @@ public class ImportExportController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        Part listPart = request.getPart("liste");
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("connexion");
+            return;
+        }
+		
+        //Réupération du fichier avec Part
+		Part listPart = request.getPart("liste");
         InputStream ipListe = listPart.getInputStream();
         
         String fileName = Paths.get(listPart.getSubmittedFileName()).getFileName().toString();
@@ -111,9 +115,49 @@ public class ImportExportController extends HttpServlet {
         
         BufferedReader buff = new BufferedReader(new InputStreamReader(ipListe));
         
+        //Permet de récupérer les lignes pour en faire une String liées par "&"
         String result = buff.lines().collect(Collectors.joining("&"));
         System.out.println(result);
+        
+        String login = (String) session.getAttribute("nom");
+        //String mdp = (String) session.getAttribute("mdp");
+        int id = (int) session.getAttribute("id");
+        String role = (String) session.getAttribute("role");
+        //String email = (String) session.getAttribute("email");
+        User user = new User(login, id, role);
+        
+        
         ArrayList<String> rslts = new ArrayList<String>(Arrays.asList(result.split("&")));
+
+        
+        /*
+        
+        ArrayList<String> newRslts = new ArrayList<String>();
+        int i = 0;
+        for (String rslt : rslts) {
+        	if (i > 1) {
+        		newRslts.add(rslt);
+        		System.out.println(rslt);
+        	}
+        	i++;
+        }
+        
+
+        String[] rsltsTab = newRslts.toArray(new String[0]);
+        
+        for (String newRslt : rsltsTab) {
+    		System.out.println(newRslt);
+        }
+        */
+        ArrayList<String> listeUnites = new ArrayList<String>(rslts.subList(2, rslts.size()));
+        ArmeeListe armee = Instanciation.importListe(rslts.get(0), rslts.get(1), listeUnites, user);
+
+        @SuppressWarnings("unchecked")
+		ArrayList<ArmeeListe> userList = (ArrayList<ArmeeListe>) session.getAttribute("listes");
+        userList.add(armee);
+        session.setAttribute("listes", userList);
+        
+        response.sendRedirect("gerer-liste");
         
 	}
 

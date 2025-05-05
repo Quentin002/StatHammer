@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import View.ConnexionView;
 
 /**
  * Servlet implementation class ControlleurGestionCompte

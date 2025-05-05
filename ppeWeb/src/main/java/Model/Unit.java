@@ -69,9 +69,7 @@ public class Unit {
 	public int getPoints() {
 		return points;
 	}
-	public String getLogo() {
-		return nom;
-	}
+	
 	public Armee getArmee() {
 		return armee;
 	}
@@ -89,6 +87,9 @@ public class Unit {
 			identical_figs.get(fig.getNom()).add(fig); // récupérer la liste correspondante à la clé et ajouter la figurine
 		}
 		group_keys = new ArrayList<>(identical_figs.keySet());
+	}
+	public String getLogo() {
+		return logo;
 	}
 	
 	@Override

@@ -8,7 +8,6 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import Model.Evenement;
 
@@ -48,10 +47,7 @@ public class AdminView extends HttpServlet {
 		     .append("       <input type='text' name='desc' required/>\r\n")
 		     .append("       <label for='date'>Date :</label>\r\n")
 		     .append("       <input type='date' name='date' required/>\r\n")
-		     .append("       <div class='custom-file'>\r\n")
-		     .append("           <input type='file' id='imageUpload' name='image' accept='image/*' required />\r\n")
-		     .append("           <label for='imageUpload'>Choisir une image</label>\r\n")
-		     .append("       </div><br/>\r\n")
+		     .append("       <input type='file' id='imageUpload' name='image' accept='image/*' required />\r\n")
 		     .append("       <input type='submit' value='Créer évènement'/>\r\n")
 		     .append("   </form>\r\n")
 		     .append("  </div>\r\n");

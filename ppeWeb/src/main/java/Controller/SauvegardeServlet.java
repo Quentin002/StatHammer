@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import Model.ArmeeListe;
@@ -39,6 +38,7 @@ public class SauvegardeServlet extends HttpServlet {
         if (session==null) {
             response.sendRedirect("connexion");
         } 
+		@SuppressWarnings("unchecked")
 		ArrayList<ArmeeListe> userList = (ArrayList<ArmeeListe>) session.getAttribute("listes");
 		if(userList==null) {
 			userList = new ArrayList<ArmeeListe>();
