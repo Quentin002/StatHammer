@@ -1,0 +1,43 @@
+@charset "UTF-8";
+body{
+	padding-top: 0px;
+}
+.create_list_form{
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+input{
+	text-wrap: wrap;
+	padding: 10px;
+	margin: 4px;
+}
+.list_name label{
+	margin-right: 4px;
+}
+.list_name input{
+	width: 80%;
+}
+h2{
+	color: #42a5f5;
+	margin: 10px;
+	text-align: center;
+}
+.factions_armies{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	margin-top: 5px;
+}
+.factions, .armies, .right_column, .destination_zone{
+	margin: 6px;
+	padding: 6px;
+	background-color: rgba(255, 255, 255, 0.02);
+}
+.destination_zone div{
+	background-color: white;
+	border-radius: 4px;
+	margin: 4px;
+	padding: 4px;
+	min-height: 48px;
+	display: flex;
+ 		flex-wrap: wrap;
+}
