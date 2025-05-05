@@ -47,7 +47,6 @@ public class SimuView extends HttpServlet {
 							+ "		<link rel=\"stylesheet\" href=\"css/anti-font-awesome.css\"/>"
 							+ "		<script type=\"text/javascript\" src=\"js/Battle.js\"></script>"
 							+ "		<script type=\"text/javascript\" src=\"js/simulation.js\"></script>"
-							+ "		<script src='js/simu.js'></script>"
 							+ "		<script src=\"js/graphique.js\"></script>\r\n"
 							+ "		<script src=\"https://cdn.canvasjs.com/canvasjs.min.js\"></script>"
 							+ "	</head>\r\n"

@@ -61,7 +61,7 @@ public class ControllerSimu extends HttpServlet {
 	    String json = jsonBuffer.toString();
 	    
 	    HashMap<String, String> data = basicParseJson(json);
-	    int col = Integer.valueOf(data.get("col")); // 1 ou 2
+	    int col = data.get("col") != null ? Integer.valueOf(data.get("col")): 0; // 1 ou 2
 	    int group;
 	    ArrayList<Figurine> fig_group;
 	    int alive_figs;
@@ -75,7 +75,7 @@ public class ControllerSimu extends HttpServlet {
 				
 				for(ArmeeListe one_list : listes) {
 					if(one_list.getId() == id_list) {
-						// on optimisera l'instanciation!!
+						out.println(one_list.getUnits().size());
 						Instanciation.getUnitsOfAList(one_list);
 						Battle.setSelectedList(col, one_list);
 						ArrayList<Unit> units_list = Battle.getSelectedList(col).getUnits();
@@ -167,6 +167,15 @@ public class ControllerSimu extends HttpServlet {
 				
 				out.println("success");
 				break;
+			case "reverse_armies":
+				Battle.reverseArmies();
+				Battle.setSelectedUnit(1, -1);
+				Battle.setSelectedUnit(2, -1);
+				
+				out.println("success");
+				break;
+			default:
+				out.println("erreur, paramètre \"action\" non valide");
 		}
 	}
 	

@@ -263,31 +263,7 @@ function checkAptitude(aptitude_id){
 
 
 /* boutons centraux */
-function calculate(){
-	// contrôle: une unité doit être sélectionnée de chaque côté
-	if(Battle.getListId(1) == null || Battle.getListId(2) == null
-		|| Battle.getUnitId(1) == null || Battle.getUnitId(2) == null)
-	{
-		toastNotify("conditions non remplies pour lancer une simulation");
-		return;
-	}
-
-	const histogramme = document.getElementById("histogramme");
-
-	// en javascript, static ne fonctionne que dans une classe
-	if(typeof calculate.compteur === 'undefined') {
-        calculate.compteur = 0;
-    }
-    // remplacer illustration par l'histogramme
-	if(calculate.compteur == 0){
-		document.getElementById("warhammer_picture").classList.add('hidden');
-		histogramme.classList.remove('hidden');
-		calculate.compteur++;
-		console.log(calculate.compteur);
-	}
-
-	// insérer l'histogramme en supprimant l'ancien si il existe
-}
+// => graphiqueSimu est dans simu.js
 
 function reverseArmies(){
 	// contrôle: une liste doit être sélectionnée de chaque côté
@@ -298,27 +274,24 @@ function reverseArmies(){
 	}
 
 	// dire au serveur d'inverser les deux joueurs
-	fetch(url, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ action: "reverse_armies" })
-	})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error('erreur réponse requête AJAX ' + response.statusText);
+	var xhr = new XMLHttpRequest();
+		xhr.open('POST', url, true);
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState === 4 && xhr.status === 200) {
+				if(xhr.responseText.trim() == "success"){
+					Battle.setUnitId(1, null);
+					Battle.setUnitId(2, null);
+					
+					// obtenir les deux nouvelles vues avec deux nouvelles requêtes AJAX 
+					selectList(1);
+					selectList(2);
+				}
+				else{
+					console.log("erreur à l'inversion attaquant/défenseur sur le serveur");
+				}
 			}
-			return response.json();
-		})
-		.then(data => {
-			// obtenir les deux nouvelles vues
-			selectList(1);
-			selectList(2);
-		})
-		.catch(error => {
-			console.error('erreur capturée requête AJAX', error);
-		});
+		};
+		xhr.send(JSON.stringify({ action: "reverse_armies" }));
 
 	// inutile
 	/*const units_list1 = document.getElementById("units_list1");

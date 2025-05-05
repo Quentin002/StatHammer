@@ -28,7 +28,7 @@
 			</div>
 
     		<div id="central_col">
-    			<button id="action_button" onclick="calculate();">Action !!</button>
+    			<button id="action_button" onclick="graphiqueSimu();">Action !!</button>
     			<div id="warhammer_picture"><img src="assets/black_templar.webp" alt="illustration"></div>
     			<section id="histogramme" class="hidden">
     				Affichage de l'histogramme
