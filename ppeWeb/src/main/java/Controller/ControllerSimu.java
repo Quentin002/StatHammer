@@ -2,6 +2,7 @@ package Controller;
 import Model.Aptitude;
 import Model.Arme;
 import Model.ArmeeListe;
+import Model.Calcul;
 import Model.Figurine;
 import Model.Unit;
 import jakarta.servlet.ServletException;
@@ -167,6 +168,37 @@ public class ControllerSimu extends HttpServlet {
 				
 				out.println("success");
 				break;
+			case "bataille":
+				Unit u1 =Battle.getSelectedUnit(1);
+				Unit u2 =Battle.getSelectedUnit(2);
+				Calcul result = Calcul.bataille(u1, u2);
+				String dataB = "{\"degat_moyen\": \""	+ result.getDegat_moyen1() + "\","
+						+ " \"mort_moyen\": \""	+ result.getMort_moyen1() +"\","
+						+ "\"table_degat\": [";
+						for(int i=0;i<result.getTabdegat1().length;i++) {
+							if(i<result.getTabdegat1().length-1) {
+								//dataB+= "{ \"value\": "+i+", "+result.getTabdegat1()[i]+" },";
+								dataB+= result.getTabdegat1()[i]+",";	
+							}
+							else {
+								dataB+= result.getTabdegat1()[i];	
+							}
+						}
+						dataB+="],"
+						+ "\"table_mort\": [";
+						for(int i=0;i<result.getTabmort1().length;i++) {
+							if(i<result.getTabmort1().length-1) {
+								//dataB+= "{ \"value\": "+i+", "+result.getTabdegat1()[i]+" },";
+								dataB+= result.getTabmort1()[i]+",";	
+							}
+							else {
+								dataB+= result.getTabmort1()[i];	
+							}
+						}
+						dataB+="]}";
+					out.println(dataB.trim());
+				
+				break;	
 			case "reverse_armies":
 				Battle.reverseArmies();
 				Battle.setSelectedUnit(1, -1);

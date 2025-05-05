@@ -31,7 +31,7 @@
     			<button id="action_button" onclick="graphiqueSimu();">Action !!</button>
     			<div id="warhammer_picture"><img src="assets/black_templar.webp" alt="illustration"></div>
     			<section id="histogramme" class="hidden">
-    				Affichage de l'histogramme
+    			<div id="graphique"></div>
     			</section>
     			<button id="reverse_armies" onclick="reverseArmies();"><img src="assets/inversion_icons.png" alt="inversion"></button>
     		</div>

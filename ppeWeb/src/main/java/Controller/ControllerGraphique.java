@@ -73,12 +73,12 @@ public class ControllerGraphique extends HttpServlet {
 			request.setAttribute("table", test);
 			
 			
-			String param1 = request.getParameter("param1");
-	        String param2 = request.getParameter("param2");
+			//String param1 = request.getParameter("degat_moyen");
+	        //String param2 = request.getParameter("param2");
 
 	        // Traiter les paramètres
-	        System.out.println("Param1: " + param1);
-	        System.out.println("Param2: " + param2);
+	        //System.out.println("Param1: " + param1);
+	        //System.out.println("Param2: " + param2);
 
 	        // Répondre au client
 	        response.setContentType("application/json");
@@ -88,7 +88,6 @@ public class ControllerGraphique extends HttpServlet {
 			
 			request.getRequestDispatcher("Hist.jsp").forward(request, response);
 			
-
 			
 	}
 
