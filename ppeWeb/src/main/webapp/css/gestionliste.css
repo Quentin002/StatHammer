@@ -3,27 +3,24 @@
 	all: initial;
 }
 
+.gestion_quote {
+    color: #cccccc;
+    border-left: 4px solid #42a5f5;
+    padding-left: 16px;
+    margin: 20px auto;
+    max-width: 600px;
+    font-size: 16px;
+    line-height: 1.6;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-radius: 4px;
+    box-shadow: inset 2px 0 5px rgba(66, 165, 245, 0.1);
+}
+
 .titreListe {
     font-size: 20px;
     color: #42a5f5;
-    margin-bottom: 30px;
     text-shadow: 0 0 4px rgba(66, 165, 245, 0.3);
 }
-
-/*
-.gestion_partieGauche {
-	background-color: #1a1a2e;
-    border: 1px solid #3c3c5c;
-    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-*/
 .GestionListe_form{
 	display:flex;
 	align-items:center;
