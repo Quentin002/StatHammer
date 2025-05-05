@@ -1,12 +1,26 @@
 .ModificationListe_structure{
 	display: flex;
+	/*
 	height:100%;
     border: 3px solid #383b69;
     box-shadow: 0 0 1px #383b69, 0 0 2px #383b69, 0 0 6px #383b69, 0 0 12px #383b69, inset 0 0 1px #383b69, inset 0 0 2px #383b69, inset 0 0 6px #383b69, inset 0 0 12px #383b69;
     border-radius: 10px;
+    */
     padding: 10px;
 }
 
+.modification_form {
+    background-color: #1a1a2e;
+    border: 1px solid #3c3c5c;
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.3);
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 .ModificationListe_form{
 	display:flex;
 	align-items:center;

@@ -61,7 +61,7 @@ public class GestionListeView extends HttpServlet {
 	            ArrayList<String> nomUniteliste = liste.getUniteListe();
 	            
 	            //listage.append("<div class='liste id='").append(idliste).append("'>\n")
-	            listage.append("<div class='quote' id='").append(idliste).append("'>\n")
+	            listage.append("<div class='gestion_quote' style='width:100%' id='").append(idliste).append("'>\n")
 	                   .append("<h2 class='titreListe'>").append(nomliste).append("</h2>\n")
 	                   .append("<p>").append(descrliste).append("</p>\n");
 
@@ -99,13 +99,25 @@ public class GestionListeView extends HttpServlet {
 	    String body= 
 	    		//"<h1>Interface de gestion des listes</h1>\n"
 	    		"<section class='GestionListe_structure'>\r\n"
-	    		+"<div class='bouton_placement'>"
-	    		+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
-	    		+"<form  class='gestion_formInitial' action='ImportExportController' method='post' enctype=\"multipart/form-data\"><input type='file' id='listUpload' name='liste' accept='.txt'><input type=submit value='Importer'></form>"
+	    		+"<div class='bouton_placement' style='padding-top:36px'>"
+	    		//+"<a href='accueil' class='bouton_gestionListe'>Retour</a>"
+	    		+"<table style='width: -moz-available'>"
+	    		//+"<tr><td>"
+	    		//+"<h2 class='titreListe'>Importer une liste :</h2>"
+	    		//+"</td></tr>"
+	    		+"<form  class='gestion_formInitial' action='ImportExportController' method='post' enctype=\"multipart/form-data\">"	    		
+	    		+"<tr><td>"
+	    		+"<input type='file' id='listUpload' name='liste' accept='.txt' required>"
+	    		+"</td></tr>"
+	    		+"<tr><td>"
+	    		+"<input type=submit value='Importer liste'  style='width: -moz-available'>"
+	    		+"</td></tr>"
+	    		+"</form>"
+	    		+"</table>"
 	    		//+"<button type='button' class='bouton_gestionListe'>Importer une liste</button>"
 	    		+"</div>"
 	    		//+"<div class='GestionListe_import'>"
-	    		+"<div>"
+	    		+"<div class='event-grid' style='width:100%'>"
 	    		+ listage
 	    		+"</div>"
 	    		+"</section>"

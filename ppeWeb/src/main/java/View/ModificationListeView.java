@@ -52,11 +52,13 @@ public class ModificationListeView extends HttpServlet {
                 int idArmeeliste = liste.getIdArmee();
 
                 if (idliste == idListeParam) {
-                    importListe.append("<div><h2>").append(nomliste).append("</h2>")
-                        .append("<p>").append(descrliste).append("</p><ul>");
-
+                    //importListe.append("<div><h2>").append(nomliste).append("</h2>")
+                        //.append("<p>").append(descrliste).append("</p><ul>");
+                	
+                	importListe.append("<div style='width: -moz-available;'><h2 class='titreListe'>").append("Unité(s) actuelle(s)").append("</h2>").append("<ul>");
+                	
                     for (String nomUnite : nomUniteliste) {
-                        importListe.append("<li>").append(nomUnite);
+                        importListe.append("<li class='gestion_quote'>").append(nomUnite);
                         ArrayList<Figurine> figurines = figMap.get(nomUnite);
                         if (figurines != null) {
                             for (Figurine fig : figurines) {
@@ -81,10 +83,10 @@ public class ModificationListeView extends HttpServlet {
         StringBuilder importModif = new StringBuilder();
         ArrayList<ArmeeListe> unitModif = (ArrayList<ArmeeListe>) session.getAttribute("Modiflistes");
         if (unitModif != null) {
-            importModif.append("<div><h3>Unités disponibles</h3><ul>");
+            importModif.append("<div style='width: -moz-available;'><h2 class='titreListe'>Unités disponibles</h2><ul>");
             for (ArmeeListe unit : unitModif) {
                 for (String uniteName : unit.getUniteListe()) {
-                    importModif.append("<li>").append(uniteName);
+                    importModif.append("<li class='gestion_quote'>").append(uniteName);
 
                     ArrayList<Figurine> figs = modifFigMap.get(uniteName);
                     if (figs != null) {
@@ -104,15 +106,24 @@ public class ModificationListeView extends HttpServlet {
             importModif.append("</ul></div>");
         }
 
-        String body = "<h1>Modificateur de liste</h1><section class='ModificationListe_structure'>"
-            +importModif 
-            +importListe
-            +"<form method='post' action='ValiderModifListe' class='Validationliste_form'>\r\n"
+        String body = //"<h1>Modificateur de liste</h1>"
+        	"<div style='padding: 50px;'>"
+            +"<form method='post' action='ValiderModifListe' class='gestion_formInitial'>\r\n"
             + "    <input type=\"hidden\" name=\"idListe\" value='"
             +idListeParam 
             +"'>\r\n"
-            + "    <button type='submit' class='Validationliste_bouton'>Valider les modifications</button>\r\n"
+            + "    <center><button type='submit' class='Validationliste_bouton'>Valider les modifications</button></center>\r\n"
             + "</form>"
+        	+"</div>"
+        	+"<section class='ModificationListe_structure'>"
+            +importModif 
+            +importListe
+//            +"<form method='post' action='ValiderModifListe' class='gestion_formInitial'>\r\n"
+//            + "    <input type=\"hidden\" name=\"idListe\" value='"
+//            +idListeParam 
+//            +"'>\r\n"
+//            + "    <button type='submit' class='Validationliste_bouton'>Valider les modifications</button>\r\n"
+//            + "</form>"
             +"</section>";
 
         String html = header + AccueilView.barDeNav + body + ConnexionView.footer;
