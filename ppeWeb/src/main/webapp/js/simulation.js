@@ -2,8 +2,6 @@
 const url = "ControllerSimu";
 
 function selectList(nb){
-	const units_list = document.getElementById("units_list" + nb);
-	units_list.innerHTML = ''; // nettoyage!
 	let select_name;
 	if(nb == 1){
 		select_name = "left_choice_box";
@@ -15,7 +13,8 @@ function selectList(nb){
 		return;
 	}
 	Battle.setListId(nb, document.getElementById(select_name).value);
-
+	
+	const units_list = document.getElementById("units_list" + nb);
 	if(Battle.getListId(nb) != null){
 		// logo de l'armée
 		var xhr2 = new XMLHttpRequest();
@@ -27,7 +26,6 @@ function selectList(nb){
 			logo_box.classList.remove('hidden');
 		  }
 		};
-		
 				
 		// vue
 		var xhr1 = new XMLHttpRequest();
@@ -46,7 +44,7 @@ function selectList(nb){
 		
 	}
 	else{
-		// afficher sauvegarde du HTML
+		console.log("erreur, pas de liste sélectionnée");
 	}
 }
 
@@ -279,10 +277,20 @@ function reverseArmies(){
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState === 4 && xhr.status === 200) {
 				if(xhr.responseText.trim() == "success"){
+					// nettoyage
 					Battle.setUnitId(1, null);
 					Battle.setUnitId(2, null);
+					const weapons_aptitudes_box = document.getElementById("weapons_aptitudes_box");
+					weapons_aptitudes_box.classList.add("hidden");
+					weapons_aptitudes_box.innerHTML = '';
 					
-					// obtenir les deux nouvelles vues avec deux nouvelles requêtes AJAX 
+					// modifier le choix du select
+					const select1 = document.getElementById("left_choice_box");
+					const select2 = document.getElementById("right_choice_box");
+					select1.value = Battle.getListId(2);
+					select2.value = Battle.getListId(1);
+					
+					// obtenir les deux nouvelles vues avec deux nouvelles requêtes AJAX
 					selectList(1);
 					selectList(2);
 				}
@@ -292,20 +300,6 @@ function reverseArmies(){
 			}
 		};
 		xhr.send(JSON.stringify({ action: "reverse_armies" }));
-
-	// inutile
-	/*const units_list1 = document.getElementById("units_list1");
-	const units_list2 = document.getElementById("units_list2");
-	let units_list1_child = units_list1.querySelector(".one_unit_zone");
-	let units_list2_child = units_list2.querySelector(".one_unit_zone");
-	units_list1.innerHTML = '';
-	units_list2.innerHTML = '';
-	units_list1.appendChild(units_list2_child);
-	units_list2.appendChild(units_list1_child);
-
-	let tmp = units_list1_child;
-	units_list1_child = units_list2_child;
-	units_list2_child = tmp;*/
 }
 
 function toastNotify(message) {
