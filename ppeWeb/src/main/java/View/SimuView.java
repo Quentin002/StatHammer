@@ -1,15 +1,15 @@
 package View;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 @WebServlet("/SimuView")
 public class SimuView extends HttpServlet {
@@ -33,6 +33,7 @@ public class SimuView extends HttpServlet {
 	         return;
 	     }
 	     
+	     
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
@@ -46,40 +47,25 @@ public class SimuView extends HttpServlet {
 							+ "		<link rel=\"stylesheet\" href=\"css/anti-font-awesome.css\"/>"
 							+ "		<script type=\"text/javascript\" src=\"js/Battle.js\"></script>"
 							+ "		<script type=\"text/javascript\" src=\"js/simulation.js\"></script>"
-							+ "		<script src='js/simu.js'></script>"
 							+ "		<script src=\"js/graphique.js\"></script>\r\n"
 							+ "		<script src=\"https://cdn.canvasjs.com/canvasjs.min.js\"></script>"
 							+ "	</head>\r\n"
 							+ "	<body>";
 	    String header = ConnexionView.headerTop + titre + header_bottom;
-	
-	    String jspFilePath = getServletContext().getRealPath("simulation.jsp");
-        StringBuilder body = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(jspFilePath))) {
-        	String one_line;
-        	while((one_line = br.readLine()) != null) {
-                body.append(one_line).append("\n");
-            }
-		}
-        
-//		String body = "<h1>Simulation</h1>"
-//				+"<div class='container'>"
-//					+"<input type=submit class='buttonGcompte' onclick='GraphiqueSimu();' value='Envoyer'>"
-//					+"<script src='js/simu.js'></script>"
-//					+"<script src=\"https://cdn.canvasjs.com/canvasjs.min.js\"></script>"
-//					 +"<div id='graphique'>"
-//					+"</div>"
-//					+"</div>";
+	    out.println(header + AccueilView.barDeNav);
+	    
+	    ArrayList<Model.ArmeeListe> listes = (ArrayList<Model.ArmeeListe>) session.getAttribute("listes");
+	    request.setAttribute("listes", listes); // => simulation.jsp
+	    
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("simulation.jsp");
+        dispatcher.include(request, response);
 
         String footer = "    	<footer>\r\n"
         		+ "    		<div id=\"toast\"></div>\r\n"
         		+ "    	</footer>\r\n"
         		+ "    </body>\r\n"
         		+ "</html>";
-
-		String html = header + AccueilView.barDeNav + body + footer;
-		out.println(html);
-		//request.getRequestDispatcher("Hist.jsp").forward(request, response);
+		out.println(footer);
 	}
 
 	/**

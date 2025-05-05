@@ -1,67 +1,67 @@
 class Battle{
-	static #selected_list_name = [null, null];
-	static #id_selected_unit = [null, null];
+	static #selected_list_id = [null, null];
+	static #selected_unit_id = [null, null];
 
-	static getListName(nb){
+	static getListId(nb){
 		if(nb == 1 || nb == 2){
-			return this.#selected_list_name[nb - 1];
+			return this.#selected_list_id[nb - 1];
 		}
 		return "";
 	}
-	static setListName(nb, unit_name){
+	static setListId(nb, list_id){
 		if(nb == 1 || nb == 2){
-			this.#selected_list_name[nb - 1] = unit_name;
+			this.#selected_list_id[nb - 1] = list_id;
 		}
 	}
 	static getUnitId(nb){
 		if(nb == 1 || nb == 2){
-			return this.#id_selected_unit[nb - 1];
+			return this.#selected_unit_id[nb - 1];
 		}
 		return "";
 	}
 	static setUnitId(nb, unit_id){
 		if(nb == 1 || nb == 2){
-			this.#id_selected_unit[nb - 1] = unit_id;
+			this.#selected_unit_id[nb - 1] = unit_id;
 		}
 	}
 	static unsetUnitId(nb){
 		if(nb == 1 || nb == 2){
-			this.#id_selected_unit[nb - 1] = null;
+			this.#selected_unit_id[nb - 1] = null;
 		}
 	}
 }
 
 // même chose compatible ES5
 /*const Battle = (function () {
-	const selected_list_name = [null, null];
-	const id_selected_unit = [null, null];
+	const selected_list_id = [null, null];
+	const selected_unit_id = [null, null];
 
 	return {
-		getListName(nb) {
+		getListId(nb) {
 			if(nb == 1 || nb == 2){
-				return selected_list_name[nb - 1];
+				return selected_list_id[nb - 1];
 			}
 			return "";
 		},
-		setListName(nb, unit_name) {
+		setListId(nb, list_id) {
 			if(nb == 1 || nb == 2){
-				selected_list_name[nb - 1] = unit_name;
+				selected_list_id[nb - 1] = list_id;
 			}
 		},
 		getUnitId(nb) {
 			if(nb == 1 || nb == 2){
-				return id_selected_unit[nb - 1];
+				return selected_unit_id[nb - 1];
 			}
 			return "";
 		},
 		setUnitId(nb, unit_id) {
 			if(nb == 1 || nb == 2){
-				id_selected_unit[nb - 1] = unit_id;
+				selected_unit_id[nb - 1] = unit_id;
 			}
 		}
 		unsetUnitId(nb){
 			if(nb == 1 || nb == 2){
-				id_selected_unit[nb - 1] = null;
+				selected_unit_id[nb - 1] = null;
 			}
 		}
 	};

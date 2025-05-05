@@ -1,3 +1,45 @@
+function graphiqueSimu(){
+	// contrôle: une unité doit être sélectionnée de chaque côté
+	if(Battle.getListId(1) == null || Battle.getListId(2) == null
+		|| Battle.getUnitId(1) == null || Battle.getUnitId(2) == null)
+	{
+		toastNotify("conditions non remplies pour lancer une simulation");
+		return;
+	}
+
+	const histogramme = document.getElementById("histogramme");
+
+	// remplacer l'illustration par l'histogramme la première fois
+	// en javascript, static ne fonctionne que dans une classe
+	if(typeof graphiqueSimu.compteur === 'undefined') {
+        graphiqueSimu.compteur = 0;
+    }
+	if(calculate.compteur == 0){
+		document.getElementById("warhammer_picture").classList.add('hidden');
+		histogramme.classList.remove('hidden');
+		calculate.compteur++;
+		
+		
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "ControllerGraphique", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function () {
+		    if (xhr.readyState === 4 && xhr.status === 200) {
+		        //console.log(xhr.responseText);
+				var response = xhr.responseText;
+				//console.log(response);
+				document.getElementById("warhammer_picture").innerHTML="";
+				document.getElementById("graphique").innerHTML=response;
+				//document.getElementById("graphique").insertAdjacentHTML('afterbegin',response);
+				execHisto();
+		    }
+		};
+		
+		// Envoyer la requête avec les paramètres
+		var params = 'param1=val&param2=value2';
+		xhr.send(params);
+	}
+}
 
  //var nb = Number( document.getElementById('m'+0).innerHTML);
 function execHisto(){
@@ -73,16 +115,9 @@ chart2.render();
 }
 
 function parseDataPoints (tab,dps) {
-        for (var i = 0; i < 50; i++){
-			if(tab[i] != 0){
-				dps.push({y: tab[i], label :i});
-			}	
-		}    
-     };
-
-   		
-
-//}
-
-/**
- */
+    for (var i = 0; i < 50; i++){
+		if(tab[i] != 0){
+			dps.push({y: tab[i], label :i});
+		}	
+	}    
+}

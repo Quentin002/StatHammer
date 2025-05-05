@@ -144,6 +144,7 @@ public class Instanciation {
 			PreparedStatement stat = conec.getPreparedStatement(sql, list.getName());
 			ResultSet rs = stat.executeQuery();
 			
+			list.removeAllUnit(); // nettoyage
 			while(rs.next()) {
 				list.addUnit(new Unit(Instanciation.getFigurine(rs.getString(1)),
 						rs.getString(1), rs.getInt(2), rs.getString(3),
