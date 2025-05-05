@@ -1,7 +1,6 @@
 package Controller;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,8 +8,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-
 import Model.Arme;
 import Model.ArmeeListe;
 import Model.Unit;
@@ -244,6 +241,37 @@ public class BDD {
 			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
 			stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
 			stat.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println(e.getMessage());
+		}
+	}
+	
+	public void updateListe(ArmeeListe armee,User user) {
+		try {
+			//stat = this.getPreparedStatement("UPDATE `utilisateur` SET mdp_utilisateur=? WHERE id_utilisateur=?;",mdp.hashCode(),id);
+			String requete;
+			ArrayList<String> rendu = new ArrayList<String>();
+			int id;
+			requete = "SELECT id_liste FROM liste WHERE nom_liste = ? AND id_utilisateur="+user.getId()+";";
+			rendu = this.select(requete,armee.getName());
+			id=Integer.parseInt(rendu.get(0));
+			requete = "DELETE FROM contenir WHERE id_liste=?";
+			stat = getPreparedStatement(requete);
+			stat.setInt(1, id);
+			stat.executeUpdate();
+			
+			requete = "INSERT INTO contenir VALUES(?,?);";
+			
+			for(Unit unit : armee.getUnits()) {
+				
+				
+				stat = this.getPreparedStatement(requete);
+				stat.setInt(1, unit.getId());
+				stat.setInt(2, id);
+				stat.executeUpdate();
+			}
 			
 		} catch (SQLException e) {
 			// TODO: handle exception
