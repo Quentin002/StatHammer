@@ -122,6 +122,10 @@ public class ControllerSimu extends HttpServlet {
 					.get(Battle.getSelectedUnit(col).getIdenticalFigsGroupsKeys().get(group));
 				Arme weapon = fig_group.get(0).getArmes().get(Integer.valueOf(data.get("weapon")));
 				
+				for(int i=0 ;i<fig_group.size();i++) {
+					fig_group.get(i).setWeapon(weapon);
+				}
+				
 				String stats = "{\"A\": \""	+ weapon.getA() + "\","
 					+ " \"F\": \""	+ weapon.getF() + "\","
 					+ "\"PA\": \""	+ weapon.getPA() + "\","
