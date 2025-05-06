@@ -80,7 +80,7 @@ public class AccueilView extends HttpServlet {
              //la balise <article> est pour chaque événement
              body.append("  <article class='evenement-container'>\n")
                  .append("    <div class='evenement-content'>\n")
-                 .append("      <img class='accueil-image' src='img/").append(nomImg).append("' alt='Image de l'événement ").append(nomEvt).append("'>\n")
+                 .append("      <img class='accueil-image' src='img/").append(nomImg).append("' alt=\"Image de l'événement ").append(nomEvt).append("\">\n")
                  .append("      <div class='evenement-info'>\n")
                  .append("        <h3>").append(nomEvt).append("</h3>\n")
                  .append("        <p>").append(descEvt).append("</p>\n")
