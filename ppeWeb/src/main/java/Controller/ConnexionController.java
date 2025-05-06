@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,14 +14,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.Properties;
 import Model.ArmeeListe;
 import Model.Evenement;
 import Model.Figurine;
 import Model.Unit;
 import Model.User;
-
-
 
 @WebServlet("/ConnexionController")
 public class ConnexionController extends HttpServlet {
@@ -47,8 +46,20 @@ public class ConnexionController extends HttpServlet {
 
 		login = login.trim();
 		mdp = Integer.toString(mdp.hashCode()); // Hash comme dans l'appli JavaFX
+		
+		// lire les codes de la BDD dans le config.ini
+		Properties properties = new Properties();
+		try (FileInputStream input = new FileInputStream(getServletContext().getRealPath("WEB-INF/config.ini"))) {
+		    properties.load(input);
+		}
+		String dbname = properties.getProperty("dbname");
+		String username = properties.getProperty("username");
+		String password = properties.getProperty("password");
+		// inutile
+		//String host = properties.getProperty("host"); 
+		//String driver = properties.getProperty("driver");
 
-		BDD.setInfos("400129", "stathammer_greta_admin", "stathammer_v1");
+		BDD.setInfos(username, password, dbname);
 		BDD conec = new BDD();
 		System.out.println(" - - - - - - - Connexion à la base de données : >-- ouverte --< ");
 

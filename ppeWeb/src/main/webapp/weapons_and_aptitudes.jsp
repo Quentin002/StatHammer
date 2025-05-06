@@ -16,9 +16,9 @@ ArrayList<Arme> weapon_list = one_fig.getArmes();%>
 	<p class="number"><%= group + 1 %></p><p><%= one_fig.getNom() %></p>
 </div>
 <select id="weapon_select" name="weapon_select" onchange="selectWeapon('group<%= group %>')">
-<%//for(Arme one_weapon : weapon_list) {
-for(int i = 0; i < weapon_list.size(); i++) { %>
-	<option value="<%= i %>"><%= weapon_list.get(i).getNom() %></option>
+<% for(int i = 0; i < weapon_list.size(); i++) {
+String selected = selected_weapon.getNom() == weapon_list.get(i).getNom() ? " selected" : ""; // selection enregistrée %>
+	<option value="<%= i %>" <%= selected %>><%= weapon_list.get(i).getNom() %></option>
 <% } %>
 </select>
 <table id="weapon_stats">

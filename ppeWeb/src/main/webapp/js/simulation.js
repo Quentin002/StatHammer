@@ -115,9 +115,6 @@ function openWeaponsAptitudesZone(group_id){
 				weapons_aptitudes_box.classList.remove("hidden");
 				weapons_aptitudes_box.innerHTML = '';
 				weapons_aptitudes_box.insertAdjacentHTML('afterbegin', xhr.responseText);
-
-				// première arme sélectionnée par défaut
-				document.getElementById("weapon_select").options[0].selected = true;
 				
 				// envoi d'une deuxième requête
 				selectWeapon(group_id);
