@@ -87,7 +87,7 @@ public class AfficheGestionListe {
 			liste.getChildren().add(listeBox);
 			
 			modifBtn.setOnAction(e ->{
-				primaryStage.close();
+				//primaryStage.close();
 				AfficheModificationListe.affiche(primaryStage, session, armee.getIdListe(), armee.getIdArmee());
 			});
 
