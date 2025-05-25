@@ -93,7 +93,7 @@ public class ControllerSimu extends HttpServlet {
 			    request.getRequestDispatcher("units_box.jsp").forward(request, response);
 				break;
 			case "get_army_file":
-				out.println(Battle.getSelectedList(col).getUnits().get(0).getArmee() + ".png");
+				out.println(Battle.getSelectedList(col).getUnits().get(0).getArmee().getLogo());
 				break;
 			case "set_selected_unit":
 				int unit_index = Integer.valueOf(data.get("unit"));

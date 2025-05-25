@@ -50,7 +50,7 @@ body
 }
 .logo_armee
 {
-	width: 28px;
+	width: 32px;
 }
 .units_list
 {
@@ -126,7 +126,6 @@ img
 }
 #action_button
 {
-	action_button: larger;
 	font-size: initial;
 }
 
